@@ -18,11 +18,7 @@ const CourseCatalog = () => {
   } = useCarousel(COURSE_DATA.length);
 
   const handleButtonClick = (action, course) => {
-    console.log(`${action} clicked for: ${course.title}`);
-    // You can replace this with actual actions like:
-    // - Navigation to course details
-    // - Add to cart functionality
-    // - Enrollment process
+
   };
 
   const renderPagination = () => {
@@ -34,11 +30,10 @@ const CourseCatalog = () => {
           <button
             key={index}
             onClick={() => goToPage(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              index === state.currentPage
+            className={`h-2 rounded-full transition-all duration-300 ${index === state.currentPage
                 ? 'w-8 bg-[#3FC89E]'
                 : 'w-2 bg-[#76c0a2]'
-            }`}
+              }`}
             aria-label={`Go to page ${index + 1}`}
           />
         ))}
@@ -64,11 +59,10 @@ const CourseCatalog = () => {
       >
         <div
           ref={carouselRef}
-          className={`flex ${state.isMoved ? 'cursor-grabbing' : 'cursor-grab'} ${
-            !state.isMoved || state.startX === 0
+          className={`flex ${state.isMoved ? 'cursor-grabbing' : 'cursor-grab'} ${!state.isMoved || state.startX === 0
               ? 'transition-transform duration-500 ease-out'
               : ''
-          }`}
+            }`}
           style={{
             transform: `translateX(${finalTranslateValue}%)`,
             WebkitUserSelect: 'none',

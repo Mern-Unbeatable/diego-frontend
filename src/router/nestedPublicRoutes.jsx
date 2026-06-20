@@ -78,3 +78,4 @@ export const nestedPublicRoutes = [
   { path: 'training/course/details', element: <CourseDetails /> },
   { path: 'training/course/checkout', element: <Checkout /> },
 ];
+

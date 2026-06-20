@@ -1,26 +1,21 @@
 import { IoIosStar } from 'react-icons/io';
 import { IoStopwatchOutline } from 'react-icons/io5';
 import { Button, Heading, Paragraph } from '../../../../components/ui';
+import { useNavigate } from 'react-router-dom';
 
 const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
+  const navigate = useNavigate();
   const handleButtonAction = (e, action) => {
-    if (isDragging) {
-      e.preventDefault();
-      e.stopPropagation();
-      return;
-    }
+    navigate('/training/course/details');
 
-    e.stopPropagation();
-    onButtonClick?.(action, course);
   };
 
   const renderStars = (rating) => {
     return [...Array(6)].map((_, index) => (
       <IoIosStar
         key={index}
-        className={`h-4 w-4 ${
-          index < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'
-        }`}
+        className={`h-4 w-4 ${index < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'
+          }`}
       />
     ));
   };
@@ -56,9 +51,8 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
 
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-lg bg-white shadow-md transition-transform duration-200 hover:shadow-lg ${
-        isDragging ? 'opacity-70' : ''
-      }`}
+      className={`flex flex-col overflow-hidden rounded-lg bg-white shadow-md transition-transform duration-200 hover:shadow-lg ${isDragging ? 'opacity-70' : ''
+        }`}
     >
       {/* Image Section */}
       <div className="relative">

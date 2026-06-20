@@ -58,9 +58,9 @@ export default function CatalogCard() {
                                         Sign up
                                     </button>
 
-                                    <button className="flex-1 border border-[#73BFA1] text-[#34b86a] text-[12px] py-2 rounded-md hover:bg-[#73BFA1] hover:text-white transition">
+                                    <a className="flex-1 border text-center border-[#73BFA1] text-[#34b86a] text-[12px] py-2 rounded-md hover:bg-[#73BFA1] hover:text-white transition" href="/training/course/details">
                                         Details
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
