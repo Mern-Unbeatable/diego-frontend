@@ -42,7 +42,7 @@ import CompanyCourseList from '../pages/admin/company/CompanyCourseList.jsx';
 
 export const dashboardRoutes = [
   {
-    //  ✅ Super Admins
+    //   Super Admins
     roles: [ROLES.SUPER_ADMIN],
     routes: [
       { path: 'super-admin', element: <SuperAdminView /> },
@@ -68,7 +68,7 @@ export const dashboardRoutes = [
   },
   {
 
-    //  ✅ Freelancers
+    //   Freelancers
     roles: [ROLES.LICENSE_USER],
     routes: [
       { path: 'license-user', element: <FreelancerView /> },
@@ -85,7 +85,7 @@ export const dashboardRoutes = [
   {
 
 
-    //  ✅ Company Admins
+    //   Company Admins
     roles: [ROLES.COMPANY_ADMIN],
     routes: [
       { path: 'company-admin', element: <CompanyHome /> },
@@ -113,7 +113,7 @@ export const dashboardRoutes = [
   {
 
 
-    //  ✅ Company employees
+    //   Company employees
     roles: [ROLES.COMPANY_EMPLOYEE],
     routes: [
 
