@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "image": "/image/servizi/servizicategory/1.jpg",
+    "title": "Corsi SEVESO"
+  },
+  {
+    "id": 2,
+    "image": "/image/servizi/servizicategory/2.jpg",
+    "title": "Corsi obbligatori"
+  },
+  {
+    "id": 3,
+    "image": "/image/servizi/servizicategory/3.jpg",
+    "title": "Servizio ASPP e RSPP"
+  },
+  {
+    "id": 4,
+    "image": "/image/servizi/servizicategory/4.jpg",
+    "title": "DVR"
+  },
+  {
+    "id": 5,
+    "image": "/image/servizi/servizicategory/5.jpg",
+    "title": "Piani di emergenza"
+  },
+  {
+    "id": 6,
+    "image": "/image/servizi/servizicategory/6.jpg",
+    "title": "Fulminazione"
+  },
+  {
+    "id": 7,
+    "image": "/image/servizi/servizicategory/7.jpg",
+    "title": "Legionella"
+  },
+  {
+    "id": 8,
+    "image": "/image/servizi/servizicategory/8.jpg",
+    "title": "Potabilità dell’acqua"
+  },
+  {
+    "id": 9,
+    "image": "/image/servizi/servizicategory/9.jpg",
+    "title": "Radon"
+  },
+  {
+    "id": 10,
+    "image": "/image/servizi/servizicategory/10.jpg",
+    "title": "Analisi di laboratorio"
+  },
+  {
+    "id": 11,
+    "image": "/image/servizi/servizicategory/11.jpg",
+    "title": "Building management"
+  },
+  {
+    "id": 12,
+    "image": "/image/servizi/servizicategory/12.jpg",
+    "title": "RENTRI"
+  },
+  {
+    "id": 13,
+    "image": "/image/servizi/servizicategory/12.jpg",
+    "title": "Video sorveglianza"
+  },
+  {
+    "id": 14,
+    "image": "/image/servizi/servizicategory/14.jpg",
+    "title": "Incarico medico competente"
+  },
+  {
+    "id": 15,
+    "image": "/image/servizi/servizicategory/15.jpg",
+    "title": "Gestione visite mediche"
+  },
+  {
+    "id": 16,
+    "image": "/image/servizi/servizicategory/16.jpg",
+    "title": "Analisi di laboratorio"
+  }
+]

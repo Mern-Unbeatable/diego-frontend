@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "icon": "IoShieldCheckmarkOutline",
+    "title": "Sicurezza prima di tutto",
+    "description": "La sicurezza sul lavoro è al centro di tutto ciò che facciamo, con l'obiettivo di creare ambienti di lavoro più sicuri."
+  },
+  {
+    "id": 2,
+    "icon": "IoFlashOutline",
+    "title": "Innovazione tecnologica",
+    "description": "Adottiamo soluzioni tecnologiche consolidate per garantire una formazione efficace e facilmente fruibile."
+  },
+  {
+    "id": 3,
+    "icon": "IoStatsChartOutline",
+    "title": "Orientamento al cliente",
+    "description": "Ogni soluzione è progettata sulle specifiche esigenze del cliente, garantendo risultati concreti."
+  },
+  {
+    "id": 4,
+    "icon": "IoSchoolOutline",
+    "title": "Eccellenza formativa",
+    "description": "Standard di qualità in ogni corso, con metodologie didattiche all'avanguardia."
+  }
+]
