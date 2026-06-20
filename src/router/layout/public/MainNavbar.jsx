@@ -249,7 +249,7 @@ const MainNavbar = () => {
           {/* --- E-Learning Button (Desktop) --- */}
           <div className="hidden lg:block">
             <Link
-              to="/auth/UserLanguage"
+              to="/auth/register/choose-language"
               className="inline-block rounded-full bg-[#73BFA1] px-8 py-3 font-semibold text-white"
             >
               E-Learning
