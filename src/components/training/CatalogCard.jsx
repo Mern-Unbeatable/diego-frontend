@@ -1,15 +1,15 @@
+import { Heading } from "../ui";
 import { courses } from "./CourseCard";
 
 export default function CatalogCard() {
     return (
         <section className=" py-14">
-            <h3 className='text-center text-3xl'>La piattaforma di formazione online per la tua azienda</h3>
-            <div className="max-w-6xl mx-auto px-4 mt-14">
-                <h2 className="text-[30px] font-semibold text-[#333] mb-8">
-                    Corsi obbligatori
-                </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <h3 className='text-center text-xl md:text-3xl'>La piattaforma di formazione online per la tua azienda</h3>
+            <div className="max-w-6xl mx-auto px-4 mt-14">
+
+                <Heading level={5}>  Corsi obbligatori</Heading>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-3 ">
                     {courses.map((course) => (
                         <div
                             key={course.id}
@@ -33,7 +33,7 @@ export default function CatalogCard() {
                                 </p>
 
                                 {/* price + rating */}
-                                <div className="flex items-center justify-between mt-2">
+                                <div className="flex flex-wrap items-center justify-between mt-2">
                                     <div className="flex items-center gap-2">
                                         <span className="text-[12px] text-gray-400 line-through">
                                             {course.oldPrice}
