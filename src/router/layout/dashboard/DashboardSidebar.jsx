@@ -160,7 +160,7 @@ const DashboardSidebar = () => {
   // DEV MODE: set true to test sidebar links without real login role.
   const DEV_BYPASS_AUTH = true;
   // Change this value to test another role quickly.
-  const DEV_MANUAL_ROLE = ROLES.COMPANY_ADMIN;
+  const DEV_MANUAL_ROLE = ROLES.PLATFORM_ADMIN;
 
   const { setActiveLink } = useUIStore();
   const { user, tempRole } = useSelector((state) => state.auth);

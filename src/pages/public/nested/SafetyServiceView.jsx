@@ -1,6 +1,6 @@
 import Banner from '../../../components/common/Banner';
 import banner from '../../../../src/assets/images/banner/safety/banner4.png'
-import { Container } from '../../../components/ui';
+import { Container, Heading } from '../../../components/ui';
 import ServiceForm from '../services/components/ServiceForm';
 const SafetyServiceView = () => {
   return <Container className=' '>
@@ -12,13 +12,13 @@ const SafetyServiceView = () => {
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
+
         {/* Left Column - Service Details */}
         <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">
-            Dettagli del servizio
-          </h1>
 
-          <div className="prose prose-lg max-w-none">
+          <Heading level={3}>Dettagli del servizio</Heading>
+
+          <div className="prose prose-lg max-w-none mt-3 ">
             <p className="text-gray-600 leading-relaxed mb-6">
               La sicurezza non è un semplicemente un argomento tedesco del quale farsi beffa durante
               la quotidiana attività lavorativa. A volte può risultare macchiosa e complessa perché

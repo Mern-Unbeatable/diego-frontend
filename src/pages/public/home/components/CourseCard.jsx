@@ -1,33 +1,28 @@
 import { IoIosStar } from 'react-icons/io';
 import { IoStopwatchOutline } from 'react-icons/io5';
 import { Button, Heading, Paragraph } from '../../../../components/ui';
+import { useNavigate } from 'react-router-dom';
 
 const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
+  const navigate = useNavigate();
   const handleButtonAction = (e, action) => {
-    if (isDragging) {
-      e.preventDefault();
-      e.stopPropagation();
-      return;
-    }
+    navigate('/training/course/details');
 
-    e.stopPropagation();
-    onButtonClick?.(action, course);
   };
 
   const renderStars = (rating) => {
-    return [...Array(6)].map((_, index) => (
+    return [...Array(5)].map((_, index) => (
       <IoIosStar
         key={index}
-        className={`h-4 w-4 ${
-          index < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'
-        }`}
+        className={`h-4 w-4 ${index < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'
+          }`}
       />
     ));
   };
 
   const renderPrice = () => {
     return (
-      <div className="flex items-center gap-2">
+      <div className="grid grid-flow-col auto-cols-max items-center gap-2 sm:justify-self-end">
         {course.oldPrice && (
           <span className="text-sm text-gray-400 line-through">
             €{course.oldPrice.toFixed(2)}
@@ -42,11 +37,11 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
 
   const renderRating = () => {
     return (
-      <div className="flex items-center gap-2">
+      <div className="grid grid-cols-[auto_auto_auto] items-center gap-2">
         <span className="text-lg font-bold text-gray-800">
           {course.rating.toFixed(1)}
         </span>
-        <div className="flex">{renderStars(course.rating)}</div>
+        <div className="grid grid-flow-col auto-cols-max">{renderStars(course.rating)}</div>
         <span className="text-sm text-gray-500">
           ({course.reviews.toLocaleString()})
         </span>
@@ -56,9 +51,8 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
 
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-lg bg-white shadow-md transition-transform duration-200 hover:shadow-lg ${
-        isDragging ? 'opacity-70' : ''
-      }`}
+      className={`flex flex-col overflow-hidden rounded-lg bg-white shadow-md transition-transform duration-200 hover:shadow-lg ${isDragging ? 'opacity-70' : ''
+        }`}
     >
       {/* Image Section */}
       <div className="relative">
@@ -80,7 +74,7 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
       {/* Content Section */}
       <div className="flex flex-col p-5">
         <Heading
-          level={3}
+          level={5}
           className="mb-2 line-clamp-1 text-lg font-semibold text-gray-800"
         >
           {course.title}
@@ -91,24 +85,24 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
         </Paragraph>
 
         {/* Rating + Price */}
-        <div className="mt-auto flex items-center justify-between">
+        <div className="mt-auto grid grid-cols-1 gap-3 sm:grid-cols-2 sm:items-center">
           {renderRating()}
           {renderPrice()}
         </div>
 
         {/* Actions */}
-        <div className="mt-4 flex gap-3">
+        <div className="mt-4 flex flex-wrap justify-between gap-3">
           <Button
             label="Iscriviti ora"
             onClick={(e) => handleButtonAction(e, 'Iscriviti ora')}
-            className="flex-1 rounded-full font-semibold"
+            className="w-full rounded-full font-semibold"
             style={{ backgroundColor: '#3FC89E', color: '#fff' }}
           />
           <Button
             label="Dettagli"
             variant="outline"
             onClick={(e) => handleButtonAction(e, 'Dettagli')}
-            className="flex-1 rounded-full border-gray-300 font-semibold text-gray-700 hover:border-gray-400"
+            className="w-full rounded-full border-gray-300 font-semibold text-gray-700 hover:border-gray-400"
           />
         </div>
       </div>

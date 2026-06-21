@@ -5,12 +5,13 @@ import Paragraph from '../../../../components/ui/typography/Paragraph';
 import Container from '../../../../components/ui/layouts/Container';
 import Heading from '../../../../components/ui/typography/Heading';
 
+
 const ReviewSection = () => {
   return (
-    <div className="mt-20 items-center overflow-hidden md:flex md:gap-8">
-      <Container className="">
+    <div className="mt-20 items-center justify-center overflow-hidden md:flex md:gap-8">
+      <Container className="w-full md:w-1/2">
         <div className="space-y-8">
-          <Heading level={2} className="">
+          <Heading level={3} className="">
             Condividi la tua recensione con noi
           </Heading>
           <Paragraph className="">
@@ -25,7 +26,7 @@ const ReviewSection = () => {
           />
         </div>
         <div className="my-5 space-y-8">
-          <Heading level={2} className="">
+          <Heading level={3} className="">
             Feedback sulla sessione
           </Heading>
           <div className="space-y-4">
@@ -45,18 +46,51 @@ const ReviewSection = () => {
         <Button label="Invia" size="lg" className="w-full" />
       </Container>
 
-      <div className="border">
-        <div className="relative">
-          <div className="ml-[140px] h-[500px] w-[260px] bg-[#73BFA1] sm:ml-[150px] sm:h-[700px] sm:w-[380px] md:ml-[300px] md:h-[800px] md:w-[360px] lg:ml-[400px] lg:h-[900px] lg:w-[529px]" />
-          <div className="absolute -mt-[460px] ml-0 sm:-mt-[600px] md:-mt-[600px] md:ml-20 lg:-mt-[820px] lg:ml-24">
+      <div className="mt-10 flex w-full justify-center md:mt-0 md:w-1/2">
+        <div className="relative w-full max-w-[560px]">
+          <div
+            className="
+      ml-auto
+      h-[420px]
+      w-[75%]
+      max-w-[529px]
+      bg-[#73BFA1]
+
+      sm:h-[540px]
+      md:h-[650px]
+      lg:h-[800px]
+      xl:h-[900px]
+      "
+          />
+
+          <div
+            className="
+      absolute
+      left-0
+      top-6
+      sm:top-8
+      md:left-4 md:top-10
+      lg:left-8 lg:top-16
+      "
+          >
             <img
-              className="h-[420px] w-[300px] sm:h-[500px] sm:w-[390px] md:h-[600px] lg:h-[720px] lg:w-full"
               src="./images/Componen.jpg"
               alt=""
+              className="
+        w-[80vw]
+        max-w-[500px]
+        h-auto
+        object-cover
+
+        sm:w-[70vw]
+        md:w-[420px]
+        lg:w-[500px]
+        "
             />
           </div>
         </div>
       </div>
+
     </div>
   );
 };

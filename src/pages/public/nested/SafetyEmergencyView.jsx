@@ -1,6 +1,6 @@
 import Banner from '../../../components/common/Banner';
 import banner from '../../../../src/assets/images/banner/safety/banner4.png'
-import { Container } from '../../../components/ui';
+import { Container, Heading } from '../../../components/ui';
 import ServiceForm from '../services/components/ServiceForm';
 const SafetyEmergencyView = () => {
   return <Container className=' '>
@@ -14,11 +14,8 @@ const SafetyEmergencyView = () => {
 
         {/* Left Column - Service Details */}
         <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">
-            Piano di emergenza
-          </h1>
-
-          <div className="prose prose-lg max-w-none">
+          <Heading level={3}>Piano di emergenza</Heading>
+          <div className="prose prose-lg max-w-none mt-3">
             <p className="text-gray-600 leading-relaxed mb-6">
               Ai fini degli adempimenti di cui all'articolo 18, comma 1, lettera t), il datore di lavoro:
             </p>
@@ -37,10 +34,8 @@ const SafetyEmergencyView = () => {
               <li>al numero delle persone presenti</li>
             </ul>
             <p className='text-gray-600 leading-relaxed mb-6'>Noi di UnoSicurezza, possiamo aiutarti in questo! </p>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Cosa include il servizio
-            </h2>
-            <div className='bg-[#F1F9F6] p-5 rounded-2xl'>
+            <Heading level={3}>Cosa include il servizio</Heading>
+            <div className='bg-[#F1F9F6] p-5 rounded-2xl mt-3 '>
               <ul className="list-disc pl-6 space-y-2 text-gray-600">
                 <li>Consulenza iniziale e analisi della situazione attuale</li>
                 <li>Redazione della documentazione necessaria</li>

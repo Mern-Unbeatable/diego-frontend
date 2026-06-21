@@ -13,12 +13,12 @@ const Heading = ({ level = 1, children, className = '', h1, h2, h3, h4, h5, h6, 
   const Tag = `h${finalLevel}`;
 
   const sizes = {
-    1: 'text-7xl',
-    2: 'text-5xl',
-    3: 'text-3xl',
-    4: 'text-xl',
-    5: 'text-lg',
-    6: 'text-base',
+    1: 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl',
+    2: 'text-3xl sm:text-4xl md:text-5xl',
+    3: 'text-2xl sm:text-3xl md:text-4xl',
+    4: 'text-lg sm:text-xl md:text-2xl',
+    5: 'text-base sm:text-lg md:text-xl',
+    6: 'text-sm sm:text-base md:text-lg',
   };
 
   const classes = `${sizes[finalLevel]} ${className}`;

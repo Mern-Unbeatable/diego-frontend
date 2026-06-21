@@ -14,7 +14,9 @@ export const useCarousel = (totalItems) => {
   const getItemsPerPage = useCallback(() => {
     if (typeof window === 'undefined') return ITEMS_PER_PAGE.DESKTOP;
 
-    if (window.innerWidth >= BREAKPOINTS.DESKTOP) return ITEMS_PER_PAGE.DESKTOP;
+    // Keep cards readable on 1024px laptops, use 4-up only on wider desktops.
+    if (window.innerWidth >= 1280) return ITEMS_PER_PAGE.DESKTOP;
+    if (window.innerWidth >= BREAKPOINTS.DESKTOP) return 3;
     if (window.innerWidth >= BREAKPOINTS.TABLET) return ITEMS_PER_PAGE.TABLET;
     return ITEMS_PER_PAGE.MOBILE;
   }, []);
