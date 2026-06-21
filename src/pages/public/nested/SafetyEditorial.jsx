@@ -1,6 +1,6 @@
 import Banner from '../../../components/common/Banner';
 import banner from '../../../../src/assets/images/banner/safety/banner4.png'
-import { Container } from '../../../components/ui';
+import { Container, Heading } from '../../../components/ui';
 import ServiceForm from '../services/components/ServiceForm';
 const SafetyServiceView = () => {
   return <Container className=' '>
@@ -14,21 +14,17 @@ const SafetyServiceView = () => {
 
         {/* Left Column - Service Details */}
         <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">
-            Dettagli del servizio
-          </h1>
+          <Heading level={3}>Dettagli del servizio</Heading>
 
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-lg max-w-none mt-3 ">
             <p className="text-gray-600 leading-relaxed mb-6">
               Il Documento di Valutazione dei Rischi (DVR). Forniamo servizi completi di valutazione dei rischi, redazione del documento, formazione del personale e aggiornamenti periodici secondo quanto previsto dal D.Lgs. 81/2008.
             </p>
 
 
 
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Cosa include il servizio
-            </h2>
-            <div className='bg-[#F1F9F6] p-5 rounded-2xl'>
+            <Heading level={3}>Cosa include il servizio</Heading>
+            <div className='bg-[#F1F9F6] p-5 rounded-2xl mt-3 '>
               <ul className="list-disc pl-6 space-y-2 text-gray-600">
                 <li>Consulenza iniziale e analisi della situazione attuale</li>
                 <li>Redazione della documentazione necessaria</li>
