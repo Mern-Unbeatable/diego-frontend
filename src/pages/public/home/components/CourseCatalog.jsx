@@ -5,6 +5,7 @@ import { useCarousel } from '../../../../config/hooks/useCarousel';
 import { Heading, Container, Button } from '../../../../components/ui';
 import { COURSE_DATA } from '../../../../config/courses';
 
+
 const CourseCatalog = () => {
   const carouselRef = useRef(null);
   const {
@@ -31,8 +32,8 @@ const CourseCatalog = () => {
             key={index}
             onClick={() => goToPage(index)}
             className={`h-2 rounded-full transition-all duration-300 ${index === state.currentPage
-                ? 'w-8 bg-[#3FC89E]'
-                : 'w-2 bg-[#76c0a2]'
+              ? 'w-8 bg-[#3FC89E]'
+              : 'w-2 bg-[#76c0a2]'
               }`}
             aria-label={`Go to page ${index + 1}`}
           />
@@ -48,7 +49,7 @@ const CourseCatalog = () => {
 
     return (
       <div
-        className="-m-6 overflow-hidden select-none"
+        className="-mx-3 overflow-hidden select-none sm:-m-6"
         onMouseDown={handleDragStart}
         onMouseMove={handleDragMove}
         onMouseUp={handleDragEnd}
@@ -60,8 +61,8 @@ const CourseCatalog = () => {
         <div
           ref={carouselRef}
           className={`flex ${state.isMoved ? 'cursor-grabbing' : 'cursor-grab'} ${!state.isMoved || state.startX === 0
-              ? 'transition-transform duration-500 ease-out'
-              : ''
+            ? 'transition-transform duration-500 ease-out'
+            : ''
             }`}
           style={{
             transform: `translateX(${finalTranslateValue}%)`,
@@ -92,8 +93,8 @@ const CourseCatalog = () => {
   };
 
   return (
-    <Container size="full" className="py-20">
-      <Heading level={2} className="mb-20">
+    <Container size="full" className="py-12 sm:py-16 lg:py-20">
+      <Heading level={2} className="mb-10 sm:mb-14 lg:mb-20">
         Esplora il nostro catalogo corsi
       </Heading>
 
@@ -101,12 +102,12 @@ const CourseCatalog = () => {
         {renderCarousel()}
         {renderPagination()}
 
-        <div className="flex justify-center">
+        <div className="flex justify-center px-2">
           <Button
             size="lg"
             variant="outline"
             label={`"Esplora tutti i nostri corsi"`}
-            className="font-semibold text-[#73BFA1]"
+            className="w-full max-w-[360px] font-semibold text-[#73BFA1] sm:w-auto"
           />
         </div>
       </div>

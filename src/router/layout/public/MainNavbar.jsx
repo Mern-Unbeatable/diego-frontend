@@ -154,30 +154,32 @@ const MainNavbar = () => {
 
   return (
     <Container>
-      <nav className="flex  py-6">
+      <nav className="relative flex items-center py-4 sm:py-5 lg:py-6">
         {/* Logo */}
-        <div className="flex flex-1 items-center gap-10">
-          <Link to="/">
-            <div className="flex items-center">
+        <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-6 lg:gap-10">
+          <Link to="/" className="min-w-0 shrink">
+            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
               <img
-                className="h-10 w-10 bg-cover object-contain text-[#46BB9D]"
+                className="h-8 w-8 bg-cover object-contain text-[#46BB9D] sm:h-10 sm:w-10"
                 src="/images/icons/title.png"
                 alt="Home"
               />
 
-              <h1 className="text-3xl font-bold text-gray-900">UnoSicurezza</h1>
+              <h1 className="truncate text-xl font-bold text-gray-900 sm:text-2xl lg:text-3xl">
+                UnoSicurezza
+              </h1>
             </div>
           </Link>
 
           {/* --- DESKTOP MENU --- */}
-          <div className="hidden flex-1 justify-center lg:flex">
-            <div className="flex items-center gap-6">
+          <div className="hidden min-w-0 flex-1 justify-center xl:flex">
+            <div className="flex items-center gap-3 xl:gap-6">
               {navItems.map((item, index) => (
                 <div key={index} className="group relative">
                   {!item.dropdown ? (
                     <Link
                       to={item.path}
-                      className={`border-b border-transparent text-base font-semibold transition-all duration-300 ${isActive(item)
+                      className={`whitespace-nowrap border-b border-transparent text-sm font-semibold transition-all duration-300 xl:text-base ${isActive(item)
                         ? 'border-[#73BFA1] text-[#73BFA1]'
                         : 'text-[#252525] hover:border-[#63be9a]'
                         }`}
@@ -188,7 +190,7 @@ const MainNavbar = () => {
                     <>
                       <Link
                         to={item.path}
-                        className={`flex items-center gap-1 border-b border-transparent text-[15px] font-medium transition-all duration-200 hover:border-[#73BFA1] ${isActive(item) ? 'text-[#73BFA1]' : 'text-gray-700'
+                        className={`flex items-center gap-1 whitespace-nowrap border-b border-transparent text-sm font-medium transition-all duration-200 hover:border-[#73BFA1] xl:text-[15px] ${isActive(item) ? 'text-[#73BFA1]' : 'text-gray-700'
                           }`}
                       >
                         <span>{item.label}</span>
@@ -247,10 +249,10 @@ const MainNavbar = () => {
           </div>
 
           {/* --- E-Learning Button (Desktop) --- */}
-          <div className="hidden lg:block">
+          <div className="hidden shrink-0 xl:block">
             <Link
               to="/auth/register/choose-language"
-              className="inline-block rounded-full bg-[#73BFA1] px-8 py-3 font-semibold text-white"
+              className="inline-block whitespace-nowrap rounded-full bg-[#73BFA1] px-5 py-2.5 text-sm font-semibold text-white xl:px-8 xl:py-3 xl:text-base"
             >
               E-Learning
             </Link>
@@ -258,7 +260,7 @@ const MainNavbar = () => {
         </div>
 
         {/* --- MOBILE MENU BUTTON --- */}
-        <div className="lg:hidden">
+        <div className="shrink-0 xl:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="relative z-50 p-2 text-gray-700"
@@ -269,15 +271,15 @@ const MainNavbar = () => {
 
         {/* --- MOBILE MENU --- */}
         {isMenuOpen && (
-          <div className="absolute top-full right-0 left-0 z-50 bg-white shadow-md lg:hidden">
+          <div className="absolute top-full shadow-5xl right-0 left-0 z-99 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white  xl:hidden">
             <nav>
-              <div className="flex flex-col space-y-3 pt-6 pb-6">
+              <div className="flex flex-col space-y-3 px-1 pt-6 pb-6 sm:px-2">
                 {navItems.map((item, index) => (
                   <div key={index}>
                     {!item.dropdown ? (
                       <Link
                         to={item.path}
-                        className={`block py-2 text-[15px] font-medium ${isActive(item) ? 'text-[#73BFA1]' : 'text-gray-700'
+                        className={`block break-words py-2 text-[15px] font-medium ${isActive(item) ? 'text-[#73BFA1]' : 'text-gray-700'
                           }`}
                         onClick={() => setIsMenuOpen(false)}
                       >
@@ -288,7 +290,7 @@ const MainNavbar = () => {
                         <div className="flex items-center justify-between">
                           <Link
                             to={item.path}
-                            className={`flex-1 py-2 text-left text-[15px] font-medium ${isActive(item) ? 'text-[#73BFA1]' : 'text-gray-700'
+                            className={`flex-1 break-words py-2 text-left text-[15px] font-medium ${isActive(item) ? 'text-[#73BFA1]' : 'text-gray-700'
                               }`}
                             onClick={() => setIsMenuOpen(false)}
                           >
@@ -317,7 +319,7 @@ const MainNavbar = () => {
                                 {sub.dropdown ? (
                                   <div className="flex items-center justify-between">
                                     <span
-                                      className="block cursor-default rounded-sm py-1 pl-4 text-base font-semibold duration-200 hover:bg-[#EAF5F1] hover:text-[#568F79]" // cursor-default added
+                                      className="block cursor-default break-words rounded-sm py-1 pl-4 text-base font-semibold duration-200 hover:bg-[#EAF5F1] hover:text-[#568F79]" // cursor-default added
                                     >
                                       {sub.label}
                                     </span>
@@ -325,7 +327,7 @@ const MainNavbar = () => {
                                 ) : (
                                   <Link
                                     to={sub.path}
-                                    className="block rounded-sm py-1 pl-4 text-base font-semibold duration-200 hover:bg-[#EAF5F1] hover:text-[#568F79]"
+                                    className="block break-words rounded-sm py-1 pl-4 text-base font-semibold duration-200 hover:bg-[#EAF5F1] hover:text-[#568F79]"
                                     onClick={() => setIsMenuOpen(false)}
                                   >
                                     {sub.label}
@@ -339,7 +341,7 @@ const MainNavbar = () => {
                                       <Link
                                         key={j}
                                         to={deep.path}
-                                        className="block rounded-sm py-1 pl-4 text-base font-semibold duration-200 hover:bg-[#EAF5F1] hover:text-[#568F79]"
+                                        className="block break-words rounded-sm py-1 pl-4 text-base font-semibold duration-200 hover:bg-[#EAF5F1] hover:text-[#568F79]"
                                         onClick={() => setIsMenuOpen(false)}
                                       >
                                         {deep.label}
