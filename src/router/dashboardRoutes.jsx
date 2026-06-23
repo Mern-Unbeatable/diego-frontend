@@ -1,31 +1,41 @@
+import { ROLES } from '../config/roles';
+
+// ✅ super admin
+import LicenseeSuperAdminDashboard from '../pages/dash/super/sections/LicenseManagementSuperAdmin';
 import AdminSettingsDashboard from '../pages/dash/super/sections/AdminSettingsDashboard.jsx';
 import FeedbackAdminDashboard from '../pages/dash/super/sections/FeedbackAdminDashboard';
 import FigureAdminDashboard from '../pages/dash/super/sections/FigureAdminDashboard';
 import TicketAdminDashboard from '../pages/dash/super/sections/TicketAdminDashboard';
+import SuperAdminView from '../pages/dash/super/SuperAdminView';
+import AdminReport from '../pages/dash/super/sections/AdminReport.jsx';
 
-import LicenseeSuperAdminDashboard from '../pages/dash/super/sections/LicenseManagementSuperAdmin';
+// ✅ freelancer
+import FreelancerAddCource from '../pages/dash/freelancer/components/FreelancerAddCource.jsx';
+import FreelancerTicket from '../pages/dash/freelancer/components/FreelancerTicket.jsx';
+import EnrolledStudents from '../pages/dash/freelancer/components/EnrolledStudents.jsx';
+import LicenPrivaceyView from '../pages/dash/freelancer/LicenPrivaceyView.jsx';
 import FreelancerView from '../pages/dash/freelancer/FreelancerView';
 import ReportDetail from '../pages/dash/freelancer/sections/ReportDetail';
+import LicenView from '../pages/dash/freelancer/LicenPrivaceyView.jsx';
 import License from '../pages/dash/freelancer/sections/License';
-import SuperAdminView from '../pages/dash/super/SuperAdminView';
 import Report from '../pages/dash/freelancer/sections/Report';
 
+// ✅ Student Admin
 import StudentHomeView from '../pages/dash/studentAdmin/StudentHomeView.jsx';
 import StudentIPofile from '../pages/dash/studentAdmin/components/StudentIPofile.jsx';
 import CertificatePage from '../pages/dash/studentAdmin/components/CertificatePage.jsx';
 import CredentialsReceived from '../pages/dash/studentAdmin/CredentialsReceived.jsx';
-
 import SupportFeedbackView from '../pages/dash/studentAdmin/SupportFeedbackView.jsx';
 import NotificationsView from '../pages/dash/studentAdmin/NotificationsView.jsx';
 import CourseContentView from '../pages/dash/studentAdmin/CourseContentView.jsx';
 import SupportTicketView from '../pages/dash/studentAdmin/SupportTicketView.jsx';
-
+import PrivacyPolicyView from '../pages/dash/studentAdmin/PrivacyPolicyView.jsx';
 import QuizesView from '../pages/dash/studentAdmin/QuizesView.jsx';
 import QuizResult from '../pages/dash/studentAdmin/QuizResult.jsx';
-import PrivacyPolicyView from '../pages/dash/studentAdmin/PrivacyPolicyView.jsx';
-import { ROLES } from '../config/roles';
-import AdminReport from '../pages/dash/super/sections/AdminReport.jsx';
+
+// ✅ Company Admin
 import CompanyHome from '../components/company/CompanyHome.jsx';
+import CompanyCourseList from '../pages/dash/company/CompanyCourseList.jsx';
 import CompanyTrainingView from '../pages/dash/company/CompanyTrainingView.jsx';
 import CompanyCourseRosterView from '../pages/dash/company/CompanyCourseRosterView.jsx';
 import CompanyTicketListView from '../pages/dash/company/CompanyTicketListView.jsx';
@@ -33,12 +43,6 @@ import CompanyOpenTicketView from '../pages/dash/company/CompanyOpenTicketView.j
 import CompanyTicketDetailView from '../pages/dash/company/CompanyTicketDetailView.jsx';
 import CompanyCertificatesView from '../pages/dash/company/CompanyCertificatesView.jsx';
 import CompanyPrivacyPolicyView from '../pages/dash/company/CompanyPrivacyPolicyView.jsx';
-import LicenView from '../pages/dash/freelancer/LicenPrivaceyView.jsx';
-import LicenPrivaceyView from '../pages/dash/freelancer/LicenPrivaceyView.jsx';
-import FreelancerAddCource from '../pages/dash/freelancer/components/FreelancerAddCource.jsx';
-import FreelancerTicket from '../pages/dash/freelancer/components/FreelancerTicket.jsx';
-import EnrolledStudents from '../pages/dash/freelancer/components/EnrolledStudents.jsx';
-import CompanyCourseList from '../pages/dash/company/CompanyCourseList.jsx';
 
 export const dashboardRoutes = [
   {
