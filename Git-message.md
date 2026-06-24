@@ -27,3 +27,5 @@
 - (chore): update ESLint config and fix warnings
 
 - (test): add unit tests for payment service
+
+- (fixed): client problem solve 
