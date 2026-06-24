@@ -17,7 +17,7 @@ const SetupPassword = () => {
     const data = Object.fromEntries(formData);
 
     console.log('Password data:', data);
-    navigate('/dashboard');
+    navigate('/dashboard/super-admin');
   };
 
   return (

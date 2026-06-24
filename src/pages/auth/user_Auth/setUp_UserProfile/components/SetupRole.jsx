@@ -58,7 +58,7 @@ const SetupRole = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/auth/register/setup-profile/information', {
+    navigate('/auth/register/setup-info', {
       state: { role: selectedRole },
     });
   };

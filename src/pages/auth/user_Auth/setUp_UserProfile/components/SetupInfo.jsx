@@ -27,7 +27,7 @@ const SetupInfo = () => {
     console.log(data);
 
     // 🔥 NEXT STEP CONTROL
-    navigate('/auth/register/setup-profile/password');
+    navigate('/auth/register/setup-password');
   };
 
   return (

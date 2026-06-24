@@ -1,13 +1,13 @@
-import { useState, useRef } from "react";
-import { Heading, InputField, Label } from "../../components/ui";
-import { IoIosArrowBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useState, useRef } from 'react';
+import { Heading, InputField, Label } from '../../components/ui';
+import { IoIosArrowBack } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterView = () => {
-  const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState(new Array(6).fill(""));
+  const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState(new Array(6).fill(''));
   const [step, setStep] = useState(1);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const otpRefs = useRef([]);
 
   // STEP 1 → STEP 2 (EMAIL)
@@ -15,7 +15,7 @@ const RegisterView = () => {
     e.preventDefault();
 
     if (!email.trim()) {
-      alert("Enter email first");
+      alert('Enter email first');
       return;
     }
 
@@ -38,22 +38,17 @@ const RegisterView = () => {
   // BACK
   const handleBack = () => {
     setStep(1);
-    setOtp(new Array(6).fill(""));
+    setOtp(new Array(6).fill(''));
   };
-
-  const handleNavigate = () => {
-    Navigate('/auth/register/setup-profile/role')
-  }
 
   // OTP VERIFY (STATIC ONLY)
   const handleVerifyOtp = (e) => {
-    navigate('/auth/register/setup-profile/role')
+    navigate('/dashboard');
   };
 
   return (
     <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
       <div className="grid min-h-[650px] grid-cols-1 md:grid-cols-2">
-
         {/* LEFT */}
         <div className="flex flex-col items-center justify-center bg-white p-10">
           <div className="flex items-center gap-2">
@@ -62,18 +57,14 @@ const RegisterView = () => {
               src="/images/icons/title.png"
               alt="Logo"
             />
-            <h1 className="text-3xl font-bold text-gray-900">
-              UnoSicurezza
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-900">UnoSicurezza</h1>
           </div>
 
           <div className="mt-10 max-w-md">
             <img
               className="w-full object-contain"
               src={
-                step === 2
-                  ? "/image/icon/otp.png"
-                  : "/image/icon/password.jpg"
+                step === 2 ? '/image/icon/otp.png' : '/image/icon/password.jpg'
               }
               alt=""
             />
@@ -83,7 +74,6 @@ const RegisterView = () => {
         {/* RIGHT */}
         <div className="flex items-center bg-[#F1F9F6] px-8 py-12 lg:px-20">
           <div className="w-full">
-
             {/* TITLE */}
             <div className="mb-8">
               <Heading
@@ -91,8 +81,8 @@ const RegisterView = () => {
                 className="text-center"
                 h3={
                   step === 2
-                    ? "Enter the OTP sent to your email"
-                    : "Scrivi la tua e-mail"
+                    ? 'Enter the OTP sent to your email'
+                    : 'Scrivi la tua e-mail'
                 }
               />
             </div>
@@ -100,9 +90,7 @@ const RegisterView = () => {
             {/* EMAIL STEP */}
             {step === 1 && (
               <form onSubmit={handleNextFromEmail}>
-                <Label className="mb-2 block text-lg font-medium">
-                  E-mail
-                </Label>
+                <Label className="mb-2 block text-lg font-medium">E-mail</Label>
 
                 <InputField
                   type="email"
@@ -138,9 +126,7 @@ const RegisterView = () => {
                       type="text"
                       maxLength={1}
                       value={digit}
-                      onChange={(e) =>
-                        handleOtpChange(e.target.value, index)
-                      }
+                      onChange={(e) => handleOtpChange(e.target.value, index)}
                       className="h-14 w-14 rounded-xl border border-green-100 bg-white text-center text-xl focus:border-[#73BFA1] focus:outline-none"
                     />
                   ))}
@@ -158,7 +144,6 @@ const RegisterView = () => {
                   </button>
 
                   <button
-                    onClick={handleNavigate}
                     type="submit"
                     className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
                   >
@@ -167,7 +152,6 @@ const RegisterView = () => {
                 </div>
               </form>
             )}
-
           </div>
         </div>
       </div>
