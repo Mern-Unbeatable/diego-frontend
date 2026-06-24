@@ -181,10 +181,11 @@ const MainNavbar = () => {
                   {!item.dropdown ? (
                     <Link
                       to={item.path}
-                      className={`border-b border-transparent text-sm font-semibold whitespace-nowrap transition-all duration-300 xl:text-base ${isActive(item)
+                      className={`border-b border-transparent text-sm font-semibold whitespace-nowrap transition-all duration-300 xl:text-base ${
+                        isActive(item)
                           ? 'border-[#73BFA1] text-[#73BFA1]'
                           : 'text-[#252525] hover:border-[#63be9a]'
-                        }`}
+                      }`}
                     >
                       {item.label}
                     </Link>
@@ -192,8 +193,9 @@ const MainNavbar = () => {
                     <>
                       <Link
                         to={item.path}
-                        className={`flex items-center gap-1 border-b border-transparent text-sm font-medium whitespace-nowrap transition-all duration-200 hover:border-[#73BFA1] xl:text-[15px] ${isActive(item) ? 'text-[#73BFA1]' : 'text-gray-700'
-                          }`}
+                        className={`flex items-center gap-1 border-b border-transparent text-sm font-medium whitespace-nowrap transition-all duration-200 hover:border-[#73BFA1] xl:text-[15px] ${
+                          isActive(item) ? 'text-[#73BFA1]' : 'text-gray-700'
+                        }`}
                       >
                         <span>{item.label}</span>
                         <FaChevronDown
@@ -281,8 +283,9 @@ const MainNavbar = () => {
                     {!item.dropdown ? (
                       <Link
                         to={item.path}
-                        className={`block py-2 text-[15px] font-medium break-words ${isActive(item) ? 'text-[#73BFA1]' : 'text-gray-700'
-                          }`}
+                        className={`block py-2 text-[15px] font-medium break-words ${
+                          isActive(item) ? 'text-[#73BFA1]' : 'text-gray-700'
+                        }`}
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {item.label}
@@ -292,10 +295,11 @@ const MainNavbar = () => {
                         <div className="flex items-center justify-between">
                           <Link
                             to={item.path}
-                            className={`flex-1 py-2 text-left text-[15px] font-medium break-words ${isActive(item)
+                            className={`flex-1 py-2 text-left text-[15px] font-medium break-words ${
+                              isActive(item)
                                 ? 'text-[#73BFA1]'
                                 : 'text-gray-700'
-                              }`}
+                            }`}
                             onClick={() => setIsMenuOpen(false)}
                           >
                             {item.label}
@@ -309,8 +313,9 @@ const MainNavbar = () => {
                           >
                             <FaChevronDown
                               size={16}
-                              className={`transition-transform duration-200 ${openDropdown === item.label ? 'rotate-180' : ''
-                                }`}
+                              className={`transition-transform duration-200 ${
+                                openDropdown === item.label ? 'rotate-180' : ''
+                              }`}
                             />
                           </button>
                         </div>
@@ -363,7 +368,7 @@ const MainNavbar = () => {
                 ))}
 
                 <Link
-                  to="/auth/UserLanguage"
+                  to="/auth/register/choose-language"
                   className="mt-4 inline-block w-full rounded-full bg-[#5FD4C8] px-8 py-3 text-center font-medium text-white transition-colors duration-200 hover:bg-[#4fc4b8]"
                   onClick={() => setIsMenuOpen(false)}
                 >
