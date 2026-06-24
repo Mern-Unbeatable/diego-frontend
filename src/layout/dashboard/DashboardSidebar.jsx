@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { useUIStore } from '../../../features/zustand';
+import { useUIStore } from '../../features/zustand';
 import {
   IoAlbumsOutline,
   IoBusinessOutline,
@@ -12,9 +12,7 @@ import {
 import { LiaThumbsUp } from 'react-icons/lia';
 import { BsUpload } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
-import { ROLES } from '../../../config/roles';
-
-
+import { ROLES } from '../../config/roles';
 
 const linksByRole = {
   [ROLES.PLATFORM_ADMIN]: [
@@ -129,7 +127,6 @@ const linksByRole = {
       icon: <IoDocumentTextOutline className="text-[19px]" />,
     },
 
-
     {
       path: '/dashboard/license-report',
       label: 'Report',
@@ -167,7 +164,6 @@ const DashboardSidebar = () => {
   const roles = DEV_BYPASS_AUTH ? DEV_MANUAL_ROLE : tempRole || user?.role;
   const links = linksByRole[roles] || [];
 
-
   return (
     <aside className="fixed top-0 left-0 z-30 h-screen w-[300px] overflow-y-auto bg-white shadow-md">
       <div className="flex justify-center py-4">
@@ -181,18 +177,21 @@ const DashboardSidebar = () => {
         </div>
       </div>
 
-
       <nav className="space-y-1.5 px-2">
         {links.map(({ path, label, icon }) => (
           <NavLink
             key={path}
             to={path}
             onClick={() => setActiveLink(path)}
-            end={path === '/dashboard/company-admin' || path === '/dashboard/super-admin'}
+            end={
+              path === '/dashboard/company-admin' ||
+              path === '/dashboard/super-admin'
+            }
             className={({ isActive }) =>
-              `flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm font-medium ${isActive
-                ? 'bg-[#73bfa1] text-white'
-                : 'text-[#2f2f2f] hover:bg-[#f3f5f4]'
+              `flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm font-medium ${
+                isActive
+                  ? 'bg-[#73bfa1] text-white'
+                  : 'text-[#2f2f2f] hover:bg-[#f3f5f4]'
               }`
             }
           >

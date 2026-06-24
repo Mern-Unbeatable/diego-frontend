@@ -5,10 +5,10 @@ import {
 } from 'react-router-dom';
 
 // ✅ Layouts
-import MainLayout from '../components/layout/public/MainLayout.jsx';
-import AuthLayout from '../components/layout/auth/AuthLayout.jsx';
-import SetupLayout from '../components/layout/auth/SetupLayout.jsx';
-import DashboardLayout from '../components/layout/dashboard/DashboardLayout.jsx';
+import MainLayout from '../layout/public/MainLayout.jsx';
+import AuthLayout from '../layout/auth/AuthLayout.jsx';
+import SetupLayout from '../layout/auth/SetupLayout.jsx';
+import DashboardLayout from '../layout/dashboard/DashboardLayout.jsx';
 
 // ✅ Guards
 import RoleGuard from './guards/RoleGuard.jsx';

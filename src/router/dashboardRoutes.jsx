@@ -1,12 +1,12 @@
 import { ROLES } from '../config/roles';
 
 // ✅ super admin
-import LicenseeSuperAdminDashboard from '../pages/dash/super/sections/LicenseManagementSuperAdmin';
+import SuperAdminView from '../pages/dash/super/01-home/SuperAdminView.jsx';
+import LicenseManagementView from '../pages/dash/super/02-License/LicenseManagementView.jsx';
 import AdminSettingsDashboard from '../pages/dash/super/sections/AdminSettingsDashboard.jsx';
 import FeedbackAdminDashboard from '../pages/dash/super/sections/FeedbackAdminDashboard';
 import FigureAdminDashboard from '../pages/dash/super/sections/FigureAdminDashboard';
 import TicketAdminDashboard from '../pages/dash/super/sections/TicketAdminDashboard';
-import SuperAdminView from '../pages/dash/super/SuperAdminView';
 import AdminReport from '../pages/dash/super/sections/AdminReport.jsx';
 
 // ✅ freelancer
@@ -52,7 +52,7 @@ export const dashboardRoutes = [
       { path: 'super-admin', element: <SuperAdminView /> },
       {
         path: 'super-admin/gestione-licenze',
-        element: <LicenseeSuperAdminDashboard />,
+        element: <LicenseManagementView />,
       },
       {
         path: 'super-admin/impostazioni/*',

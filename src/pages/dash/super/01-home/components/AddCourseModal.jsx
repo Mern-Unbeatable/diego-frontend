@@ -10,7 +10,12 @@ import {
 } from 'lucide-react';
 import QuizBuilderModal from './QuizBuilderModal';
 
-export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) {
+export default function AddCourseModal({
+  isOpen,
+  onClose,
+  onSave,
+  courseData,
+}) {
   const [formData, setFormData] = useState({
     titoloPianoFormativo: '',
     idPianoFormativo: '',
@@ -138,7 +143,9 @@ export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) 
       </span>
       <div className="flex flex-col items-center">
         <FileText size={20} className="text-[#4f8de4]" />
-        <span className="mt-0.5 text-[10px] font-semibold text-[#e25647]">{label}</span>
+        <span className="mt-0.5 text-[10px] font-semibold text-[#e25647]">
+          {label}
+        </span>
       </div>
     </div>
   );
@@ -157,7 +164,7 @@ export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) 
         >
           <option>{formData[field]}</option>
         </select>
-        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#5f6764]" />
+        <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-[#5f6764]" />
       </div>
     </div>
   );
@@ -166,7 +173,7 @@ export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) 
     <>
       <div className="fixed inset-0 z-[20] flex items-center justify-center bg-[#33584d]/78 p-3 md:p-6">
         <div className="max-h-[96vh] w-full max-w-[1000px] overflow-y-auto rounded-2xl bg-[#f3f3f3] p-6 md:p-10">
-          <div className=" items-center">
+          <div className="items-center">
             <button
               type="button"
               onClick={onClose}
@@ -181,7 +188,10 @@ export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) 
             <div />
           </div>
 
-          <form onSubmit={handleSubmit} className="mx-auto mt-10 w-full max-w-[720px] space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            className="mx-auto mt-10 w-full max-w-[720px] space-y-4"
+          >
             <div>
               <label className="mb-1.5 block text-[13px] font-medium text-[#222]">
                 TITOLO PIANO FORMATIVO
@@ -189,7 +199,9 @@ export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) 
               </label>
               <input
                 value={formData.titoloPianoFormativo}
-                onChange={(e) => handleInputChange('titoloPianoFormativo', e.target.value)}
+                onChange={(e) =>
+                  handleInputChange('titoloPianoFormativo', e.target.value)
+                }
                 placeholder="Titolo"
                 className={inputClass}
               />
@@ -202,7 +214,9 @@ export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) 
               </label>
               <textarea
                 value={formData.idPianoFormativo}
-                onChange={(e) => handleInputChange('idPianoFormativo', e.target.value)}
+                onChange={(e) =>
+                  handleInputChange('idPianoFormativo', e.target.value)
+                }
                 placeholder="Aggiungi una breve descrizione del corso oppure riferimenti legislativi"
                 rows={3}
                 className={`${inputClass} resize-none`}
@@ -216,7 +230,9 @@ export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) 
               </label>
               <input
                 value={formData.idAzioneFormativa}
-                onChange={(e) => handleInputChange('idAzioneFormativa', e.target.value)}
+                onChange={(e) =>
+                  handleInputChange('idAzioneFormativa', e.target.value)
+                }
                 placeholder="Genera automaticamente"
                 className={inputClass}
               />
@@ -229,13 +245,18 @@ export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) 
               </label>
               <input
                 value={formData.titoloIntervento}
-                onChange={(e) => handleInputChange('titoloIntervento', e.target.value)}
+                onChange={(e) =>
+                  handleInputChange('titoloIntervento', e.target.value)
+                }
                 placeholder="Genera automaticamente"
                 className={inputClass}
               />
             </div>
 
-            {selectField('AZIENDA DI APPARTENENZA PER FORMAZIONE FINANZIATA', 'aziendaFormazione')}
+            {selectField(
+              'AZIENDA DI APPARTENENZA PER FORMAZIONE FINANZIATA',
+              'aziendaFormazione',
+            )}
             {selectField('DATA INIZIO CORSO', 'dataInizio')}
             {selectField('DATA FINE CORSO', 'dataFine')}
             {selectField('CIG', 'cig')}
@@ -248,9 +269,15 @@ export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) 
             {selectField('SETTORE', 'settore')}
             {selectField('FONDO', 'fondo')}
             {selectField('METODOLOGIA', 'metodologia')}
-            {selectField('RESPONSABILE PROGETTO FORMATIVO', 'responsabileProgetto')}
+            {selectField(
+              'RESPONSABILE PROGETTO FORMATIVO',
+              'responsabileProgetto',
+            )}
             {selectField('TUTOR', 'tutor')}
-            {selectField('PREZZO DI VENDITA (compreso di iva se dovuta)', 'prezzoVendita')}
+            {selectField(
+              'PREZZO DI VENDITA (compreso di iva se dovuta)',
+              'prezzoVendita',
+            )}
 
             <div>
               <label className="mb-2 block text-[13px] font-medium text-[#222]">
@@ -275,7 +302,9 @@ export default function AddCourseModal({ isOpen, onClose, onSave, courseData }) 
                 <span className="text-[#f04c42]">*</span>
               </label>
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">{thumbCard('single-thumb')}</div>
+                <div className="flex items-center gap-2">
+                  {thumbCard('single-thumb')}
+                </div>
                 <button
                   type="button"
                   className="flex h-14 w-14 items-center justify-center rounded-lg bg-[#dfe8e4] text-[#6b7471]"

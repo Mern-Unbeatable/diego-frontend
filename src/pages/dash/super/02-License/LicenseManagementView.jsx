@@ -1,4 +1,3 @@
-// src/components/admin/super/components/LicenseeSuperAdminDashboard.jsx
 import React, { useMemo, useState } from 'react';
 import {
   Search,
@@ -53,7 +52,7 @@ const Progress = ({ current, max }) => {
   );
 };
 
-export default function LicenseeSuperAdminDashboard({
+export default function LicenseManagementView({
   initialRows = [
     {
       azienda: 'TechCorp Training',
@@ -128,7 +127,7 @@ export default function LicenseeSuperAdminDashboard({
   const rows = filtered.slice(start, start + pageSize);
 
   return (
-    <div className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-black/5 md:p-6">
+    <div className="m-8 rounded-3xl bg-white p-4 shadow-sm ring-1 ring-black/5 md:m-8 md:p-8">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3 px-2 md:gap-4">
         <h2 className="flex-1 text-[26px] font-semibold text-gray-900 md:text-[28px]">
@@ -264,19 +263,21 @@ export default function LicenseeSuperAdminDashboard({
           {/* Pages (simple demo: show first 2 pages explicitly like screenshot) */}
           <button
             onClick={() => setPage(1)}
-            className={`h-8 w-8 rounded-md text-sm ${clampedPage === 1
+            className={`h-8 w-8 rounded-md text-sm ${
+              clampedPage === 1
                 ? 'bg-emerald-500 text-white'
                 : 'text-gray-700 hover:bg-gray-100'
-              }`}
+            }`}
           >
             1
           </button>
           <button
             onClick={() => setPage(2)}
-            className={`h-8 w-8 rounded-md text-sm ${clampedPage === 2
+            className={`h-8 w-8 rounded-md text-sm ${
+              clampedPage === 2
                 ? 'bg-emerald-500 text-white'
                 : 'text-gray-700 hover:bg-gray-100'
-              }`}
+            }`}
           >
             2
           </button>

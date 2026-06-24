@@ -47,7 +47,7 @@ export default function SettingsLayout() {
   };
 
   return (
-    <div className="rounded-3xl bg-white shadow-sm ring-1 ring-black/5">
+    <div className="m-0 rounded-3xl bg-white shadow-sm ring-1 ring-black/5 md:m-8">
       {/* Header */}
       <div className="flex items-center justify-between gap-4 rounded-t-3xl bg-gray-50 px-6 py-4">
         <h1 className="text-xl font-semibold text-gray-900">
@@ -71,9 +71,9 @@ export default function SettingsLayout() {
                   [
                     'flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition',
                     isActive ||
-                      (location.pathname.includes('impostazioni') &&
-                        !location.pathname.includes('/') &&
-                        tab.to.includes('finance'))
+                    (location.pathname.includes('impostazioni') &&
+                      !location.pathname.includes('/') &&
+                      tab.to.includes('finance'))
                       ? 'bg-emerald-500 text-white'
                       : 'bg-white text-gray-800 ring-1 ring-gray-200 hover:ring-gray-300',
                   ].join(' ')
