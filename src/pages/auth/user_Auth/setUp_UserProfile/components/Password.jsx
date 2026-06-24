@@ -1,15 +1,13 @@
-import { useNavigate } from "react-router-dom";
-import SignUpPassword from '../../../../../components/common/SignUpPassword';
+import { useNavigate } from 'react-router-dom';
+import SetupPassword from './SetupPassword';
 
 const Password = () => {
   const navigate = useNavigate();
 
   const handlePasswordSubmit = (data) => {
-
-
-    navigate("/dashboard");
+    navigate('/dashboard');
   };
 
-  return <SignUpPassword onSubmitPassword={handlePasswordSubmit} />;
+  return <SetupPassword onSubmitPassword={handlePasswordSubmit} />;
 };
 export default Password;

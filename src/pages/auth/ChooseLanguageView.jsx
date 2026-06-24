@@ -33,7 +33,6 @@ const ChooseLanguageView = () => {
     <div className="mx-auto w-full max-w-7xl">
       <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
         <div className="grid min-h-[700px] grid-cols-1 md:grid-cols-2">
-
           {/* Left Section */}
           <div className="flex flex-col items-center justify-center p-8 lg:p-16">
             <Heading level={3} className="text-center">
@@ -73,19 +72,20 @@ const ChooseLanguageView = () => {
                     key={lang.code}
                     type="button"
                     onClick={() => handleSelect(lang.code)}
-                    className={`relative rounded-2xl border-2 bg-white p-5 transition-all h-40
-                  ${selected === lang.code
+                    className={`relative h-40 rounded-2xl border-2 bg-white p-5 transition-all ${
+                      selected === lang.code
                         ? 'border-emerald-400 shadow-md'
                         : 'border-gray-200 hover:border-gray-300'
-                      }`}
+                    }`}
                   >
                     {/* Check Icon */}
-                    <div className="absolute right-3 top-3">
+                    <div className="absolute top-3 right-3">
                       <div
-                        className={`flex h-6 w-6 items-center justify-center rounded-full ${selected === lang.code
-                          ? 'bg-emerald-400'
-                          : 'bg-gray-200'
-                          }`}
+                        className={`flex h-6 w-6 items-center justify-center rounded-full ${
+                          selected === lang.code
+                            ? 'bg-emerald-400'
+                            : 'bg-gray-200'
+                        }`}
                       >
                         {selected === lang.code && (
                           <svg

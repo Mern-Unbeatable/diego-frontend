@@ -37,7 +37,6 @@ const SetupView = () => {
           alt="logo"
         />
         <Heading level={3}>Set up your user profile</Heading>
-
         <SetupTabs basePath={basePath} steps={categories} />
       </div>
 
