@@ -4,29 +4,28 @@ import {
   createRoutesFromElements,
 } from 'react-router-dom';
 
-// Layouts
-import DashboardLayout from './layout/dashboard/DashboardLayout.jsx';
-import MainLayout from './layout/public/MainLayout.jsx';
-import AuthLayout from './layout/auth/AuthLayout.jsx';
+// ✅ Layouts
+import MainLayout from '../components/layout/public/MainLayout.jsx';
+import AuthLayout from '../components/layout/auth/AuthLayout.jsx';
+import SetupLayout from '../components/layout/auth/SetupLayout.jsx';
+import DashboardLayout from '../components/layout/dashboard/DashboardLayout.jsx';
 
-// Guards
+// ✅ Guards
 import RoleGuard from './guards/RoleGuard.jsx';
-// Auth
 
-// Public Route Config
-import { publicRoutes } from './publicRoutes.jsx';
-import { nestedPublicRoutes } from './nestedPublicRoutes.jsx';
-// Dashboard Route Config
-import { dashboardRoutes } from './dashboardRoutes.jsx';
-// Error
+// ✅ Route Config
+import { publicRoutes } from './publicRoutes.jsx'; // public
+import { nestedPublicRoutes } from './nestedPublicRoutes.jsx'; // public
+import { dashboardRoutes } from './dashboardRoutes.jsx'; // dashboard
+import { authRoutes, setupRoutes } from './authRoutes.jsx'; // Auth
+
+//  ✅ Error
 import ErrorView from '../pages/err/ErrorView.jsx';
-import { authRoutes, setupRoutes } from './authRoutes.jsx';
-import SetupLayout from './layout/auth/SetupLayout.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      {/* Public */}
+      {/* ✅ PUBLIC */}
       <Route path="/" element={<MainLayout />}>
         {publicRoutes.map((r) => (
           <Route
@@ -41,8 +40,7 @@ const router = createBrowserRouter(
         ))}
       </Route>
 
-      {/* Auth */}
-      {/* Auth */}
+      {/* ✅ AUTH */}
       <Route path="/auth" element={<AuthLayout />}>
         {/* Auth routes (no sidebar) */}
         {authRoutes.map((r) => (
@@ -61,16 +59,8 @@ const router = createBrowserRouter(
           ))}
         </Route>
       </Route>
-      {/* <Route path="/dashboard" element={<DashboardLayout />}>
-        {dashboardRoutes.map(({ roles, routes }) => (
-          <Route key={roles.join('-')} element={<RoleGuard allowedRoles={roles} />}>
-            {routes.map((r) => (
-              <Route key={r.path} path={r.path} element={r.element} />
-            ))}
-          </Route>
-        ))}
-      </Route> */}
-      {/* Dashboard */}
+
+      {/* ✅ DASHBOARD */}
       <Route path="/dashboard" element={<DashboardLayout />}>
         {dashboardRoutes.map(({ roles, routes }) => (
           <Route

@@ -1,44 +1,48 @@
-import AdminSettingsDashboard from '../pages/admin/super/sections/AdminSettingsDashboard';
-import FeedbackAdminDashboard from '../pages/admin/super/sections/FeedbackAdminDashboard';
-import FigureAdminDashboard from '../pages/admin/super/sections/FigureAdminDashboard';
-import TicketAdminDashboard from '../pages/admin/super/sections/TicketAdminDashboard';
-
-import LicenseeSuperAdminDashboard from '../pages/admin/super/sections/LicenseManagementSuperAdmin';
-import FreelancerView from '../pages/admin/freelancer/FreelancerView';
-import ReportDetail from '../pages/admin/freelancer/sections/ReportDetail';
-import License from '../pages/admin/freelancer/sections/License';
-import SuperAdminView from '../pages/admin/super/SuperAdminView';
-import Report from '../pages/admin/freelancer/sections/Report';
-
-import StudentHomeView from '../pages/admin/studentAdmin/StudentHomeView.jsx';
-import StudentIPofile from '../pages/admin/studentAdmin/components/StudentIPofile.jsx';
-import CertificatePage from '../pages/admin/studentAdmin/components/CertificatePage.jsx';
-import CredentialsReceived from '../pages/admin/studentAdmin/CredentialsReceived.jsx';
-
-import SupportFeedbackView from '../pages/admin/studentAdmin/SupportFeedbackView.jsx';
-import NotificationsView from '../pages/admin/studentAdmin/NotificationsView.jsx';
-import CourseContentView from '../pages/admin/studentAdmin/CourseContentView.jsx';
-import SupportTicketView from '../pages/admin/studentAdmin/SupportTicketView.jsx';
-
-import QuizesView from '../pages/admin/studentAdmin/QuizesView.jsx';
-import QuizResult from '../pages/admin/studentAdmin/QuizResult.jsx';
-import PrivacyPolicyView from '../pages/admin/studentAdmin/PrivacyPolicyView.jsx';
 import { ROLES } from '../config/roles';
-import AdminReport from '../pages/admin/super/sections/AdminReport.jsx';
+
+// ✅ super admin
+import LicenseeSuperAdminDashboard from '../pages/dash/super/sections/LicenseManagementSuperAdmin';
+import AdminSettingsDashboard from '../pages/dash/super/sections/AdminSettingsDashboard.jsx';
+import FeedbackAdminDashboard from '../pages/dash/super/sections/FeedbackAdminDashboard';
+import FigureAdminDashboard from '../pages/dash/super/sections/FigureAdminDashboard';
+import TicketAdminDashboard from '../pages/dash/super/sections/TicketAdminDashboard';
+import SuperAdminView from '../pages/dash/super/SuperAdminView';
+import AdminReport from '../pages/dash/super/sections/AdminReport.jsx';
+
+// ✅ freelancer
+import FreelancerAddCource from '../pages/dash/freelancer/components/FreelancerAddCource.jsx';
+import FreelancerTicket from '../pages/dash/freelancer/components/FreelancerTicket.jsx';
+import EnrolledStudents from '../pages/dash/freelancer/components/EnrolledStudents.jsx';
+import LicenPrivaceyView from '../pages/dash/freelancer/LicenPrivaceyView.jsx';
+import FreelancerView from '../pages/dash/freelancer/FreelancerView';
+import ReportDetail from '../pages/dash/freelancer/sections/ReportDetail';
+import LicenView from '../pages/dash/freelancer/LicenPrivaceyView.jsx';
+import License from '../pages/dash/freelancer/sections/License';
+import Report from '../pages/dash/freelancer/sections/Report';
+
+// ✅ Student Admin
+import StudentHomeView from '../pages/dash/studentAdmin/StudentHomeView.jsx';
+import StudentIPofile from '../pages/dash/studentAdmin/components/StudentIPofile.jsx';
+import CertificatePage from '../pages/dash/studentAdmin/components/CertificatePage.jsx';
+import CredentialsReceived from '../pages/dash/studentAdmin/CredentialsReceived.jsx';
+import SupportFeedbackView from '../pages/dash/studentAdmin/SupportFeedbackView.jsx';
+import NotificationsView from '../pages/dash/studentAdmin/NotificationsView.jsx';
+import CourseContentView from '../pages/dash/studentAdmin/CourseContentView.jsx';
+import SupportTicketView from '../pages/dash/studentAdmin/SupportTicketView.jsx';
+import PrivacyPolicyView from '../pages/dash/studentAdmin/PrivacyPolicyView.jsx';
+import QuizesView from '../pages/dash/studentAdmin/QuizesView.jsx';
+import QuizResult from '../pages/dash/studentAdmin/QuizResult.jsx';
+
+// ✅ Company Admin
 import CompanyHome from '../components/company/CompanyHome.jsx';
-import CompanyTrainingView from '../pages/admin/company/CompanyTrainingView.jsx';
-import CompanyCourseRosterView from '../pages/admin/company/CompanyCourseRosterView.jsx';
-import CompanyTicketListView from '../pages/admin/company/CompanyTicketListView.jsx';
-import CompanyOpenTicketView from '../pages/admin/company/CompanyOpenTicketView.jsx';
-import CompanyTicketDetailView from '../pages/admin/company/CompanyTicketDetailView.jsx';
-import CompanyCertificatesView from '../pages/admin/company/CompanyCertificatesView.jsx';
-import CompanyPrivacyPolicyView from '../pages/admin/company/CompanyPrivacyPolicyView.jsx';
-import LicenView from '../pages/admin/freelancer/LicenPrivaceyView.jsx';
-import LicenPrivaceyView from '../pages/admin/freelancer/LicenPrivaceyView.jsx';
-import FreelancerAddCource from '../pages/admin/freelancer/components/FreelancerAddCource.jsx';
-import FreelancerTicket from '../pages/admin/freelancer/components/FreelancerTicket.jsx';
-import EnrolledStudents from '../pages/admin/freelancer/components/EnrolledStudents.jsx';
-import CompanyCourseList from '../pages/admin/company/CompanyCourseList.jsx';
+import CompanyCourseList from '../pages/dash/company/CompanyCourseList.jsx';
+import CompanyTrainingView from '../pages/dash/company/CompanyTrainingView.jsx';
+import CompanyCourseRosterView from '../pages/dash/company/CompanyCourseRosterView.jsx';
+import CompanyTicketListView from '../pages/dash/company/CompanyTicketListView.jsx';
+import CompanyOpenTicketView from '../pages/dash/company/CompanyOpenTicketView.jsx';
+import CompanyTicketDetailView from '../pages/dash/company/CompanyTicketDetailView.jsx';
+import CompanyCertificatesView from '../pages/dash/company/CompanyCertificatesView.jsx';
+import CompanyPrivacyPolicyView from '../pages/dash/company/CompanyPrivacyPolicyView.jsx';
 
 export const dashboardRoutes = [
   {
@@ -67,7 +71,6 @@ export const dashboardRoutes = [
     ],
   },
   {
-
     //  ✅ Freelancers
     roles: [ROLES.LICENSE_USER],
     routes: [
@@ -83,23 +86,32 @@ export const dashboardRoutes = [
   },
 
   {
-
-
     //  ✅ Company Admins
     roles: [ROLES.COMPANY_ADMIN],
     routes: [
       { path: 'company-admin', element: <CompanyHome /> },
-      { path: 'company-admin/gestisci-formazione', element: <CompanyTrainingView /> },
+      {
+        path: 'company-admin/gestisci-formazione',
+        element: <CompanyTrainingView />,
+      },
       {
         path: 'company-admin/gestisci-formazione/corsi/:courseId',
         element: <CompanyCourseRosterView />,
-
       },
       { path: 'company-admin/ticket', element: <CompanyTicketListView /> },
-      { path: 'company-admin/ticket/nuovo', element: <CompanyOpenTicketView /> },
-      { path: 'company-admin/ticket/:ticketId', element: <CompanyTicketDetailView /> },
+      {
+        path: 'company-admin/ticket/nuovo',
+        element: <CompanyOpenTicketView />,
+      },
+      {
+        path: 'company-admin/ticket/:ticketId',
+        element: <CompanyTicketDetailView />,
+      },
       { path: 'company-admin/attestati', element: <CompanyCertificatesView /> },
-      { path: 'company-admin/privacy-policy', element: <CompanyPrivacyPolicyView /> },
+      {
+        path: 'company-admin/privacy-policy',
+        element: <CompanyPrivacyPolicyView />,
+      },
       { path: 'company-admin/my-courses', element: <CompanyCourseList /> },
 
       // Legacy aliases
@@ -111,13 +123,10 @@ export const dashboardRoutes = [
     ],
   },
   {
-
-
     //  ✅ Company employees
     roles: [ROLES.COMPANY_EMPLOYEE],
     routes: [
-
-      { path: 'company-admin/my-courses', element: <CompanyCourseList /> }
+      { path: 'company-admin/my-courses', element: <CompanyCourseList /> },
     ],
   },
 
@@ -127,7 +136,10 @@ export const dashboardRoutes = [
     routes: [
       { path: 'private-user', element: <StudentHomeView /> },
       { path: 'private-user-ticket', element: <SupportTicketView /> },
-      { path: 'private-user/ticket-feedback', element: <SupportFeedbackView /> },
+      {
+        path: 'private-user/ticket-feedback',
+        element: <SupportFeedbackView />,
+      },
       { path: 'private-user/profile', element: <StudentIPofile /> },
       { path: 'private-user/credentials', element: <CredentialsReceived /> },
       { path: 'private-user/notifications', element: <NotificationsView /> },
@@ -137,4 +149,3 @@ export const dashboardRoutes = [
     ],
   },
 ];
-
