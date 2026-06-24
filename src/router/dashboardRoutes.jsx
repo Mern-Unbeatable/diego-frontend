@@ -21,17 +21,17 @@ import License from '../pages/dash/freelancer/sections/License';
 import Report from '../pages/dash/freelancer/sections/Report';
 
 // ✅ Student Admin
-import StudentHomeView from '../pages/dash/studentAdmin/StudentHomeView.jsx';
-import StudentIPofile from '../pages/dash/studentAdmin/components/StudentIPofile.jsx';
-import CertificatePage from '../pages/dash/studentAdmin/components/CertificatePage.jsx';
-import CredentialsReceived from '../pages/dash/studentAdmin/CredentialsReceived.jsx';
-import SupportFeedbackView from '../pages/dash/studentAdmin/SupportFeedbackView.jsx';
-import NotificationsView from '../pages/dash/studentAdmin/NotificationsView.jsx';
-import CourseContentView from '../pages/dash/studentAdmin/CourseContentView.jsx';
-import SupportTicketView from '../pages/dash/studentAdmin/SupportTicketView.jsx';
-import PrivacyPolicyView from '../pages/dash/studentAdmin/PrivacyPolicyView.jsx';
-import QuizesView from '../pages/dash/studentAdmin/QuizesView.jsx';
-import QuizResult from '../pages/dash/studentAdmin/QuizResult.jsx';
+import StudentHomeView from '../pages/dash/student/StudentHomeView.jsx';
+import StudentIPofile from '../pages/dash/student/components/StudentIPofile.jsx';
+import CertificatePage from '../pages/dash/student/components/CertificatePage.jsx';
+import CredentialsReceived from '../pages/dash/student/CredentialsReceived.jsx';
+import SupportFeedbackView from '../pages/dash/student/SupportFeedbackView.jsx';
+import NotificationsView from '../pages/dash/student/NotificationsView.jsx';
+import CourseContentView from '../pages/dash/student/CourseContentView.jsx';
+import SupportTicketView from '../pages/dash/student/SupportTicketView.jsx';
+import PrivacyPolicyView from '../pages/dash/student/PrivacyPolicyView.jsx';
+import QuizesView from '../pages/dash/student/QuizesView.jsx';
+import QuizResult from '../pages/dash/student/QuizResult.jsx';
 
 // ✅ Company Admin
 import CompanyHome from '../components/company/CompanyHome.jsx';
