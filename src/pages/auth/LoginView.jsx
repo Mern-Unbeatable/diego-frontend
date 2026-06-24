@@ -43,7 +43,8 @@ const RegisterView = () => {
 
   // OTP VERIFY (STATIC ONLY)
   const handleVerifyOtp = (e) => {
-    navigate('/dashboard');
+    console.log('OTP:', otp.join(''));
+    navigate('/dashboard/super-admin');
   };
 
   return (
