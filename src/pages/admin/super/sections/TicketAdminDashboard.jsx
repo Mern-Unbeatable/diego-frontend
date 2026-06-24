@@ -8,8 +8,7 @@ export default function TicketAdminDashboard() {
     { id: 'panoramica', label: 'Panoramica' },
     { id: 'aperti', label: 'Tickets aperti' },
     { id: 'chiusi', label: 'Tickets chiusi' },
-    { id: 'attesa', label: 'In attesa di approvazione' },
-    { id: 'approvati', label: 'Corsi approvati' },
+    { id: 'attesa', label: 'In attesa di approvazione' }
   ];
 
   return (
@@ -23,8 +22,8 @@ export default function TicketAdminDashboard() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`border-b-2 px-6 py-4 text-sm font-medium whitespace-nowrap ${activeTab === tab.id
-                    ? 'border-teal-500 bg-gray-50 text-teal-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                  ? 'border-teal-500 bg-gray-50 text-teal-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
                   } `}
               >
                 {tab.label}

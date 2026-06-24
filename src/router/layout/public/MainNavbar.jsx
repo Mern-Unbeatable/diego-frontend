@@ -98,6 +98,10 @@ const navItems = [
             label: 'Gestione immobiliare',
             path: '/services/condominium/management',
           },
+          {
+            label: 'Analisi di laboratorio',
+            path: '/services/condominium/laboratory-analysis',
+          },
         ],
       },
     ],

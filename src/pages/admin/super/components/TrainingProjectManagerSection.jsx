@@ -74,7 +74,7 @@ export default function TrainingProjectManagerSection({
 
   return (
     <section className="overflow-hidden rounded-3xl bg-[#f7f7f7] shadow-[0_8px_20px_rgba(0,0,0,0.04)] ring-1 ring-[#ececec]">
-      <div className="bg-[#1e2a3b] px-5 py-4 text-white md:px-6">
+      <div className="bg-[#73BFA1] px-5 py-4 text-white md:px-6">
         <div className="flex items-start gap-3">
           <div className="mt-0.5 h-7 w-7 rounded-md bg-[linear-gradient(160deg,#dbe7f8,#9eb7db)]" />
           <div>

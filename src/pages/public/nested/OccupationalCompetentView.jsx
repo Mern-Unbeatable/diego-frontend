@@ -7,9 +7,9 @@ const OccupationalCompetentView = () => {
   return (
     <Container className=' '>
       <Banner
-        description={'       Hai una azienda/impresa con uno o più dipendenti? Vuoi esser tranquillo di non aver dimenticato nessun adempimento per la tutela della salute dei propri dipendenti?'}
         image={banner}
-        title={'Gestione autorizzazioni impiantiIncarichi medico competente'}
+        title="Gestione autorizzazioni impianti e incarico del medico competente"
+        description="Hai un'azienda con uno o più dipendenti? Vuoi essere certo di rispettare tutti gli obblighi per la tutela della salute dei lavoratori?"
       />
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

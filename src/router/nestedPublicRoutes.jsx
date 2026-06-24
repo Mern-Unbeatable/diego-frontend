@@ -23,6 +23,7 @@ import {
   TrainingOurPlatformView,
   VideoAndAuthorizationView,
 } from '../pages/public/nested';
+import LabratoryAnalysis from '../pages/public/nested/LabratoryAnalysis';
 
 export const nestedPublicRoutes = [
   { path: 'services/sev/sev-courses', element: <SafetySevCoursesView /> },
@@ -64,6 +65,10 @@ export const nestedPublicRoutes = [
   {
     path: 'services/condominium/management',
     element: <CondominiumPropertyView />,
+  },
+  {
+    path: 'services/condominium/laboratory-analysis',
+    element: <LabratoryAnalysis />,
   },
   { path: 'training/courses/our', element: <TrainingOurPlatformView /> },
   {

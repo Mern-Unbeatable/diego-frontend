@@ -301,97 +301,7 @@ export default function TicketSection({ activeTab = 'panoramica' }) {
     );
   }
 
-  // Special layout for "Corsi approvati" tab
-  if (activeTab === 'approvati') {
-    return (
-      <div>
-        <h2 className="mb-4 text-lg font-medium text-gray-900">
-          Corsi approvati (1)
-        </h2>
 
-        {filteredTickets.length === 0 ? (
-          <div className="py-24 text-center">
-            <div className="mx-auto mb-6 h-40 w-40">
-              <div className="relative">
-                <div className="absolute inset-0 rotate-3 transform rounded-lg bg-blue-100 opacity-30"></div>
-                <div className="absolute inset-0 translate-x-2 translate-y-1 -rotate-2 transform rounded-lg bg-blue-200 opacity-50"></div>
-                <div className="relative flex h-full w-full items-center justify-center rounded-lg bg-blue-300">
-                  <div className="relative">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full border-4 border-blue-500 bg-white">
-                      <div className="relative">
-                        <div className="mb-1 flex space-x-2">
-                          <div className="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
-                          <div className="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
-                        </div>
-                        <div className="h-3 w-6 rotate-180 transform rounded-t-full border-2 border-b-0 border-blue-500"></div>
-                      </div>
-                    </div>
-                    <div className="absolute -right-2 -bottom-2 h-6 w-6 rotate-45 transform rounded-full border-4 border-blue-500 bg-blue-500"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <h3 className="mb-2 text-lg font-medium text-gray-900">
-              Nessun corso approvato
-            </h3>
-          </div>
-        ) : (
-          <div className="overflow-hidden rounded-lg bg-white shadow-sm">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    Titolo
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    Licenziataria
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                    Data di approvazione
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                {filteredTickets.map((course) => (
-                  <tr key={course.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4">
-                      <div>
-                        <div className="text-sm font-medium text-gray-900">
-                          {course.title}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {course.description}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
-                      {course.licensee || course.author}
-                    </td>
-                    <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
-                      {new Date(
-                        course.approvedAt || course.updatedAt,
-                      ).toLocaleDateString('it-IT', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                      })}
-                      ,{' '}
-                      {new Date(
-                        course.approvedAt || course.updatedAt,
-                      ).toLocaleTimeString('it-IT', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-    );
-  }
 
   // Get tab title based on active tab
   const getTabTitle = () => {
@@ -402,8 +312,6 @@ export default function TicketSection({ activeTab = 'panoramica' }) {
         return 'Biglietti chiusi';
       case 'attesa':
         return 'In attesa di approvazione';
-      case 'approvati':
-        return 'Corsi approvati';
       default:
         return 'Biglietti';
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDropzone } from 'react-dropzone';
 
-export default function ServiceForm() {
+export default function ServiceForm({ title }) {
     const [formData, setFormData] = useState({
         nome: '',
         cognome: '',
@@ -86,7 +86,7 @@ export default function ServiceForm() {
                 Richiedi informazioni
             </h2>
             <p className="text-gray-500 mb-6">
-                Compila il form per richiedere informazioni sul Servizio ASPP e RSPP
+                Compila il form per richiedere informazioni sul Servizio {title ? title : 'ASPP e RSPP'}.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">

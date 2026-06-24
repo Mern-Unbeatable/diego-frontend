@@ -1,5 +1,5 @@
 import Banner from '../../../components/common/Banner';
-import banner from '../../../../src/assets/images/banner/safety/banner4.png'
+import banner from '../../../../src/assets/images/banner/safety/banner14.png'
 import { Container, Heading } from '../../../components/ui';
 import ServiceForm from '../services/components/ServiceForm';
 const SafetyServiceView = () => {

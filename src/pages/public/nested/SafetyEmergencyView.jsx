@@ -49,8 +49,9 @@ const SafetyEmergencyView = () => {
 
         {/* Right Column - Form */}
         <div>
-          <ServiceForm />
+          <ServiceForm title="Piano di emergenza" />
         </div>
+
       </div>
     </div>
   </Container>

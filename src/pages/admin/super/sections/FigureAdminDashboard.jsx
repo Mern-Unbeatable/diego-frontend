@@ -17,6 +17,7 @@ export default function FigureAdminDashboard() {
         ]}
       />
 
+
       <TrainingProjectManagerSection
         title="Mentore/tutore di contenuto"
         subtitle="Mentore/tutore di contenuto"
