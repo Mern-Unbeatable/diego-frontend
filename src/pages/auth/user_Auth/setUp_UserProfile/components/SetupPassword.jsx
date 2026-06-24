@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { GrClose } from 'react-icons/gr';
 
 import {
@@ -7,15 +8,16 @@ import {
   Label,
 } from '../../../../../components/ui';
 
-const SetupPassword = ({ onSubmitPassword }) => {
+const SetupPassword = () => {
+  const navigate = useNavigate();
+
   const handlePassWordSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
-    if (onSubmitPassword) {
-      onSubmitPassword(data);
-    }
+    console.log('Password data:', data);
+    navigate('/dashboard');
   };
 
   return (

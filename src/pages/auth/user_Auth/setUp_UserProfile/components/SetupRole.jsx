@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
 import { Divider } from '../../../../../components/ui';
 
@@ -51,12 +52,15 @@ const RoleCard = ({ label, image, isSelected, onClick }) => {
   );
 };
 
-const SetupRole = ({ onSelectRole }) => {
+const SetupRole = () => {
   const [selectedRole, setSelectedRole] = useState('standard');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSelectRole?.(selectedRole);
+    navigate('/auth/register/setup-profile/information', {
+      state: { role: selectedRole },
+    });
   };
 
   return (
