@@ -4,7 +4,7 @@ import { ROLES } from '../config/roles';
 import SuperAdminView from '../pages/dash/super/01-home/SuperAdminView.jsx';
 import LicenseManagementView from '../pages/dash/super/02-License/LicenseManagementView.jsx';
 import AdminSettingsDashboard from '../pages/dash/super/sections/AdminSettingsDashboard.jsx';
-import FeedbackAdminDashboard from '../pages/dash/super/sections/FeedbackAdminDashboard';
+import FeedbackView from '../pages/dash/super/05-Feedback/FeedbackView.jsx';
 import FigureAdminDashboard from '../pages/dash/super/sections/FigureAdminDashboard';
 import TicketAdminDashboard from '../pages/dash/super/sections/TicketAdminDashboard';
 import AdminReport from '../pages/dash/super/sections/AdminReport.jsx';
@@ -59,7 +59,7 @@ export const dashboardRoutes = [
         element: <AdminSettingsDashboard />,
       },
       { path: 'super-admin/ticket', element: <TicketAdminDashboard /> },
-      { path: 'super-admin/feedback', element: <FeedbackAdminDashboard /> },
+      { path: 'super-admin/feedback', element: <FeedbackView /> },
       {
         path: 'super-admin/figura-previste',
         element: <FigureAdminDashboard />,
