@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Download, UploadCloud } from 'lucide-react';
+import { Check, Download, UploadCloud } from 'lucide-react';
 
 const DEFAULT_DOCS = [
   'Curriculum',
@@ -76,10 +76,16 @@ export default function TrainingProjectManagerSection({
     <section className="overflow-hidden rounded-3xl bg-[#f7f7f7] shadow-[0_8px_20px_rgba(0,0,0,0.04)] ring-1 ring-[#ececec]">
       <div className="bg-[#73BFA1] px-5 py-4 text-white md:px-6">
         <div className="flex items-start gap-3">
-          <div className="mt-0.5 h-7 w-7 rounded-md bg-[linear-gradient(160deg,#dbe7f8,#9eb7db)]" />
+          <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-sm bg-[#71c2a3]">
+            <Check className="h-4 w-4 text-white" strokeWidth={3} />
+          </div>
           <div>
-            <h2 className="text-[18px] font-semibold leading-tight md:text-[34px]">{title}</h2>
-            <p className="mt-1 text-[12px] text-white/80 md:text-[16px]">{subtitle}</p>
+            <h2 className="text-[18px] leading-tight font-semibold md:text-[34px]">
+              {title}
+            </h2>
+            <p className="mt-1 text-[12px] text-white/80 md:text-[16px]">
+              {subtitle}
+            </p>
           </div>
         </div>
       </div>
@@ -122,7 +128,9 @@ export default function TrainingProjectManagerSection({
         )}
 
         <div>
-          <h3 className="mb-3 text-[18px] font-semibold text-[#171717] md:text-[34px]">Documenti richiesti</h3>
+          <h3 className="mb-3 text-[18px] font-semibold text-[#171717] md:text-[34px]">
+            Documenti richiesti
+          </h3>
 
           <div className="space-y-4">
             {documentLabels.map((label, index) => (
@@ -180,7 +188,9 @@ function DocCard({ label, fileMeta, onUpload, onDownload }) {
 
   return (
     <div className="rounded-2xl bg-[#efefef] p-4 md:p-5">
-      <p className="mb-2 text-[12px] font-medium text-[#2f2f2f] md:text-[20px]">{label}</p>
+      <p className="mb-2 text-[12px] font-medium text-[#2f2f2f] md:text-[20px]">
+        {label}
+      </p>
 
       <div className="h-10 rounded-lg border border-[#cbcbcb] bg-transparent px-4 text-center text-[12px] leading-10 text-[#3a3a3a] md:text-[16px]">
         {statusText}

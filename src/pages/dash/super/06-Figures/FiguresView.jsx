@@ -1,10 +1,10 @@
 import React from 'react';
-import FigurePrevisteDashboard from '../components/FigurePrevisteDashboard';
+import FigurePrevisteDashboard from './components/FigurePrevisteDashboard';
 import TrainingProjectManagerSection from '../components/TrainingProjectManagerSection';
 
-export default function FigureAdminDashboard() {
+export default function FiguresView() {
   return (
-    <div className="space-y-6 rounded-3xl bg-[#f3f3f3] p-3 md:p-5">
+    <div className="m-8 space-y-6 rounded-3xl p-3">
       <FigurePrevisteDashboard />
 
       <TrainingProjectManagerSection
@@ -16,7 +16,6 @@ export default function FigureAdminDashboard() {
           'Certificati di Competenze Digitali',
         ]}
       />
-
 
       <TrainingProjectManagerSection
         title="Mentore/tutore di contenuto"
@@ -46,4 +45,3 @@ export default function FigureAdminDashboard() {
     </div>
   );
 }
-
