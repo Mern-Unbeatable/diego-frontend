@@ -12,6 +12,8 @@ import DashboardLayout from '../layout/dashboard/DashboardLayout.jsx';
 
 // ✅ Guards
 import RoleGuard from './guards/RoleGuard.jsx';
+import AuthGuard from './guards/AuthGuard.jsx';
+import PublicGuard from './guards/PublicGuard.jsx';
 
 // ✅ Route Config
 import { publicRoutes } from './publicRoutes.jsx'; // public
@@ -41,37 +43,41 @@ const router = createBrowserRouter(
       </Route>
 
       {/* ✅ AUTH */}
-      <Route path="/auth" element={<AuthLayout />}>
-        {/* Auth routes (no sidebar) */}
-        {authRoutes.map((r) => (
-          <Route
-            key={r.path}
-            path={r.path}
-            element={r.element}
-            index={r.path === 'register/choose-language'}
-          />
-        ))}
-
-        {/* Auth setup routes (with sidebar / custom layout) */}
-        <Route element={<SetupLayout />}>
-          {setupRoutes.map((r) => (
-            <Route key={r.path} path={r.path} element={r.element} />
+      <Route element={<PublicGuard />}>
+        <Route path="/auth" element={<AuthLayout />}>
+          {/* Auth routes (no sidebar) */}
+          {authRoutes.map((r) => (
+            <Route
+              key={r.path}
+              path={r.path}
+              element={r.element}
+              index={r.path === 'register/choose-language'}
+            />
           ))}
+
+          {/* Auth setup routes (with sidebar / custom layout) */}
+          <Route element={<SetupLayout />}>
+            {setupRoutes.map((r) => (
+              <Route key={r.path} path={r.path} element={r.element} />
+            ))}
+          </Route>
         </Route>
       </Route>
 
       {/* ✅ DASHBOARD */}
-      <Route path="/dashboard" element={<DashboardLayout />}>
-        {dashboardRoutes.map(({ roles, routes }) => (
-          <Route
-            key={roles.join('-')}
-            element={<RoleGuard allowedRoles={roles} />}
-          >
-            {routes.map((r) => (
-              <Route key={r.path} path={r.path} element={r.element} />
-            ))}
-          </Route>
-        ))}
+      <Route element={<AuthGuard />}>
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          {dashboardRoutes.map(({ roles, routes }) => (
+            <Route
+              key={roles.join('-')}
+              element={<RoleGuard allowedRoles={roles} />}
+            >
+              {routes.map((r) => (
+                <Route key={r.path} path={r.path} element={r.element} />
+              ))}
+            </Route>
+          ))}
+        </Route>
       </Route>
 
       {/* Fallback */}
