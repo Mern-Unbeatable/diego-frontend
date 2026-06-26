@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { BREAKPOINTS, ITEMS_PER_PAGE, CAROUSEL_CONFIG } from '../courses';
+import { BREAKPOINTS, ITEMS_PER_PAGE, CAROUSEL_CONFIG } from '../data/courses';
 
 export const useCarousel = (totalItems) => {
   const [state, setState] = useState({

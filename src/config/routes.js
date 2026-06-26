@@ -17,4 +17,3 @@ export const ROLE_DASHBOARD_ROUTE = {
   [ROLES.COMPANY_ADMIN]: '/company-admin',
   [ROLES.COMPANY_EMPLOYEE]: '/company-user',
 };
-

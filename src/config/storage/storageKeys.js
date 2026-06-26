@@ -30,9 +30,11 @@ export const STORAGE = {
   getToken: () => getItem(storageKeys.TOKEN),
   setToken: (token) => setItem(storageKeys.TOKEN, token),
 
+  // === REFRESH TOKEN ===
   getRefreshToken: () => getItem(storageKeys.REFRESH_TOKEN),
   setRefreshToken: (token) => setItem(storageKeys.REFRESH_TOKEN, token),
 
+  // === CLEAR TOKEN ===
   clearToken: () => removeItem(storageKeys.TOKEN),
 
   // === CLEAR ALL (logout / app reset) ===

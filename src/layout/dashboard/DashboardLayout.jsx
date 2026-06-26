@@ -4,15 +4,8 @@ import DashboardSidebar from './DashboardSidebar';
 // import DevRoleSwitcher from './DevRoleSwitcher';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { forceRole } from '../../features/auth/authDevSlice';
 
 const DashboardLayout = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(forceRole('LICENSE_USER'));
-  }, []);
-
   return (
     <div className="flex h-screen overflow-hidden bg-[#fcfcfb]">
       <DashboardSidebar />

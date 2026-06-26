@@ -1,10 +1,9 @@
 import { useRef } from 'react';
 import CourseCard from './CourseCard';
 
-import { useCarousel } from '../../../../config/hooks/useCarousel';
+import { useCarousel } from '../../../../hooks/useCarousel';
 import { Heading, Container, Button } from '../../../../components/ui';
-import { COURSE_DATA } from '../../../../config/courses';
-
+import { COURSE_DATA } from '../../../../data/courses';
 
 const CourseCatalog = () => {
   const carouselRef = useRef(null);
@@ -18,9 +17,7 @@ const CourseCatalog = () => {
     handleDragEnd,
   } = useCarousel(COURSE_DATA.length);
 
-  const handleButtonClick = (action, course) => {
-
-  };
+  const handleButtonClick = (action, course) => {};
 
   const renderPagination = () => {
     if (!showPagination) return null;
@@ -31,10 +28,11 @@ const CourseCatalog = () => {
           <button
             key={index}
             onClick={() => goToPage(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${index === state.currentPage
-              ? 'w-8 bg-[#3FC89E]'
-              : 'w-2 bg-[#76c0a2]'
-              }`}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === state.currentPage
+                ? 'w-8 bg-[#3FC89E]'
+                : 'w-2 bg-[#76c0a2]'
+            }`}
             aria-label={`Go to page ${index + 1}`}
           />
         ))}
@@ -60,10 +58,11 @@ const CourseCatalog = () => {
       >
         <div
           ref={carouselRef}
-          className={`flex ${state.isMoved ? 'cursor-grabbing' : 'cursor-grab'} ${!state.isMoved || state.startX === 0
-            ? 'transition-transform duration-500 ease-out'
-            : ''
-            }`}
+          className={`flex ${state.isMoved ? 'cursor-grabbing' : 'cursor-grab'} ${
+            !state.isMoved || state.startX === 0
+              ? 'transition-transform duration-500 ease-out'
+              : ''
+          }`}
           style={{
             transform: `translateX(${finalTranslateValue}%)`,
             WebkitUserSelect: 'none',
