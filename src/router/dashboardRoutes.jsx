@@ -46,7 +46,7 @@ import CompanyPrivacyPolicyView from '../pages/dash/company/CompanyPrivacyPolicy
 
 export const dashboardRoutes = [
   {
-    //  ✅ Super Admins
+    //  ✅ SUPER_ADMIN
     roles: [ROLES.SUPER_ADMIN],
     routes: [
       { path: 'super-admin', element: <SuperAdminView /> },
@@ -71,7 +71,7 @@ export const dashboardRoutes = [
     ],
   },
   {
-    //  ✅ Freelancers
+    //  ✅ LICENSE_USER
     roles: [ROLES.LICENSE_USER],
     routes: [
       { path: 'license-user', element: <FreelancerView /> },
@@ -86,7 +86,7 @@ export const dashboardRoutes = [
   },
 
   {
-    //  ✅ Company Admins
+    //  ✅ COMPANY_ADMIN
     roles: [ROLES.COMPANY_ADMIN],
     routes: [
       { path: 'company-admin', element: <CompanyHome /> },
@@ -123,15 +123,13 @@ export const dashboardRoutes = [
     ],
   },
   {
-    //  ✅ Company employees
+    //  ✅ COMPANY_EMPLOYEE
     roles: [ROLES.COMPANY_EMPLOYEE],
-    routes: [
-      { path: 'company-admin/my-courses', element: <CompanyCourseList /> },
-    ],
+    routes: [{ path: 'company-employee', element: <CompanyCourseList /> }],
   },
 
   {
-    //  ✅ Private Users
+    //  ✅ PRIVATE_USER
     roles: [ROLES.PRIVATE_USER],
     routes: [
       { path: 'private-user', element: <StudentHomeView /> },

@@ -91,9 +91,14 @@ const linksByRole = {
 
   [ROLES.COMPANY_EMPLOYEE]: [
     {
-      path: '/dashboard/company-admin/my-courses',
+      path: '/dashboard/company-employee',
       label: 'Dashboard',
       icon: <IoHomeOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/company-employee/item-1',
+      label: 'Item 1',
+      icon: <IoAlbumsOutline className="text-[19px]" />,
     },
   ],
 
