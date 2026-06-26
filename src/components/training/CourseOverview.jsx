@@ -7,10 +7,10 @@ import catalog from '../../assets/images/course/catalog4.png';
 import { useTranslation } from 'react-i18next';
 export default function CourseOverview() {
   const { t } = useTranslation();
-  const courses = t('trainingPages.courseOverview.tableRows', {
+  const courses = t('trainingPages.section8.tableRows', {
     returnObjects: true,
   });
-  const howitWorks = t('trainingPages.courseOverview.howItWorksSteps', {
+  const howitWorks = t('trainingPages.section8.howItWorksSteps', {
     returnObjects: true,
   });
 
@@ -18,7 +18,7 @@ export default function CourseOverview() {
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-6 md:p-8">
       {/* Header */}
-      <h1 className="mb-8 text-2xl font-bold text-gray-800 sm:text-3xl">{t('trainingPages.courseOverview.title')}</h1>
+      <h1 className="mb-8 text-2xl font-bold text-gray-800 sm:text-3xl">{t('trainingPages.section8.title')}</h1>
 
       {/* Table Section */}
       <div className="mb-12 rounded-lg bg-white p-3 shadow-sm sm:p-6">
@@ -26,10 +26,10 @@ export default function CourseOverview() {
           <table className="min-w-[640px] w-full">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="text-left py-4 px-4 text-gray-700 font-semibold text-sm">{t('trainingPages.courseOverview.headers.course')}</th>
-              <th className="text-left py-4 px-4 text-gray-700 font-semibold text-sm">{t('trainingPages.courseOverview.headers.description')}</th>
-              <th className="text-left py-4 px-4 text-gray-700 font-semibold text-sm">{t('trainingPages.courseOverview.headers.duration')}</th>
-              <th className="text-left py-4 px-4 text-gray-700 font-semibold text-sm">{t('trainingPages.courseOverview.headers.type')}</th>
+              <th className="text-left py-4 px-4 text-gray-700 font-semibold text-sm">{t('trainingPages.section8.headers.course')}</th>
+              <th className="text-left py-4 px-4 text-gray-700 font-semibold text-sm">{t('trainingPages.section8.headers.description')}</th>
+              <th className="text-left py-4 px-4 text-gray-700 font-semibold text-sm">{t('trainingPages.section8.headers.duration')}</th>
+              <th className="text-left py-4 px-4 text-gray-700 font-semibold text-sm">{t('trainingPages.section8.headers.type')}</th>
             </tr>
           </thead>
           <tbody>
@@ -68,7 +68,7 @@ export default function CourseOverview() {
             <div className="bg-[#73BFA1] text-white p-2 rounded-full">
               <CheckCircle2 size={24} />
             </div>
-            <h2 className="text-xl font-bold text-gray-800 sm:text-2xl">{t('trainingPages.courseOverview.howItWorksTitle')}</h2>
+            <h2 className="text-xl font-bold text-gray-800 sm:text-2xl">{t('trainingPages.section8.howItWorksTitle')}</h2>
           </div>
 
           <ol className="space-y-3">

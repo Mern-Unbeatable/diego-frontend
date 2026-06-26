@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 
 const AmbientRentView = () => {
   const { t } = useTranslation();
-  const listItems = t('servicesPages.rentri.listItems', { returnObjects: true });
-  const includeItems = t('servicesPages.common.includeItems', {
+  const listItems = t('servicesPages.section13.listItems', { returnObjects: true });
+  const includeItems = t('servicesPages.section1.includeItems', {
     returnObjects: true,
   });
 
@@ -15,22 +15,22 @@ const AmbientRentView = () => {
     <Container className=" ">
       <Banner
         image={banner}
-        title={t('servicesPages.rentri.bannerTitle')}
+        title={t('servicesPages.section13.bannerTitle')}
       />
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left Column - Service Details */}
           <div>
             <h1 className="text-4xl font-bold text-gray-900 mb-6">
-              {t('servicesPages.common.serviceDetailsTitle')}
+              {t('servicesPages.section1.serviceDetailsTitle')}
             </h1>
 
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-600 leading-relaxed mb-6">
-                {t('servicesPages.rentri.paragraph1')}
+                {t('servicesPages.section13.paragraph1')}
 
               </p>
-              <p>{t('servicesPages.rentri.paragraph2')}</p>
+              <p>{t('servicesPages.section13.paragraph2')}</p>
 
 
 
@@ -41,11 +41,11 @@ const AmbientRentView = () => {
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
-                <p>{t('servicesPages.rentri.paragraph3')}
+                <p>{t('servicesPages.section13.paragraph3')}
                 </p>
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-6">
-                {t('servicesPages.common.serviceIncludesTitle')}
+                {t('servicesPages.section1.serviceIncludesTitle')}
               </h2>
               <div className='bg-[#F1F9F6] p-5 rounded-2xl'>
                 <ul className="list-disc pl-6 space-y-2 text-gray-600">

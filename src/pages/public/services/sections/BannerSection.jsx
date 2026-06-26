@@ -8,9 +8,9 @@ const BannerSection = () => {
   return (
     <Container size="full">
       <Banner
-        description={t('servicesPages.servicesLanding.bannerDescription')}
+        description={t('servicesPages.section2.bannerDescription')}
         image={'/image/home/banner/image.jpg'}
-        title={t('servicesPages.servicesLanding.bannerTitle')}
+        title={t('servicesPages.section2.bannerTitle')}
       />
     </Container>
   );

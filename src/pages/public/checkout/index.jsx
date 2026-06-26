@@ -16,12 +16,12 @@ const Checkout = () => {
                     <div className="md:col-span-2">
                         <div className="flex items-center gap-2 mb-8">
                             <ChevronLeft className="h-5 w-5 text-green-600" />
-                            <h2 className="text-lg font-semibold text-gray-800">{t('paymentPages.cart.continueShopping')}</h2>
+                            <h2 className="text-lg font-semibold text-gray-800">{t('paymentPages.section1.continueShopping')}</h2>
                         </div>
 
                         <div className="rounded-lg bg-white p-6 shadow">
-                            <h3 className="mb-4 text-lg font-semibold text-gray-800">{t('paymentPages.cart.title')}</h3>
-                            <p className="mb-6 text-sm text-gray-600">{t('paymentPages.cart.contains')}</p>
+                            <h3 className="mb-4 text-lg font-semibold text-gray-800">{t('paymentPages.section1.title')}</h3>
+                            <p className="mb-6 text-sm text-gray-600">{t('paymentPages.section1.contains')}</p>
 
                             {/* Cart Item */}
                             <div className="flex items-center gap-4 rounded-lg bg-gray-50 p-4">
@@ -33,8 +33,8 @@ const Checkout = () => {
                                     />
                                 </div>
                                 <div className="flex-1">
-                                    <h4 className="font-semibold text-gray-800">{t('paymentPages.cart.courseDescription')}</h4>
-                                    <p className="text-sm text-gray-600">{t('paymentPages.cart.courseName')}</p>
+                                    <h4 className="font-semibold text-gray-800">{t('paymentPages.section1.courseDescription')}</h4>
+                                    <p className="text-sm text-gray-600">{t('paymentPages.section1.courseName')}</p>
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <span className="font-semibold text-gray-800">€30.00</span>
@@ -48,11 +48,11 @@ const Checkout = () => {
 
                     {/* Payment Details Section */}
                     <div className="rounded-lg bg-[#D4EBE2] p-6">
-                        <h3 className="mb-6 text-lg font-semibold text-gray-800">{t('paymentPages.cardDetails.title')}</h3>
+                        <h3 className="mb-6 text-lg font-semibold text-gray-800">{t('paymentPages.section2.title')}</h3>
 
                         {/* Payment Methods */}
                         <div className="mb-6">
-                            <p className="mb-3 text-sm font-semibold text-gray-700">{t('paymentPages.cardDetails.network')}</p>
+                            <p className="mb-3 text-sm font-semibold text-gray-700">{t('paymentPages.section2.network')}</p>
                             <div className="flex items-center justify-center gap-x-3  w-full">
 
 
@@ -69,14 +69,14 @@ const Checkout = () => {
                                     alt="RuPay"
                                 />
 
-                                <button className="text-xs text-green-600 hover:text-green-700 font-semibold">{t('paymentPages.cardDetails.seeAll')}</button>
+                                <button className="text-xs text-green-600 hover:text-green-700 font-semibold">{t('paymentPages.section2.seeAll')}</button>
                             </div>
                         </div>
 
                         {/* Form Fields */}
                         <div className="space-y-4">
                             <div>
-                                <label className="mb-2 block text-sm font-semibold text-gray-700">{t('paymentPages.cardDetails.nameOnCard')}</label>
+                                <label className="mb-2 block text-sm font-semibold text-gray-700">{t('paymentPages.section2.nameOnCard')}</label>
                                 <input
                                     type="text"
                                     placeholder="Franco Rossi"
@@ -85,7 +85,7 @@ const Checkout = () => {
                             </div>
 
                             <div>
-                                <label className="mb-2 block text-sm font-semibold text-gray-700">{t('paymentPages.cardDetails.cardNumber')}</label>
+                                <label className="mb-2 block text-sm font-semibold text-gray-700">{t('paymentPages.section2.cardNumber')}</label>
                                 <input
                                     type="text"
                                     placeholder="3333 3333 3333 3333"
@@ -95,7 +95,7 @@ const Checkout = () => {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="mb-2 block text-sm font-semibold text-gray-700">{t('paymentPages.cardDetails.expiryDate')}</label>
+                                    <label className="mb-2 block text-sm font-semibold text-gray-700">{t('paymentPages.section2.expiryDate')}</label>
                                     <input
                                         type="text"
                                         placeholder="01/01/2030"
@@ -103,7 +103,7 @@ const Checkout = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label className="mb-2 block text-sm font-semibold text-gray-700">{t('paymentPages.cardDetails.cvv')}</label>
+                                    <label className="mb-2 block text-sm font-semibold text-gray-700">{t('paymentPages.section2.cvv')}</label>
                                     <input
                                         type="text"
                                         placeholder="111"
@@ -116,11 +116,11 @@ const Checkout = () => {
                         {/* Totals */}
                         <div className="my-6 space-y-2 border-t border-[#73BFA1] pt-6">
                             <div className="flex justify-between text-gray-700">
-                                <span>{t('paymentPages.cardDetails.subtotal')}</span>
+                                <span>{t('paymentPages.section2.subtotal')}</span>
                                 <span>€80.00</span>
                             </div>
                             <div className="flex justify-between text-lg font-bold text-gray-800">
-                                <span>{t('paymentPages.cardDetails.total')}</span>
+                                <span>{t('paymentPages.section2.total')}</span>
                                 <span>€88.00</span>
                             </div>
                         </div>
@@ -128,7 +128,7 @@ const Checkout = () => {
                         {/* Pay Button */}
                         <button className="w-full rounded-full bg-[#73BFA1] py-3 font-semibold text-white hover:bg-[#73BFA1] transition flex items-center justify-center gap-2">
                             <span>€ 86.00 €</span>
-                            <span>{t('paymentPages.cardDetails.payNow')}</span>
+                            <span>{t('paymentPages.section2.payNow')}</span>
                             <span>→</span>
                         </button>
                     </div>

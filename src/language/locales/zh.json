@@ -4,46 +4,46 @@
   "dashboard": "仪表板",
   "logout": "退出登录",
   "navbar": {
-  "home": "首页",
-  "services": "服务",
-  "training": "培训",
-  "whoWeAre": "关于我们",
-  "workWithUs": "与我们合作",
-  "contactUs": "联系我们",
-  "eLearning": "在线学习",
-  "servicesDropdown": {
-    "seveso": "塞韦索",
-    "corsiSeveso": "SEVESO课程",
-    "sicurezza": "安全",
-    "servizioASPP": "ASPP和RSPP服务",
-    "redazioneDVR": "DVR起草",
-    "pianiEmergenza": "应急计划",
-    "fulminazione": "防雷保护",
-    "legionella": "军团菌",
-    "potabilitaAcqua": "饮用水安全",
-    "radon": "氡气",
-    "analisiLaboratorio": "实验室分析",
-    "buildingManagement": "建筑管理",
-    "ambiente": "环境",
-    "rentri": "RENTRI",
-    "videosorveglianza": "视频监控",
-    "gestioneAutorizzazione": "设备授权管理",
-    "medicinaLavoro": "职业医学",
-    "incarichiMedico": "合格医师任命",
-    "gestioneVisite": "医疗检查管理",
-    "analisiLab": "实验室分析",
-    "condominio": "公寓管理",
-    "gestioneImmobiliare": "物业管理"
+    "home": "首页",
+    "services": "服务",
+    "training": "培训",
+    "whoWeAre": "关于我们",
+    "workWithUs": "与我们合作",
+    "contactUs": "联系我们",
+    "eLearning": "在线学习",
+    "servicesDropdown": {
+      "seveso": "塞韦索",
+      "corsiSeveso": "SEVESO课程",
+      "sicurezza": "安全",
+      "servizioASPP": "ASPP和RSPP服务",
+      "redazioneDVR": "DVR起草",
+      "pianiEmergenza": "应急计划",
+      "fulminazione": "防雷保护",
+      "legionella": "军团菌",
+      "potabilitaAcqua": "饮用水安全",
+      "radon": "氡气",
+      "analisiLaboratorio": "实验室分析",
+      "buildingManagement": "建筑管理",
+      "ambiente": "环境",
+      "rentri": "RENTRI",
+      "videosorveglianza": "视频监控",
+      "gestioneAutorizzazione": "设备授权管理",
+      "medicinaLavoro": "职业医学",
+      "incarichiMedico": "合格医师任命",
+      "gestioneVisite": "医疗检查管理",
+      "analisiLab": "实验室分析",
+      "condominio": "公寓管理",
+      "gestioneImmobiliare": "物业管理"
+    },
+    "trainingDropdown": {
+      "nostraPiattaforma": "我们的平台",
+      "comeFunziona": "如何运作",
+      "corsi": "课程",
+      "corsiSeveso": "SEVESO课程",
+      "corsiObbligatori": "必修课程",
+      "catalogo": "课程目录"
+    }
   },
-  "trainingDropdown": {
-    "nostraPiattaforma": "我们的平台",
-    "comeFunziona": "如何运作",
-    "corsi": "课程",
-    "corsiSeveso": "SEVESO课程",
-    "corsiObbligatori": "必修课程",
-    "catalogo": "课程目录"
-  }
-},
   "homeView": {
     "section1": {
       "title": "一种安全",
@@ -73,7 +73,7 @@
     }
   },
   "servicesPages": {
-    "common": {
+    "section1": {
       "serviceDetailsTitle": "服务详情",
       "serviceIncludesTitle": "服务包含内容",
       "includeItems": [
@@ -83,30 +83,30 @@
         "持续支持与更新"
       ]
     },
-    "servicesLanding": {
+    "section2": {
       "bannerTitle": "服务",
       "bannerDescription": "探索我们的服务并联系我们",
       "loading": "加载中",
       "categoryTitle": "服务"
     },
-    "sevCourses": {
+    "section3": {
       "bannerTitle": "SEVESO课程",
       "bannerDescription": "针对Seveso重大事故预防指令的咨询服务",
       "description": "本课程帮助受105/2015号法令约束的企业和管理方提升安全管理能力。管理方需在文件中承诺建立、采用并持续改进其安全管理体系。为此，UnoSicurezza提供多种定制课程，满足管理方需求并符合持续培训要求。"
     },
-    "aspRspp": {
+    "section4": {
       "bannerTitle": "服务",
       "bannerDescription": "探索我们的服务并联系我们",
       "description": "安全不是日常工作中可忽视的理论话题。有时因为缺乏知识而显得复杂；有时又误以为一次完成即可，但实际并非如此。安全需要持续维护与改进。UnoSicurezza因此为企业提供以下服务：",
       "aspp": "（预防与保护服务助理）",
       "rspp": "（预防与保护服务负责人）"
     },
-    "dvr": {
+    "section5": {
       "bannerTitle": "DVR - 风险评估文件",
       "bannerDescription": "风险评估文件编制与更新",
       "description": "我们提供完整的风险评估、文件编制、人员培训和定期更新服务，符合81/2008号法令要求。"
     },
-    "emergency": {
+    "section6": {
       "bannerTitle": "应急预案",
       "descriptionLead": "根据第18条第1款t项，雇主必须：",
       "descriptionBody": "采取必要措施用于消防预防、工作场所疏散以及重大紧急危险情况处理（依据第43条）。这些措施应当符合：",
@@ -117,12 +117,12 @@
       ],
       "descriptionCta": "UnoSicurezza 可以为您提供帮助！"
     },
-    "lightning": {
+    "section7": {
       "bannerTitle": "防雷保护",
       "bannerDescription": "让您的设施符合法规：评估雷击风险。",
       "description": "根据81/08号法令第17条，雇主不得委托他人完成所有风险评估及第28条要求的文件编制，并需遵守CEI标准。其中也包括建筑遭受雷击放电的风险评估。UnoSicurezza可协助您完成。"
     },
-    "legionella": {
+    "section8": {
       "bannerTitle": "军团菌",
       "bannerDescription": "军团菌风险评估与控制方案",
       "paragraph1": "我们在供水系统关键点进行采样与分析，出具官方检测报告，并按18/2023号法令限值进行比对，结果清晰完整。",
@@ -136,7 +136,7 @@
         "军团菌风险评估与相关文件编制"
       ]
     },
-    "radon": {
+    "section9": {
       "bannerTitle": "氡气",
       "bannerDescription": "工作场所氡气测量与评估",
       "description": "地下或半地下工作场所位于重点区域？根据101/2020号法令，工作场所氡风险评估是雇主的法定义务。风险通过测量空气中氡浓度（Bq/m3）进行评估。UnoSicurezza团队提供：",
@@ -146,7 +146,7 @@
         "指定专业专家"
       ]
     },
-    "drinkingWater": {
+    "section10": {
       "bannerTitle": "饮用水安全",
       "bannerDescription": "为公寓、住宅和企业提供饮用水检测",
       "paragraph1": "意大利饮用水质量与安全由18/2023号法令监管（落实欧盟2020/2184指令），规定了必须满足的化学与微生物参数限值。",
@@ -162,7 +162,7 @@
       ],
       "reportNote": "检测完成后将出具官方检测报告，列明检测值并与18/2023号法令限值进行对比。"
     },
-    "laboratory": {
+    "section11": {
       "bannerTitle": "实验室分析",
       "bannerDescription": "我们提供完整的实验室分析服务，确保产品与环境的质量、安全与合规。通过认证方法，对水、空气、废弃物及材料样本进行检测，识别潜在污染并确保符合法规要求。",
       "intro": "我们的目标是将法规义务转化为预防和价值提升工具，为环境保护提供一体化解决方案。",
@@ -207,7 +207,7 @@
         }
       ]
     },
-    "building": {
+    "section12": {
       "bannerTitle": "建筑管理",
       "bannerDescription": "工作场所氡气测量与评估",
       "description": "UnoSicurezza团队提供建筑与公寓管理服务，帮助业主/管理方优化以下流程：",
@@ -218,7 +218,7 @@
       ],
       "cta": "信任我们，立即联系我们！"
     },
-    "rentri": {
+    "section13": {
       "bannerTitle": "RENTRI",
       "paragraph1": "RENTRI是意大利环境与能源安全部构建废弃物追踪体系的工具，并实现废弃物流转和运输相关文件数字化。",
       "paragraph2": "具体而言，RENTRI可实现：",
@@ -231,32 +231,32 @@
       ],
       "paragraph3": "选择UnoSicurezza，我们将一步一步协助合作伙伴完成各项合规义务。"
     },
-    "videoAuthorization": {
+    "section14": {
       "bannerTitle": "设备授权管理",
       "bannerDescription": "您是否使用视频监控/卫星定位系统并且涉及员工管理？",
       "description": "根据300/1970号法律第4条，可能导致远程监控员工活动的音视频系统仅可出于组织、生产、安全及资产保护目的使用。用于工作本身的工具（如电脑、电话、平板）和出入勤记录设备适用相应例外条款。"
     },
-    "medicalCompetent": {
+    "section15": {
       "bannerTitle": "设备授权管理与合格医师任命",
       "bannerDescription": "您的企业有员工吗？您是否希望确保满足所有职业健康义务？",
       "description": "根据81/08号法令，任命合格医师是法定义务（特别是第18与41条），对员工健康保护至关重要。合格医师参与风险评估、实施健康监测并协助预防职业病与工伤。"
     },
-    "medicalVisits": {
+    "section16": {
       "bannerTitle": "医疗检查管理",
       "bannerDescription": "您的企业有员工吗？是否希望确认未遗漏任何员工健康保护义务？",
       "description": "根据81/08号法令，任命合格医师是法定义务（特别是第18与41条），对员工健康保护至关重要。合格医师参与风险评估、实施健康监测并协助预防职业病与工伤。"
     },
-    "occupationalLab": {
+    "section17": {
       "bannerTitle": "实验室分析",
       "bannerDescription": "您的企业有员工吗？是否希望确认未遗漏任何员工健康保护义务？",
       "description": "在某些岗位情况下，需要通过实验室检测补充工作适任性评估。这些检查不仅是法规要求，也是切实的预防与保护措施，用于保障员工福祉并维持企业高标准安全水平。"
     },
-    "condominium": {
+    "section18": {
       "bannerTitle": "物业管理",
       "bannerDescription": "面向公寓与建筑的行政与技术管理服务。",
       "description": "我们为物业管理者与业主提供运营与合规支持，提升组织效率、文件管理、安全履责与管理连续性。"
     },
-    "form": {
+    "section19": {
       "title": "申请信息",
       "subtitle": "填写表单以获取关于 {{service}} 服务的更多信息。",
       "defaultService": "ASPP和RSPP",
@@ -285,11 +285,19 @@
     }
   },
   "trainingPages": {
-    "trainingViewTitle": "培训",
-    "ourPlatform": { "bannerTitle": "探索我们的SEVESO课程" },
-    "required": { "bannerTitle": "UnoSicurezza - LMS平台" },
-    "sev": { "bannerTitle": "探索我们的SEVESO课程" },
-    "catalog": {
+    "section1": {
+      "trainingViewTitle": "培训"
+    },
+    "section2": {
+      "bannerTitle": "探索我们的SEVESO课程"
+    },
+    "section3": {
+      "bannerTitle": "UnoSicurezza - LMS平台"
+    },
+    "section4": {
+      "bannerTitle": "探索我们的SEVESO课程"
+    },
+    "section5": {
       "bannerTitle": "课程目录",
       "platformTitle": "面向企业的在线培训平台",
       "ratingValue": "4.5",
@@ -297,7 +305,7 @@
       "signUp": "报名",
       "details": "详情"
     },
-    "filters": {
+    "section6": {
       "searchPlaceholder": "搜索课程...",
       "allCategories": "所有分类",
       "categorySafety": "安全",
@@ -310,23 +318,68 @@
       "hours16": "16小时",
       "searchButton": "搜索"
     },
-    "courseCards": {
+    "section7": {
       "title": "必修课程",
       "courses": [
-        { "title": "SEVESO培训 - 年度套餐", "description": "“Seveso III”课程对应欧盟2012/18/EU重大事故预防指令...", "oldPrice": "60,00€", "price": "50,00 €" },
-        { "title": "雇主（新版）16小时", "description": "依据2008年4月9日第81号法令第37条第2款相关协议...", "oldPrice": "180,00€", "price": "110,00 €" },
-        { "title": "通用 4小时", "description": "依据2008年4月9日第81号法令第37条第2款相关协议...", "oldPrice": "50,00€", "price": "40,00 €" },
-        { "title": "低风险专项 4小时（新版）", "description": "依据2008年4月9日第81号法令第37条第2款相关协议...", "oldPrice": "50,00€", "price": "40,00 €" },
-        { "title": "管理人员 12小时", "description": "依据2008年4月9日第81号法令第37条第2款相关协议...", "oldPrice": "160,00€", "price": "120,00 €" },
-        { "title": "管理人员更新 6小时", "description": "依据2008年4月9日第81号法令第37条第2款相关协议...", "oldPrice": "50,00€", "price": "40,00 €" }
+        {
+          "title": "SEVESO培训 - 年度套餐",
+          "description": "“Seveso III”课程对应欧盟2012/18/EU重大事故预防指令...",
+          "oldPrice": "60,00€",
+          "price": "50,00 €"
+        },
+        {
+          "title": "雇主（新版）16小时",
+          "description": "依据2008年4月9日第81号法令第37条第2款相关协议...",
+          "oldPrice": "180,00€",
+          "price": "110,00 €"
+        },
+        {
+          "title": "通用 4小时",
+          "description": "依据2008年4月9日第81号法令第37条第2款相关协议...",
+          "oldPrice": "50,00€",
+          "price": "40,00 €"
+        },
+        {
+          "title": "低风险专项 4小时（新版）",
+          "description": "依据2008年4月9日第81号法令第37条第2款相关协议...",
+          "oldPrice": "50,00€",
+          "price": "40,00 €"
+        },
+        {
+          "title": "管理人员 12小时",
+          "description": "依据2008年4月9日第81号法令第37条第2款相关协议...",
+          "oldPrice": "160,00€",
+          "price": "120,00 €"
+        },
+        {
+          "title": "管理人员更新 6小时",
+          "description": "依据2008年4月9日第81号法令第37条第2款相关协议...",
+          "oldPrice": "50,00€",
+          "price": "40,00 €"
+        }
       ]
     },
-    "courseOverview": {
+    "section8": {
       "title": "课程概览",
-      "headers": { "course": "课程", "description": "描述", "duration": "时长", "type": "类型" },
+      "headers": {
+        "course": "课程",
+        "description": "描述",
+        "duration": "时长",
+        "type": "类型"
+      },
       "tableRows": [
-        { "name": "单课", "description": "适用于单一培训需求的直接访问。", "duration": "30分钟", "type": "单课" },
-        { "name": "高级Seveso课程", "description": "符合2012/18/EU指令的完整套餐。", "duration": "30分钟/课", "type": "套餐" }
+        {
+          "name": "单课",
+          "description": "适用于单一培训需求的直接访问。",
+          "duration": "30分钟",
+          "type": "单课"
+        },
+        {
+          "name": "高级Seveso课程",
+          "description": "符合2012/18/EU指令的完整套餐。",
+          "duration": "30分钟/课",
+          "type": "套餐"
+        }
       ],
       "howItWorksTitle": "如何运作",
       "howItWorksSteps": [
@@ -340,54 +393,119 @@
         "课程结束后颁发证书"
       ]
     },
-    "workflow": {
+    "section9": {
       "steps": [
-        { "title": "联系", "desc": "与UnoSicurezza团队" },
-        { "title": "产品选择", "desc": "单课或季度套餐" },
-        { "title": "需求收集", "desc": "在线表单或现场技术勘查" },
-        { "title": "定制课程制作", "desc": "含Logo、资料、图片、视频与流程" },
-        { "title": "上传至LMS平台", "desc": "自动化发布与学习监控" },
-        { "title": "课程交付", "desc": "通过电脑、平板、手机学习" }
+        {
+          "title": "联系",
+          "desc": "与UnoSicurezza团队"
+        },
+        {
+          "title": "产品选择",
+          "desc": "单课或季度套餐"
+        },
+        {
+          "title": "需求收集",
+          "desc": "在线表单或现场技术勘查"
+        },
+        {
+          "title": "定制课程制作",
+          "desc": "含Logo、资料、图片、视频与流程"
+        },
+        {
+          "title": "上传至LMS平台",
+          "desc": "自动化发布与学习监控"
+        },
+        {
+          "title": "课程交付",
+          "desc": "通过电脑、平板、手机学习"
+        }
       ]
     },
-    "howWorks": {
+    "section10": {
       "headerTitle": "找到最适合你的解决方案",
       "headerDescription": "无边界学习体验。随时访问我们的安全、隐私与食品卫生课程，持续更新并符合监管要求。",
       "headerCta": "探索我们所有课程",
       "sections": [
-        { "title": "单用户 - 等级1", "badge": "高效直观的团队管理", "contents": ["等级1适用于购买单门课程的用户，登录后可直接进入已购课程。"] },
-        { "title": "企业 - 等级2", "contents": ["适用于企业为员工购买多门培训套餐。", "如何运作", "分配管理员与员工账号", "员工首次登录完成资料", "管理员分配课程并跟踪进度", "云端归档报告与证书", "流程有序且便于长期管理。"] },
-        { "title": "培训机构 - 等级3", "contents": ["面向持平台许可的认证培训机构，支持多租户独立管理。", "如何运作", "开通账号并提供技术手册", "课程分配与进度监控", "自动生成个性化证书", "出勤、学习时长与测试结果报表", "全面掌控培训业务流程。"] }
+        {
+          "title": "单用户 - 等级1",
+          "badge": "高效直观的团队管理",
+          "contents": [
+            "等级1适用于购买单门课程的用户，登录后可直接进入已购课程。"
+          ]
+        },
+        {
+          "title": "企业 - 等级2",
+          "contents": [
+            "适用于企业为员工购买多门培训套餐。",
+            "如何运作",
+            "分配管理员与员工账号",
+            "员工首次登录完成资料",
+            "管理员分配课程并跟踪进度",
+            "云端归档报告与证书",
+            "流程有序且便于长期管理。"
+          ]
+        },
+        {
+          "title": "培训机构 - 等级3",
+          "contents": [
+            "面向持平台许可的认证培训机构，支持多租户独立管理。",
+            "如何运作",
+            "开通账号并提供技术手册",
+            "课程分配与进度监控",
+            "自动生成个性化证书",
+            "出勤、学习时长与测试结果报表",
+            "全面掌控培训业务流程。"
+          ]
+        }
       ]
     },
-    "courseDetail": {
+    "section11": {
       "backToCatalog": "返回课程目录",
       "rating": "4/5 星",
       "title": "SEVESO培训",
       "description": "依据105/2015号法令，为重大事故风险行业提供高级风险管理课程。",
       "objectivesTitle": "目标",
-      "objectives": ["理解SEVESO III法规", "识别重大事故风险", "制定有效应急预案", "管理应急沟通"],
+      "objectives": [
+        "理解SEVESO III法规",
+        "识别重大事故风险",
+        "制定有效应急预案",
+        "管理应急沟通"
+      ],
       "specialPrice": "特价",
       "duration": "时长16小时",
       "code": "代码：",
       "enrollNow": "立即报名"
     },
-    "pricing": {
+    "section12": {
       "frameLabel": "Frame 1281154065",
       "select": "选择",
-      "singleCourse": { "title": "单课", "description": "适合个人学习", "item1": "1位用户", "item2": "完整课程访问", "item3": "可下载证书" },
-      "companyPackage": { "title": "企业套餐", "description": "帮助企业跟踪法规时限并确保合规", "subtitle": "培训：为你匹配的规模", "item1": "1-20用户 - €150/用户", "item2": "21-50用户 - €420/用户", "item3": "51-200用户 - €1000/用户", "item4": "包含管理面板" }
+      "singleCourse": {
+        "title": "单课",
+        "description": "适合个人学习",
+        "item1": "1位用户",
+        "item2": "完整课程访问",
+        "item3": "可下载证书"
+      },
+      "companyPackage": {
+        "title": "企业套餐",
+        "description": "帮助企业跟踪法规时限并确保合规",
+        "subtitle": "培训：为你匹配的规模",
+        "item1": "1-20用户 - €150/用户",
+        "item2": "21-50用户 - €420/用户",
+        "item3": "51-200用户 - €1000/用户",
+        "item4": "包含管理面板"
+      }
     }
   },
   "paymentPages": {
-    "cart": {
+    "section1": {
       "continueShopping": "继续购物",
       "title": "购物车",
       "contains": "购物车包含：",
       "courseDescription": "课程描述",
       "courseName": "Afrobeat"
     },
-    "cardDetails": {
+    "section2": {
       "title": "卡片详情",
       "network": "支付网络",
       "seeAll": "查看全部",
@@ -399,7 +517,7 @@
       "total": "总计",
       "payNow": "立即支付"
     },
-    "success": {
+    "section3": {
       "close": "关闭",
       "title": "购买成功完成",
       "description": "感谢你在UnoSicurezza购买！",
@@ -407,294 +525,296 @@
     }
   },
   "chiSiamo": {
-  "bannerTitle": "关于我们",
-  "intro": "我们是一群专业人士，专注于为企业和公寓提供物业管理、培训、安全和健康服务。",
-  "objectiveLabel": "我们的目标是简化法规合规，帮助客户在更安全、更有组织的环境中工作和生活。",
-  "whatWeDoLabel": "我们的服务：",
-  "formazione": "培训：",
-  "formazioneDesc": "我们提供清晰实用的课程，包括在线课程，通过简单易用的平台为工人、管理人员和培训机构服务。",
-  "sicurezza": "安全：",
-  "sicurezzaDesc": "我们为企业和公寓提供文件合规、必修课程、应急计划和检查支持，确保工作场所符合法规要求。",
-  "salute": "健康：",
-  "saluteDesc": "我们进行实验室分析以预防风险，在职业医学领域提供支持，保护人们的健康。",
-  "tagline": "培训与安全，通往更美好、更成功未来的引擎。",
-  "missionTitle": "我们的使命",
-  "missionDesc": "我们的使命是通过有针对性的培训路径、战略咨询服务和高效的文件合规管理，支持各类规模的企业。我们相信持续成长、流程简化和能力提升。",
-  "pillarsTitle": "我们的支柱",
-  "mission": {
-    "card1Title": "安全第一",
-    "card1Desc": "职场安全是我们一切工作的核心，目标是创造更安全的工作环境。",
-    "card2Title": "技术创新",
-    "card2Desc": "我们使用可靠且经过验证的系统，提供高质量、易获取且功能完善的培训路径。",
-    "card3Title": "以客户为中心",
-    "card3Desc": "每个解决方案都根据客户的具体需求量身定制，确保切实可行的成果。",
-    "card4Title": "卓越培训",
-    "card4Desc": "每门课程都达到质量标准，采用前沿的教学方法。"
-  },
-  "pillars": {
-    "card1Title": "法规的实际应用",
-    "card1Desc": "我们持续致力于按照现行法规进行不断更新。",
-    "card2Title": "创新技术基础设施",
-    "card2Desc": "专为提供简单、有效且始终符合现行法规的培训路径而设计的LMS平台。",
-    "card3Title": "多行业培训",
-    "card3Desc": "一个集多样化课程和个性化培训路径于一体的平台，满足各种需求。"
-  }
-},
-  "workWithUs": {
-  "bannerTitle": "与UnoSicurezza合作",
-  "badge": "合作伙伴",
-  "heroTitle": "加入UnoSicurezza网络",
-  "heroDescription": "该平台按照安全、可靠性和数据保护标准以云模式提供。了解如何与我们在培训、安全和专业人士方面展开合作。",
-
-  "section1": {
-    "title": "面向培训机构",
-    "description": "我们在平台上提供专属空间，您可以：",
-    "bullet1": "提供您的职业健康与安全课程",
-    "bullet2": "独立管理用户和培训路径",
-    "bottomText": "一个实用且专业的解决方案，提升您的服务价值，确保客户始终获得最新认证的必修培训。",
-    "buttonText": "联系我们，其余的交给我们！",
-    "contactFormTitle": "点击此处联系我们",
-    "aziendaPlaceholder": "公司*"
-  },
-
-  "section2": {
-    "title": "面向专业人士",
-    "description": "如果您从事职业健康与安全领域，欢迎加入我们的网络，与我们合作提供您的服务。",
-    "subText": "您将有机会：",
-    "bullet1": "希望创建自己在线学校的讲师和培训师，能够立即产生收入。",
-    "bullet2": "一个简单直观的平台，配备专业工具，用于创建在线课程和培训。",
-    "buttonText": "联系我们提交提案",
-    "contactFormTitle": "点击此处联系我们",
-    "bottomText": "这种合作让您能够专业成长，为您的服务提供更大的完整性。",
-    "qualificaPlaceholder": "职位资质*"
-  },
-
-  "section3": {
-    "title": "合作优势",
-    "description": "我们的平台让您专注于培训内容，而我们负责技术和法规合规。",
-    "benefit1Title": "即用型平台",
-    "benefit1Desc": "无需开发成本，立即访问我们的高级LMS平台。",
-    "benefit2Title": "自主管理",
-    "benefit2Desc": "在一个界面中全面集中管理各个方面：课程、报告和个人区域。",
-    "benefit3Title": "课程创建",
-    "benefit3Desc": "能够以SCORM格式及许多其他格式上传您的培训内容。",
-    "benefit4Title": "合规认证",
-    "benefit4Desc": "颁发符合意大利法规的认证。",
-    "licenseTitle": "许可证用户模型",
-    "feature1": "完整的LMS平台",
-    "feature2": "学员自主管理",
-    "feature3": "课程上传（SCORM、PPT等）",
-    "feature4": "一键下载报告和培训证书",
-    "feature5": "通过工单提供个性化技术支持",
-    "compliance": "保证符合D.Lgs. 81/08"
-  },
-
-  "section4": {
-    "title": "合作申请",
-    "subtitle": "填写表格以获取有关合作伙伴关系的更多信息",
-    "nomeAzienda": "公司名称 *",
-    "nomeAziendaPlaceholder": "名称...",
-    "tipoCollaborazione": "合作类型 *",
-    "tipo1": "培训机构",
-    "tipo2": "人力资源顾问",
-    "tipo3": "咨询公司",
-    "tipo4": "企业",
-    "tipo5": "其他",
-    "referente": "联系人 *",
-    "referentePlaceholder": "您的姓名...",
-    "email": "电子邮件 *",
-    "emailPlaceholder": "mario.rossi@gmail.com",
-    "telefono": "电话 *",
-    "telefonoPlaceholder": "+39 123 456 7890",
-    "dimensione": "公司规模 *",
-    "dim1": "初创企业（1-10名员工）",
-    "dim2": "小型（11-50名员工）",
-    "dim3": "中型（51-250名员工）",
-    "dim4": "大型（250+名员工）",
-    "descrizione": "描述您的业务和目标",
-    "descrizionePlaceholder": "与我们分享如何共同建立有价值的合作伙伴关系...",
-    "submit": "发送申请"
-  },
-  "form": {
-    "contactTitle": "点击这里联系我们"
-  }
-},
-  "contactUs": {
-  "bannerTitle": "联系我们",
-  "heroTitle": "我们随时为您服务",
-  "heroDescription": "您是否想了解更多关于我们培训、安全服务的信息或获取报价？请填写下面的表格或使用我们的直接联系方式，我们将尽快回复您。",
-  "formTitle": "联系表单",
-  "nome": "名字*",
-  "nomePlaceholder": "您的名字",
-  "cognome": "姓氏*",
-  "cognomePlaceholder": "您的姓氏",
-  "azienda": "公司*",
-  "aziendaPlaceholder": "您的公司名称",
-  "piva": "税号*",
-  "pivaPlaceholder": "增值税号",
-  "telefono": "电话 / 手机号码*",
-  "telefonoPlaceholder": "+39 123 456 7890",
-  "email": "电子邮件*",
-  "emailPlaceholder": "your.email@example.com",
-  "messaggioPlaceholder": "留下留言",
-  "submit": "提交",
-  "cancel": "取消",
-  "emailCardTitle": "电子邮件",
-  "emailCardSub": "如有任何疑问请发送邮件",
-  "phoneCardTitle": "电话",
-  "phoneCardSub": "周一至周五 9:00-18:00"
-},
-  "auth": {
-  "common": {
-    "logoAlt": "Logo",
-    "emailLabel": "电子邮箱",
-    "emailPlaceholder": "请输入邮箱",
-    "goAhead": "继续",
-    "back": "返回",
-    "verifyOtp": "验证 OTP",
-    "confirm": "确认",
-    "proceed": "继续",
-    "close": "关闭"
-  },
-  "login": {
-    "enterEmailAlert": "请先输入邮箱",
-    "enterOtpTitle": "请输入发送到你邮箱的 OTP",
-    "enterEmailTitle": "请输入你的邮箱",
-    "otpSentTo": "OTP 已发送到"
-  },
-  "register": {
-    "enterEmailAlert": "请输入你的邮箱地址",
-    "enterEmailTitle": "请输入你的邮箱",
-    "otpIllustrationAlt": "OTP 验证",
-    "emailIllustrationAlt": "邮箱注册"
-  },
-  "chooseLanguage": {
-    "heroTitleLine1": "让我们改变学习新事物的体验",
-    "heroTitleLine2": "。",
-    "illustrationAlt": "学习插图",
-    "heroDescription": "我们致力于以更低成本为所有人提供高质量教育。",
-    "title": "选择首选语言"
-  },
-  "changePassword": {
-    "fillAllFieldsAlert": "请填写所有字段",
-    "passwordTooShortAlert": "密码太短",
-    "passwordMismatchAlert": "两次密码不一致",
-    "illustrationAlt": "重置密码",
-    "newPasswordLabel": "新密码*",
-    "newPasswordPlaceholder": "输入新密码",
-    "repeatPasswordLabel": "重复密码*",
-    "repeatPasswordPlaceholder": "确认密码"
-  },
-  "setup": {
-    "profileTitle": "设置用户资料",
-    "tabs": {
-      "role": "角色",
-      "information": "信息",
-      "password": "密码"
+    "section1": {
+      "bannerTitle": "关于我们",
+      "intro": "我们是一群专业人士，专注于为企业和公寓提供物业管理、培训、安全和健康服务。",
+      "objectiveLabel": "我们的目标是简化法规合规，帮助客户在更安全、更有组织的环境中工作和生活。",
+      "whatWeDoLabel": "我们的服务：",
+      "formazione": "培训：",
+      "formazioneDesc": "我们提供清晰实用的课程，包括在线课程，通过简单易用的平台为工人、管理人员和培训机构服务。",
+      "sicurezza": "安全：",
+      "sicurezzaDesc": "我们为企业和公寓提供文件合规、必修课程、应急计划和检查支持，确保工作场所符合法规要求。",
+      "salute": "健康：",
+      "saluteDesc": "我们进行实验室分析以预防风险，在职业医学领域提供支持，保护人们的健康。",
+      "tagline": "培训与安全，通往更美好、更成功未来的引擎。",
+      "missionTitle": "我们的使命",
+      "missionDesc": "我们的使命是通过有针对性的培训路径、战略咨询服务和高效的文件合规管理，支持各类规模的企业。我们相信持续成长、流程简化和能力提升。",
+      "pillarsTitle": "我们的支柱"
     },
-    "steps": {
-      "step2of3": "步骤 2/3",
-      "step3of3": "步骤 3/3"
+    "section2": {
+      "card1Title": "安全第一",
+      "card1Desc": "职场安全是我们一切工作的核心，目标是创造更安全的工作环境。",
+      "card2Title": "技术创新",
+      "card2Desc": "我们使用可靠且经过验证的系统，提供高质量、易获取且功能完善的培训路径。",
+      "card3Title": "以客户为中心",
+      "card3Desc": "每个解决方案都根据客户的具体需求量身定制，确保切实可行的成果。",
+      "card4Title": "卓越培训",
+      "card4Desc": "每门课程都达到质量标准，采用前沿的教学方法。"
     },
-    "role": {
-      "title": "角色",
-      "subtitle": "你是：",
-      "options": {
-        "standard": "标准用户 - 级别 1",
-        "business": "企业 - 级别 2",
-        "licensed": "授权用户 - 级别 3"
-      }
-    },
-    "infoRouter": {
-      "roleRequiredTitle": "必须先选择角色",
-      "roleRequiredDescription": "请先选择一个角色。",
-      "backToRoleSelection": "返回角色选择"
-    },
-    "info": {
-      "title": "信息",
-      "firstNameLabel": "名字",
-      "firstNamePlaceholder": "输入名字",
-      "lastNameLabel": "姓氏",
-      "lastNamePlaceholder": "输入姓氏",
-      "birthDateLabel": "出生日期",
-      "birthDatePlaceholder": "选择出生日期",
-      "cityLabel": "城市",
-      "cityPlaceholder": "输入出生城市",
-      "countryLabel": "国家",
-      "countryPlaceholder": "输入国家",
-      "addressLabel": "地址",
-      "addressPlaceholder": "街道、门牌号、邮编、城市、省份、国家",
-      "companyNameLabel": "公司名称",
-      "companyNamePlaceholder": "输入公司名称",
-      "officeLabel": "注册地址",
-      "officePlaceholder": "输入注册地址",
-      "vatNumberLabel": "增值税号",
-      "vatNumberPlaceholder": "输入增值税号",
-      "taxCodeLabel": "税号",
-      "taxCodePlaceholder": "输入税号",
-      "citizenshipTitle": "国籍",
-      "citizenshipForeign": "外国",
-      "citizenshipItalian": "意大利"
-    },
-    "password": {
-      "title": "创建你的密码",
-      "newPasswordLabel": "新密码*",
-      "newPasswordPlaceholder": "输入密码",
-      "minLengthRule": "最少 8 个字符（建议 12 个或以上）",
-      "mustIncludeTitle": "至少应包含：",
-      "ruleUppercase": "1 个大写字母 (A-Z)",
-      "ruleLowercase": "1 个小写字母 (a-z)",
-      "ruleNumber": "1 个数字 (0-9)",
-      "ruleSpecial": "1 个特殊字符 (!, ?, $, %, &)",
-      "noPersonalInfoRule": "不能包含用户名、真实姓名或易猜信息",
-      "confirmPasswordLabel": "确认密码*",
-      "confirmPasswordPlaceholder": "842000@Sa"
-    },
-    "companyInfo": {
-      "title": "企业信息",
-      "companyNameLabel": "公司法定名称*",
-      "companyNamePlaceholder": "输入完整公司名称",
-      "officeLabel": "注册地址*",
-      "officePlaceholder": "输入注册地址",
-      "vatLabel": "增值税号*",
-      "vatPlaceholder": "输入增值税号",
-      "taxCodeLabel": "税号（若不同于增值税号）*",
-      "emailLabel": "联系邮箱*"
-    },
-    "freelancer": {
-      "subdomainLabel": "子域名*",
-      "subdomainPlaceholder": "freelanceradmin.com",
-      "serviceTypeLabel": "服务类型*",
-      "serviceTypePlaceholder": "许可证"
-    },
-    "subdomainModal": {
-      "title": "子域名",
-      "description1": "输入你的域名，其余交给我们。",
-      "description2": "输入已购买域名，我们会让你的公司名称显示出来。",
-      "buyButton": "购买子域名",
-      "tipTitle": "提示：",
-      "tipText": "购买后将域名提供给我们，我们会自动完成绑定。"
+    "section3": {
+      "card1Title": "法规的实际应用",
+      "card1Desc": "我们持续致力于按照现行法规进行不断更新。",
+      "card2Title": "创新技术基础设施",
+      "card2Desc": "专为提供简单、有效且始终符合现行法规的培训路径而设计的LMS平台。",
+      "card3Title": "多行业培训",
+      "card3Desc": "一个集多样化课程和个性化培训路径于一体的平台，满足各种需求。"
     }
-  }
-},
+  },
+  "workWithUs": {
+    "section1": {
+      "title": "面向培训机构",
+      "description": "我们在平台上提供专属空间，您可以：",
+      "bullet1": "提供您的职业健康与安全课程",
+      "bullet2": "独立管理用户和培训路径",
+      "bottomText": "一个实用且专业的解决方案，提升您的服务价值，确保客户始终获得最新认证的必修培训。",
+      "buttonText": "联系我们，其余的交给我们！",
+      "contactFormTitle": "点击此处联系我们",
+      "aziendaPlaceholder": "公司*"
+    },
+    "section2": {
+      "title": "面向专业人士",
+      "description": "如果您从事职业健康与安全领域，欢迎加入我们的网络，与我们合作提供您的服务。",
+      "subText": "您将有机会：",
+      "bullet1": "希望创建自己在线学校的讲师和培训师，能够立即产生收入。",
+      "bullet2": "一个简单直观的平台，配备专业工具，用于创建在线课程和培训。",
+      "buttonText": "联系我们提交提案",
+      "contactFormTitle": "点击此处联系我们",
+      "bottomText": "这种合作让您能够专业成长，为您的服务提供更大的完整性。",
+      "qualificaPlaceholder": "职位资质*"
+    },
+    "section3": {
+      "title": "合作优势",
+      "description": "我们的平台让您专注于培训内容，而我们负责技术和法规合规。",
+      "benefit1Title": "即用型平台",
+      "benefit1Desc": "无需开发成本，立即访问我们的高级LMS平台。",
+      "benefit2Title": "自主管理",
+      "benefit2Desc": "在一个界面中全面集中管理各个方面：课程、报告和个人区域。",
+      "benefit3Title": "课程创建",
+      "benefit3Desc": "能够以SCORM格式及许多其他格式上传您的培训内容。",
+      "benefit4Title": "合规认证",
+      "benefit4Desc": "颁发符合意大利法规的认证。",
+      "licenseTitle": "许可证用户模型",
+      "feature1": "完整的LMS平台",
+      "feature2": "学员自主管理",
+      "feature3": "课程上传（SCORM、PPT等）",
+      "feature4": "一键下载报告和培训证书",
+      "feature5": "通过工单提供个性化技术支持",
+      "compliance": "保证符合D.Lgs. 81/08"
+    },
+    "section4": {
+      "title": "合作申请",
+      "subtitle": "填写表格以获取有关合作伙伴关系的更多信息",
+      "nomeAzienda": "公司名称 *",
+      "nomeAziendaPlaceholder": "名称...",
+      "tipoCollaborazione": "合作类型 *",
+      "tipo1": "培训机构",
+      "tipo2": "人力资源顾问",
+      "tipo3": "咨询公司",
+      "tipo4": "企业",
+      "tipo5": "其他",
+      "referente": "联系人 *",
+      "referentePlaceholder": "您的姓名...",
+      "email": "电子邮件 *",
+      "emailPlaceholder": "mario.rossi@gmail.com",
+      "telefono": "电话 *",
+      "telefonoPlaceholder": "+39 123 456 7890",
+      "dimensione": "公司规模 *",
+      "dim1": "初创企业（1-10名员工）",
+      "dim2": "小型（11-50名员工）",
+      "dim3": "中型（51-250名员工）",
+      "dim4": "大型（250+名员工）",
+      "descrizione": "描述您的业务和目标",
+      "descrizionePlaceholder": "与我们分享如何共同建立有价值的合作伙伴关系...",
+      "submit": "发送申请"
+    },
+    "section5": {
+      "bannerTitle": "与UnoSicurezza合作",
+      "badge": "合作伙伴",
+      "heroTitle": "加入UnoSicurezza网络",
+      "heroDescription": "该平台按照安全、可靠性和数据保护标准以云模式提供。了解如何与我们在培训、安全和专业人士方面展开合作。"
+    },
+    "section6": {
+      "contactTitle": "点击这里联系我们"
+    }
+  },
+  "contactUs": {
+    "section1": {
+      "bannerTitle": "联系我们",
+      "heroTitle": "我们随时为您服务",
+      "heroDescription": "您是否想了解更多关于我们培训、安全服务的信息或获取报价？请填写下面的表格或使用我们的直接联系方式，我们将尽快回复您。",
+      "formTitle": "联系表单",
+      "nome": "名字*",
+      "nomePlaceholder": "您的名字",
+      "cognome": "姓氏*",
+      "cognomePlaceholder": "您的姓氏",
+      "azienda": "公司*",
+      "aziendaPlaceholder": "您的公司名称",
+      "piva": "税号*",
+      "pivaPlaceholder": "增值税号",
+      "telefono": "电话 / 手机号码*",
+      "telefonoPlaceholder": "+39 123 456 7890",
+      "email": "电子邮件*",
+      "emailPlaceholder": "your.email@example.com",
+      "messaggioPlaceholder": "留下留言",
+      "submit": "提交",
+      "cancel": "取消",
+      "emailCardTitle": "电子邮件",
+      "emailCardSub": "如有任何疑问请发送邮件",
+      "phoneCardTitle": "电话",
+      "phoneCardSub": "周一至周五 9:00-18:00"
+    }
+  },
+  "auth": {
+    "common": {
+      "logoAlt": "Logo",
+      "emailLabel": "电子邮箱",
+      "emailPlaceholder": "请输入邮箱",
+      "goAhead": "继续",
+      "back": "返回",
+      "verifyOtp": "验证 OTP",
+      "confirm": "确认",
+      "proceed": "继续",
+      "close": "关闭"
+    },
+    "login": {
+      "enterEmailAlert": "请先输入邮箱",
+      "enterOtpTitle": "请输入发送到你邮箱的 OTP",
+      "enterEmailTitle": "请输入你的邮箱",
+      "otpSentTo": "OTP 已发送到"
+    },
+    "register": {
+      "enterEmailAlert": "请输入你的邮箱地址",
+      "enterEmailTitle": "请输入你的邮箱",
+      "otpIllustrationAlt": "OTP 验证",
+      "emailIllustrationAlt": "邮箱注册"
+    },
+    "chooseLanguage": {
+      "heroTitleLine1": "让我们改变学习新事物的体验",
+      "heroTitleLine2": "。",
+      "illustrationAlt": "学习插图",
+      "heroDescription": "我们致力于以更低成本为所有人提供高质量教育。",
+      "title": "选择首选语言"
+    },
+    "changePassword": {
+      "fillAllFieldsAlert": "请填写所有字段",
+      "passwordTooShortAlert": "密码太短",
+      "passwordMismatchAlert": "两次密码不一致",
+      "illustrationAlt": "重置密码",
+      "newPasswordLabel": "新密码*",
+      "newPasswordPlaceholder": "输入新密码",
+      "repeatPasswordLabel": "重复密码*",
+      "repeatPasswordPlaceholder": "确认密码"
+    },
+    "setup": {
+      "profileTitle": "设置用户资料",
+      "tabs": {
+        "role": "角色",
+        "information": "信息",
+        "password": "密码"
+      },
+      "steps": {
+        "step2of3": "步骤 2/3",
+        "step3of3": "步骤 3/3"
+      },
+      "role": {
+        "title": "角色",
+        "subtitle": "你是：",
+        "options": {
+          "standard": "标准用户 - 级别 1",
+          "business": "企业 - 级别 2",
+          "licensed": "授权用户 - 级别 3"
+        }
+      },
+      "infoRouter": {
+        "roleRequiredTitle": "必须先选择角色",
+        "roleRequiredDescription": "请先选择一个角色。",
+        "backToRoleSelection": "返回角色选择"
+      },
+      "info": {
+        "title": "信息",
+        "firstNameLabel": "名字",
+        "firstNamePlaceholder": "输入名字",
+        "lastNameLabel": "姓氏",
+        "lastNamePlaceholder": "输入姓氏",
+        "birthDateLabel": "出生日期",
+        "birthDatePlaceholder": "选择出生日期",
+        "cityLabel": "城市",
+        "cityPlaceholder": "输入出生城市",
+        "countryLabel": "国家",
+        "countryPlaceholder": "输入国家",
+        "addressLabel": "地址",
+        "addressPlaceholder": "街道、门牌号、邮编、城市、省份、国家",
+        "companyNameLabel": "公司名称",
+        "companyNamePlaceholder": "输入公司名称",
+        "officeLabel": "注册地址",
+        "officePlaceholder": "输入注册地址",
+        "vatNumberLabel": "增值税号",
+        "vatNumberPlaceholder": "输入增值税号",
+        "taxCodeLabel": "税号",
+        "taxCodePlaceholder": "输入税号",
+        "citizenshipTitle": "国籍",
+        "citizenshipForeign": "外国",
+        "citizenshipItalian": "意大利"
+      },
+      "password": {
+        "title": "创建你的密码",
+        "newPasswordLabel": "新密码*",
+        "newPasswordPlaceholder": "输入密码",
+        "minLengthRule": "最少 8 个字符（建议 12 个或以上）",
+        "mustIncludeTitle": "至少应包含：",
+        "ruleUppercase": "1 个大写字母 (A-Z)",
+        "ruleLowercase": "1 个小写字母 (a-z)",
+        "ruleNumber": "1 个数字 (0-9)",
+        "ruleSpecial": "1 个特殊字符 (!, ?, $, %, &)",
+        "noPersonalInfoRule": "不能包含用户名、真实姓名或易猜信息",
+        "confirmPasswordLabel": "确认密码*",
+        "confirmPasswordPlaceholder": "842000@Sa"
+      },
+      "companyInfo": {
+        "title": "企业信息",
+        "companyNameLabel": "公司法定名称*",
+        "companyNamePlaceholder": "输入完整公司名称",
+        "officeLabel": "注册地址*",
+        "officePlaceholder": "输入注册地址",
+        "vatLabel": "增值税号*",
+        "vatPlaceholder": "输入增值税号",
+        "taxCodeLabel": "税号（若不同于增值税号）*",
+        "emailLabel": "联系邮箱*"
+      },
+      "freelancer": {
+        "subdomainLabel": "子域名*",
+        "subdomainPlaceholder": "freelanceradmin.com",
+        "serviceTypeLabel": "服务类型*",
+        "serviceTypePlaceholder": "许可证"
+      },
+      "subdomainModal": {
+        "title": "子域名",
+        "description1": "输入你的域名，其余交给我们。",
+        "description2": "输入已购买域名，我们会让你的公司名称显示出来。",
+        "buyButton": "购买子域名",
+        "tipTitle": "提示：",
+        "tipText": "购买后将域名提供给我们，我们会自动完成绑定。"
+      }
+    }
+  },
   "footer": {
-  "product": "产品",
-  "overview": "概览",
-  "features": "功能特点",
-  "solutions": "解决方案",
-  "tutorial": "教程",
-  "pricing": "价格",
-  "company": "公司",
-  "whoWeAre": "关于我们",
-  "course": "课程",
-  "news": "新闻",
-  "social": "社交媒体",
-  "legal": "法律",
-  "terms": "条款",
-  "privacy": "隐私政策",
-  "cookies": "Cookie政策",
-  "contact": "联系我们",
-  "copyright": "© 2022 UnoSicurezza. 保留所有权利。",
-  "downloadApp": "下载应用"
-}
+    "product": "产品",
+    "overview": "概览",
+    "features": "功能特点",
+    "solutions": "解决方案",
+    "tutorial": "教程",
+    "pricing": "价格",
+    "company": "公司",
+    "whoWeAre": "关于我们",
+    "course": "课程",
+    "news": "新闻",
+    "social": "社交媒体",
+    "legal": "法律",
+    "terms": "条款",
+    "privacy": "隐私政策",
+    "cookies": "Cookie政策",
+    "contact": "联系我们",
+    "copyright": "© 2022 UnoSicurezza. 保留所有权利。",
+    "downloadApp": "下载应用"
+  }
 }

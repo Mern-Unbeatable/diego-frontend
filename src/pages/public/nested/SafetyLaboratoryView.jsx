@@ -6,19 +6,19 @@ import { useTranslation } from 'react-i18next';
 
 const SafetyLaboratoryView = () => {
   const { t } = useTranslation();
-  const includeItems = t('servicesPages.common.includeItems', {
+  const includeItems = t('servicesPages.section1.includeItems', {
     returnObjects: true,
   });
-  const sections = t('servicesPages.laboratory.sections', {
+  const sections = t('servicesPages.section11.sections', {
     returnObjects: true,
   });
 
   return (
     <Container className=" ">
       <Banner
-        description={t('servicesPages.laboratory.bannerDescription')}
+        description={t('servicesPages.section11.bannerDescription')}
         image={banner}
-        title={t('servicesPages.laboratory.bannerTitle')}
+        title={t('servicesPages.section11.bannerTitle')}
       />
 
 
@@ -30,12 +30,12 @@ const SafetyLaboratoryView = () => {
             <div className="max-w-2xl mx-auto">
               {/* Title */}
               <h1 className="text-4xl font-bold text-gray-900 mb-6">
-                {t('servicesPages.common.serviceDetailsTitle')}
+                {t('servicesPages.section1.serviceDetailsTitle')}
               </h1>
 
               {/* Introduction Paragraph */}
               <p className="text-gray-700 text-base leading-relaxed mb-8">
-                {t('servicesPages.laboratory.intro')}
+                {t('servicesPages.section11.intro')}
               </p>
 
               {/* Service Sections */}
@@ -60,7 +60,7 @@ const SafetyLaboratoryView = () => {
 
               {/* What's Included Section */}
               <div className="bg-[#F0F8F5] rounded-2xl p-6">
-                <h2 className="font-bold text-gray-900 mb-4 text-lg">{t('servicesPages.common.serviceIncludesTitle')}</h2>
+                <h2 className="font-bold text-gray-900 mb-4 text-lg">{t('servicesPages.section1.serviceIncludesTitle')}</h2>
                 <ul className="space-y-3">
                   {includeItems.map((item, index) => (
                     <li key={index} className="flex items-start text-gray-700 text-sm">

@@ -29,8 +29,8 @@ const CardDetailsRightSide = () => {
 
   return (
     <div className="mt-12 w-full rounded-xl bg-[#D4EBE2] px-8 py-6 sm:mt-14 md:mt-0">
-      <Heading level={4} className={''} h2={t('paymentPages.cardDetails.title')} />
-      <Heading level={4} className={'my-6'} h4={t('paymentPages.cardDetails.network')} />
+      <Heading level={4} className={''} h2={t('paymentPages.section2.title')} />
+      <Heading level={4} className={'my-6'} h4={t('paymentPages.section2.network')} />
       <form onSubmit={handleSubmit}>
         <div className="flex w-full items-center justify-between">
           <div className="h-auto w-[75px] bg-[#D4EBE2]">
@@ -54,14 +54,14 @@ const CardDetailsRightSide = () => {
               alt=""
             />
           </div>
-          <P p={t('paymentPages.cardDetails.seeAll')} />
+          <P p={t('paymentPages.section2.seeAll')} />
         </div>
         <Input
           TClassName={''}
           className={'bg-white text-[#505050]'}
           name={'name'}
           placeholder={'Franco Rossi'}
-          title={t('paymentPages.cardDetails.nameOnCard')}
+          title={t('paymentPages.section2.nameOnCard')}
           type={'text'}
         />
         <Input
@@ -69,7 +69,7 @@ const CardDetailsRightSide = () => {
           className={'bg-white text-[#505050]'}
           name={'number'}
           placeholder={'3333 3333 3333 3333'}
-          title={t('paymentPages.cardDetails.cardNumber')}
+          title={t('paymentPages.section2.cardNumber')}
           type={'text'}
         />
         <div className="flex items-center gap-4">
@@ -78,7 +78,7 @@ const CardDetailsRightSide = () => {
             className={'bg-white text-[#505050]'}
             name={'date'}
             placeholder={'Franco Rossi'}
-            title={t('paymentPages.cardDetails.expiryDate')}
+            title={t('paymentPages.section2.expiryDate')}
             type={'number'}
           />
           <Input
@@ -86,14 +86,14 @@ const CardDetailsRightSide = () => {
             className={'bg-white text-[#505050]'}
             name={'cvv'}
             placeholder={'111'}
-            title={t('paymentPages.cardDetails.cvv')}
+            title={t('paymentPages.section2.cvv')}
             type={'number'}
           />
         </div>
         <hr className="my-6 text-[#5F65C3]" />
         <div className="flex items-center justify-between text-[#505050]">
           <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
-            {t('paymentPages.cardDetails.subtotal')}
+            {t('paymentPages.section2.subtotal')}
           </p>
           <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
             €90.00
@@ -101,7 +101,7 @@ const CardDetailsRightSide = () => {
         </div>
         <div className="my-6 flex items-center justify-between text-[#505050]">
           <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
-            {t('paymentPages.cardDetails.total')}
+            {t('paymentPages.section2.total')}
           </p>
           <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
             €86.00
@@ -114,7 +114,7 @@ const CardDetailsRightSide = () => {
         >
           86,00 €
           <div className="flex items-center gap-3">
-            {t('paymentPages.cardDetails.payNow')}
+            {t('paymentPages.section2.payNow')}
             <FaArrowRight />
           </div>
         </button>
@@ -129,7 +129,7 @@ const CardDetailsRightSide = () => {
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 z-10 rounded-full bg-white p-2 text-gray-700 transition hover:bg-gray-200 hover:text-gray-900"
-              aria-label={t('paymentPages.success.close')}
+              aria-label={t('paymentPages.section3.close')}
             >
               <IoClose className="h-6 w-6" />
             </button>
@@ -145,15 +145,15 @@ const CardDetailsRightSide = () => {
               <Heading
                 level={4}
                 className={'mt-4 text-[#73BFA1]'}
-                h4={t('paymentPages.success.title')}
+                h4={t('paymentPages.section3.title')}
               />
               <Paragraph
                 className={
                   'mt-2 max-w-[300px] text-center font-semibold text-[#4A4A4A]'
                 }
-                p={t('paymentPages.success.description')}
+                p={t('paymentPages.section3.description')}
               />
-              <Button className={'mt-4'} text={t('paymentPages.success.backHome')} />
+              <Button className={'mt-4'} text={t('paymentPages.section3.backHome')} />
             </div>
           </div>
         </div>

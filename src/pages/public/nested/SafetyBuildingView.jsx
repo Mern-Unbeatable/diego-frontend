@@ -6,31 +6,31 @@ import { useTranslation } from 'react-i18next';
 
 const SafetyBuildingView = () => {
   const { t } = useTranslation();
-  const processItems = t('servicesPages.building.processItems', {
+  const processItems = t('servicesPages.section12.processItems', {
     returnObjects: true,
   });
-  const includeItems = t('servicesPages.common.includeItems', {
+  const includeItems = t('servicesPages.section1.includeItems', {
     returnObjects: true,
   });
 
   return (
     <Container className=" ">
       <Banner
-        description={t('servicesPages.building.bannerDescription')}
+        description={t('servicesPages.section12.bannerDescription')}
         image={banner}
-        title={t('servicesPages.building.bannerTitle')}
+        title={t('servicesPages.section12.bannerTitle')}
       />
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left Column - Service Details */}
           <div>
             <h1 className="text-4xl font-bold text-gray-900 mb-6">
-              {t('servicesPages.common.serviceDetailsTitle')}
+              {t('servicesPages.section1.serviceDetailsTitle')}
             </h1>
 
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-600 leading-relaxed mb-6">
-                {t('servicesPages.building.description')}
+                {t('servicesPages.section12.description')}
               </p>
               <div >
                 <ul className="list-disc pl-6 space-y-2 text-gray-600">
@@ -41,7 +41,7 @@ const SafetyBuildingView = () => {
 
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-6">
-                {t('servicesPages.building.cta')}
+                {t('servicesPages.section12.cta')}
               </h2>
               <div className='bg-[#F1F9F6] p-5 rounded-2xl'>
                 <ul className="list-disc pl-6 space-y-2 text-gray-600">

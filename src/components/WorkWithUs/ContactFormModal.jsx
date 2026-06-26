@@ -66,7 +66,7 @@ export default function ContactFormModal({ isOpen, onClose }) {
                 <div className="w-full bg-white rounded-lg p-8 shadow-lg">
                     {/* Header */}
                     <h1 className="text-3xl font-bold text-center text-gray-900 mb-5">
-                        {t('contactUs.formTitle')}
+                        {t('contactUs.section1.formTitle')}
                     </h1>
 
                     {/* Form */}
@@ -75,27 +75,27 @@ export default function ContactFormModal({ isOpen, onClose }) {
                         <div className="grid grid-cols-2 gap-3">
                             <div>
                                 <label className="block text-xs font-semibold text-gray-700 mb-3">
-                                    {t('contactUs.nome')}
+                                    {t('contactUs.section1.nome')}
                                 </label>
                                 <input
                                     type="text"
                                     name="nome"
                                     value={formData.nome}
                                     onChange={handleChange}
-                                    placeholder={t('contactUs.nomePlaceholder')}
+                                    placeholder={t('contactUs.section1.nomePlaceholder')}
                                     className="w-full text-xs px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
                             <div>
                                 <label className="block text-xs font-semibold text-gray-700 mb-3">
-                                    {t('contactUs.cognome')}
+                                    {t('contactUs.section1.cognome')}
                                 </label>
                                 <input
                                     type="text"
                                     name="cognome"
                                     value={formData.cognome}
                                     onChange={handleChange}
-                                    placeholder={t('contactUs.cognomePlaceholder')}
+                                    placeholder={t('contactUs.section1.cognomePlaceholder')}
                                     className="w-full px-2 py-2 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
@@ -105,27 +105,27 @@ export default function ContactFormModal({ isOpen, onClose }) {
                         <div className="grid grid-cols-2 gap-3">
                             <div>
                                 <label className="block text-xs font-semibold text-gray-700 mb-3">
-                                    {t('contactUs.azienda')}
+                                    {t('contactUs.section1.azienda')}
                                 </label>
                                 <input
                                     type="text"
                                     name="azienda"
                                     value={formData.azienda}
                                     onChange={handleChange}
-                                    placeholder={t('contactUs.aziendaPlaceholder')}
+                                    placeholder={t('contactUs.section1.aziendaPlaceholder')}
                                     className="w-full px-2 py-2 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
                             <div>
                                 <label className="block text-xs font-semibold text-gray-700 mb-3">
-                                    {t('contactUs.piva')}
+                                    {t('contactUs.section1.piva')}
                                 </label>
                                 <input
                                     type="text"
                                     name="piva"
                                     value={formData.piva}
                                     onChange={handleChange}
-                                    placeholder={t('contactUs.pivaPlaceholder')}
+                                    placeholder={t('contactUs.section1.pivaPlaceholder')}
                                     className="w-full px-2 py-2 tex-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
@@ -135,27 +135,27 @@ export default function ContactFormModal({ isOpen, onClose }) {
                         <div className="grid grid-cols-2 gap-3">
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-3">
-                                    {t('contactUs.telefono')}
+                                    {t('contactUs.section1.telefono')}
                                 </label>
                                 <input
                                     type="tel"
                                     name="telefono"
                                     value={formData.telefono}
                                     onChange={handleChange}
-                                    placeholder={t('contactUs.telefonoPlaceholder')}
+                                    placeholder={t('contactUs.section1.telefonoPlaceholder')}
                                     className="w-full text-xs px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-3">
-                                    {t('contactUs.email')}
+                                    {t('contactUs.section1.email')}
                                 </label>
                                 <input
                                     type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    placeholder={t('contactUs.emailPlaceholder')}
+                                    placeholder={t('contactUs.section1.emailPlaceholder')}
                                     className="w-full px-2 py-2 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
@@ -164,13 +164,13 @@ export default function ContactFormModal({ isOpen, onClose }) {
                         {/* Message Textarea */}
                         <div>
                             <label className="block text-xs font-semibold text-gray-700 mb-3">
-                                {t('contactUs.messaggioPlaceholder')}
+                                {t('contactUs.section1.messaggioPlaceholder')}
                             </label>
                             <textarea
                                 name="messaggio"
                                 value={formData.messaggio}
                                 onChange={handleChange}
-                                placeholder={t('contactUs.messaggioPlaceholder')}
+                                placeholder={t('contactUs.section1.messaggioPlaceholder')}
                                 rows="6"
                                 className="w-full px-2 py-2 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50 resize-none"
                             ></textarea>
@@ -182,14 +182,14 @@ export default function ContactFormModal({ isOpen, onClose }) {
                                 type="submit"
                                 className="w-full bg-[#73BFA1] hover:bg-[#73BFA1] text-white font-semibold py-2 rounded-md transition duration-300"
                             >
-                                {t('contactUs.submit')}
+                                {t('contactUs.section1.submit')}
                             </button>
                             <button
                                 type="button"
                                 onClick={handleCancel}
                                 className="w-full border-2 border-gray-400 text-gray-700 font-semibold py-2 rounded-md hover:bg-gray-50 transition duration-300"
                             >
-                                {t('contactUs.cancel')}
+                                {t('contactUs.section1.cancel')}
                             </button>
                         </div>
                     </form>

@@ -8,7 +8,7 @@ const BannerSection = () => {
   return (
     <Container>
       <Banner
-        description={t('servicesPages.aspRspp.bannerDescription')}
+        description={t('servicesPages.section4.bannerDescription')}
         image={'/image/home/banner/image22.jpg'}
         title={t('navbar.servicesDropdown.servizioASPP')}
       />

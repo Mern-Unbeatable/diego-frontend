@@ -19,7 +19,7 @@ export default function CoursesSection() {
         <section className="bg-[#f6f6f6] py-10">
             <div className="max-w-6xl mx-auto px-4">
                 <h2 className="text-[30px] font-semibold text-[#333] mb-8">
-                    {t('trainingPages.courseCards.title')}
+                    {t('trainingPages.section7.title')}
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">

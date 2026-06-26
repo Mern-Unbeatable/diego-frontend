@@ -45,13 +45,13 @@ export default function ServiceForm({ title }) {
     };
 
     const formatFileSize = (bytes) => {
-        if (bytes === 0) return `0 ${t('servicesPages.form.bytes')}`;
+        if (bytes === 0) return `0 ${t('servicesPages.section19.bytes')}`;
         const k = 1024;
         const sizes = [
-            t('servicesPages.form.bytes'),
-            t('servicesPages.form.kb'),
-            t('servicesPages.form.mb'),
-            t('servicesPages.form.gb'),
+            t('servicesPages.section19.bytes'),
+            t('servicesPages.section19.kb'),
+            t('servicesPages.section19.mb'),
+            t('servicesPages.section19.gb'),
         ];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
@@ -79,10 +79,10 @@ export default function ServiceForm({ title }) {
             // Reset form after successful submission
             // setFormData(initialState);
             // setFiles([]);
-            alert(t('servicesPages.form.successAlert'));
+            alert(t('servicesPages.section19.successAlert'));
         } catch (error) {
             console.error('Error submitting form:', error);
-            alert(t('servicesPages.form.errorAlert'));
+            alert(t('servicesPages.section19.errorAlert'));
         } finally {
             setLoading(false);
         }
@@ -90,11 +90,11 @@ export default function ServiceForm({ title }) {
     return (
         <div className="bg-[#FFF5E6] rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                {t('servicesPages.form.title')}
+                {t('servicesPages.section19.title')}
             </h2>
             <p className="text-gray-500 mb-6">
-                {t('servicesPages.form.subtitle', {
-                    service: title || t('servicesPages.form.defaultService'),
+                {t('servicesPages.section19.subtitle', {
+                    service: title || t('servicesPages.section19.defaultService'),
                 })}
             </p>
 
@@ -102,7 +102,7 @@ export default function ServiceForm({ title }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('servicesPages.form.firstName')} <span className="text-red-500">*</span>
+                            {t('servicesPages.section19.firstName')} <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
@@ -116,7 +116,7 @@ export default function ServiceForm({ title }) {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('servicesPages.form.lastName')} <span className="text-red-500">*</span>
+                            {t('servicesPages.section19.lastName')} <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
@@ -133,7 +133,7 @@ export default function ServiceForm({ title }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('servicesPages.form.company')}
+                            {t('servicesPages.section19.company')}
                         </label>
                         <input
                             type="text"
@@ -146,7 +146,7 @@ export default function ServiceForm({ title }) {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('servicesPages.form.vat')}
+                            {t('servicesPages.section19.vat')}
                         </label>
                         <input
                             type="text"
@@ -162,7 +162,7 @@ export default function ServiceForm({ title }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('servicesPages.form.phone')} <span className="text-red-500">*</span>
+                            {t('servicesPages.section19.phone')} <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="tel"
@@ -176,7 +176,7 @@ export default function ServiceForm({ title }) {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('servicesPages.form.email')} <span className="text-red-500">*</span>
+                            {t('servicesPages.section19.email')} <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="email"
@@ -192,7 +192,7 @@ export default function ServiceForm({ title }) {
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {t('servicesPages.form.message')}
+                        {t('servicesPages.section19.message')}
                     </label>
                     <textarea
                         name="messaggio"
@@ -207,7 +207,7 @@ export default function ServiceForm({ title }) {
                 {/* File Upload */}
                 <div >
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {t('servicesPages.form.attachDocuments')}
+                        {t('servicesPages.section19.attachDocuments')}
                     </label>
                     <div
                         {...getRootProps()}
@@ -231,15 +231,15 @@ export default function ServiceForm({ title }) {
                         </svg>
                         <p className="mt-2 text-sm text-gray-600">
                             {isDragActive ? (
-                                t('servicesPages.form.dropHere')
+                                t('servicesPages.section19.dropHere')
                             ) : (
                                 <>
-                                    <span className="font-medium text-blue-600">{t('servicesPages.form.clickToUpload')}</span> {t('servicesPages.form.orDragHere')}
+                                    <span className="font-medium text-blue-600">{t('servicesPages.section19.clickToUpload')}</span> {t('servicesPages.section19.orDragHere')}
                                 </>
                             )}
                         </p>
                         <p className="text-xs text-gray-500 mt-1">
-                            {t('servicesPages.form.maxFileSize')}
+                            {t('servicesPages.section19.maxFileSize')}
                         </p>
                     </div>
 
@@ -273,11 +273,11 @@ export default function ServiceForm({ title }) {
                 {/* Privacy Checkbox */}
 
                 <div className=" items-start">
-                    <b className='text-[#C43216] '>{t('servicesPages.form.privacyTitle')}</b>
+                    <b className='text-[#C43216] '>{t('servicesPages.section19.privacyTitle')}</b>
 
                     <div className=" bg-[#F1F9F6] rounded-3xl p-5 mt-5">
                         <label className="text-sm text-gray-600">
-                            {t('servicesPages.form.privacyText')}
+                            {t('servicesPages.section19.privacyText')}
                         </label>
                     </div>
                 </div>
@@ -290,10 +290,10 @@ export default function ServiceForm({ title }) {
                 >
                     {loading ? (
                         <span className="flex items-center justify-center">
-                            {t('servicesPages.form.sending')}
+                            {t('servicesPages.section19.sending')}
                         </span>
                     ) : (
-                        t('servicesPages.form.submit')
+                        t('servicesPages.section19.submit')
                     )}
                 </button>
             </form>

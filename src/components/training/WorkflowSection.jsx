@@ -14,7 +14,7 @@ const stepIcons = [Users, FileText, ClipboardList, BookOpen, MonitorPlay, Users]
 
 export default function WorkflowSection() {
     const { t } = useTranslation();
-    const steps = t('trainingPages.workflow.steps', { returnObjects: true });
+    const steps = t('trainingPages.section9.steps', { returnObjects: true });
 
     return (
         <div className="max-w-sm py-5">

@@ -54,23 +54,23 @@ const MissionCards = () => {
   const missionData = [
     {
       icon: Shield,
-      title: t('chiSiamo.mission.card1Title'),
-      description: t('chiSiamo.mission.card1Desc'),
+      title: t('chiSiamo.section2.card1Title'),
+      description: t('chiSiamo.section2.card1Desc'),
     },
     {
       icon: Zap,
-      title: t('chiSiamo.mission.card2Title'),
-      description: t('chiSiamo.mission.card2Desc'),
+      title: t('chiSiamo.section2.card2Title'),
+      description: t('chiSiamo.section2.card2Desc'),
     },
     {
       icon: Target,
-      title: t('chiSiamo.mission.card3Title'),
-      description: t('chiSiamo.mission.card3Desc'),
+      title: t('chiSiamo.section2.card3Title'),
+      description: t('chiSiamo.section2.card3Desc'),
     },
     {
       icon: Award,
-      title: t('chiSiamo.mission.card4Title'),
-      description: t('chiSiamo.mission.card4Desc'),
+      title: t('chiSiamo.section2.card4Title'),
+      description: t('chiSiamo.section2.card4Desc'),
     },
   ];
 

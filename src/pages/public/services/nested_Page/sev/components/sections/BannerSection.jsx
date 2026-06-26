@@ -7,8 +7,8 @@ export const BannerSection = () => {
   return (
     <>
       <Banner
-        description={t('servicesPages.sevCourses.bannerDescription')}
-        title={t('servicesPages.sevCourses.bannerTitle')}
+        description={t('servicesPages.section3.bannerDescription')}
+        title={t('servicesPages.section3.bannerTitle')}
         image={'/image/home/banner/image.jpg'}
       />
     </>

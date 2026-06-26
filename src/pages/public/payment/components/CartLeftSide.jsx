@@ -21,14 +21,14 @@ const CartLeftSide = () => {
       >
         <IoMdArrowRoundBack className="text-lg text-[#73BFA1]" />
         <h4 className={`text-base font-bold text-[#73BFA1] md:text-lg`}>
-          {t('paymentPages.cart.continueShopping')}
+          {t('paymentPages.section1.continueShopping')}
         </h4>
       </button>
 
       <hr className="my-6 text-[#D0CFCF]" />
 
-      <H4 h4={t('paymentPages.cart.title')} />
-      <P className={'my-5'} p={t('paymentPages.cart.contains')} />
+      <H4 h4={t('paymentPages.section1.title')} />
+      <P className={'my-5'} p={t('paymentPages.section1.contains')} />
 
       <div className="flex items-center justify-between gap-10 rounded-xl bg-white p-3">
         <div className="flex items-center gap-10">
@@ -41,8 +41,8 @@ const CartLeftSide = () => {
           </div>
 
           <div>
-            <H3 className={''} h3={t('paymentPages.cart.courseDescription')} />
-            <P p={t('paymentPages.cart.courseName')} />
+            <H3 className={''} h3={t('paymentPages.section1.courseDescription')} />
+            <P p={t('paymentPages.section1.courseName')} />
           </div>
         </div>
 

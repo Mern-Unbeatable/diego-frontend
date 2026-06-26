@@ -6,15 +6,15 @@ import { useTranslation } from 'react-i18next';
 
 const SafetyServiceView = () => {
   const { t } = useTranslation();
-  const includeItems = t('servicesPages.common.includeItems', {
+  const includeItems = t('servicesPages.section1.includeItems', {
     returnObjects: true,
   });
 
   return <Container className=" ">
     <Banner
-      description={t('servicesPages.aspRspp.bannerDescription')}
+      description={t('servicesPages.section4.bannerDescription')}
       image={banner}
-      title={t('servicesPages.aspRspp.bannerTitle')}
+      title={t('servicesPages.section4.bannerTitle')}
     />
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -23,24 +23,24 @@ const SafetyServiceView = () => {
         {/* Left Column - Service Details */}
         <div>
 
-          <Heading level={3}>{t('servicesPages.common.serviceDetailsTitle')}</Heading>
+          <Heading level={3}>{t('servicesPages.section1.serviceDetailsTitle')}</Heading>
 
           <div className="prose prose-lg max-w-none mt-3 ">
             <p className="text-gray-600 leading-relaxed mb-6">
-              {t('servicesPages.aspRspp.description')}
+              {t('servicesPages.section4.description')}
             </p>
 
             <ul className="list-disc pl-6 mb-8 space-y-2 text-gray-600">
               <li>
-                <span className="font-semibold">ASPP</span> {t('servicesPages.aspRspp.aspp')}
+                <span className="font-semibold">ASPP</span> {t('servicesPages.section4.aspp')}
               </li>
               <li>
-                <span className="font-semibold">RSPP</span> {t('servicesPages.aspRspp.rspp')}
+                <span className="font-semibold">RSPP</span> {t('servicesPages.section4.rspp')}
               </li>
             </ul>
 
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              {t('servicesPages.common.serviceIncludesTitle')}
+              {t('servicesPages.section1.serviceIncludesTitle')}
             </h2>
             <div className='bg-[#F1F9F6] p-5 rounded-2xl'>
               <ul className="list-disc pl-6 space-y-2 text-gray-600">

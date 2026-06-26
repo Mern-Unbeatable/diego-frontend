@@ -12,7 +12,7 @@ const TrainingOurPlatformView = () => {
       <Banner
 
         image={banner}
-        title={t('trainingPages.ourPlatform.bannerTitle')}
+        title={t('trainingPages.section2.bannerTitle')}
       />
       <CourseOverview />
     </Container>

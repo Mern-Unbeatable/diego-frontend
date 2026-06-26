@@ -19,10 +19,10 @@ export default function CatalogCard() {
     return (
         <section className=" py-14">
 
-            <h3 className='text-center text-xl md:text-3xl'>{t('trainingPages.catalog.platformTitle')}</h3>
+            <h3 className='text-center text-xl md:text-3xl'>{t('trainingPages.section5.platformTitle')}</h3>
             <div className="max-w-6xl mx-auto px-4 mt-14">
 
-                <Heading level={5}>  {t('trainingPages.courseCards.title')}</Heading>
+                <Heading level={5}>  {t('trainingPages.section7.title')}</Heading>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-3 ">
                     {courses.map((course, index) => (
                         <div
@@ -60,20 +60,20 @@ export default function CatalogCard() {
 
                                     {/* 5 star review */}
                                     <div className="flex  text-[14px] space-x-2">
-                                        <span className="txt-[#3FC89E]">{t('trainingPages.catalog.ratingValue')}</span>
+                                        <span className="txt-[#3FC89E]">{t('trainingPages.section5.ratingValue')}</span>
                                         <span className="text-yellow-400">   ★★★★★</span>
-                                        <span className="text-[#969696]">{t('trainingPages.catalog.ratingCount')}</span>
+                                        <span className="text-[#969696]">{t('trainingPages.section5.ratingCount')}</span>
                                     </div>
                                 </div>
 
                                 {/* buttons */}
                                 <div className="flex gap-2 mt-3">
                                     <button className="flex-1 bg-[#73BFA1] text-white text-[12px] py-2 rounded-md hover:bg-[#2fa15d] transition">
-                                        {t('trainingPages.catalog.signUp')}
+                                        {t('trainingPages.section5.signUp')}
                                     </button>
 
                                     <a className="flex-1 border text-center border-[#73BFA1] text-[#34b86a] text-[12px] py-2 rounded-md hover:bg-[#73BFA1] hover:text-white transition" href="/training/course/details">
-                                        {t('trainingPages.catalog.details')}
+                                        {t('trainingPages.section5.details')}
                                     </a>
                                 </div>
                             </div>

@@ -39,16 +39,16 @@ const PillarsCards = () => {
 
   const pillarsData = [
     {
-      title: t('chiSiamo.pillars.card1Title'),
-      description: t('chiSiamo.pillars.card1Desc'),
+      title: t('chiSiamo.section3.card1Title'),
+      description: t('chiSiamo.section3.card1Desc'),
     },
     {
-      title: t('chiSiamo.pillars.card2Title'),
-      description: t('chiSiamo.pillars.card2Desc'),
+      title: t('chiSiamo.section3.card2Title'),
+      description: t('chiSiamo.section3.card2Desc'),
     },
     {
-      title: t('chiSiamo.pillars.card3Title'),
-      description: t('chiSiamo.pillars.card3Desc'),
+      title: t('chiSiamo.section3.card3Title'),
+      description: t('chiSiamo.section3.card3Desc'),
     },
   ];
 

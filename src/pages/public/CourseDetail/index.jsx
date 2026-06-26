@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 const CourseDetails = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { t } = useTranslation();
-    const objectives = t('trainingPages.courseDetail.objectives', {
+    const objectives = t('trainingPages.section11.objectives', {
         returnObjects: true,
     });
 
@@ -17,7 +17,7 @@ const CourseDetails = () => {
 
                 <div className="mb-8 flex items-center gap-2">
                     <ChevronLeft className="h-5 w-5 text-green-600" />
-                    <button className="text-green-600 hover:text-green-700 font-semibold">{t('trainingPages.courseDetail.backToCatalog')}</button>
+                    <button className="text-green-600 hover:text-green-700 font-semibold">{t('trainingPages.section11.backToCatalog')}</button>
                 </div>
 
                 <div className="grid gap-8 md:grid-cols-3">
@@ -45,18 +45,18 @@ const CourseDetails = () => {
                                 ))}
                                 <Star className="h-5 w-5 text-gray-300" />
                             </div>
-                            <span className="text-sm text-gray-600">{t('trainingPages.courseDetail.rating')}</span>
+                            <span className="text-sm text-gray-600">{t('trainingPages.section11.rating')}</span>
                         </div>
 
                         {/* Course Title and Description */}
-                        <h1 className="mb-6 text-3xl font-bold text-gray-900">{t('trainingPages.courseDetail.title')}</h1>
+                        <h1 className="mb-6 text-3xl font-bold text-gray-900">{t('trainingPages.section11.title')}</h1>
                         <p className="mb-8 text-gray-700 leading-relaxed">
-                            {t('trainingPages.courseDetail.description')}
+                            {t('trainingPages.section11.description')}
                         </p>
 
                         {/* Objectives Section */}
                         <div>
-                            <h2 className="mb-4 text-xl font-bold text-gray-900">{t('trainingPages.courseDetail.objectivesTitle')}</h2>
+                            <h2 className="mb-4 text-xl font-bold text-gray-900">{t('trainingPages.section11.objectivesTitle')}</h2>
                             <div className="space-y-3">
                                 {objectives.map((item, index) => (
                                     <div className="flex items-start gap-3" key={index}>
@@ -73,17 +73,17 @@ const CourseDetails = () => {
                         <div className="mb-6 flex items-baseline gap-3">
                             <span className="text-2xl font-bold text-gray-800">€25.00</span>
                             <span className="text-xl font-bold text-[#73BFA1]">€18.00</span>
-                            <span className="text-xs text-gray-600">{t('trainingPages.courseDetail.specialPrice')}</span>
+                            <span className="text-xs text-gray-600">{t('trainingPages.section11.specialPrice')}</span>
                         </div>
 
                         <div className="mb-6 space-y-2 text-sm text-gray-700">
                             <div className="flex items-center gap-2">
                                 <CheckCircle className="h-4 w-4 text-[#73BFA1]" />
-                                <span>{t('trainingPages.courseDetail.duration')}</span>
+                                <span>{t('trainingPages.section11.duration')}</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <CheckCircle className="h-4 w-4 text-[#73BFA1]" />
-                                <span>{t('trainingPages.courseDetail.code')}</span>
+                                <span>{t('trainingPages.section11.code')}</span>
                             </div>
                         </div>
 
@@ -91,7 +91,7 @@ const CourseDetails = () => {
                             onClick={() => setIsModalOpen(true)}
                             className="w-full rounded-full bg-[#73BFA1] py-3 font-semibold text-white hover:bg-[#73BFA1] transition mb-6"
                         >
-                            {t('trainingPages.courseDetail.enrollNow')}
+                            {t('trainingPages.section11.enrollNow')}
                         </button>
                     </div>
                 </div>

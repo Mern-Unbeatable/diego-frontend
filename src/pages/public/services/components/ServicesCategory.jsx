@@ -8,10 +8,10 @@ const ServicesCategory = ({ categories, loading }) => {
   return (
     <Container className="my-5 md:my-10 ">
       {loading ? (
-        <Heading h2={t('servicesPages.servicesLanding.loading')}></Heading>
+        <Heading h2={t('servicesPages.section2.loading')}></Heading>
       ) : (
         <div>
-          <Heading className={'mb-10'} h2={t('servicesPages.servicesLanding.categoryTitle')}></Heading>
+          <Heading className={'mb-10'} h2={t('servicesPages.section2.categoryTitle')}></Heading>
           <div className="flex flex-wrap justify-center gap-[48px]">
             {categories.map((category) => (
               <div

@@ -260,16 +260,16 @@ export default function ContactUs() {
     <div className="min-h-screen bg-white">
       <Banner
         image={banner}
-        title={t('contactUs.bannerTitle')}
+        title={t('contactUs.section1.bannerTitle')}
       />
 
       {/* Hero Section */}
       <div className="max-w-4xl mx-auto px-6 py-16 text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          {t('contactUs.heroTitle')}
+          {t('contactUs.section1.heroTitle')}
         </h1>
         <p className="text-gray-700 text-base leading-relaxed">
-          {t('contactUs.heroDescription')}
+          {t('contactUs.section1.heroDescription')}
         </p>
       </div>
 
@@ -277,7 +277,7 @@ export default function ContactUs() {
       <div className="max-w-4xl mx-auto px-6 pb-20">
         <div className="border border-gray-200 rounded-lg p-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-            {t('contactUs.formTitle')}
+            {t('contactUs.section1.formTitle')}
           </h2>
 
           <form onSubmit={handleSubmit}>
@@ -285,14 +285,14 @@ export default function ContactUs() {
               {/* Nome */}
               <div>
                 <label className="block text-gray-900 font-medium mb-2 text-sm">
-                  {t('contactUs.nome')}
+                  {t('contactUs.section1.nome')}
                 </label>
                 <input
                   type="text"
                   name="nome"
                   value={formData.nome}
                   onChange={handleChange}
-                  placeholder={t('contactUs.nomePlaceholder')}
+                  placeholder={t('contactUs.section1.nomePlaceholder')}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-300"
                   required
                 />
@@ -301,14 +301,14 @@ export default function ContactUs() {
               {/* Cognome */}
               <div>
                 <label className="block text-gray-900 font-medium mb-2 text-sm">
-                  {t('contactUs.cognome')}
+                  {t('contactUs.section1.cognome')}
                 </label>
                 <input
                   type="text"
                   name="cognome"
                   value={formData.cognome}
                   onChange={handleChange}
-                  placeholder={t('contactUs.cognomePlaceholder')}
+                  placeholder={t('contactUs.section1.cognomePlaceholder')}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-300"
                   required
                 />
@@ -317,14 +317,14 @@ export default function ContactUs() {
               {/* Azienda */}
               <div>
                 <label className="block text-gray-900 font-medium mb-2 text-sm">
-                  {t('contactUs.azienda')}
+                  {t('contactUs.section1.azienda')}
                 </label>
                 <input
                   type="text"
                   name="azienda"
                   value={formData.azienda}
                   onChange={handleChange}
-                  placeholder={t('contactUs.aziendaPlaceholder')}
+                  placeholder={t('contactUs.section1.aziendaPlaceholder')}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-300"
                   required
                 />
@@ -333,14 +333,14 @@ export default function ContactUs() {
               {/* P.IVA */}
               <div>
                 <label className="block text-gray-900 font-medium mb-2 text-sm">
-                  {t('contactUs.piva')}
+                  {t('contactUs.section1.piva')}
                 </label>
                 <input
                   type="text"
                   name="partitaIva"
                   value={formData.partitaIva}
                   onChange={handleChange}
-                  placeholder={t('contactUs.pivaPlaceholder')}
+                  placeholder={t('contactUs.section1.pivaPlaceholder')}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-300"
                   required
                 />
@@ -349,14 +349,14 @@ export default function ContactUs() {
               {/* Telefono */}
               <div>
                 <label className="block text-gray-900 font-medium mb-2 text-sm">
-                  {t('contactUs.telefono')}
+                  {t('contactUs.section1.telefono')}
                 </label>
                 <input
                   type="tel"
                   name="telefono"
                   value={formData.telefono}
                   onChange={handleChange}
-                  placeholder={t('contactUs.telefonoPlaceholder')}
+                  placeholder={t('contactUs.section1.telefonoPlaceholder')}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-300"
                   required
                 />
@@ -365,14 +365,14 @@ export default function ContactUs() {
               {/* Email */}
               <div>
                 <label className="block text-gray-900 font-medium mb-2 text-sm">
-                  {t('contactUs.email')}
+                  {t('contactUs.section1.email')}
                 </label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder={t('contactUs.emailPlaceholder')}
+                  placeholder={t('contactUs.section1.emailPlaceholder')}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-300"
                   required
                 />
@@ -385,7 +385,7 @@ export default function ContactUs() {
                 name="messaggio"
                 value={formData.messaggio}
                 onChange={handleChange}
-                placeholder={t('contactUs.messaggioPlaceholder')}
+                placeholder={t('contactUs.section1.messaggioPlaceholder')}
                 rows="6"
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-300 resize-none"
               ></textarea>
@@ -397,14 +397,14 @@ export default function ContactUs() {
                 type="submit"
                 className="flex-1 bg-[#73BFA1] text-white font-medium py-3 px-6 rounded-lg transition duration-200"
               >
-                {t('contactUs.submit')}
+                {t('contactUs.section1.submit')}
               </button>
               <button
                 type="button"
                 onClick={handleReset}
                 className="flex-1 border-2 border-gray-900 text-gray-900 font-medium py-3 px-6 rounded-lg hover:bg-gray-50 transition duration-200"
               >
-                {t('contactUs.cancel')}
+                {t('contactUs.section1.cancel')}
               </button>
             </div>
           </form>
@@ -422,11 +422,11 @@ export default function ContactUs() {
               </div>
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">
-              {t('contactUs.emailCardTitle')}
+              {t('contactUs.section1.emailCardTitle')}
             </h3>
             <p className="text-[#73BFA1] font-medium mb-1">info@unosicurezza.it</p>
             <p className="text-gray-600 text-sm">
-              {t('contactUs.emailCardSub')}
+              {t('contactUs.section1.emailCardSub')}
             </p>
           </div>
 
@@ -438,11 +438,11 @@ export default function ContactUs() {
               </div>
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">
-              {t('contactUs.phoneCardTitle')}
+              {t('contactUs.section1.phoneCardTitle')}
             </h3>
             <p className="text-[#73BFA1] font-medium mb-1">+39 02 1234 5678</p>
             <p className="text-gray-600 text-sm">
-              {t('contactUs.phoneCardSub')}
+              {t('contactUs.section1.phoneCardSub')}
             </p>
           </div>
         </div>

@@ -4,19 +4,19 @@ import { useTranslation } from 'react-i18next';
 
 const HowWorks = () => {
     const { t } = useTranslation();
-    const sections = t('trainingPages.howWorks.sections', { returnObjects: true });
+    const sections = t('trainingPages.section10.sections', { returnObjects: true });
 
     return (
         <div className="min-h-screen bg-white p-4 sm:p-8 md:p-12">
             {/* Header Section */}
             <div className="mx-auto mb-16 max-w-6xl">
                 <h1 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
-                    {t('trainingPages.howWorks.headerTitle')}
+                    {t('trainingPages.section10.headerTitle')}
                 </h1>
                 <p className="mb-6 text-sm leading-relaxed text-gray-600 md:text-base">
-                    {t('trainingPages.howWorks.headerDescription')}
+                    {t('trainingPages.section10.headerDescription')}
                 </p>
-                <span className="text-[#73BFA1]">"{t('trainingPages.howWorks.headerCta')}"</span>
+                <span className="text-[#73BFA1]">"{t('trainingPages.section10.headerCta')}"</span>
             </div>
 
             {howWorksData.map((section, index) => {

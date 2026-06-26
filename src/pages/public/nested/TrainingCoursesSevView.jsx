@@ -12,7 +12,7 @@ const TrainingCoursesSevView = () => {
       <Banner
 
         image={banner}
-        title={t('trainingPages.sev.bannerTitle')}
+        title={t('trainingPages.section4.bannerTitle')}
       />
       <CourseCard />
     </Container>

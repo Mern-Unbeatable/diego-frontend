@@ -133,19 +133,19 @@ const WorkWithUsView = () => {
         {/* Banner */}
         <Banner
           image={banner}
-          title={t('workWithUs.bannerTitle')}
+          title={t('workWithUs.section5.bannerTitle')}
         />
 
         {/* Hero */}
         <div className="max-w-4xl mx-auto px-4 py-12 text-center">
           <span className="bg-[#E4F0E8] text-xs p-3 rounded-full text-[#5C9981]">
-            {t('workWithUs.badge')}
+            {t('workWithUs.section5.badge')}
           </span>
           <h1 className="mt-5 text-2xl font-bold text-gray-900 mb-4">
-            {t('workWithUs.heroTitle')}
+            {t('workWithUs.section5.heroTitle')}
           </h1>
           <p className="text-gray-600 text-sm leading-relaxed max-w-2xl mx-auto">
-            {t('workWithUs.heroDescription')}
+            {t('workWithUs.section5.heroDescription')}
           </p>
         </div>
 

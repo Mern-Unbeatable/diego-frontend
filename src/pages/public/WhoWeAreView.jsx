@@ -101,7 +101,7 @@ const ChiSiamo = () => {
     <div className="w-full bg-white">
       <Banner
         image={banner}
-        title={t('chiSiamo.bannerTitle')}
+        title={t('chiSiamo.section1.bannerTitle')}
       />
 
       {/* Header Section */}
@@ -115,38 +115,38 @@ const ChiSiamo = () => {
                 <span className="text-white text-xs font-bold">S</span>
               </div>
               <p className="text-gray-700 text-sm leading-relaxed">
-                {t('chiSiamo.intro')}
+                {t('chiSiamo.section1.intro')}
               </p>
             </div>
 
             <div className="space-y-4 text-gray-700 text-sm leading-relaxed">
               <div>
                 <p className="font-semibold mb-2">
-                  {t('chiSiamo.objectiveLabel')}
+                  {t('chiSiamo.section1.objectiveLabel')}
                 </p>
               </div>
 
               <div>
-                <h3 className="font-semibold mb-2">{t('chiSiamo.whatWeDoLabel')}</h3>
+                <h3 className="font-semibold mb-2">{t('chiSiamo.section1.whatWeDoLabel')}</h3>
                 <p>
-                  <strong>{t('chiSiamo.formazione')}</strong> {t('chiSiamo.formazioneDesc')}
-                </p>
-              </div>
-
-              <div>
-                <p>
-                  <strong>{t('chiSiamo.sicurezza')}</strong> {t('chiSiamo.sicurezzaDesc')}
+                  <strong>{t('chiSiamo.section1.formazione')}</strong> {t('chiSiamo.section1.formazioneDesc')}
                 </p>
               </div>
 
               <div>
                 <p>
-                  <strong>{t('chiSiamo.salute')}</strong> {t('chiSiamo.saluteDesc')}
+                  <strong>{t('chiSiamo.section1.sicurezza')}</strong> {t('chiSiamo.section1.sicurezzaDesc')}
                 </p>
               </div>
 
               <div>
-                <p className="italic">{t('chiSiamo.tagline')}</p>
+                <p>
+                  <strong>{t('chiSiamo.section1.salute')}</strong> {t('chiSiamo.section1.saluteDesc')}
+                </p>
+              </div>
+
+              <div>
+                <p className="italic">{t('chiSiamo.section1.tagline')}</p>
               </div>
             </div>
           </div>
@@ -167,10 +167,10 @@ const ChiSiamo = () => {
       {/* Mission Section */}
       <div className="max-w-6xl mx-auto px-4 py-16 text-center">
         <h2 className="text-3xl font-bold text-gray-900 mb-6">
-          {t('chiSiamo.missionTitle')}
+          {t('chiSiamo.section1.missionTitle')}
         </h2>
         <p className="text-gray-600 text-sm leading-relaxed max-w-3xl mx-auto mb-12">
-          {t('chiSiamo.missionDesc')}
+          {t('chiSiamo.section1.missionDesc')}
         </p>
         <MissionCards />
       </div>
@@ -178,7 +178,7 @@ const ChiSiamo = () => {
       {/* Pillars Section */}
       <div className="max-w-6xl mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-          {t('chiSiamo.pillarsTitle')}
+          {t('chiSiamo.section1.pillarsTitle')}
         </h2>
         <PillarsCards />
       </div>
