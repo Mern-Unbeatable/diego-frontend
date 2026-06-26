@@ -1,13 +1,20 @@
 import Banner from '../../../components/common/Banner';
-import banner from '../../../../src/assets/images/banner/safety/banner14.png'
+import banner from '../../../../src/assets/images/banner/safety/banner14.png';
 import { Container, Heading } from '../../../components/ui';
 import ServiceForm from '../services/components/ServiceForm';
+import { useTranslation } from 'react-i18next';
+
 const SafetyServiceView = () => {
-  return <Container className=' '>
+  const { t } = useTranslation();
+  const includeItems = t('servicesPages.common.includeItems', {
+    returnObjects: true,
+  });
+
+  return <Container className=" ">
     <Banner
-      description={'Esplora i nostri servizi e contattaci'}
+      description={t('servicesPages.aspRspp.bannerDescription')}
       image={banner}
-      title={'Servizi'}
+      title={t('servicesPages.aspRspp.bannerTitle')}
     />
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -16,37 +23,30 @@ const SafetyServiceView = () => {
         {/* Left Column - Service Details */}
         <div>
 
-          <Heading level={3}>Dettagli del servizio</Heading>
+          <Heading level={3}>{t('servicesPages.common.serviceDetailsTitle')}</Heading>
 
           <div className="prose prose-lg max-w-none mt-3 ">
             <p className="text-gray-600 leading-relaxed mb-6">
-              La sicurezza non è un semplicemente un argomento tedesco del quale farsi beffa durante
-              la quotidiana attività lavorativa. A volte può risultare macchiosa e complessa perché
-              non si hanno le conoscenze sufficienti a disposizione per portarla a termine. Altre
-              volte invece si pensa che è un adempimento il quale, una volta portato a termine, non
-              prevede più impegno, ma ci si sbaglia di grosso. La sicurezza è un adempimento che
-              prevede un mantenimento e miglioramento continuo seguendo dettami di legge. Motivo
-              per il quale, UnoSicurezza, aiuta le imprese a fornire il servizio di:
+              {t('servicesPages.aspRspp.description')}
             </p>
 
             <ul className="list-disc pl-6 mb-8 space-y-2 text-gray-600">
               <li>
-                <span className="font-semibold">ASPP</span> (Addetto per il Servizio di Prevenzione e Protezione)
+                <span className="font-semibold">ASPP</span> {t('servicesPages.aspRspp.aspp')}
               </li>
               <li>
-                <span className="font-semibold">RSPP</span> (Responsabile per il Servizio di Prevenzione e Protezione)
+                <span className="font-semibold">RSPP</span> {t('servicesPages.aspRspp.rspp')}
               </li>
             </ul>
 
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Cosa include il servizio
+              {t('servicesPages.common.serviceIncludesTitle')}
             </h2>
             <div className='bg-[#F1F9F6] p-5 rounded-2xl'>
               <ul className="list-disc pl-6 space-y-2 text-gray-600">
-                <li>Consulenza iniziale e analisi della situazione attuale</li>
-                <li>Redazione della documentazione necessaria</li>
-                <li>Formazione del personale coinvolto</li>
-                <li>Supporto continuativo e aggiornamenti</li>
+                {includeItems.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
               </ul>
             </div>
 

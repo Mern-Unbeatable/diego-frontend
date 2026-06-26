@@ -73,6 +73,218 @@
       "details": "Dettagli"
     }
   },
+  "servicesPages": {
+    "common": {
+      "serviceDetailsTitle": "Dettagli del servizio",
+      "serviceIncludesTitle": "Cosa include il servizio",
+      "includeItems": [
+        "Consulenza iniziale e analisi della situazione attuale",
+        "Redazione della documentazione necessaria",
+        "Formazione del personale coinvolto",
+        "Supporto continuativo e aggiornamenti"
+      ]
+    },
+    "servicesLanding": {
+      "bannerTitle": "Servizi",
+      "bannerDescription": "Esplora i nostri servizi e contattaci",
+      "loading": "Caricamento",
+      "categoryTitle": "Servizi"
+    },
+    "sevCourses": {
+      "bannerTitle": "Corsi SEVESO",
+      "bannerDescription": "Consulenza per la direttiva Seveso sulla prevenzione degli incidenti rilevanti",
+      "description": "Corsi finalizzati a garantire alle aziende e gestori soggetti al D. lgs. 105/2015 l'affinare delle proprie capacità a livello capillare in merito alla gestione in sicurezza di tutti i processi che la rendono soggetta. Il gestore deve riportare nel Documento il proprio impegno a realizzare, adottare, nonché a mantenere e ricercare il miglioramento continuo del proprio sistema di gestione della sicurezza. Motivo per il quale UnoSicurezza propone una vasta gamma di corsi che possano soddisfare le richieste del gestore e che rispettino l'ottica obbligatoria della formazione continua (D. lgs. 105/2015 art. 14 all'Appendice 1 dell'Allegato B). Corsi fatti su misura, grazie alla collaborazione con il vostro gruppo HS."
+    },
+    "aspRspp": {
+      "bannerTitle": "Servizi",
+      "bannerDescription": "Esplora i nostri servizi e contattaci",
+      "description": "La sicurezza non è semplicemente un argomento di cui farsi beffa durante la quotidiana attività lavorativa. A volte può risultare macchinosa e complessa perché non si hanno le conoscenze sufficienti per portarla a termine. Altre volte invece si pensa che sia un adempimento che, una volta concluso, non richiede più impegno, ma non è così. La sicurezza richiede mantenimento e miglioramento continuo secondo i dettami di legge. Motivo per il quale UnoSicurezza aiuta le imprese a fornire il servizio di:",
+      "aspp": "(Addetto per il Servizio di Prevenzione e Protezione)",
+      "rspp": "(Responsabile per il Servizio di Prevenzione e Protezione)"
+    },
+    "dvr": {
+      "bannerTitle": "DVR - Documento Valutazione Rischi",
+      "bannerDescription": "Redazione e aggiornamento del Documento di Valutazione dei Rischi",
+      "description": "Il Documento di Valutazione dei Rischi (DVR). Forniamo servizi completi di valutazione dei rischi, redazione del documento, formazione del personale e aggiornamenti periodici secondo quanto previsto dal D.Lgs. 81/2008."
+    },
+    "emergency": {
+      "bannerTitle": "Piano di emergenza",
+      "descriptionLead": "Ai fini degli adempimenti di cui all'articolo 18, comma 1, lettera t), il datore di lavoro:",
+      "descriptionBody": "Deve adottare le misure necessarie ai fini della prevenzione incendi e dell'evacuazione dei luoghi di lavoro, nonché per il caso di pericolo grave e immediato, secondo le disposizioni di cui all'articolo 43. Tali misure devono essere adeguate:",
+      "obligations": [
+        "alla natura dell'attività",
+        "alle dimensioni dell'azienda o dell'unità produttiva",
+        "al numero delle persone presenti"
+      ],
+      "descriptionCta": "Noi di UnoSicurezza possiamo aiutarti in questo!"
+    },
+    "lightning": {
+      "bannerTitle": "Fulminazione",
+      "bannerDescription": "Adegua la tua struttura alle norme: valuta il rischio fulmini.",
+      "description": "Art. 17 D.lgs. 81/08 - Obblighi del datore di lavoro non delegabili: il datore di lavoro non può delegare la valutazione di tutti i rischi con la conseguente elaborazione del documento previsto dall'articolo 28, nonché quanto previsto dalle norme CEI. Tra tutti i rischi si annovera anche il rischio che il proprio edificio possa essere soggetto alle scariche atmosferiche. Noi di UnoSicurezza possiamo aiutarti in questo!"
+    },
+    "legionella": {
+      "bannerTitle": "Legionella",
+      "bannerDescription": "Valutazione del rischio legionella e piani di controllo",
+      "paragraph1": "Eseguiamo campionamenti e analisi su punti selezionati dell'impianto idrico, con restituzione di rapporti di prova e confronto con i valori limite di parametro previsti dal D.Lgs. 18/2023, per la determinazione della Legionella. I risultati delle indagini vengono restituiti in modo chiaro e completo.",
+      "paragraph2": "Noi di UnoSicurezza aiutiamo i nostri partner a non correre rischi nascosti, spesso sottovalutati nella quotidianità. Uno dei rischi più trascurati è rappresentato dal batterio Legionella: un microrganismo che, se non individuato e gestito, può causare gravi problemi di salute alle persone presenti in azienda e generare pesanti responsabilità per i datori di lavoro.",
+      "paragraph3": "Affida a noi la gestione di questa criticità",
+      "specialItems": [
+        "Rapporti di prova ufficiali",
+        "Valutazione tecnica dei dati emersi",
+        "Campionamenti nei punti con maggiore probabilità di proliferazione del batterio",
+        "Analisi di laboratorio con confronto ai limiti previsti dalla normativa vigente",
+        "Valutazione del rischio Legionella e redazione della relativa documentazione"
+      ]
+    },
+    "radon": {
+      "bannerTitle": "Radon",
+      "bannerDescription": "Misurazioni e valutazioni del gas radon negli ambienti di lavoro",
+      "description": "Ambienti di lavoro interrati, seminterrati, posizionati in aree prioritarie? La valutazione del rischio radon nei luoghi di lavoro, secondo il D. Lgs. 101/2020, è un obbligo per i datori di lavoro per tutelare la salute dei lavoratori. Il rischio è valutato effettuando misure della concentrazione di gas radon in aria, espressa in Bq/m3. Il team di UnoSicurezza effettua:",
+      "riskItems": [
+        "Misurazioni della concentrazione",
+        "Valutazione del rischio",
+        "Nomina dell'esperto"
+      ]
+    },
+    "drinkingWater": {
+      "bannerTitle": "Potabilità dell'acqua",
+      "bannerDescription": "Analisi di potabilità dell'acqua per condomini, abitazioni e aziende",
+      "paragraph1": "La qualità e la sicurezza dell'acqua destinata al consumo umano sono disciplinate in Italia dal D.Lgs. 18/2023, che recepisce la Direttiva Europea 2020/2184. Questa normativa stabilisce i valori limite dei parametri chimici e microbiologici che devono essere rispettati per garantire la potabilità dell'acqua.",
+      "paragraph2": "La verifica periodica della conformità dell'acqua è un adempimento fondamentale non solo per tutelare la salute delle persone, ma anche per adempiere agli obblighi previsti per amministratori di condominio e aziende.",
+      "paragraph3": "Offriamo un servizio completo di campionamento e analisi di laboratorio, che comprende:",
+      "sampleAtHome": "Campionamento a domicilio - uscita del nostro tecnico specializzato presso il punto di prelievo indicato (rubinetto o altro punto accessibile).",
+      "fullAnalysisLead": "Analisi completa di potabilità (D.Lgs. 18/2023) - verifica di conformità ai parametri microbiologici, chimici e indicatori previsti dalla legge, con determinazione di oltre 60 parametri, tra cui:",
+      "parameterItems": [
+        "batteri coliformi, Escherichia coli, enterococchi intestinali, Clostridium perfringens;",
+        "metalli pesanti (piombo, arsenico, mercurio, cadmio, nichel, cromo);",
+        "contaminanti organici e inorganici (nitrati, nitriti, PFAS, trialometani, idrocarburi policiclici aromatici, pesticidi);",
+        "parametri indicatori (pH, torbidità, durezza, conducibilità, odore, colore, sapore)."
+      ],
+      "reportNote": "Al termine delle analisi viene rilasciato un rapporto di prova ufficiale, che riporta i valori riscontrati e il confronto con i limiti previsti dal D.Lgs. 18/2023."
+    },
+    "laboratory": {
+      "bannerTitle": "Analisi di laboratorio",
+      "bannerDescription": "Offriamo servizi di analisi di laboratorio completi per garantire la qualità, la sicurezza e la conformità dei prodotti e degli ambienti. Attraverso metodi certificati, analizziamo campioni di acqua, aria, rifiuti e materiali al fine di individuare eventuali contaminazioni e assicurare il rispetto delle normative vigenti.",
+      "intro": "Il nostro obiettivo è trasformare gli adempimenti normativi in strumenti di prevenzione e valorizzazione, offrendo soluzioni integrate per la protezione dell'ambiente.",
+      "sections": [
+        {
+          "title": "Gestione rifiuti",
+          "items": [
+            "La corretta gestione dei rifiuti è un elemento centrale della sostenibilità ambientale.",
+            "Campionamenti in sito e analisi di laboratorio;",
+            "Test di cessione per l'utilizzo o lo smaltimento in impianto."
+          ]
+        },
+        {
+          "title": "Acque",
+          "description": "Gli scarichi idrici e il monitoraggio delle acque sotterranee devono rispettare prescrizioni precise. Ci occupiamo di:",
+          "items": [
+            "La corretta gestione dei rifiuti è un elemento centrale della sicurezza ambientale.",
+            "Eseguire campionamenti e analisi di laboratorio;",
+            "Monitoraggi tramite piezometri e pozzi artigianali per cave, impianti di trattamento e aziende industriali."
+          ]
+        },
+        {
+          "title": "Emissioni in atmosfera",
+          "description": "Le emissioni industriali e artigianali sono regolate da normative stringenti. I nostri servizi comprendono:",
+          "items": [
+            "Identificazione dei processi soggetti a normativa;",
+            "Redazione delle richieste autorizzative;",
+            "Campionamenti e analisi a camino;",
+            "Determinazione dei principali inquinanti (polveri, metalli, acidi, COV, SOx, NOx, CO, CO2, diossine)."
+          ]
+        },
+        {
+          "title": "Amianto",
+          "description": "Per la gestione del rischio amianto offriamo:",
+          "items": [
+            "Valutazione dello stato dei manufatti con algoritmi certificati;",
+            "Prelievi e analisi qualitative/quantitative con tecniche FT-IR e XRD;",
+            "Campionamenti e analisi a camino;",
+            "Determinazione dei principali inquinanti (polveri, metalli, acidi, COV, SOx, NOx, CO, CO2, diossine).",
+            "Monitoraggio delle fibre aerodisperse (MOCF e SEM)."
+          ]
+        }
+      ]
+    },
+    "building": {
+      "bannerTitle": "Building management",
+      "bannerDescription": "Misurazioni e valutazioni del gas radon negli ambienti di lavoro",
+      "description": "Il team UnoSicurezza offre il servizio di building management e amministrazione condominiale per poter sgravare i propri clienti possessori/gestori di edifici che vogliono ottimizzare i processi di:",
+      "processItems": [
+        "Manutenzioni e riparazioni",
+        "Gestione dell'energia e dell'efficienza",
+        "Sicurezza e conformità normativa"
+      ],
+      "cta": "Affidati a noi e contattaci!"
+    },
+    "rentri": {
+      "bannerTitle": "RENTRI",
+      "paragraph1": "Il RENTRI è lo strumento su cui il Ministero dell'ambiente e della sicurezza energetica fonda il sistema di tracciabilità dei rifiuti e prevede la digitalizzazione dei documenti relativi alla movimentazione e al trasporto dei rifiuti.",
+      "paragraph2": "In particolare, il RENTRI consente di:",
+      "listItems": [
+        "Mettere a disposizione della pubblica amministrazione un flusso costante di dati e informazioni sulla movimentazione dei rifiuti, a supporto delle politiche ambientali e della pianificazione regionale;",
+        "Sostenere le autorità di controllo nella prevenzione e nel contrasto della gestione illecita dei rifiuti, facilitando le modalità di verifica basate su documenti digitali;",
+        "Assolvere con rapidità e facilità agli adempimenti previsti per le imprese, con lo snellimento delle procedure, anche attraverso l'utilizzo di strumenti di supporto alla transizione digitale messi a disposizione dal Ministero dell'Ambiente e della Sicurezza Energetica;",
+        "Ridurre i tempi per la trasmissione dei dati necessari per la rendicontazione e il monitoraggio del raggiungimento degli obiettivi europei di recupero e riciclo;",
+        "Gestire in modalità digitale milioni di documenti cartacei."
+      ],
+      "paragraph3": "Affidati ad UnoSicurezza, società che segue passo per passo i propri partner nella realizzazione dei propri adempimenti."
+    },
+    "videoAuthorization": {
+      "bannerTitle": "Gestione autorizzazioni impianti",
+      "bannerDescription": "Hai un impianto di videosorveglianza/localizzazione satellitare che effettua ripresa e/o registrazione e hai dei dipendenti?",
+      "description": "L'impiego di impianti audiovisivi e di altri strumenti dai quali derivi anche la possibilità di controllo a distanza dell'attività dei lavoratori è consentito esclusivamente per esigenze organizzative e produttive, per la sicurezza del lavoro e per la tutela del patrimonio aziendale (art. 4, comma 1, legge n. 300/1970), ad eccezione degli strumenti utilizzati per lo svolgimento della prestazione lavorativa (ad esempio computer, telefoni, tablet), ovvero per la rilevazione degli accessi e delle presenze (lettori badge), ai sensi dell'art. 4, comma 2, legge n. 300/1970."
+    },
+    "medicalCompetent": {
+      "bannerTitle": "Gestione autorizzazioni impianti e incarico del medico competente",
+      "bannerDescription": "Hai un'azienda con uno o più dipendenti? Vuoi essere certo di rispettare tutti gli obblighi per la tutela della salute dei lavoratori?",
+      "description": "La nomina del medico competente è un obbligo previsto dal D. Lgs. 81/08, in particolare dagli artt. 18 e 41, e rappresenta un elemento fondamentale per la tutela della salute dei lavoratori. Il medico competente collabora alla valutazione dei rischi, effettua la sorveglianza sanitaria e contribuisce alla prevenzione di malattie professionali e infortuni, assicurando la conformità dell'azienda alla normativa vigente."
+    },
+    "medicalVisits": {
+      "bannerTitle": "Gestione visite mediche",
+      "bannerDescription": "Hai una azienda/impresa con uno o più dipendenti? Vuoi esser tranquillo di non aver dimenticato nessun adempimento per la tutela della salute dei propri dipendenti?",
+      "description": "La nomina del medico competente è un obbligo previsto dal D. Lgs. 81/08, in particolare dagli artt. 18 e 41, e rappresenta un elemento fondamentale per la tutela della salute dei lavoratori. Il medico competente collabora alla valutazione dei rischi, effettua la sorveglianza sanitaria e contribuisce alla prevenzione di malattie professionali e infortuni, assicurando la conformità dell'azienda alla normativa vigente."
+    },
+    "occupationalLab": {
+      "bannerTitle": "Analisi di laboratorio",
+      "bannerDescription": "Hai una azienda/impresa con uno o più dipendenti? Vuoi esser tranquillo di non aver dimenticato nessun adempimento per la tutela della salute dei propri dipendenti?",
+      "description": "In alcuni casi specifici, in base alla mansione svolta, è necessario effettuare analisi di laboratorio per completare la valutazione dell'idoneità al lavoro. Questi controlli, richiesti dal D. Lgs. 81/08, permettono di accertare che il lavoratore sia nelle condizioni fisiche ottimali per svolgere le proprie attività in sicurezza. Non si tratta solo di un obbligo normativo, ma di una misura concreta di prevenzione e tutela, pensata per garantire il benessere del personale e mantenere elevati standard di sicurezza all'interno dell'azienda."
+    },
+    "condominium": {
+      "bannerTitle": "Gestione immobiliare",
+      "bannerDescription": "Gestione amministrativa e tecnica per immobili e condomini.",
+      "description": "Supportiamo amministratori e proprietari nella gestione immobiliare con servizi operativi e normativi, per migliorare organizzazione, controllo documentale, sicurezza e continuità gestionale."
+    },
+    "form": {
+      "title": "Richiedi informazioni",
+      "subtitle": "Compila il form per richiedere informazioni sul servizio {{service}}.",
+      "defaultService": "ASPP e RSPP",
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "company": "Azienda",
+      "vat": "P.IVA",
+      "phone": "Telefono",
+      "email": "Email",
+      "message": "Messaggio",
+      "attachDocuments": "Allega documenti (PDF, Word, Excel)",
+      "dropHere": "Rilascia i file qui...",
+      "clickToUpload": "Clicca per caricare",
+      "orDragHere": "i file o trascinali qui",
+      "maxFileSize": "Massimo 25MB per file",
+      "privacyTitle": "Informativa Privacy",
+      "privacyText": "Il sottoscritto autorizza il trattamento dei dati personali nel rispetto della vigente normativa sulla protezione dei dati personali ed, in particolare, il Regolamento Europeo per la protezione dei dati personali 2016/679, il D.lgs. 30/06/2003 n. 196 e successive modifiche e integrazioni, come modificato da ultimo dal d.lgs. 10/08/2018 n. 101, autorizza inoltre il ricevente a trattare i dati per la finalità di fornitura dei servizi richiesti per i quali lo si contatta.",
+      "sending": "Invio in corso...",
+      "submit": "Invia richiesta",
+      "successAlert": "Richiesta inviata con successo!",
+      "errorAlert": "Errore durante l'invio della richiesta",
+      "bytes": "Bytes",
+      "kb": "KB",
+      "mb": "MB",
+      "gb": "GB"
+    }
+  },
   "chiSiamo": {
   "bannerTitle": "Chi siamo",
   "intro": "Siamo un gruppo di professionisti che si occupa di amministrazione stabili, formazione, sicurezza e salute per aziende e condomini.",

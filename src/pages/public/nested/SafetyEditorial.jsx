@@ -1,35 +1,41 @@
 import Banner from '../../../components/common/Banner';
-import banner from '../../../../src/assets/images/banner/safety/banner2.png'
+import banner from '../../../../src/assets/images/banner/safety/banner2.png';
 import { Container, Heading } from '../../../components/ui';
 import ServiceForm from '../services/components/ServiceForm';
+import { useTranslation } from 'react-i18next';
+
 const SafetyServiceView = () => {
-  return <Container className=' '>
+  const { t } = useTranslation();
+  const includeItems = t('servicesPages.common.includeItems', {
+    returnObjects: true,
+  });
+
+  return <Container className=" ">
     <Banner
-      description={'Redazione e aggiornamento del Documento di Valutazione dei Rischi'}
+      description={t('servicesPages.dvr.bannerDescription')}
       image={banner}
-      title={' DVR - Documento Valutazione Rischi'}
+      title={t('servicesPages.dvr.bannerTitle')}
     />
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
         {/* Left Column - Service Details */}
         <div>
-          <Heading level={3}>Dettagli del servizio</Heading>
+          <Heading level={3}>{t('servicesPages.common.serviceDetailsTitle')}</Heading>
 
           <div className="prose prose-lg max-w-none mt-3 ">
             <p className="text-gray-600 leading-relaxed mb-6">
-              Il Documento di Valutazione dei Rischi (DVR). Forniamo servizi completi di valutazione dei rischi, redazione del documento, formazione del personale e aggiornamenti periodici secondo quanto previsto dal D.Lgs. 81/2008.
+              {t('servicesPages.dvr.description')}
             </p>
 
 
 
-            <Heading level={3}>Cosa include il servizio</Heading>
+            <Heading level={3}>{t('servicesPages.common.serviceIncludesTitle')}</Heading>
             <div className='bg-[#F1F9F6] p-5 rounded-2xl mt-3 '>
               <ul className="list-disc pl-6 space-y-2 text-gray-600">
-                <li>Consulenza iniziale e analisi della situazione attuale</li>
-                <li>Redazione della documentazione necessaria</li>
-                <li>Formazione del personale coinvolto</li>
-                <li>Supporto continuativo e aggiornamenti</li>
+                {includeItems.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
               </ul>
             </div>
 

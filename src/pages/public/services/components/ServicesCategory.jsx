@@ -1,15 +1,17 @@
 import { Container, Heading, Paragraph } from '../../../../components/ui';
+import { useTranslation } from 'react-i18next';
 
 const ServicesCategory = ({ categories, loading }) => {
+  const { t } = useTranslation();
   console.log('Categories in component:', categories);
 
   return (
     <Container className="my-5 md:my-10 ">
       {loading ? (
-        <Heading h2={'Loading'}></Heading>
+        <Heading h2={t('servicesPages.servicesLanding.loading')}></Heading>
       ) : (
         <div>
-          <Heading className={'mb-10'} h2={'Servizi'}></Heading>
+          <Heading className={'mb-10'} h2={t('servicesPages.servicesLanding.categoryTitle')}></Heading>
           <div className="flex flex-wrap justify-center gap-[48px]">
             {categories.map((category) => (
               <div

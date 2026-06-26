@@ -1,39 +1,44 @@
 import Banner from '../../../components/common/Banner';
-import banner from '../../../../src/assets/images/banner/safety/banner11.png'
+import banner from '../../../../src/assets/images/banner/safety/banner11.png';
 import { Container } from '../../../components/ui';
 import ServiceForm from '../services/components/ServiceForm';
+import { useTranslation } from 'react-i18next';
 
 const VideoAndAuthorizationView = () => {
+  const { t } = useTranslation();
+  const includeItems = t('servicesPages.common.includeItems', {
+    returnObjects: true,
+  });
+
   return (
-    <Container className=' '>
+    <Container className=" ">
       <Banner
-        description={'Hai un impianto di videosorveglianza/localizzazione satellitare che effettua ripresa e/o registrazione e hai dei dipendenti?'}
+        description={t('servicesPages.videoAuthorization.bannerDescription')}
         image={banner}
-        title={'Gestione autorizzazioni impianti'}
+        title={t('servicesPages.videoAuthorization.bannerTitle')}
       />
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left Column - Service Details */}
           <div>
             <h1 className="text-4xl font-bold text-gray-900 mb-6">
-              Dettagli del servizio
+              {t('servicesPages.common.serviceDetailsTitle')}
             </h1>
 
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-600 leading-relaxed mb-6">
-                L’impiego di impianti audiovisivi e di altri strumenti dai quali derivi anche la possibilità di controllo a distanza dell'attività dei lavoratori, è consentito esclusivamente per esigenze organizzative e produttive, per la sicurezza del lavoro e per la tutela del patrimonio aziendale (art. 4, comma 1, legge n. 300/1970), ad eccezione degli strumenti utilizzati per lo svolgimento della prestazione lavorativa (ad esempio, computer, telefoni, tablet), ovvero per la rilevazione degli accessi e delle presenze (c.d. lettori badge), ai sensi dell’art. 4, comma 2, legge n. 300/1970.
+                {t('servicesPages.videoAuthorization.description')}
 
               </p>
 
               <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-6">
-                Cosa include il servizio
+                {t('servicesPages.common.serviceIncludesTitle')}
               </h2>
               <div className='bg-[#F1F9F6] p-5 rounded-2xl'>
                 <ul className="list-disc pl-6 space-y-2 text-gray-600">
-                  <li>Consulenza iniziale e analisi della situazione attuale</li>
-                  <li>Redazione della documentazione necessaria</li>
-                  <li>Formazione del personale coinvolto</li>
-                  <li>Supporto continuativo e aggiornamenti</li>
+                  {includeItems.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
                 </ul>
               </div>
             </div>

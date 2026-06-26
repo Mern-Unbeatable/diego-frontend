@@ -72,6 +72,218 @@
       "details": "Details"
     }
   },
+  "servicesPages": {
+    "common": {
+      "serviceDetailsTitle": "Service details",
+      "serviceIncludesTitle": "What the service includes",
+      "includeItems": [
+        "Initial consultancy and analysis of the current situation",
+        "Preparation of the required documentation",
+        "Training of involved personnel",
+        "Ongoing support and updates"
+      ]
+    },
+    "servicesLanding": {
+      "bannerTitle": "Services",
+      "bannerDescription": "Explore our services and contact us",
+      "loading": "Loading",
+      "categoryTitle": "Services"
+    },
+    "sevCourses": {
+      "bannerTitle": "SEVESO Courses",
+      "bannerDescription": "Consultancy for the Seveso directive on the prevention of major accidents",
+      "description": "Courses designed to help companies and operators subject to Legislative Decree 105/2015 improve their capabilities in the safe management of all relevant processes. The operator must state in the document their commitment to implement, adopt, maintain and continuously improve their safety management system. For this reason, UnoSicurezza offers a wide range of tailored courses that meet operator needs and comply with the mandatory principle of continuous training (Legislative Decree 105/2015, art. 14, Appendix 1 of Annex B), thanks to collaboration with your HS group."
+    },
+    "aspRspp": {
+      "bannerTitle": "Services",
+      "bannerDescription": "Explore our services and contact us",
+      "description": "Safety is not merely a theoretical topic to overlook during daily work activities. Sometimes it may seem complex because the right knowledge is missing. Other times, people think compliance ends once done, but that is a serious mistake. Safety requires continuous maintenance and improvement in line with legal requirements. For this reason, UnoSicurezza helps companies provide:",
+      "aspp": "(Worker in charge of prevention and protection service)",
+      "rspp": "(Manager in charge of prevention and protection service)"
+    },
+    "dvr": {
+      "bannerTitle": "DVR - Risk Assessment Document",
+      "bannerDescription": "Drafting and updating of the Risk Assessment Document",
+      "description": "The Risk Assessment Document (DVR). We provide complete services for risk assessment, document drafting, staff training and periodic updates in accordance with Legislative Decree 81/2008."
+    },
+    "emergency": {
+      "bannerTitle": "Emergency plan",
+      "descriptionLead": "For compliance with article 18, paragraph 1, letter t), the employer:",
+      "descriptionBody": "Must adopt necessary measures for fire prevention and workplace evacuation, as well as for serious and immediate danger, according to article 43. These measures must be adequate:",
+      "obligations": [
+        "to the nature of the activity",
+        "to the size of the company or production unit",
+        "to the number of people present"
+      ],
+      "descriptionCta": "At UnoSicurezza, we can help you with this!"
+    },
+    "lightning": {
+      "bannerTitle": "Lightning protection",
+      "bannerDescription": "Adapt your structure to regulations: assess lightning risk.",
+      "description": "Art. 17 of Legislative Decree 81/08 defines non-delegable employer duties: the employer cannot delegate the assessment of all risks and the related preparation of the document required by article 28, as well as compliance with CEI standards. Among all risks is also the risk that the building may be exposed to lightning discharges. At UnoSicurezza, we can help you with this!"
+    },
+    "legionella": {
+      "bannerTitle": "Legionella",
+      "bannerDescription": "Legionella risk assessment and control plans",
+      "paragraph1": "We carry out sampling and analysis at selected points of the water system, with official test reports and comparison against parameter limit values provided by Legislative Decree 18/2023 for Legionella determination. Results are delivered clearly and comprehensively.",
+      "paragraph2": "At UnoSicurezza, we help our partners avoid hidden risks often underestimated in daily operations. One of the most overlooked risks is Legionella bacteria: a microorganism that, if not identified and managed, can cause serious health issues and major liabilities for employers.",
+      "paragraph3": "Entrust us with managing this critical issue.",
+      "specialItems": [
+        "Official test reports",
+        "Technical evaluation of findings",
+        "Sampling in points with higher probability of bacterial proliferation",
+        "Laboratory analysis with comparison to limits required by current regulations",
+        "Legionella risk assessment and preparation of related documentation"
+      ]
+    },
+    "radon": {
+      "bannerTitle": "Radon",
+      "bannerDescription": "Measurements and assessments of radon gas in workplaces",
+      "description": "Underground and semi-underground workplaces located in priority areas? Radon risk assessment in workplaces, under Legislative Decree 101/2020, is mandatory for employers to protect workers' health. Risk is assessed by measuring radon concentration in air, expressed in Bq/m3. The UnoSicurezza team provides:",
+      "riskItems": [
+        "Concentration measurements",
+        "Risk assessment",
+        "Appointment of the qualified expert"
+      ]
+    },
+    "drinkingWater": {
+      "bannerTitle": "Water potability",
+      "bannerDescription": "Water potability analysis for condominiums, homes and companies",
+      "paragraph1": "The quality and safety of water intended for human consumption in Italy are regulated by Legislative Decree 18/2023, implementing European Directive 2020/2184. This regulation defines limit values for chemical and microbiological parameters required to ensure water potability.",
+      "paragraph2": "Periodic verification of water compliance is fundamental not only to protect people's health, but also to meet obligations for condominium administrators and companies.",
+      "paragraph3": "We offer a complete sampling and laboratory analysis service, including:",
+      "sampleAtHome": "Home sampling - one of our specialized technicians visits the indicated sampling point (tap or other accessible point).",
+      "fullAnalysisLead": "Complete potability analysis (Legislative Decree 18/2023) - compliance verification for microbiological, chemical and indicator parameters required by law, with determination of over 60 parameters, including:",
+      "parameterItems": [
+        "coliform bacteria, Escherichia coli, intestinal enterococci, Clostridium perfringens;",
+        "heavy metals (lead, arsenic, mercury, cadmium, nickel, chromium);",
+        "organic and inorganic contaminants (nitrates, nitrites, PFAS, trihalomethanes, polycyclic aromatic hydrocarbons, pesticides);",
+        "indicator parameters (pH, turbidity, hardness, conductivity, odor, color, taste)."
+      ],
+      "reportNote": "At the end of the analyses, an official test report is issued, showing detected values and comparison against limits set by Legislative Decree 18/2023."
+    },
+    "laboratory": {
+      "bannerTitle": "Laboratory analysis",
+      "bannerDescription": "We provide complete laboratory analysis services to ensure quality, safety and compliance of products and environments. Through certified methods, we analyze samples of water, air, waste and materials to identify possible contamination and ensure compliance with current regulations.",
+      "intro": "Our goal is to transform regulatory obligations into prevention and value enhancement tools, offering integrated solutions for environmental protection.",
+      "sections": [
+        {
+          "title": "Waste management",
+          "items": [
+            "Correct waste management is a central element of environmental sustainability.",
+            "On-site sampling and laboratory analyses;",
+            "Leaching tests for reuse or plant disposal."
+          ]
+        },
+        {
+          "title": "Water",
+          "description": "Water discharges and groundwater monitoring must comply with precise requirements. We handle:",
+          "items": [
+            "Correct waste management is a central element of environmental safety.",
+            "Sampling and laboratory analyses;",
+            "Monitoring through piezometers and artisanal wells for quarries, treatment plants and industrial companies."
+          ]
+        },
+        {
+          "title": "Atmospheric emissions",
+          "description": "Industrial and artisanal emissions are regulated by strict standards. Our services include:",
+          "items": [
+            "Identification of processes subject to regulations;",
+            "Preparation of authorization requests;",
+            "Stack sampling and analyses;",
+            "Determination of main pollutants (dust, metals, acids, VOCs, SOx, NOx, CO, CO2, dioxins)."
+          ]
+        },
+        {
+          "title": "Asbestos",
+          "description": "For asbestos risk management we offer:",
+          "items": [
+            "Assessment of material condition with certified algorithms;",
+            "Sampling and qualitative/quantitative analyses with FT-IR and XRD techniques;",
+            "Stack sampling and analyses;",
+            "Determination of main pollutants (dust, metals, acids, VOCs, SOx, NOx, CO, CO2, dioxins).",
+            "Monitoring of airborne fibers (MOCF and SEM)."
+          ]
+        }
+      ]
+    },
+    "building": {
+      "bannerTitle": "Building management",
+      "bannerDescription": "Measurements and assessments of radon gas in workplaces",
+      "description": "The UnoSicurezza team offers building management and condominium administration services to support building owners/managers who want to optimize processes related to:",
+      "processItems": [
+        "Maintenance and repairs",
+        "Energy and efficiency management",
+        "Safety and regulatory compliance"
+      ],
+      "cta": "Rely on us and contact us!"
+    },
+    "rentri": {
+      "bannerTitle": "RENTRI",
+      "paragraph1": "RENTRI is the tool through which the Ministry of Environment and Energy Security structures the waste traceability system and enables digitization of documents related to waste movement and transport.",
+      "paragraph2": "Specifically, RENTRI allows to:",
+      "listItems": [
+        "provide public administration with a continuous flow of data and information on waste movement, supporting environmental policies and regional planning;",
+        "support control authorities in preventing and combating illegal waste management by facilitating verification through digital documents;",
+        "fulfill obligations for companies quickly and easily by streamlining procedures, also through digital transition support tools made available by the Ministry;",
+        "reduce time for transmitting data needed for reporting and monitoring achievement of European recovery and recycling targets;",
+        "digitally manage millions of paper documents."
+      ],
+      "paragraph3": "Rely on UnoSicurezza, a company that supports its partners step by step in fulfilling their obligations."
+    },
+    "videoAuthorization": {
+      "bannerTitle": "Plant authorization management",
+      "bannerDescription": "Do you have a video surveillance/satellite localization system that records and includes employees?",
+      "description": "The use of audiovisual systems and other tools that may enable remote monitoring of workers' activities is permitted only for organizational and production needs, workplace safety and protection of company assets (art. 4, paragraph 1, law no. 300/1970), except tools used for work performance (e.g. computers, phones, tablets) or for access/presence detection (badge readers), pursuant to art. 4, paragraph 2, law no. 300/1970."
+    },
+    "medicalCompetent": {
+      "bannerTitle": "Plant authorization management and appointment of the competent doctor",
+      "bannerDescription": "Do you have a company with one or more employees? Do you want to be sure you comply with all obligations for workers' health protection?",
+      "description": "Appointment of the competent doctor is mandatory under Legislative Decree 81/08, especially articles 18 and 41, and is fundamental for protecting workers' health. The competent doctor collaborates in risk assessment, carries out health surveillance and contributes to prevention of occupational diseases and injuries, ensuring company compliance with current regulations."
+    },
+    "medicalVisits": {
+      "bannerTitle": "Medical visits management",
+      "bannerDescription": "Do you have a company with one or more employees? Do you want to be sure you have not missed any obligation for employee health protection?",
+      "description": "Appointment of the competent doctor is mandatory under Legislative Decree 81/08, especially articles 18 and 41, and is fundamental for protecting workers' health. The competent doctor collaborates in risk assessment, carries out health surveillance and contributes to prevention of occupational diseases and injuries, ensuring company compliance with current regulations."
+    },
+    "occupationalLab": {
+      "bannerTitle": "Laboratory analysis",
+      "bannerDescription": "Do you have a company with one or more employees? Do you want to be sure you have not missed any obligation for employee health protection?",
+      "description": "In some specific cases, depending on the role performed, laboratory analyses are required to complete fitness-for-work assessment. These checks, required by Legislative Decree 81/08, verify that workers are in optimal physical condition to carry out activities safely. This is not only a legal requirement, but a concrete prevention and protection measure designed to safeguard staff wellbeing and maintain high safety standards within the company."
+    },
+    "condominium": {
+      "bannerTitle": "Property management",
+      "bannerDescription": "Do you manage buildings and want full support for condominium compliance and administration?",
+      "description": "We support condominium managers and property owners with practical and regulatory services aimed at improving management efficiency, documentation control, safety obligations and organizational continuity. Our approach helps reduce operational burden while keeping every process aligned with regulations."
+    },
+    "form": {
+      "title": "Request information",
+      "subtitle": "Fill in the form to request information about the {{service}} service.",
+      "defaultService": "ASPP and RSPP",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "company": "Company",
+      "vat": "VAT number",
+      "phone": "Phone",
+      "email": "Email",
+      "message": "Message",
+      "attachDocuments": "Attach documents (PDF, Word, Excel)",
+      "dropHere": "Drop files here...",
+      "clickToUpload": "Click to upload",
+      "orDragHere": "files or drag them here",
+      "maxFileSize": "Maximum 25MB per file",
+      "privacyTitle": "Privacy notice",
+      "privacyText": "The undersigned authorizes processing of personal data in compliance with current personal data protection laws and, in particular, Regulation (EU) 2016/679, Legislative Decree no. 196 of 30/06/2003 and subsequent amendments and integrations, as last amended by Legislative Decree no. 101 of 10/08/2018, and further authorizes the recipient to process data for provision of requested services.",
+      "sending": "Sending...",
+      "submit": "Send request",
+      "successAlert": "Request sent successfully!",
+      "errorAlert": "Error while sending request",
+      "bytes": "Bytes",
+      "kb": "KB",
+      "mb": "MB",
+      "gb": "GB"
+    }
+  },
   "chiSiamo": {
   "bannerTitle": "Who We Are",
   "intro": "We are a group of professionals dealing with property management, training, safety and health for companies and condominiums.",

@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 
 export default function ServiceForm({ title }) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         nome: '',
         cognome: '',
@@ -43,9 +45,14 @@ export default function ServiceForm({ title }) {
     };
 
     const formatFileSize = (bytes) => {
-        if (bytes === 0) return '0 Bytes';
+        if (bytes === 0) return `0 ${t('servicesPages.form.bytes')}`;
         const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const sizes = [
+            t('servicesPages.form.bytes'),
+            t('servicesPages.form.kb'),
+            t('servicesPages.form.mb'),
+            t('servicesPages.form.gb'),
+        ];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     };
@@ -72,10 +79,10 @@ export default function ServiceForm({ title }) {
             // Reset form after successful submission
             // setFormData(initialState);
             // setFiles([]);
-            alert('Richiesta inviata con successo!');
+            alert(t('servicesPages.form.successAlert'));
         } catch (error) {
             console.error('Error submitting form:', error);
-            alert('Errore durante l\'invio della richiesta');
+            alert(t('servicesPages.form.errorAlert'));
         } finally {
             setLoading(false);
         }
@@ -83,17 +90,19 @@ export default function ServiceForm({ title }) {
     return (
         <div className="bg-[#FFF5E6] rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                Richiedi informazioni
+                {t('servicesPages.form.title')}
             </h2>
             <p className="text-gray-500 mb-6">
-                Compila il form per richiedere informazioni sul Servizio {title ? title : 'ASPP e RSPP'}.
+                {t('servicesPages.form.subtitle', {
+                    service: title || t('servicesPages.form.defaultService'),
+                })}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Nome <span className="text-red-500">*</span>
+                            {t('servicesPages.form.firstName')} <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
@@ -107,7 +116,7 @@ export default function ServiceForm({ title }) {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Cognome <span className="text-red-500">*</span>
+                            {t('servicesPages.form.lastName')} <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
@@ -124,7 +133,7 @@ export default function ServiceForm({ title }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Azienda
+                            {t('servicesPages.form.company')}
                         </label>
                         <input
                             type="text"
@@ -137,7 +146,7 @@ export default function ServiceForm({ title }) {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            P.IVA
+                            {t('servicesPages.form.vat')}
                         </label>
                         <input
                             type="text"
@@ -153,7 +162,7 @@ export default function ServiceForm({ title }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Telefono <span className="text-red-500">*</span>
+                            {t('servicesPages.form.phone')} <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="tel"
@@ -167,7 +176,7 @@ export default function ServiceForm({ title }) {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Email <span className="text-red-500">*</span>
+                            {t('servicesPages.form.email')} <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="email"
@@ -183,7 +192,7 @@ export default function ServiceForm({ title }) {
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Messaggio
+                        {t('servicesPages.form.message')}
                     </label>
                     <textarea
                         name="messaggio"
@@ -198,7 +207,7 @@ export default function ServiceForm({ title }) {
                 {/* File Upload */}
                 <div >
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Allega documenti (PDF, Word, Excel)
+                        {t('servicesPages.form.attachDocuments')}
                     </label>
                     <div
                         {...getRootProps()}
@@ -222,15 +231,15 @@ export default function ServiceForm({ title }) {
                         </svg>
                         <p className="mt-2 text-sm text-gray-600">
                             {isDragActive ? (
-                                "Rilascia i file qui..."
+                                t('servicesPages.form.dropHere')
                             ) : (
                                 <>
-                                    <span className="font-medium text-blue-600">Clicca per caricare</span> i file o trascinali qui
+                                    <span className="font-medium text-blue-600">{t('servicesPages.form.clickToUpload')}</span> {t('servicesPages.form.orDragHere')}
                                 </>
                             )}
                         </p>
                         <p className="text-xs text-gray-500 mt-1">
-                            Massimo 25MB per file
+                            {t('servicesPages.form.maxFileSize')}
                         </p>
                     </div>
 
@@ -264,16 +273,11 @@ export default function ServiceForm({ title }) {
                 {/* Privacy Checkbox */}
 
                 <div className=" items-start">
-                    <b className='text-[#C43216] '>Informativa Privacy</b>
+                    <b className='text-[#C43216] '>{t('servicesPages.form.privacyTitle')}</b>
 
                     <div className=" bg-[#F1F9F6] rounded-3xl p-5 mt-5">
                         <label className="text-sm text-gray-600">
-                            Il sottoscritto autorizza il trattamento dei dati personali nel rispetto della
-                            vigente normativa sulla protezione dei dati personali ed, in particolare, il
-                            Regolamento Europeo per la protezione dei dati personali 2016/679, il D.lgs.
-                            30/06/2003 n. 196 e successive modifiche e integrazioni, come modificato da
-                            ultimo dal d.lgs. 10/08/2018 n. 101, autorizza inoltre, il ricevente a trattare
-                            i dati per la finalità di fornitura dei servizi richiesti per i quali lo si contatta.
+                            {t('servicesPages.form.privacyText')}
                         </label>
                     </div>
                 </div>
@@ -286,11 +290,10 @@ export default function ServiceForm({ title }) {
                 >
                     {loading ? (
                         <span className="flex items-center justify-center">
-
-                            Invio in corso...
+                            {t('servicesPages.form.sending')}
                         </span>
                     ) : (
-                        'Invia richiesta'
+                        t('servicesPages.form.submit')
                     )}
                 </button>
             </form>
