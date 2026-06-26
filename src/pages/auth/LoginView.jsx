@@ -2,8 +2,10 @@ import { useState, useRef } from 'react';
 import { Heading, InputField, Label } from '../../components/ui';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const RegisterView = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(new Array(6).fill(''));
   const [step, setStep] = useState(1);
@@ -15,7 +17,7 @@ const RegisterView = () => {
     e.preventDefault();
 
     if (!email.trim()) {
-      alert('Enter email first');
+      alert(t('auth.login.enterEmailAlert'));
       return;
     }
 
@@ -56,7 +58,7 @@ const RegisterView = () => {
             <img
               className="h-10 w-10 object-contain"
               src="/images/icons/title.png"
-              alt="Logo"
+              alt={t('auth.common.logoAlt')}
             />
             <h1 className="text-3xl font-bold text-gray-900">UnoSicurezza</h1>
           </div>
@@ -82,8 +84,8 @@ const RegisterView = () => {
                 className="text-center"
                 h3={
                   step === 2
-                    ? 'Enter the OTP sent to your email'
-                    : 'Scrivi la tua e-mail'
+                    ? t('auth.login.enterOtpTitle')
+                    : t('auth.login.enterEmailTitle')
                 }
               />
             </div>
@@ -91,12 +93,12 @@ const RegisterView = () => {
             {/* EMAIL STEP */}
             {step === 1 && (
               <form onSubmit={handleNextFromEmail}>
-                <Label className="mb-2 block text-lg font-medium">E-mail</Label>
+                <Label className="mb-2 block text-lg font-medium">{t('auth.common.emailLabel')}</Label>
 
                 <InputField
                   type="email"
                   value={email}
-                  placeholder="Type Your Email"
+                  placeholder={t('auth.common.emailPlaceholder')}
                   className="rounded-2xl border border-green-100 bg-white px-4 py-3"
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -106,7 +108,7 @@ const RegisterView = () => {
                     type="submit"
                     className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
                   >
-                    Go ahead
+                    {t('auth.common.goAhead')}
                   </button>
                 </div>
               </form>
@@ -116,7 +118,7 @@ const RegisterView = () => {
             {step === 2 && (
               <form onSubmit={handleVerifyOtp}>
                 <p className="mb-6 text-center text-gray-600">
-                  OTP sent to <strong>{email}</strong>
+                  {t('auth.login.otpSentTo')} <strong>{email}</strong>
                 </p>
 
                 <div className="flex justify-center gap-3">
@@ -141,14 +143,14 @@ const RegisterView = () => {
                     className="flex items-center gap-1 rounded-full border border-gray-200 bg-white px-5 py-3 text-gray-600"
                   >
                     <IoIosArrowBack />
-                    Back
+                    {t('auth.common.back')}
                   </button>
 
                   <button
                     type="submit"
                     className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
                   >
-                    Verify OTP
+                    {t('auth.common.verifyOtp')}
                   </button>
                 </div>
               </form>

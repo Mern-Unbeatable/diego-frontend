@@ -10,8 +10,10 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { BackpackIcon } from 'lucide-react';
 import { BiArrowBack } from 'react-icons/bi';
+import { useTranslation } from 'react-i18next';
 
 const CompanyInformation = () => {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState('');
   const navigate = useNavigate();
 
@@ -37,14 +39,14 @@ const CompanyInformation = () => {
         <div className="mb-6 flex items-center justify-between">
           <Paragraph className="flex items-center gap-x-2 text-sm text-gray-600">
             {' '}
-            <BiArrowBack /> Steps 2/3
+            <BiArrowBack /> {t('auth.setup.steps.step2of3')}
           </Paragraph>
           <button className="rounded-full p-2 hover:bg-gray-100">
             <GrClose className="h-5 w-5 text-gray-500" />
           </button>
         </div>
 
-        <Heading level={4}>Informazioni aziendali</Heading>
+        <Heading level={4}>{t('auth.setup.companyInfo.title')}</Heading>
 
         <form onSubmit={handleFormSubmit}>
           <div className="mb-6">
@@ -53,12 +55,12 @@ const CompanyInformation = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Ragione sociale*
+              {t('auth.setup.companyInfo.companyNameLabel')}
             </Label>
             <InputField
               type="text"
               name="companyName"
-              placeholder="Inserisci il nome completa dell'azienda"
+              placeholder={t('auth.setup.companyInfo.companyNamePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -69,12 +71,12 @@ const CompanyInformation = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Indirizzo sede legale*
+              {t('auth.setup.companyInfo.officeLabel')}
             </Label>
             <InputField
               type="text"
               name="office"
-              placeholder="Inserisci l'indirizzo della sede legale dell'azienda"
+              placeholder={t('auth.setup.companyInfo.officePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -85,12 +87,12 @@ const CompanyInformation = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              VAT Number
+              {t('auth.setup.companyInfo.vatLabel')}
             </Label>
             <InputField
               type="number"
               name="vatNumber"
-              placeholder="Inserisci la Partita IVA"
+              placeholder={t('auth.setup.companyInfo.vatPlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -101,7 +103,7 @@ const CompanyInformation = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Codice fiscale (se diverso dalla P. IVA)*
+              {t('auth.setup.companyInfo.taxCodeLabel')}
             </Label>
             <InputField
               type="number"
@@ -117,7 +119,7 @@ const CompanyInformation = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              E-mail di contatto*
+              {t('auth.setup.companyInfo.emailLabel')}
             </Label>
             <InputField
               name="email"
@@ -130,7 +132,7 @@ const CompanyInformation = () => {
               type="submit"
               className="w-[100px] rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] py-2 font-medium text-[#ffffff] transition-colors hover:bg-[#ffffff] hover:text-[#73BFA1]"
             >
-              Procedi
+              {t('auth.common.proceed')}
             </button>
           </div>
         </form>

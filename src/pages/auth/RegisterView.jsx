@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Heading, InputField, Label } from '../../components/ui';
 import { IoIosArrowBack } from 'react-icons/io';
+import { useTranslation } from 'react-i18next';
 
 // Constants
 const OTP_LENGTH = 6;
@@ -47,29 +48,29 @@ const useOtp = (length = OTP_LENGTH) => {
 };
 
 // Step Components
-const EmailStep = ({ email, onEmailChange, onSubmit }) => (
+const EmailStep = ({ email, onEmailChange, onSubmit, t }) => (
   <form onSubmit={onSubmit}>
-    <Label className="mb-2 block text-lg font-medium">E-mail</Label>
+    <Label className="mb-2 block text-lg font-medium">{t('auth.common.emailLabel')}</Label>
     <InputField
       type="email"
       value={email}
-      placeholder="Type Your Email"
+      placeholder={t('auth.common.emailPlaceholder')}
       className="rounded-2xl border border-green-100 bg-white px-4 py-3"
       onChange={(e) => onEmailChange(e.target.value)}
       autoFocus
       required
     />
     <div className="mt-8 flex justify-end">
-      <SubmitButton type="submit">Go ahead</SubmitButton>
+      <SubmitButton type="submit">{t('auth.common.goAhead')}</SubmitButton>
     </div>
   </form>
 );
 
 // OTP Step Component
-const OtpStep = ({ email, otp, inputRefs, onOtpChange, onBack, onSubmit }) => (
+const OtpStep = ({ email, otp, inputRefs, onOtpChange, onBack, onSubmit, t }) => (
   <form onSubmit={onSubmit}>
     <p className="mb-6 text-center text-gray-600">
-      OTP sent to <strong>{email}</strong>
+      {t('auth.login.otpSentTo')} <strong>{email}</strong>
     </p>
 
     <div className="flex justify-center gap-3">
@@ -89,8 +90,8 @@ const OtpStep = ({ email, otp, inputRefs, onOtpChange, onBack, onSubmit }) => (
     </div>
 
     <div className="mt-8 flex justify-end gap-3">
-      <BackButton onClick={onBack} />
-      <SubmitButton type="submit">Verify OTP</SubmitButton>
+      <BackButton onClick={onBack} t={t} />
+      <SubmitButton type="submit">{t('auth.common.verifyOtp')}</SubmitButton>
     </div>
   </form>
 );
@@ -106,24 +107,24 @@ const SubmitButton = ({ children, ...props }) => (
 );
 
 // Back Button Component
-const BackButton = ({ onClick }) => (
+const BackButton = ({ onClick, t }) => (
   <button
     type="button"
     onClick={onClick}
     className="flex items-center gap-1 rounded-full border border-gray-200 bg-white px-5 py-3 text-gray-600 transition-colors duration-200 hover:bg-gray-50"
   >
     <IoIosArrowBack />
-    Back
+    {t('auth.common.back')}
   </button>
 );
 
 // Logo Component
-const Logo = () => (
+const Logo = ({ t }) => (
   <div className="flex items-center gap-2">
     <img
       className="h-10 w-10 object-contain"
       src="/images/icons/title.png"
-      alt="UnoSicurezza Logo"
+      alt={t('auth.common.logoAlt')}
       loading="lazy"
     />
     <h1 className="text-3xl font-bold text-gray-900">UnoSicurezza</h1>
@@ -132,6 +133,7 @@ const Logo = () => (
 
 // Main Component
 const RegisterView = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [step, setStep] = useState(STEPS.EMAIL);
   const navigate = useNavigate();
@@ -158,14 +160,14 @@ const RegisterView = () => {
       e.preventDefault();
 
       if (!email.trim()) {
-        alert('Please enter your email address');
+        alert(t('auth.register.enterEmailAlert'));
         return;
       }
 
       // Here you would typically send OTP to email
       goToNextStep();
     },
-    [email, goToNextStep],
+    [email, goToNextStep, t],
   );
 
   const handleOtpSubmit = useCallback(
@@ -195,12 +197,16 @@ const RegisterView = () => {
       <div className="grid min-h-[650px] grid-cols-1 md:grid-cols-2">
         {/* Left Section - Logo & Illustration */}
         <div className="flex flex-col items-center justify-center bg-white p-10">
-          <Logo />
+          <Logo t={t} />
           <div className="mt-10 max-w-md">
             <img
               className="w-full object-contain"
               src={illustration}
-              alt={step === STEPS.OTP ? 'OTP Verification' : 'Email Sign Up'}
+              alt={
+                step === STEPS.OTP
+                  ? t('auth.register.otpIllustrationAlt')
+                  : t('auth.register.emailIllustrationAlt')
+              }
               loading="lazy"
             />
           </div>
@@ -213,8 +219,8 @@ const RegisterView = () => {
             <div className="mb-8">
               <Heading level={3} className="text-center">
                 {step === STEPS.OTP
-                  ? 'Enter the OTP sent to your email'
-                  : 'Enter your email'}
+                  ? t('auth.login.enterOtpTitle')
+                  : t('auth.register.enterEmailTitle')}
               </Heading>
             </div>
 
@@ -224,6 +230,7 @@ const RegisterView = () => {
                 email={email}
                 onEmailChange={setEmail}
                 onSubmit={handleEmailSubmit}
+                t={t}
               />
             ) : (
               <OtpStep
@@ -233,6 +240,7 @@ const RegisterView = () => {
                 onOtpChange={handleOtpChange}
                 onBack={goToPreviousStep}
                 onSubmit={handleOtpSubmit}
+                t={t}
               />
             )}
           </div>

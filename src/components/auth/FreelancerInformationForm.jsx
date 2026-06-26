@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
 import { FiHelpCircle } from 'react-icons/fi';
 import SubdomainModal from './SubdomainModal';
+import { useTranslation } from 'react-i18next';
 
 const FreelancerInformationForm = () => {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState('');
   const [openModal, setOpenModal] = useState(false);
 
@@ -29,7 +31,7 @@ const FreelancerInformationForm = () => {
         {/* HEADER */}
         <div className="mb-6 flex items-center justify-between">
           <Paragraph className="flex items-center gap-x-2 text-sm text-gray-600">
-            <BiArrowBack /> Steps 2/3
+            <BiArrowBack /> {t('auth.setup.steps.step2of3')}
           </Paragraph>
 
           <button className="rounded-full p-2 hover:bg-gray-100">
@@ -37,17 +39,17 @@ const FreelancerInformationForm = () => {
           </button>
         </div>
 
-        <Heading level={4}>Informazioni aziendali</Heading>
+        <Heading level={4}>{t('auth.setup.companyInfo.title')}</Heading>
 
         <form onSubmit={handleFormSubmit} className="mt-6">
           {/* COMPANY */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              Ragione sociale*
+              {t('auth.setup.companyInfo.companyNameLabel')}
             </Label>
             <InputField
               name="companyName"
-              placeholder="Inserisci il nome completo dell'azienda"
+              placeholder={t('auth.setup.companyInfo.companyNamePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3"
             />
           </div>
@@ -55,11 +57,11 @@ const FreelancerInformationForm = () => {
           {/* OFFICE */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              Indirizzo sede legale*
+              {t('auth.setup.companyInfo.officeLabel')}
             </Label>
             <InputField
               name="office"
-              placeholder="Inserisci indirizzo sede legale"
+              placeholder={t('auth.setup.companyInfo.officePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3"
             />
           </div>
@@ -67,7 +69,7 @@ const FreelancerInformationForm = () => {
           {/* VAT */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              Partita IVA*
+              {t('auth.setup.companyInfo.vatLabel')}
             </Label>
             <InputField
               name="vatNumber"
@@ -79,7 +81,7 @@ const FreelancerInformationForm = () => {
           {/* TAX */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              Codice fiscale*
+              {t('auth.setup.companyInfo.taxCodeLabel')}
             </Label>
             <InputField
               name="taxCode"
@@ -91,7 +93,7 @@ const FreelancerInformationForm = () => {
           {/* EMAIL */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              E-mail di contatto*
+              {t('auth.setup.companyInfo.emailLabel')}
             </Label>
             <InputField
               name="contactEmail"
@@ -103,7 +105,8 @@ const FreelancerInformationForm = () => {
           {/* SOTTODOMINIO WITH HELP ICON */}
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
-              <Label className="text-sm font-medium">Sottodominio*</Label>
+              <Label className="text-sm font-medium">{t('auth.setup.freelancer.subdomainLabel')}</Label>
+
 
               <button
                 type="button"
@@ -116,7 +119,7 @@ const FreelancerInformationForm = () => {
 
             <InputField
               name="subdomain"
-              placeholder="freelanceradmin.com"
+              placeholder={t('auth.setup.freelancer.subdomainPlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3"
             />
           </div>
@@ -124,11 +127,11 @@ const FreelancerInformationForm = () => {
           {/* SERVICE TYPE */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              Tipo di servizio*
+              {t('auth.setup.freelancer.serviceTypeLabel')}
             </Label>
             <InputField
               name="serviceType"
-              placeholder="Licenza"
+              placeholder={t('auth.setup.freelancer.serviceTypePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3"
             />
           </div>
@@ -139,7 +142,7 @@ const FreelancerInformationForm = () => {
               type="submit"
               className="w-[120px] rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] py-2 text-white hover:bg-white hover:text-[#73BFA1]"
             >
-              Procedi
+              {t('auth.common.proceed')}
             </button>
           </div>
         </form>

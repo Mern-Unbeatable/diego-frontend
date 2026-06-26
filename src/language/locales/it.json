@@ -285,6 +285,128 @@
       "gb": "GB"
     }
   },
+  "trainingPages": {
+    "trainingViewTitle": "Formazione",
+    "ourPlatform": { "bannerTitle": "Scopri i nostri corsi SEVESO" },
+    "required": { "bannerTitle": "UnoSicurezza - Piattaforma LMS" },
+    "sev": { "bannerTitle": "Scopri i nostri corsi SEVESO" },
+    "catalog": {
+      "bannerTitle": "Catalogo",
+      "platformTitle": "La piattaforma di formazione online per la tua azienda",
+      "ratingValue": "4.5",
+      "ratingCount": "(44,566)",
+      "signUp": "Iscriviti",
+      "details": "Dettagli"
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca corsi...",
+      "allCategories": "Tutte le categorie",
+      "categorySafety": "Sicurezza",
+      "categoryManagers": "Dirigenti",
+      "categoryGeneral": "Generale",
+      "allDurations": "Tutte le durate",
+      "hours4": "4 ore",
+      "hours6": "6 ore",
+      "hours12": "12 ore",
+      "hours16": "16 ore",
+      "searchButton": "Cerca"
+    },
+    "courseCards": {
+      "title": "Corsi obbligatori",
+      "courses": [
+        { "title": "Formazione SEVESO - pacchetto annuale", "description": "Il corso Seveso III si riferisce alla direttiva UE 2012/18/UE sulla prevenzione degli incidenti rilevanti...", "oldPrice": "60,00€", "price": "50,00 €" },
+        { "title": "Datore di lavoro (Nuovo) 16 ore", "description": "Accordo ai sensi dell'articolo 37, comma 2, del decreto legislativo 81/2008...", "oldPrice": "180,00€", "price": "110,00 €" },
+        { "title": "Generale 4 ore", "description": "Accordo ai sensi dell'articolo 37, comma 2, del decreto legislativo 81/2008...", "oldPrice": "50,00€", "price": "40,00 €" },
+        { "title": "Specifico basso rischio 4 ore (Nuovo)", "description": "Accordo ai sensi dell'articolo 37, comma 2, del decreto legislativo 81/2008...", "oldPrice": "50,00€", "price": "40,00 €" },
+        { "title": "Dirigenti 12 ore", "description": "Accordo ai sensi dell'articolo 37, comma 2, del decreto legislativo 81/2008...", "oldPrice": "160,00€", "price": "120,00 €" },
+        { "title": "Aggiornamento Dirigenti 6 ore", "description": "Accordo ai sensi dell'articolo 37, comma 2, del decreto legislativo 81/2008...", "oldPrice": "50,00€", "price": "40,00 €" }
+      ]
+    },
+    "courseOverview": {
+      "title": "Panoramica dei corsi",
+      "headers": { "course": "Corso", "description": "Descrizione", "duration": "Durata", "type": "Tipo" },
+      "tableRows": [
+        { "name": "Corso singolo", "description": "Il corso singolo offre accesso diretto per una specifica esigenza formativa.", "duration": "30 min", "type": "Singolo" },
+        { "name": "Corso avanzato Seveso", "description": "Pacchetto completo conforme alla direttiva UE 2012/18/UE per la prevenzione dei grandi incidenti.", "duration": "30 min/corso", "type": "Pacchetto" }
+      ],
+      "howItWorksTitle": "Come funziona",
+      "howItWorksSteps": [
+        "Contatto con il team UnoSicurezza",
+        "Scelta del prodotto: corso singolo o pacchetto",
+        "Raccolta esigenze tramite form o sopralluogo tecnico",
+        "Realizzazione corso personalizzato con logo, riferimenti e procedure",
+        "Caricamento sulla piattaforma LMS con automazione",
+        "Erogazione e-learning da PC e mobile",
+        "Test finale",
+        "Rilascio attestato a fine corso"
+      ]
+    },
+    "workflow": {
+      "steps": [
+        { "title": "Contatto", "desc": "con il team UnoSicurezza" },
+        { "title": "Scelta del prodotto", "desc": "corso singolo o pacchetto trimestrale" },
+        { "title": "Raccolta delle esigenze", "desc": "tramite form online o sopralluogo tecnico" },
+        { "title": "Realizzazione del corso personalizzato", "desc": "con logo, riferimenti, foto, video, procedure e manuali interni" },
+        { "title": "Caricamento sulla piattaforma LMS", "desc": "automazione erogazione e monitoraggio attività formativa" },
+        { "title": "Erogazione corso", "desc": "in e-learning da PC, tablet e smartphone" }
+      ]
+    },
+    "howWorks": {
+      "headerTitle": "Trova la soluzione su misura per te",
+      "headerDescription": "La tua formazione senza confini. Accedi ai nostri corsi di sicurezza sul lavoro, privacy e igiene alimentare. Sempre aggiornati e progettati per le tue esigenze.",
+      "headerCta": "Esplora tutti i nostri corsi",
+      "sections": [
+        { "title": "Utente singolo - Livello 1", "badge": "Gestione team intuitiva e veloce", "contents": ["Il Livello 1 è pensato per chi acquista un singolo corso. Dopo il login, l'utente accede direttamente al corso acquistato."] },
+        { "title": "Azienda - Livello 2", "contents": ["Il Livello 2 è pensato per aziende che acquistano pacchetti multipli per i dipendenti.", "Come funziona", "Invio credenziali admin e utenti", "Primo accesso con profilazione dipendente", "Assegnazione corsi e monitoraggio avanzamento", "Archivio cloud con report e attestati", "Sistema ordinato e accessibile nel tempo."] },
+        { "title": "Ente di formazione - Livello 3", "contents": ["Pensato per enti accreditati con licenza piattaforma e accesso multi-tenant.", "Come funziona", "Attivazione con credenziali e manuale tecnico", "Assegnazione corsi e monitoraggio progressi", "Generazione attestati personalizzati", "Report presenze, tempi e risultati test", "Controllo completo delle attività formative."] }
+      ]
+    },
+    "courseDetail": {
+      "backToCatalog": "Torna al catalogo",
+      "rating": "4/5 stelle",
+      "title": "Formazione SEVESO",
+      "description": "Corso avanzato per la gestione dei rischi nelle industrie a rischio di incidente rilevante secondo il D.Lgs. 105/2015.",
+      "objectivesTitle": "Obiettivi",
+      "objectives": ["Comprendere la normativa SEVESO III", "Identificare i rischi di incidente rilevante", "Sviluppare piani di emergenza efficaci", "Gestire la comunicazione in caso di emergenza"],
+      "specialPrice": "Prezzo speciale",
+      "duration": "Durata 16 ore",
+      "code": "Codice:",
+      "enrollNow": "Iscriviti ora"
+    },
+    "pricing": {
+      "frameLabel": "Frame 1281154065",
+      "select": "Seleziona",
+      "singleCourse": { "title": "Corso singolo", "description": "Ottimo per chi vuole accedere e frequentare individualmente", "item1": "1 utente", "item2": "Accesso completo al corso", "item3": "Possibilità di scaricare l'attestato" },
+      "companyPackage": { "title": "Pacchetto Aziendale", "description": "Soluzione per supportare le aziende nel monitoraggio delle scadenze normative", "subtitle": "Formazione: la taglia perfetta per te", "item1": "1-20 utenti - €150/utente", "item2": "21-50 utenti - €420/utente", "item3": "51-200 utenti - €1000/utente", "item4": "Include pannello di amministrazione" }
+    }
+  },
+  "paymentPages": {
+    "cart": {
+      "continueShopping": "Continua gli acquisti",
+      "title": "Carrello",
+      "contains": "Il carrello contiene:",
+      "courseDescription": "Descrizione corso",
+      "courseName": "Afrobeat"
+    },
+    "cardDetails": {
+      "title": "Dettagli carta",
+      "network": "Circuito carta",
+      "seeAll": "Vedi tutto",
+      "nameOnCard": "Nome sulla carta",
+      "cardNumber": "Numero",
+      "expiryDate": "Data di scadenza",
+      "cvv": "CVV",
+      "subtotal": "Subtotale",
+      "total": "Totale",
+      "payNow": "Paga ora"
+    },
+    "success": {
+      "close": "Chiudi",
+      "title": "Acquisto completato con successo",
+      "description": "Grazie di aver acquistato su UnoSicurezza!",
+      "backHome": "Torna alla Home"
+    }
+  },
   "chiSiamo": {
   "bannerTitle": "Chi siamo",
   "intro": "Siamo un gruppo di professionisti che si occupa di amministrazione stabili, formazione, sicurezza e salute per aziende e condomini.",
@@ -393,6 +515,9 @@
     "descrizione": "Descrivi la tua attività e i tuoi obiettivi",
     "descrizionePlaceholder": "Condividi con noi le come possiamo costruire insieme una partnership di valore...",
     "submit": "Invia richiesta"
+  },
+  "form": {
+    "contactTitle": "Clicca qui per contattarci"
   }
 },
   "contactUs": {
@@ -419,6 +544,139 @@
   "emailCardSub": "Scrivi per qualsiasi informazione",
   "phoneCardTitle": "Telefono",
   "phoneCardSub": "Lun-Ven 9.00-18.00"
+},
+  "auth": {
+  "common": {
+    "logoAlt": "Logo",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "Inserisci la tua e-mail",
+    "goAhead": "Avanti",
+    "back": "Indietro",
+    "verifyOtp": "Verifica OTP",
+    "confirm": "Conferma",
+    "proceed": "Procedi",
+    "close": "Chiudi"
+  },
+  "login": {
+    "enterEmailAlert": "Inserisci prima l'e-mail",
+    "enterOtpTitle": "Inserisci l'OTP inviato alla tua e-mail",
+    "enterEmailTitle": "Inserisci la tua e-mail",
+    "otpSentTo": "OTP inviato a"
+  },
+  "register": {
+    "enterEmailAlert": "Inserisci il tuo indirizzo e-mail",
+    "enterEmailTitle": "Inserisci la tua e-mail",
+    "otpIllustrationAlt": "Verifica OTP",
+    "emailIllustrationAlt": "Registrazione e-mail"
+  },
+  "chooseLanguage": {
+    "heroTitleLine1": "Cambiamo l'esperienza di apprendere",
+    "heroTitleLine2": "qualcosa di nuovo.",
+    "illustrationAlt": "Illustrazione apprendimento",
+    "heroDescription": "Il nostro percorso per garantire un'istruzione di qualità a basso costo.",
+    "title": "Scegli la lingua preferita"
+  },
+  "changePassword": {
+    "fillAllFieldsAlert": "Compila tutti i campi",
+    "passwordTooShortAlert": "Password troppo corta",
+    "passwordMismatchAlert": "Le password non coincidono",
+    "illustrationAlt": "Reimpostazione password",
+    "newPasswordLabel": "Nuova password*",
+    "newPasswordPlaceholder": "Inserisci la nuova password",
+    "repeatPasswordLabel": "Ripeti password*",
+    "repeatPasswordPlaceholder": "Conferma password"
+  },
+  "setup": {
+    "profileTitle": "Configura il tuo profilo utente",
+    "tabs": {
+      "role": "Ruolo",
+      "information": "Informazioni",
+      "password": "Password"
+    },
+    "steps": {
+      "step2of3": "Step 2/3",
+      "step3of3": "Step 3/3"
+    },
+    "role": {
+      "title": "Ruolo",
+      "subtitle": "Tu sei un:",
+      "options": {
+        "standard": "Utente standard - Liv. 1",
+        "business": "Azienda - Liv. 2",
+        "licensed": "Utente licenza - Liv. 3"
+      }
+    },
+    "infoRouter": {
+      "roleRequiredTitle": "Selezione ruolo obbligatoria",
+      "roleRequiredDescription": "Seleziona prima un ruolo.",
+      "backToRoleSelection": "Torna alla selezione ruolo"
+    },
+    "info": {
+      "title": "Informazioni",
+      "firstNameLabel": "Nome",
+      "firstNamePlaceholder": "Inserisci il nome",
+      "lastNameLabel": "Cognome",
+      "lastNamePlaceholder": "Inserisci il cognome",
+      "birthDateLabel": "Data di nascita",
+      "birthDatePlaceholder": "Seleziona la data di nascita",
+      "cityLabel": "Città",
+      "cityPlaceholder": "Inserisci il luogo di nascita",
+      "countryLabel": "Paese",
+      "countryPlaceholder": "Inserisci il paese",
+      "addressLabel": "Indirizzo",
+      "addressPlaceholder": "Via, numero civico, CAP, città, provincia, paese",
+      "companyNameLabel": "Nome azienda",
+      "companyNamePlaceholder": "Inserisci il nome dell'azienda",
+      "officeLabel": "Sede legale",
+      "officePlaceholder": "Inserisci l'indirizzo della sede legale",
+      "vatNumberLabel": "Partita IVA",
+      "vatNumberPlaceholder": "Inserisci la Partita IVA",
+      "taxCodeLabel": "Codice fiscale",
+      "taxCodePlaceholder": "Inserisci il codice fiscale",
+      "citizenshipTitle": "Cittadinanza",
+      "citizenshipForeign": "Estera",
+      "citizenshipItalian": "Italiana"
+    },
+    "password": {
+      "title": "Crea la tua password",
+      "newPasswordLabel": "Nuova password*",
+      "newPasswordPlaceholder": "Inserisci la password",
+      "minLengthRule": "Lunghezza minima: 8 caratteri (consigliati 12 o più)",
+      "mustIncludeTitle": "Deve includere almeno:",
+      "ruleUppercase": "1 lettera maiuscola (A-Z)",
+      "ruleLowercase": "1 lettera minuscola (a-z)",
+      "ruleNumber": "1 numero (0-9)",
+      "ruleSpecial": "1 carattere speciale (!, ?, $, %, &)",
+      "noPersonalInfoRule": "Non deve contenere username, nome reale o informazioni facilmente intuibili",
+      "confirmPasswordLabel": "Conferma password*",
+      "confirmPasswordPlaceholder": "842000@Sa"
+    },
+    "companyInfo": {
+      "title": "Informazioni aziendali",
+      "companyNameLabel": "Ragione sociale*",
+      "companyNamePlaceholder": "Inserisci il nome completo dell'azienda",
+      "officeLabel": "Indirizzo sede legale*",
+      "officePlaceholder": "Inserisci l'indirizzo della sede legale",
+      "vatLabel": "Partita IVA*",
+      "vatPlaceholder": "Inserisci la Partita IVA",
+      "taxCodeLabel": "Codice fiscale (se diverso dalla P. IVA)*",
+      "emailLabel": "E-mail di contatto*"
+    },
+    "freelancer": {
+      "subdomainLabel": "Sottodominio*",
+      "subdomainPlaceholder": "freelanceradmin.com",
+      "serviceTypeLabel": "Tipo di servizio*",
+      "serviceTypePlaceholder": "Licenza"
+    },
+    "subdomainModal": {
+      "title": "Sottodominio",
+      "description1": "Inserisci il dominio e penseremo noi al resto.",
+      "description2": "Inserisci il dominio acquistato. Faremo visualizzare il nome della tua azienda.",
+      "buyButton": "Acquista sottodominio",
+      "tipTitle": "Suggerimento:",
+      "tipText": "dopo l'acquisto, forniscici il dominio e lo collegheremo automaticamente."
+    }
+  }
 },
   "footer": {
   "product": "Prodotto",

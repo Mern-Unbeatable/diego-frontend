@@ -284,6 +284,128 @@
       "gb": "GB"
     }
   },
+  "trainingPages": {
+    "trainingViewTitle": "培训",
+    "ourPlatform": { "bannerTitle": "探索我们的SEVESO课程" },
+    "required": { "bannerTitle": "UnoSicurezza - LMS平台" },
+    "sev": { "bannerTitle": "探索我们的SEVESO课程" },
+    "catalog": {
+      "bannerTitle": "课程目录",
+      "platformTitle": "面向企业的在线培训平台",
+      "ratingValue": "4.5",
+      "ratingCount": "(44,566)",
+      "signUp": "报名",
+      "details": "详情"
+    },
+    "filters": {
+      "searchPlaceholder": "搜索课程...",
+      "allCategories": "所有分类",
+      "categorySafety": "安全",
+      "categoryManagers": "管理层",
+      "categoryGeneral": "通用",
+      "allDurations": "所有时长",
+      "hours4": "4小时",
+      "hours6": "6小时",
+      "hours12": "12小时",
+      "hours16": "16小时",
+      "searchButton": "搜索"
+    },
+    "courseCards": {
+      "title": "必修课程",
+      "courses": [
+        { "title": "SEVESO培训 - 年度套餐", "description": "“Seveso III”课程对应欧盟2012/18/EU重大事故预防指令...", "oldPrice": "60,00€", "price": "50,00 €" },
+        { "title": "雇主（新版）16小时", "description": "依据2008年4月9日第81号法令第37条第2款相关协议...", "oldPrice": "180,00€", "price": "110,00 €" },
+        { "title": "通用 4小时", "description": "依据2008年4月9日第81号法令第37条第2款相关协议...", "oldPrice": "50,00€", "price": "40,00 €" },
+        { "title": "低风险专项 4小时（新版）", "description": "依据2008年4月9日第81号法令第37条第2款相关协议...", "oldPrice": "50,00€", "price": "40,00 €" },
+        { "title": "管理人员 12小时", "description": "依据2008年4月9日第81号法令第37条第2款相关协议...", "oldPrice": "160,00€", "price": "120,00 €" },
+        { "title": "管理人员更新 6小时", "description": "依据2008年4月9日第81号法令第37条第2款相关协议...", "oldPrice": "50,00€", "price": "40,00 €" }
+      ]
+    },
+    "courseOverview": {
+      "title": "课程概览",
+      "headers": { "course": "课程", "description": "描述", "duration": "时长", "type": "类型" },
+      "tableRows": [
+        { "name": "单课", "description": "适用于单一培训需求的直接访问。", "duration": "30分钟", "type": "单课" },
+        { "name": "高级Seveso课程", "description": "符合2012/18/EU指令的完整套餐。", "duration": "30分钟/课", "type": "套餐" }
+      ],
+      "howItWorksTitle": "如何运作",
+      "howItWorksSteps": [
+        "联系UnoSicurezza团队",
+        "选择产品：单课或套餐",
+        "通过表单或现场勘查收集需求",
+        "定制课程内容与企业元素",
+        "上传至LMS并自动化管理",
+        "支持PC与移动端学习",
+        "最终测试",
+        "课程结束后颁发证书"
+      ]
+    },
+    "workflow": {
+      "steps": [
+        { "title": "联系", "desc": "与UnoSicurezza团队" },
+        { "title": "产品选择", "desc": "单课或季度套餐" },
+        { "title": "需求收集", "desc": "在线表单或现场技术勘查" },
+        { "title": "定制课程制作", "desc": "含Logo、资料、图片、视频与流程" },
+        { "title": "上传至LMS平台", "desc": "自动化发布与学习监控" },
+        { "title": "课程交付", "desc": "通过电脑、平板、手机学习" }
+      ]
+    },
+    "howWorks": {
+      "headerTitle": "找到最适合你的解决方案",
+      "headerDescription": "无边界学习体验。随时访问我们的安全、隐私与食品卫生课程，持续更新并符合监管要求。",
+      "headerCta": "探索我们所有课程",
+      "sections": [
+        { "title": "单用户 - 等级1", "badge": "高效直观的团队管理", "contents": ["等级1适用于购买单门课程的用户，登录后可直接进入已购课程。"] },
+        { "title": "企业 - 等级2", "contents": ["适用于企业为员工购买多门培训套餐。", "如何运作", "分配管理员与员工账号", "员工首次登录完成资料", "管理员分配课程并跟踪进度", "云端归档报告与证书", "流程有序且便于长期管理。"] },
+        { "title": "培训机构 - 等级3", "contents": ["面向持平台许可的认证培训机构，支持多租户独立管理。", "如何运作", "开通账号并提供技术手册", "课程分配与进度监控", "自动生成个性化证书", "出勤、学习时长与测试结果报表", "全面掌控培训业务流程。"] }
+      ]
+    },
+    "courseDetail": {
+      "backToCatalog": "返回课程目录",
+      "rating": "4/5 星",
+      "title": "SEVESO培训",
+      "description": "依据105/2015号法令，为重大事故风险行业提供高级风险管理课程。",
+      "objectivesTitle": "目标",
+      "objectives": ["理解SEVESO III法规", "识别重大事故风险", "制定有效应急预案", "管理应急沟通"],
+      "specialPrice": "特价",
+      "duration": "时长16小时",
+      "code": "代码：",
+      "enrollNow": "立即报名"
+    },
+    "pricing": {
+      "frameLabel": "Frame 1281154065",
+      "select": "选择",
+      "singleCourse": { "title": "单课", "description": "适合个人学习", "item1": "1位用户", "item2": "完整课程访问", "item3": "可下载证书" },
+      "companyPackage": { "title": "企业套餐", "description": "帮助企业跟踪法规时限并确保合规", "subtitle": "培训：为你匹配的规模", "item1": "1-20用户 - €150/用户", "item2": "21-50用户 - €420/用户", "item3": "51-200用户 - €1000/用户", "item4": "包含管理面板" }
+    }
+  },
+  "paymentPages": {
+    "cart": {
+      "continueShopping": "继续购物",
+      "title": "购物车",
+      "contains": "购物车包含：",
+      "courseDescription": "课程描述",
+      "courseName": "Afrobeat"
+    },
+    "cardDetails": {
+      "title": "卡片详情",
+      "network": "支付网络",
+      "seeAll": "查看全部",
+      "nameOnCard": "持卡人姓名",
+      "cardNumber": "卡号",
+      "expiryDate": "到期日期",
+      "cvv": "CVV",
+      "subtotal": "小计",
+      "total": "总计",
+      "payNow": "立即支付"
+    },
+    "success": {
+      "close": "关闭",
+      "title": "购买成功完成",
+      "description": "感谢你在UnoSicurezza购买！",
+      "backHome": "返回首页"
+    }
+  },
   "chiSiamo": {
   "bannerTitle": "关于我们",
   "intro": "我们是一群专业人士，专注于为企业和公寓提供物业管理、培训、安全和健康服务。",
@@ -392,6 +514,9 @@
     "descrizione": "描述您的业务和目标",
     "descrizionePlaceholder": "与我们分享如何共同建立有价值的合作伙伴关系...",
     "submit": "发送申请"
+  },
+  "form": {
+    "contactTitle": "点击这里联系我们"
   }
 },
   "contactUs": {
@@ -418,6 +543,139 @@
   "emailCardSub": "如有任何疑问请发送邮件",
   "phoneCardTitle": "电话",
   "phoneCardSub": "周一至周五 9:00-18:00"
+},
+  "auth": {
+  "common": {
+    "logoAlt": "Logo",
+    "emailLabel": "电子邮箱",
+    "emailPlaceholder": "请输入邮箱",
+    "goAhead": "继续",
+    "back": "返回",
+    "verifyOtp": "验证 OTP",
+    "confirm": "确认",
+    "proceed": "继续",
+    "close": "关闭"
+  },
+  "login": {
+    "enterEmailAlert": "请先输入邮箱",
+    "enterOtpTitle": "请输入发送到你邮箱的 OTP",
+    "enterEmailTitle": "请输入你的邮箱",
+    "otpSentTo": "OTP 已发送到"
+  },
+  "register": {
+    "enterEmailAlert": "请输入你的邮箱地址",
+    "enterEmailTitle": "请输入你的邮箱",
+    "otpIllustrationAlt": "OTP 验证",
+    "emailIllustrationAlt": "邮箱注册"
+  },
+  "chooseLanguage": {
+    "heroTitleLine1": "让我们改变学习新事物的体验",
+    "heroTitleLine2": "。",
+    "illustrationAlt": "学习插图",
+    "heroDescription": "我们致力于以更低成本为所有人提供高质量教育。",
+    "title": "选择首选语言"
+  },
+  "changePassword": {
+    "fillAllFieldsAlert": "请填写所有字段",
+    "passwordTooShortAlert": "密码太短",
+    "passwordMismatchAlert": "两次密码不一致",
+    "illustrationAlt": "重置密码",
+    "newPasswordLabel": "新密码*",
+    "newPasswordPlaceholder": "输入新密码",
+    "repeatPasswordLabel": "重复密码*",
+    "repeatPasswordPlaceholder": "确认密码"
+  },
+  "setup": {
+    "profileTitle": "设置用户资料",
+    "tabs": {
+      "role": "角色",
+      "information": "信息",
+      "password": "密码"
+    },
+    "steps": {
+      "step2of3": "步骤 2/3",
+      "step3of3": "步骤 3/3"
+    },
+    "role": {
+      "title": "角色",
+      "subtitle": "你是：",
+      "options": {
+        "standard": "标准用户 - 级别 1",
+        "business": "企业 - 级别 2",
+        "licensed": "授权用户 - 级别 3"
+      }
+    },
+    "infoRouter": {
+      "roleRequiredTitle": "必须先选择角色",
+      "roleRequiredDescription": "请先选择一个角色。",
+      "backToRoleSelection": "返回角色选择"
+    },
+    "info": {
+      "title": "信息",
+      "firstNameLabel": "名字",
+      "firstNamePlaceholder": "输入名字",
+      "lastNameLabel": "姓氏",
+      "lastNamePlaceholder": "输入姓氏",
+      "birthDateLabel": "出生日期",
+      "birthDatePlaceholder": "选择出生日期",
+      "cityLabel": "城市",
+      "cityPlaceholder": "输入出生城市",
+      "countryLabel": "国家",
+      "countryPlaceholder": "输入国家",
+      "addressLabel": "地址",
+      "addressPlaceholder": "街道、门牌号、邮编、城市、省份、国家",
+      "companyNameLabel": "公司名称",
+      "companyNamePlaceholder": "输入公司名称",
+      "officeLabel": "注册地址",
+      "officePlaceholder": "输入注册地址",
+      "vatNumberLabel": "增值税号",
+      "vatNumberPlaceholder": "输入增值税号",
+      "taxCodeLabel": "税号",
+      "taxCodePlaceholder": "输入税号",
+      "citizenshipTitle": "国籍",
+      "citizenshipForeign": "外国",
+      "citizenshipItalian": "意大利"
+    },
+    "password": {
+      "title": "创建你的密码",
+      "newPasswordLabel": "新密码*",
+      "newPasswordPlaceholder": "输入密码",
+      "minLengthRule": "最少 8 个字符（建议 12 个或以上）",
+      "mustIncludeTitle": "至少应包含：",
+      "ruleUppercase": "1 个大写字母 (A-Z)",
+      "ruleLowercase": "1 个小写字母 (a-z)",
+      "ruleNumber": "1 个数字 (0-9)",
+      "ruleSpecial": "1 个特殊字符 (!, ?, $, %, &)",
+      "noPersonalInfoRule": "不能包含用户名、真实姓名或易猜信息",
+      "confirmPasswordLabel": "确认密码*",
+      "confirmPasswordPlaceholder": "842000@Sa"
+    },
+    "companyInfo": {
+      "title": "企业信息",
+      "companyNameLabel": "公司法定名称*",
+      "companyNamePlaceholder": "输入完整公司名称",
+      "officeLabel": "注册地址*",
+      "officePlaceholder": "输入注册地址",
+      "vatLabel": "增值税号*",
+      "vatPlaceholder": "输入增值税号",
+      "taxCodeLabel": "税号（若不同于增值税号）*",
+      "emailLabel": "联系邮箱*"
+    },
+    "freelancer": {
+      "subdomainLabel": "子域名*",
+      "subdomainPlaceholder": "freelanceradmin.com",
+      "serviceTypeLabel": "服务类型*",
+      "serviceTypePlaceholder": "许可证"
+    },
+    "subdomainModal": {
+      "title": "子域名",
+      "description1": "输入你的域名，其余交给我们。",
+      "description2": "输入已购买域名，我们会让你的公司名称显示出来。",
+      "buyButton": "购买子域名",
+      "tipTitle": "提示：",
+      "tipText": "购买后将域名提供给我们，我们会自动完成绑定。"
+    }
+  }
 },
   "footer": {
   "product": "产品",

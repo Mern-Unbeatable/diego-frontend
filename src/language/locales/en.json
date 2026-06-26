@@ -284,6 +284,244 @@
       "gb": "GB"
     }
   },
+  "trainingPages": {
+    "trainingViewTitle": "Training",
+    "ourPlatform": {
+      "bannerTitle": "Discover our SEVESO courses"
+    },
+    "required": {
+      "bannerTitle": "UnoSicurezza - LMS Platform"
+    },
+    "sev": {
+      "bannerTitle": "Discover our SEVESO courses"
+    },
+    "catalog": {
+      "bannerTitle": "Catalog",
+      "platformTitle": "The online training platform for your company",
+      "ratingValue": "4.5",
+      "ratingCount": "(44,566)",
+      "signUp": "Sign up",
+      "details": "Details"
+    },
+    "filters": {
+      "searchPlaceholder": "Search courses...",
+      "allCategories": "All categories",
+      "categorySafety": "Safety",
+      "categoryManagers": "Managers",
+      "categoryGeneral": "General",
+      "allDurations": "All durations",
+      "hours4": "4 hours",
+      "hours6": "6 hours",
+      "hours12": "12 hours",
+      "hours16": "16 hours",
+      "searchButton": "Search"
+    },
+    "courseCards": {
+      "title": "Mandatory courses",
+      "courses": [
+        {
+          "title": "SEVESO Training - annual package",
+          "description": "The 'Seveso III' course refers to EU Directive 2012/18/EU on the prevention of major accidents involving dangerous substances...",
+          "oldPrice": "60,00€",
+          "price": "50,00 €"
+        },
+        {
+          "title": "Employer (New) 16 hours",
+          "description": "Agreement, pursuant to article 37, paragraph 2, of Legislative Decree no. 81 of 9 April 2008, between the Government, regions and autonomous provinces...",
+          "oldPrice": "180,00€",
+          "price": "110,00 €"
+        },
+        {
+          "title": "General 4 hours",
+          "description": "Agreement, pursuant to article 37, paragraph 2, of Legislative Decree no. 81 of 9 April 2008, between the Government, regions and autonomous provinces...",
+          "oldPrice": "50,00€",
+          "price": "40,00 €"
+        },
+        {
+          "title": "Specific low risk 4 hours (New)",
+          "description": "Agreement, pursuant to article 37, paragraph 2, of Legislative Decree no. 81 of 9 April 2008, between the Government, regions and autonomous provinces...",
+          "oldPrice": "50,00€",
+          "price": "40,00 €"
+        },
+        {
+          "title": "Managers 12 hours",
+          "description": "Agreement, pursuant to article 37, paragraph 2, of Legislative Decree no. 81 of 9 April 2008, between the Government, regions and autonomous provinces...",
+          "oldPrice": "160,00€",
+          "price": "120,00 €"
+        },
+        {
+          "title": "Managers update 6 hours",
+          "description": "Agreement, pursuant to article 37, paragraph 2, of Legislative Decree no. 81 of 9 April 2008, between the Government, regions and autonomous provinces...",
+          "oldPrice": "50,00€",
+          "price": "40,00 €"
+        }
+      ]
+    },
+    "courseOverview": {
+      "title": "Course overview",
+      "headers": {
+        "course": "Course",
+        "description": "Description",
+        "duration": "Duration",
+        "type": "Type"
+      },
+      "tableRows": [
+        {
+          "name": "Single course",
+          "description": "The single course offers direct access for one specific training need.",
+          "duration": "30 min",
+          "type": "Single"
+        },
+        {
+          "name": "Advanced Seveso course",
+          "description": "A complete package aligned with EU Directive 2012/18/EU for major accident prevention.",
+          "duration": "30 min/course",
+          "type": "Package"
+        }
+      ],
+      "howItWorksTitle": "How it works",
+      "howItWorksSteps": [
+        "Contact UnoSicurezza teams",
+        "Choose the product: single course or training package",
+        "Collect requirements through form or technical inspection",
+        "Create the customized course with logo, references, media and procedures",
+        "Upload to LMS platform with delivery and monitoring automation",
+        "Asynchronous e-learning delivery from desktop and mobile",
+        "Final test",
+        "Certificate release at the end of the course"
+      ]
+    },
+    "workflow": {
+      "steps": [
+        {
+          "title": "Contact",
+          "desc": "with UnoSicurezza team"
+        },
+        {
+          "title": "Product selection",
+          "desc": "single course or quarterly package"
+        },
+        {
+          "title": "Requirements collection",
+          "desc": "via online form or technical on-site inspection"
+        },
+        {
+          "title": "Custom course creation",
+          "desc": "with logo, references, photos, videos, procedures and internal manuals"
+        },
+        {
+          "title": "LMS platform upload",
+          "desc": "automated delivery and training activity monitoring"
+        },
+        {
+          "title": "Course delivery",
+          "desc": "e-learning access from PC, tablet and smartphone"
+        }
+      ]
+    },
+    "howWorks": {
+      "headerTitle": "Find the right solution for you",
+      "headerDescription": "Your training without boundaries. Access our workplace safety, privacy and food hygiene courses. Always updated and designed for your needs. Anywhere and anytime, our eLearning platform provides smart and effective training fully compliant with authority requirements.",
+      "headerCta": "Explore all our courses",
+      "sections": [
+        {
+          "title": "Single user - Level 1",
+          "badge": "Fast and intuitive team management",
+          "contents": [
+            "Level 1 is designed for users who buy a single course. After login with received credentials, the user directly accesses the purchased course without further steps."
+          ]
+        },
+        {
+          "title": "Company - Level 2",
+          "contents": [
+            "Level 2 is designed for companies buying multiple training packages for employees with simple centralized management.",
+            "How it works",
+            "Credential delivery: the company receives admin credentials and assigns unique credentials to each employee.",
+            "First employee access: each employee completes profiling data to validate the path and generate the certificate.",
+            "Admin features: assign courses, monitor progress, view reports and download certificates.",
+            "Cloud archive: certificates and reports are stored securely in cloud with search, export, notifications and backups.",
+            "The system guarantees order and accessibility over time."
+          ]
+        },
+        {
+          "title": "Training entity - Level 3",
+          "contents": [
+            "Level 3 is for accredited training entities purchasing a platform license with multi-tenant access and full autonomy in managing learners and courses.",
+            "How it works",
+            "Activation and access: the entity receives credentials and technical manual.",
+            "Courses: assignment and monitoring of learning progress.",
+            "Customized certificates: automatic generation for learners.",
+            "Detailed reporting: attendance, usage time and test results compliant with authority requirements.",
+            "With Level 3, training entities gain full control of activities with professional management."
+          ]
+        }
+      ]
+    },
+    "courseDetail": {
+      "backToCatalog": "Back to catalog",
+      "rating": "4/5 stars",
+      "title": "SEVESO Training",
+      "description": "Advanced course for risk management in industries exposed to major accidents according to Legislative Decree 105/2015. The course provides specific skills for prevention of major accidents and emergency management.",
+      "objectivesTitle": "Objectives",
+      "objectives": [
+        "Understand SEVESO III regulations",
+        "Identify major accident risks",
+        "Develop effective emergency plans",
+        "Manage emergency communication"
+      ],
+      "specialPrice": "Special price",
+      "duration": "Duration 16 hours",
+      "code": "Code:",
+      "enrollNow": "Enroll now"
+    },
+    "pricing": {
+      "frameLabel": "Frame 1281154065",
+      "select": "Select",
+      "singleCourse": {
+        "title": "Single course",
+        "description": "Perfect for individual access and attendance",
+        "item1": "1 user",
+        "item2": "Full course access",
+        "item3": "Certificate download available"
+      },
+      "companyPackage": {
+        "title": "Company package",
+        "description": "Solution to support companies in monitoring regulatory deadlines, ensuring timely assistance and compliance",
+        "subtitle": "Training: the right size for you",
+        "item1": "1-20 users - €150/user",
+        "item2": "21-50 users - €420/user",
+        "item3": "51-200 users - €1000/user",
+        "item4": "Includes administration panel"
+      }
+    }
+  },
+  "paymentPages": {
+    "cart": {
+      "continueShopping": "Continue shopping",
+      "title": "Cart",
+      "contains": "The cart contains:",
+      "courseDescription": "Course description",
+      "courseName": "Afrobeat"
+    },
+    "cardDetails": {
+      "title": "Card details",
+      "network": "Card network",
+      "seeAll": "See all",
+      "nameOnCard": "Name on card",
+      "cardNumber": "Number",
+      "expiryDate": "Expiry date",
+      "cvv": "CVV",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "payNow": "Pay now"
+    },
+    "success": {
+      "close": "Close",
+      "title": "Purchase completed successfully",
+      "description": "Thank you for purchasing on UnoSicurezza!",
+      "backHome": "Back to Home"
+    }
+  },
   "chiSiamo": {
   "bannerTitle": "Who We Are",
   "intro": "We are a group of professionals dealing with property management, training, safety and health for companies and condominiums.",
@@ -392,6 +630,9 @@
     "descrizione": "Describe your business and your goals",
     "descrizionePlaceholder": "Share with us how we can build a valuable partnership together...",
     "submit": "Send request"
+  },
+  "form": {
+    "contactTitle": "Click here to contact us"
   }
 },
   "contactUs": {
@@ -418,6 +659,139 @@
   "emailCardSub": "Write for any information",
   "phoneCardTitle": "Phone",
   "phoneCardSub": "Mon-Fri 9.00-18.00"
+},
+  "auth": {
+  "common": {
+    "logoAlt": "Logo",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "Type your email",
+    "goAhead": "Go ahead",
+    "back": "Back",
+    "verifyOtp": "Verify OTP",
+    "confirm": "Confirm",
+    "proceed": "Proceed",
+    "close": "Close"
+  },
+  "login": {
+    "enterEmailAlert": "Enter email first",
+    "enterOtpTitle": "Enter the OTP sent to your email",
+    "enterEmailTitle": "Enter your e-mail",
+    "otpSentTo": "OTP sent to"
+  },
+  "register": {
+    "enterEmailAlert": "Please enter your email address",
+    "enterEmailTitle": "Enter your email",
+    "otpIllustrationAlt": "OTP verification",
+    "emailIllustrationAlt": "Email sign up"
+  },
+  "chooseLanguage": {
+    "heroTitleLine1": "Let's change the experience of learning",
+    "heroTitleLine2": "something new.",
+    "illustrationAlt": "Learning illustration",
+    "heroDescription": "Our journey to ensure quality education for all at low cost.",
+    "title": "Choose a preferred language"
+  },
+  "changePassword": {
+    "fillAllFieldsAlert": "Fill all fields",
+    "passwordTooShortAlert": "Password too short",
+    "passwordMismatchAlert": "Passwords do not match",
+    "illustrationAlt": "Password reset",
+    "newPasswordLabel": "New password*",
+    "newPasswordPlaceholder": "Enter new password",
+    "repeatPasswordLabel": "Repeat password*",
+    "repeatPasswordPlaceholder": "Confirm password"
+  },
+  "setup": {
+    "profileTitle": "Set up your user profile",
+    "tabs": {
+      "role": "Role",
+      "information": "Information",
+      "password": "Password"
+    },
+    "steps": {
+      "step2of3": "Steps 2/3",
+      "step3of3": "Steps 3/3"
+    },
+    "role": {
+      "title": "Role",
+      "subtitle": "You are a:",
+      "options": {
+        "standard": "Standard user - Lv. 1",
+        "business": "Company - Lv. 2",
+        "licensed": "Licensed user - Lv. 3"
+      }
+    },
+    "infoRouter": {
+      "roleRequiredTitle": "Role Selection Required",
+      "roleRequiredDescription": "Please select a role first.",
+      "backToRoleSelection": "Go back to role selection"
+    },
+    "info": {
+      "title": "Information",
+      "firstNameLabel": "First name",
+      "firstNamePlaceholder": "Type your first name",
+      "lastNameLabel": "Last name",
+      "lastNamePlaceholder": "Type your last name",
+      "birthDateLabel": "Birth date",
+      "birthDatePlaceholder": "Select your birth date",
+      "cityLabel": "City",
+      "cityPlaceholder": "Enter city of birth",
+      "countryLabel": "Country",
+      "countryPlaceholder": "Type your country",
+      "addressLabel": "Address",
+      "addressPlaceholder": "Street, number, ZIP code, city, province, country",
+      "companyNameLabel": "Company name",
+      "companyNamePlaceholder": "Enter company name",
+      "officeLabel": "Office",
+      "officePlaceholder": "Enter registered office address",
+      "vatNumberLabel": "VAT number",
+      "vatNumberPlaceholder": "Enter VAT number",
+      "taxCodeLabel": "Tax code",
+      "taxCodePlaceholder": "Enter tax code",
+      "citizenshipTitle": "Citizenship",
+      "citizenshipForeign": "Foreign",
+      "citizenshipItalian": "Italian"
+    },
+    "password": {
+      "title": "Create your password",
+      "newPasswordLabel": "New password*",
+      "newPasswordPlaceholder": "Enter password",
+      "minLengthRule": "Minimum length: 8 characters (12 or more recommended)",
+      "mustIncludeTitle": "It must include at least:",
+      "ruleUppercase": "1 uppercase letter (A-Z)",
+      "ruleLowercase": "1 lowercase letter (a-z)",
+      "ruleNumber": "1 number (0-9)",
+      "ruleSpecial": "1 special character (!, ?, $, %, &)",
+      "noPersonalInfoRule": "It must not contain username, real name, or other easy-to-guess information",
+      "confirmPasswordLabel": "Confirm password*",
+      "confirmPasswordPlaceholder": "842000@Sa"
+    },
+    "companyInfo": {
+      "title": "Company information",
+      "companyNameLabel": "Company legal name*",
+      "companyNamePlaceholder": "Enter full company name",
+      "officeLabel": "Registered office address*",
+      "officePlaceholder": "Enter registered office address",
+      "vatLabel": "VAT number*",
+      "vatPlaceholder": "Enter VAT number",
+      "taxCodeLabel": "Tax code (if different from VAT)*",
+      "emailLabel": "Contact e-mail*"
+    },
+    "freelancer": {
+      "subdomainLabel": "Subdomain*",
+      "subdomainPlaceholder": "freelanceradmin.com",
+      "serviceTypeLabel": "Service type*",
+      "serviceTypePlaceholder": "License"
+    },
+    "subdomainModal": {
+      "title": "Subdomain",
+      "description1": "Enter your domain and we will take care of the rest.",
+      "description2": "Enter the purchased domain. We will make your company name visible.",
+      "buyButton": "Buy subdomain",
+      "tipTitle": "Tip:",
+      "tipText": "after purchase, provide the domain and we will connect it automatically."
+    }
+  }
 },
   "footer": {
   "product": "Product",

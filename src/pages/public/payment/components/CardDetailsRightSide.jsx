@@ -1,14 +1,15 @@
 import { FaArrowRight } from 'react-icons/fa';
-import { H2, H4 } from '../../../../components/ui/Heading';
 import Input from '../../../../components/ui/Input';
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import Button from '../../../../components/ui/Button';
 import P from '../../../../components/ui/P';
 import { Heading, Paragraph } from '../../../../components/ui';
+import { useTranslation } from 'react-i18next';
 
 const CardDetailsRightSide = () => {
   const [isOpenModal, setIsModalOpen] = useState(false);
+  const { t } = useTranslation();
 
   const openModal = () => {
     console.log('Opening modal...');
@@ -28,8 +29,8 @@ const CardDetailsRightSide = () => {
 
   return (
     <div className="mt-12 w-full rounded-xl bg-[#D4EBE2] px-8 py-6 sm:mt-14 md:mt-0">
-      <Heading level={4} className={''} h2={'Dettagli carta'} />
-      <Heading level={4} className={'my-6'} h4={'Circuito carta'} />
+      <Heading level={4} className={''} h2={t('paymentPages.cardDetails.title')} />
+      <Heading level={4} className={'my-6'} h4={t('paymentPages.cardDetails.network')} />
       <form onSubmit={handleSubmit}>
         <div className="flex w-full items-center justify-between">
           <div className="h-auto w-[75px] bg-[#D4EBE2]">
@@ -53,14 +54,14 @@ const CardDetailsRightSide = () => {
               alt=""
             />
           </div>
-          <P p={'See all'} />
+          <P p={t('paymentPages.cardDetails.seeAll')} />
         </div>
         <Input
           TClassName={''}
           className={'bg-white text-[#505050]'}
           name={'name'}
           placeholder={'Franco Rossi'}
-          title={'Nome sulla carta'}
+          title={t('paymentPages.cardDetails.nameOnCard')}
           type={'text'}
         />
         <Input
@@ -68,7 +69,7 @@ const CardDetailsRightSide = () => {
           className={'bg-white text-[#505050]'}
           name={'number'}
           placeholder={'3333 3333 3333 3333'}
-          title={'Nome sulla carta'}
+          title={t('paymentPages.cardDetails.cardNumber')}
           type={'text'}
         />
         <div className="flex items-center gap-4">
@@ -77,7 +78,7 @@ const CardDetailsRightSide = () => {
             className={'bg-white text-[#505050]'}
             name={'date'}
             placeholder={'Franco Rossi'}
-            title={'01/01/2030'}
+            title={t('paymentPages.cardDetails.expiryDate')}
             type={'number'}
           />
           <Input
@@ -85,14 +86,14 @@ const CardDetailsRightSide = () => {
             className={'bg-white text-[#505050]'}
             name={'cvv'}
             placeholder={'111'}
-            title={'CVV'}
+            title={t('paymentPages.cardDetails.cvv')}
             type={'number'}
           />
         </div>
         <hr className="my-6 text-[#5F65C3]" />
         <div className="flex items-center justify-between text-[#505050]">
           <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
-            Subtotale
+            {t('paymentPages.cardDetails.subtotal')}
           </p>
           <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
             €90.00
@@ -100,7 +101,7 @@ const CardDetailsRightSide = () => {
         </div>
         <div className="my-6 flex items-center justify-between text-[#505050]">
           <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
-            Totale
+            {t('paymentPages.cardDetails.total')}
           </p>
           <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
             €86.00
@@ -113,7 +114,7 @@ const CardDetailsRightSide = () => {
         >
           86,00 €
           <div className="flex items-center gap-3">
-            Paga ora
+            {t('paymentPages.cardDetails.payNow')}
             <FaArrowRight />
           </div>
         </button>
@@ -128,7 +129,7 @@ const CardDetailsRightSide = () => {
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 z-10 rounded-full bg-white p-2 text-gray-700 transition hover:bg-gray-200 hover:text-gray-900"
-              aria-label="Chiudi"
+              aria-label={t('paymentPages.success.close')}
             >
               <IoClose className="h-6 w-6" />
             </button>
@@ -144,15 +145,15 @@ const CardDetailsRightSide = () => {
               <Heading
                 level={4}
                 className={'mt-4 text-[#73BFA1]'}
-                h4={'Acquisto completato con successo'}
+                h4={t('paymentPages.success.title')}
               />
               <Paragraph
                 className={
                   'mt-2 max-w-[300px] text-center font-semibold text-[#4A4A4A]'
                 }
-                p={'Grazie di aver acquistato su UnoSicurezza!'}
+                p={t('paymentPages.success.description')}
               />
-              <Button className={'mt-4'} text={'Torna alla Home'} />
+              <Button className={'mt-4'} text={t('paymentPages.success.backHome')} />
             </div>
           </div>
         </div>

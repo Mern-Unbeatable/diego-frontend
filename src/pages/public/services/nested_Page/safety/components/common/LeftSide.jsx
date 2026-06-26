@@ -1,5 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 const LeftSide = () => {
-  return <div>LeftSide</div>
+  const { t } = useTranslation();
+  return <div>{t('servicesPages.common.serviceDetailsTitle')}</div>
 }
 
 export default LeftSide

@@ -284,6 +284,128 @@
       "gb": "GB"
     }
   },
+  "trainingPages": {
+    "trainingViewTitle": "التدريب",
+    "ourPlatform": { "bannerTitle": "اكتشف دورات SEVESO الخاصة بنا" },
+    "required": { "bannerTitle": "UnoSicurezza - منصة LMS" },
+    "sev": { "bannerTitle": "اكتشف دورات SEVESO الخاصة بنا" },
+    "catalog": {
+      "bannerTitle": "الكتالوج",
+      "platformTitle": "منصة التدريب عبر الإنترنت لشركتك",
+      "ratingValue": "4.5",
+      "ratingCount": "(44,566)",
+      "signUp": "سجّل",
+      "details": "التفاصيل"
+    },
+    "filters": {
+      "searchPlaceholder": "ابحث عن الدورات...",
+      "allCategories": "كل الفئات",
+      "categorySafety": "السلامة",
+      "categoryManagers": "المديرون",
+      "categoryGeneral": "عام",
+      "allDurations": "كل المدد",
+      "hours4": "4 ساعات",
+      "hours6": "6 ساعات",
+      "hours12": "12 ساعة",
+      "hours16": "16 ساعة",
+      "searchButton": "بحث"
+    },
+    "courseCards": {
+      "title": "الدورات الإلزامية",
+      "courses": [
+        { "title": "تدريب SEVESO - باقة سنوية", "description": "تشير دورة Seveso III إلى توجيه الاتحاد الأوروبي 2012/18/EU الخاص بمنع الحوادث الكبرى...", "oldPrice": "60,00€", "price": "50,00 €" },
+        { "title": "صاحب العمل (جديد) 16 ساعة", "description": "اتفاق وفق المادة 37 الفقرة 2 من المرسوم التشريعي 81/2008...", "oldPrice": "180,00€", "price": "110,00 €" },
+        { "title": "عام 4 ساعات", "description": "اتفاق وفق المادة 37 الفقرة 2 من المرسوم التشريعي 81/2008...", "oldPrice": "50,00€", "price": "40,00 €" },
+        { "title": "مخاطر منخفضة محددة 4 ساعات (جديد)", "description": "اتفاق وفق المادة 37 الفقرة 2 من المرسوم التشريعي 81/2008...", "oldPrice": "50,00€", "price": "40,00 €" },
+        { "title": "المديرون 12 ساعة", "description": "اتفاق وفق المادة 37 الفقرة 2 من المرسوم التشريعي 81/2008...", "oldPrice": "160,00€", "price": "120,00 €" },
+        { "title": "تحديث المديرين 6 ساعات", "description": "اتفاق وفق المادة 37 الفقرة 2 من المرسوم التشريعي 81/2008...", "oldPrice": "50,00€", "price": "40,00 €" }
+      ]
+    },
+    "courseOverview": {
+      "title": "نظرة عامة على الدورات",
+      "headers": { "course": "الدورة", "description": "الوصف", "duration": "المدة", "type": "النوع" },
+      "tableRows": [
+        { "name": "دورة فردية", "description": "دورة فردية للوصول المباشر حسب الحاجة.", "duration": "30 دقيقة", "type": "فردي" },
+        { "name": "دورة Seveso متقدمة", "description": "حزمة متكاملة متوافقة مع توجيه 2012/18/EU.", "duration": "30 دقيقة/دورة", "type": "حزمة" }
+      ],
+      "howItWorksTitle": "كيف يعمل",
+      "howItWorksSteps": [
+        "التواصل مع فريق UnoSicurezza",
+        "اختيار المنتج: دورة فردية أو حزمة",
+        "جمع المتطلبات عبر النموذج أو المعاينة",
+        "إنشاء دورة مخصصة بالشعار والمراجع",
+        "رفعها على منصة LMS مع الأتمتة",
+        "تقديم التدريب الإلكتروني من الحاسوب والهاتف",
+        "اختبار نهائي",
+        "إصدار الشهادة عند نهاية الدورة"
+      ]
+    },
+    "workflow": {
+      "steps": [
+        { "title": "تواصل", "desc": "مع فريق UnoSicurezza" },
+        { "title": "اختيار المنتج", "desc": "دورة فردية أو باقة ربع سنوية" },
+        { "title": "جمع المتطلبات", "desc": "عبر نموذج إلكتروني أو معاينة فنية" },
+        { "title": "إنشاء دورة مخصصة", "desc": "مع الشعار والمراجع والصور والإجراءات" },
+        { "title": "الرفع على منصة LMS", "desc": "أتمتة الإتاحة ومتابعة النشاط التدريبي" },
+        { "title": "تقديم الدورة", "desc": "تعلم إلكتروني عبر الكمبيوتر والجوال" }
+      ]
+    },
+    "howWorks": {
+      "headerTitle": "اعثر على الحل المناسب لك",
+      "headerDescription": "تدريبك بلا حدود. وصول دائم لدورات السلامة والخصوصية والنظافة الغذائية.",
+      "headerCta": "استكشف جميع دوراتنا",
+      "sections": [
+        { "title": "مستخدم فردي - المستوى 1", "badge": "إدارة فريق سريعة وسهلة", "contents": ["المستوى 1 مخصص لمن يشتري دورة واحدة ويصل إليها مباشرة بعد تسجيل الدخول."] },
+        { "title": "شركة - المستوى 2", "contents": ["مخصص للشركات التي تشتري باقات متعددة للموظفين.", "كيف يعمل", "إرسال بيانات الدخول للمشرف والموظفين", "إدخال بيانات الموظف عند أول دخول", "تعيين الدورات ومتابعة التقدم", "أرشفة سحابية للتقارير والشهادات", "نظام منظم وسهل الوصول."] },
+        { "title": "جهة تدريب - المستوى 3", "contents": ["مخصص للجهات المعتمدة مع ترخيص منصة وإدارة مستقلة.", "كيف يعمل", "تفعيل الحساب مع دليل تقني", "تعيين الدورات ومتابعة الأداء", "إنشاء شهادات مخصصة", "تقارير حضور ونتائج الاختبار", "تحكم كامل بالعملية التدريبية."] }
+      ]
+    },
+    "courseDetail": {
+      "backToCatalog": "العودة إلى الكتالوج",
+      "rating": "4/5 نجوم",
+      "title": "تدريب SEVESO",
+      "description": "دورة متقدمة لإدارة المخاطر في الصناعات المعرضة للحوادث الكبرى وفق المرسوم 105/2015.",
+      "objectivesTitle": "الأهداف",
+      "objectives": ["فهم لوائح SEVESO III", "تحديد مخاطر الحوادث الكبرى", "إعداد خطط طوارئ فعّالة", "إدارة التواصل أثناء الطوارئ"],
+      "specialPrice": "سعر خاص",
+      "duration": "المدة 16 ساعة",
+      "code": "الرمز:",
+      "enrollNow": "سجّل الآن"
+    },
+    "pricing": {
+      "frameLabel": "Frame 1281154065",
+      "select": "اختيار",
+      "singleCourse": { "title": "دورة فردية", "description": "مناسبة للوصول الفردي", "item1": "مستخدم واحد", "item2": "وصول كامل للدورة", "item3": "إمكانية تحميل الشهادة" },
+      "companyPackage": { "title": "باقة الشركات", "description": "حل لمساعدة الشركات على متابعة الالتزامات التنظيمية", "subtitle": "التدريب: المقاس المناسب لك", "item1": "1-20 مستخدم - €150/مستخدم", "item2": "21-50 مستخدم - €420/مستخدم", "item3": "51-200 مستخدم - €1000/مستخدم", "item4": "يشمل لوحة إدارة" }
+    }
+  },
+  "paymentPages": {
+    "cart": {
+      "continueShopping": "متابعة التسوق",
+      "title": "السلة",
+      "contains": "تحتوي السلة على:",
+      "courseDescription": "وصف الدورة",
+      "courseName": "Afrobeat"
+    },
+    "cardDetails": {
+      "title": "تفاصيل البطاقة",
+      "network": "شبكة البطاقة",
+      "seeAll": "عرض الكل",
+      "nameOnCard": "الاسم على البطاقة",
+      "cardNumber": "الرقم",
+      "expiryDate": "تاريخ الانتهاء",
+      "cvv": "CVV",
+      "subtotal": "المجموع الفرعي",
+      "total": "الإجمالي",
+      "payNow": "ادفع الآن"
+    },
+    "success": {
+      "close": "إغلاق",
+      "title": "تم إكمال عملية الشراء بنجاح",
+      "description": "شكرًا لشرائك من UnoSicurezza!",
+      "backHome": "العودة للرئيسية"
+    }
+  },
   "chiSiamo": {
   "bannerTitle": "من نحن",
   "intro": "نحن مجموعة من المهنيين المتخصصين في إدارة العقارات والتدريب والسلامة والصحة للشركات والمجمعات السكنية.",
@@ -392,6 +514,9 @@
     "descrizione": "صف نشاطك وأهدافك",
     "descrizionePlaceholder": "شاركنا كيف يمكننا بناء شراكة ذات قيمة معًا...",
     "submit": "إرسال الطلب"
+  },
+  "form": {
+    "contactTitle": "انقر هنا للتواصل معنا"
   }
 },
   "contactUs": {
@@ -418,6 +543,139 @@
   "emailCardSub": "اكتب لأي استفسار",
   "phoneCardTitle": "الهاتف",
   "phoneCardSub": "الاثنين-الجمعة 9.00-18.00"
+},
+  "auth": {
+  "common": {
+    "logoAlt": "الشعار",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "goAhead": "متابعة",
+    "back": "رجوع",
+    "verifyOtp": "تحقق من OTP",
+    "confirm": "تأكيد",
+    "proceed": "متابعة",
+    "close": "إغلاق"
+  },
+  "login": {
+    "enterEmailAlert": "أدخل البريد الإلكتروني أولاً",
+    "enterOtpTitle": "أدخل رمز OTP المرسل إلى بريدك الإلكتروني",
+    "enterEmailTitle": "أدخل بريدك الإلكتروني",
+    "otpSentTo": "تم إرسال OTP إلى"
+  },
+  "register": {
+    "enterEmailAlert": "يرجى إدخال بريدك الإلكتروني",
+    "enterEmailTitle": "أدخل بريدك الإلكتروني",
+    "otpIllustrationAlt": "التحقق من OTP",
+    "emailIllustrationAlt": "تسجيل البريد الإلكتروني"
+  },
+  "chooseLanguage": {
+    "heroTitleLine1": "لنغيّر تجربة تعلم",
+    "heroTitleLine2": "شيء جديد.",
+    "illustrationAlt": "صورة تعليمية",
+    "heroDescription": "رحلتنا لضمان تعليم عالي الجودة بتكلفة منخفضة للجميع.",
+    "title": "اختر اللغة المفضلة"
+  },
+  "changePassword": {
+    "fillAllFieldsAlert": "يرجى تعبئة جميع الحقول",
+    "passwordTooShortAlert": "كلمة المرور قصيرة جدًا",
+    "passwordMismatchAlert": "كلمتا المرور غير متطابقتين",
+    "illustrationAlt": "إعادة تعيين كلمة المرور",
+    "newPasswordLabel": "كلمة المرور الجديدة*",
+    "newPasswordPlaceholder": "أدخل كلمة المرور الجديدة",
+    "repeatPasswordLabel": "أعد إدخال كلمة المرور*",
+    "repeatPasswordPlaceholder": "تأكيد كلمة المرور"
+  },
+  "setup": {
+    "profileTitle": "إعداد ملف المستخدم",
+    "tabs": {
+      "role": "الدور",
+      "information": "المعلومات",
+      "password": "كلمة المرور"
+    },
+    "steps": {
+      "step2of3": "الخطوة 2/3",
+      "step3of3": "الخطوة 3/3"
+    },
+    "role": {
+      "title": "الدور",
+      "subtitle": "أنت:",
+      "options": {
+        "standard": "مستخدم عادي - المستوى 1",
+        "business": "شركة - المستوى 2",
+        "licensed": "مستخدم بترخيص - المستوى 3"
+      }
+    },
+    "infoRouter": {
+      "roleRequiredTitle": "اختيار الدور مطلوب",
+      "roleRequiredDescription": "يرجى اختيار الدور أولاً.",
+      "backToRoleSelection": "العودة لاختيار الدور"
+    },
+    "info": {
+      "title": "المعلومات",
+      "firstNameLabel": "الاسم الأول",
+      "firstNamePlaceholder": "أدخل الاسم الأول",
+      "lastNameLabel": "اسم العائلة",
+      "lastNamePlaceholder": "أدخل اسم العائلة",
+      "birthDateLabel": "تاريخ الميلاد",
+      "birthDatePlaceholder": "اختر تاريخ الميلاد",
+      "cityLabel": "المدينة",
+      "cityPlaceholder": "أدخل مدينة الميلاد",
+      "countryLabel": "الدولة",
+      "countryPlaceholder": "أدخل الدولة",
+      "addressLabel": "العنوان",
+      "addressPlaceholder": "الشارع، الرقم، الرمز البريدي، المدينة، المحافظة، الدولة",
+      "companyNameLabel": "اسم الشركة",
+      "companyNamePlaceholder": "أدخل اسم الشركة",
+      "officeLabel": "المقر الرئيسي",
+      "officePlaceholder": "أدخل عنوان المقر الرئيسي",
+      "vatNumberLabel": "الرقم الضريبي",
+      "vatNumberPlaceholder": "أدخل الرقم الضريبي",
+      "taxCodeLabel": "الرمز الضريبي",
+      "taxCodePlaceholder": "أدخل الرمز الضريبي",
+      "citizenshipTitle": "الجنسية",
+      "citizenshipForeign": "أجنبية",
+      "citizenshipItalian": "إيطالية"
+    },
+    "password": {
+      "title": "أنشئ كلمة المرور الخاصة بك",
+      "newPasswordLabel": "كلمة المرور الجديدة*",
+      "newPasswordPlaceholder": "أدخل كلمة المرور",
+      "minLengthRule": "الحد الأدنى للطول: 8 أحرف (يُفضّل 12 أو أكثر)",
+      "mustIncludeTitle": "يجب أن تحتوي على الأقل على:",
+      "ruleUppercase": "حرف كبير واحد (A-Z)",
+      "ruleLowercase": "حرف صغير واحد (a-z)",
+      "ruleNumber": "رقم واحد (0-9)",
+      "ruleSpecial": "رمز خاص واحد (!, ?, $, %, &)",
+      "noPersonalInfoRule": "يجب ألا تحتوي على اسم المستخدم أو الاسم الحقيقي أو معلومات سهلة التخمين",
+      "confirmPasswordLabel": "تأكيد كلمة المرور*",
+      "confirmPasswordPlaceholder": "842000@Sa"
+    },
+    "companyInfo": {
+      "title": "معلومات الشركة",
+      "companyNameLabel": "الاسم القانوني للشركة*",
+      "companyNamePlaceholder": "أدخل الاسم الكامل للشركة",
+      "officeLabel": "عنوان المقر الرئيسي*",
+      "officePlaceholder": "أدخل عنوان المقر الرئيسي",
+      "vatLabel": "الرقم الضريبي*",
+      "vatPlaceholder": "أدخل الرقم الضريبي",
+      "taxCodeLabel": "الرمز الضريبي (إذا كان مختلفًا عن الضريبة)*",
+      "emailLabel": "البريد الإلكتروني للتواصل*"
+    },
+    "freelancer": {
+      "subdomainLabel": "النطاق الفرعي*",
+      "subdomainPlaceholder": "freelanceradmin.com",
+      "serviceTypeLabel": "نوع الخدمة*",
+      "serviceTypePlaceholder": "ترخيص"
+    },
+    "subdomainModal": {
+      "title": "النطاق الفرعي",
+      "description1": "أدخل النطاق وسنتكفل بالباقي.",
+      "description2": "أدخل النطاق الذي تم شراؤه وسنقوم بإظهار اسم شركتك.",
+      "buyButton": "شراء نطاق فرعي",
+      "tipTitle": "نصيحة:",
+      "tipText": "بعد الشراء، زودنا بالنطاق وسنربطه تلقائيًا."
+    }
+  }
 },
   "footer": {
   "product": "المنتج",

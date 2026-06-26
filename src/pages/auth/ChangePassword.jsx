@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Heading, InputField, Label } from "../../components/ui";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const ChangePassword = () => {
+    const { t } = useTranslation();
     const [form, setForm] = useState({
         password: "",
         confirmPassword: "",
@@ -21,17 +23,17 @@ const ChangePassword = () => {
         e.preventDefault();
 
         if (!form.password || !form.confirmPassword) {
-            alert("Fill all fields");
+            alert(t('auth.changePassword.fillAllFieldsAlert'));
             return;
         }
 
         if (form.password.length < 6) {
-            alert("Password too short");
+            alert(t('auth.changePassword.passwordTooShortAlert'));
             return;
         }
 
         if (form.password !== form.confirmPassword) {
-            alert("Passwords do not match");
+            alert(t('auth.changePassword.passwordMismatchAlert'));
             return;
         }
 
@@ -51,7 +53,7 @@ const ChangePassword = () => {
                         <img
                             className="h-10 w-10 object-contain"
                             src="/images/icons/title.png"
-                            alt="Logo"
+                            alt={t('auth.common.logoAlt')}
                         />
                         <h1 className="text-3xl font-bold text-gray-900">
                             UnoSicurezza
@@ -62,7 +64,7 @@ const ChangePassword = () => {
                         <img
                             className="w-full object-contain"
                             src="/image/icon/password.jpg"
-                            alt="Password reset"
+                            alt={t('auth.changePassword.illustrationAlt')}
                         />
                     </div>
                 </div>
@@ -78,14 +80,14 @@ const ChangePassword = () => {
                             {/* NEW PASSWORD */}
                             <div>
                                 <Label className="mb-2 block text-lg font-medium">
-                                    Nuova password*
+                                    {t('auth.changePassword.newPasswordLabel')}
                                 </Label>
 
                                 <InputField
                                     type="password"
                                     name="password"
                                     value={form.password}
-                                    placeholder="Inserisci la nuova password"
+                                    placeholder={t('auth.changePassword.newPasswordPlaceholder')}
                                     className="rounded-2xl border border-green-100 bg-white px-4 py-3"
                                     onChange={handleChange}
                                 />
@@ -94,14 +96,14 @@ const ChangePassword = () => {
                             {/* CONFIRM PASSWORD */}
                             <div>
                                 <Label className="mb-2 block text-lg font-medium">
-                                    Ripeti password*
+                                    {t('auth.changePassword.repeatPasswordLabel')}
                                 </Label>
 
                                 <InputField
                                     type="password"
                                     name="confirmPassword"
                                     value={form.confirmPassword}
-                                    placeholder="Conferma la password"
+                                    placeholder={t('auth.changePassword.repeatPasswordPlaceholder')}
                                     className="rounded-2xl border border-green-100 bg-white px-4 py-3"
                                     onChange={handleChange}
                                 />
@@ -115,7 +117,7 @@ const ChangePassword = () => {
                                     type="submit"
                                     className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
                                 >
-                                    Conferma
+                                    {t('auth.common.confirm')}
                                 </button>
                             </div>
 

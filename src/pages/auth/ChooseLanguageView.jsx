@@ -11,7 +11,7 @@ const LANGUAGES = [
 ];
 
 const ChooseLanguageView = () => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const navigate = useNavigate();
   const [selected, setSelected] = useState(i18n.language || 'it');
 
@@ -36,21 +36,21 @@ const ChooseLanguageView = () => {
           {/* Left Section */}
           <div className="flex flex-col items-center justify-center p-8 lg:p-16">
             <Heading level={3} className="text-center">
-              Let's change the experience of learning
+              {t('auth.chooseLanguage.heroTitleLine1')}
               <br />
-              something new.
+              {t('auth.chooseLanguage.heroTitleLine2')}
             </Heading>
 
             <div className="mt-8 max-w-md">
               <img
                 className="w-full object-contain"
                 src="/image/icon/authentication.jpg"
-                alt="Learning illustration"
+                alt={t('auth.chooseLanguage.illustrationAlt')}
               />
             </div>
 
             <Paragraph className="mt-6 text-center">
-              Our journey to ensure quality education for all at low cost.
+              {t('auth.chooseLanguage.heroDescription')}
             </Paragraph>
           </div>
 
@@ -63,7 +63,7 @@ const ChooseLanguageView = () => {
               <Heading
                 level={3}
                 className="mb-10 text-center"
-                h3="Choose a preferred language"
+                h3={t('auth.chooseLanguage.title')}
               />
 
               <div className="grid grid-cols-2 gap-5">
@@ -126,7 +126,7 @@ const ChooseLanguageView = () => {
                   type="submit"
                   className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-8 py-3 font-medium text-white transition-all hover:bg-white hover:text-[#73BFA1]"
                 >
-                  Go ahead
+                  {t('auth.common.goAhead')}
                 </button>
               </div>
             </div>

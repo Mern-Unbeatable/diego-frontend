@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ContactFormDesign = () => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         nome: '',
         cognome: '',
@@ -41,7 +43,7 @@ const ContactFormDesign = () => {
                 <div className="border border-gray-300 rounded-lg p-5">
                     {/* Title */}
                     <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-                        Clicca qui per contattarci
+                        {t('workWithUs.form.contactTitle')}
                     </h2>
 
                     {/* Form */}
@@ -50,27 +52,27 @@ const ContactFormDesign = () => {
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-2">
-                                    Nome*
+                                    {t('contactUs.nome')}
                                 </label>
                                 <input
                                     type="text"
                                     name="nome"
                                     value={formData.nome}
                                     onChange={handleChange}
-                                    placeholder="Il tuo nome"
+                                    placeholder={t('contactUs.nomePlaceholder')}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-xs"
                                 />
                             </div>
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-2">
-                                    Cognome*
+                                    {t('contactUs.cognome')}
                                 </label>
                                 <input
                                     type="text"
                                     name="cognome"
                                     value={formData.cognome}
                                     onChange={handleChange}
-                                    placeholder="Il tuo cognome"
+                                    placeholder={t('contactUs.cognomePlaceholder')}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-xs"
                                 />
                             </div>
@@ -80,27 +82,27 @@ const ContactFormDesign = () => {
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-2">
-                                    Azienda*
+                                    {t('contactUs.azienda')}
                                 </label>
                                 <input
                                     type="text"
                                     name="azienda"
                                     value={formData.azienda}
                                     onChange={handleChange}
-                                    placeholder="Nome della tua azienda"
+                                    placeholder={t('contactUs.aziendaPlaceholder')}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-xs"
                                 />
                             </div>
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-2">
-                                    P.IVA*
+                                    {t('contactUs.piva')}
                                 </label>
                                 <input
                                     type="text"
                                     name="partitaIva"
                                     value={formData.partitaIva}
                                     onChange={handleChange}
-                                    placeholder="Partita IVA"
+                                    placeholder={t('contactUs.pivaPlaceholder')}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-xs"
                                 />
                             </div>
@@ -110,27 +112,27 @@ const ContactFormDesign = () => {
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-2">
-                                    Numero di telefono/cellulare
+                                    {t('contactUs.telefono')}
                                 </label>
                                 <input
                                     type="tel"
                                     name="telefono"
                                     value={formData.telefono}
                                     onChange={handleChange}
-                                    placeholder="+39 123 456 7890"
+                                    placeholder={t('contactUs.telefonoPlaceholder')}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-xs"
                                 />
                             </div>
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-2">
-                                    E-mail
+                                    {t('contactUs.email')}
                                 </label>
                                 <input
                                     type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    placeholder="tua.email@esempio.com"
+                                    placeholder={t('contactUs.emailPlaceholder')}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-xs"
                                 />
                             </div>
@@ -142,14 +144,14 @@ const ContactFormDesign = () => {
                                 type="submit"
                                 className="bg-[#73BFA1] text-white font-semibold py-3 rounded-lg hover:bg-[#63AE91] transition-colors"
                             >
-                                Invia
+                                {t('contactUs.submit')}
                             </button>
                             <button
                                 type="button"
                                 onClick={handleReset}
                                 className="border-2 border-gray-800 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-50 transition-colors"
                             >
-                                Annulla
+                                {t('contactUs.cancel')}
                             </button>
                         </div>
                     </form>

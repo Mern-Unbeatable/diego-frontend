@@ -1,13 +1,16 @@
 import Banner from '../../../../../../components/common/Banner';
 import { Container } from '../../../../../../components/ui';
+import { useTranslation } from 'react-i18next';
 
 const BannerSection = () => {
+  const { t } = useTranslation();
+
   return (
     <Container>
       <Banner
-        description={'La sicurezza sul lavoro ha due alleati: ASPP e RSPP'}
+        description={t('servicesPages.aspRspp.bannerDescription')}
         image={'/image/home/banner/image22.jpg'}
-        title={'Servizio ASPP e RSPP'}
+        title={t('navbar.servicesDropdown.servizioASPP')}
       />
     </Container>
   );

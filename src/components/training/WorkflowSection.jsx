@@ -8,47 +8,18 @@ import {
     BookOpen,
     ArrowDown,
 } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
-const steps = [
-    {
-        icon: Users,
-        title: "Contatto",
-        desc: "con il team UnoSicurezza",
-        avatar: true,
-    },
-    {
-        icon: FileText,
-        title: "Scelta del prodotto",
-        desc: "corso singolo o pacchetto trimestrale",
-    },
-    {
-        icon: ClipboardList,
-        title: "Raccolta delle esigenze",
-        desc: "tramite form online, o sopralluogo tecnico",
-    },
-    {
-        icon: BookOpen,
-        title: "Realizzazione del corso personalizzato",
-        desc: "con logo, riferimenti, foto, video, procedure operative, manuali interni",
-    },
-    {
-        icon: MonitorPlay,
-        title: "Caricamento sulla piattaforma LMS",
-        desc: "automazione erogazione e monitoraggio attività formativa",
-    },
-    {
-        icon: Users,
-        title: "Erogazione corso",
-        desc: "in e-learning ai lavoratori da PC, tablet e smartphone",
-        bottomAvatar: true,
-    },
-];
+const stepIcons = [Users, FileText, ClipboardList, BookOpen, MonitorPlay, Users];
 
 export default function WorkflowSection() {
+    const { t } = useTranslation();
+    const steps = t('trainingPages.workflow.steps', { returnObjects: true });
+
     return (
         <div className="max-w-sm py-5">
             {steps.map((step, index) => {
-                const Icon = step.icon;
+                const Icon = stepIcons[index] || Users;
 
                 return (
                     <div key={index}>

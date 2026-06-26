@@ -3,30 +3,31 @@ import { PiRadioButtonDuotone } from 'react-icons/pi';
 import { Outlet } from 'react-router-dom';
 import { Heading } from '../../components/ui';
 import SetupTabs from './SetupTabs';
-
-const categories = [
-  {
-    label: 'Role',
-    icon: <RiRadioButtonFill className="h-5 w-5" />,
-    activeIcon: <PiRadioButtonDuotone className="h-5 w-5 text-[#30AD75]" />,
-    path: 'role',
-  },
-  {
-    label: 'Information',
-    icon: <RiRadioButtonFill className="h-5 w-5" />,
-    activeIcon: <PiRadioButtonDuotone className="h-5 w-5 text-[#30AD75]" />,
-    path: 'information',
-  },
-  {
-    label: 'Password',
-    icon: <RiRadioButtonFill className="h-5 w-5" />,
-    activeIcon: <PiRadioButtonDuotone className="h-5 w-5 text-[#30AD75]" />,
-    path: 'password',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 const SetupView = () => {
+  const { t } = useTranslation();
   const basePath = '/auth/setUp-userProfile';
+  const categories = [
+    {
+      label: t('auth.setup.tabs.role'),
+      icon: <RiRadioButtonFill className="h-5 w-5" />,
+      activeIcon: <PiRadioButtonDuotone className="h-5 w-5 text-[#30AD75]" />,
+      path: 'role',
+    },
+    {
+      label: t('auth.setup.tabs.information'),
+      icon: <RiRadioButtonFill className="h-5 w-5" />,
+      activeIcon: <PiRadioButtonDuotone className="h-5 w-5 text-[#30AD75]" />,
+      path: 'information',
+    },
+    {
+      label: t('auth.setup.tabs.password'),
+      icon: <RiRadioButtonFill className="h-5 w-5" />,
+      activeIcon: <PiRadioButtonDuotone className="h-5 w-5 text-[#30AD75]" />,
+      path: 'password',
+    },
+  ];
 
   return (
     <div className="mx-auto grid w-full grid-cols-7 overflow-hidden md:h-screen md:grid-cols-6">
@@ -34,9 +35,9 @@ const SetupView = () => {
         <img
           className="h-[91px] w-[104px]"
           src="/image/icon/droplogo.png"
-          alt="logo"
+          alt={t('auth.common.logoAlt')}
         />
-        <Heading level={3}>Set up your user profile</Heading>
+        <Heading level={3}>{t('auth.setup.profileTitle')}</Heading>
         <SetupTabs basePath={basePath} steps={categories} />
       </div>
 

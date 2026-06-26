@@ -2,23 +2,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
 import { Divider } from '../../../../../components/ui';
+import { useTranslation } from 'react-i18next';
 
 const roles = [
-  {
-    id: 'standard',
-    label: 'Utente standard - Liv. 1',
-    image: '/image/register/icon.png',
-  },
-  {
-    id: 'business',
-    label: 'Azienda - Liv. 2',
-    image: '/image/register/icon2.png',
-  },
-  {
-    id: 'licensed',
-    label: 'Utente licenza - Liv. 3',
-    image: '/image/register/icon3.png',
-  },
+  { id: 'standard', image: '/image/register/icon.png' },
+  { id: 'business', image: '/image/register/icon2.png' },
+  { id: 'licensed', image: '/image/register/icon3.png' },
 ];
 
 const RoleCard = ({ label, image, isSelected, onClick }) => {
@@ -53,8 +42,14 @@ const RoleCard = ({ label, image, isSelected, onClick }) => {
 };
 
 const SetupRole = () => {
+  const { t } = useTranslation();
   const [selectedRole, setSelectedRole] = useState('standard');
   const navigate = useNavigate();
+  const roleLabels = {
+    standard: t('auth.setup.role.options.standard'),
+    business: t('auth.setup.role.options.business'),
+    licensed: t('auth.setup.role.options.licensed'),
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,15 +62,15 @@ const SetupRole = () => {
     <div className="">
       <form onSubmit={handleSubmit}>
         <div className="px-8">
-          <h1 className="text-3xl font-bold text-gray-900">Ruolo</h1>
-          <p className="mt-2 text-gray-600">Tu sei un:</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('auth.setup.role.title')}</h1>
+          <p className="mt-2 text-gray-600">{t('auth.setup.role.subtitle')}</p>
         </div>
 
         <div className="mt-8 grid max-w-2xl grid-cols-1 gap-6 px-8 sm:grid-cols-2">
           {roles.map((role) => (
             <RoleCard
               key={role.id}
-              label={role.label}
+              label={roleLabels[role.id]}
               image={role.image}
               isSelected={selectedRole === role.id}
               onClick={() => setSelectedRole(role.id)}
@@ -90,7 +85,7 @@ const SetupRole = () => {
             type="submit"
             className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
           >
-            Procedi
+            {t('auth.common.proceed')}
           </button>
         </div>
       </form>
