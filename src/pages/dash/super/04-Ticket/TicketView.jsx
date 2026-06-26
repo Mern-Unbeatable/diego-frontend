@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import TicketSection from '../components/TicketSection';
+import TicketSection from './components/TicketSection';
 
-export default function TicketAdminDashboard() {
+export default function TicketView() {
   const [activeTab, setActiveTab] = useState('panoramica');
 
   const tabs = [
     { id: 'panoramica', label: 'Panoramica' },
     { id: 'aperti', label: 'Tickets aperti' },
     { id: 'chiusi', label: 'Tickets chiusi' },
-    { id: 'attesa', label: 'In attesa di approvazione' }
+    { id: 'attesa', label: 'In attesa di approvazione' },
   ];
 
   return (
@@ -21,10 +21,11 @@ export default function TicketAdminDashboard() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`border-b-2 px-6 py-4 text-sm font-medium whitespace-nowrap ${activeTab === tab.id
-                  ? 'border-teal-500 bg-gray-50 text-teal-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-                  } `}
+                className={`border-b-2 px-6 py-4 text-sm font-medium whitespace-nowrap ${
+                  activeTab === tab.id
+                    ? 'border-teal-500 bg-gray-50 text-teal-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                } `}
               >
                 {tab.label}
               </button>
@@ -39,5 +40,4 @@ export default function TicketAdminDashboard() {
       </div>
     </div>
   );
-
 }

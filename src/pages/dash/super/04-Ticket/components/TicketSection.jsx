@@ -83,7 +83,6 @@ const demoTickets = [
   },
 ];
 
-
 export default function TicketSection({ activeTab = 'panoramica' }) {
   const [tickets, setTickets] = useState(demoTickets);
   const [selectedTicket, setSelectedTicket] = useState(null);
@@ -108,16 +107,16 @@ export default function TicketSection({ activeTab = 'panoramica' }) {
       prev.map((ticket) =>
         ticket.id === ticketId
           ? {
-            ...ticket,
-            risposte: [
-              ...(ticket.risposte || []),
-              {
-                testo: response,
-                data: new Date().toLocaleDateString('it-IT'),
-                autore: 'Admin',
-              },
-            ],
-          }
+              ...ticket,
+              risposte: [
+                ...(ticket.risposte || []),
+                {
+                  testo: response,
+                  data: new Date().toLocaleDateString('it-IT'),
+                  autore: 'Admin',
+                },
+              ],
+            }
           : ticket,
       ),
     );
@@ -300,8 +299,6 @@ export default function TicketSection({ activeTab = 'panoramica' }) {
       </div>
     );
   }
-
-
 
   // Get tab title based on active tab
   const getTabTitle = () => {

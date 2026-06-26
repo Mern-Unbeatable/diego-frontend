@@ -24,10 +24,7 @@ const PublicGuard = () => {
 
   if (activeRole && authState) {
     return (
-      <Navigate
-        to={roleToDashboardPath[activeRole] || '/dashboard'}
-        replace
-      />
+      <Navigate to={roleToDashboardPath[activeRole] || '/dashboard'} replace />
     );
   }
 

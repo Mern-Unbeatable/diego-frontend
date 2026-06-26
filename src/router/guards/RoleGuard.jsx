@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 // DEV MODE: set true to test routes without real login.
 const DEV_BYPASS_AUTH = true;
 // Change this role manually while testing.
-const DEV_MANUAL_ROLE = 'PLATFORM_ADMIN';
+const DEV_MANUAL_ROLE = 'COMPANY_ADMIN';
 
 const roleToDashboardPath = {
   PLATFORM_ADMIN: '/dashboard/super-admin',
@@ -32,10 +32,7 @@ const RoleGuard = ({ allowedRoles }) => {
 
   if (!allowedRoles?.includes(activeRole)) {
     return (
-      <Navigate
-        to={roleToDashboardPath[activeRole] || '/dashboard'}
-        replace
-      />
+      <Navigate to={roleToDashboardPath[activeRole] || '/dashboard'} replace />
     );
   }
 

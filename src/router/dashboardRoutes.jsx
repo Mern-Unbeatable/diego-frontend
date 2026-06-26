@@ -4,10 +4,10 @@ import { ROLES } from '../config/roles';
 import SuperAdminView from '../pages/dash/super/01-home/SuperAdminView.jsx';
 import LicenseManagementView from '../pages/dash/super/02-License/LicenseManagementView.jsx';
 import AdminSettingsDashboard from '../pages/dash/super/sections/AdminSettingsDashboard.jsx';
+import TicketView from '../pages/dash/super/04-Ticket/TicketView.jsx';
 import FeedbackView from '../pages/dash/super/05-Feedback/FeedbackView.jsx';
 import FiguresView from '../pages/dash/super/06-Figures/FiguresView.jsx';
-import TicketAdminDashboard from '../pages/dash/super/sections/TicketAdminDashboard';
-import AdminReport from '../pages/dash/super/sections/AdminReport.jsx';
+import AdminReportView from '../pages/dash/super/07-Report/AdminReportView.jsx';
 
 // ✅ freelancer
 import FreelancerAddCource from '../pages/dash/freelancer/components/FreelancerAddCource.jsx';
@@ -58,7 +58,7 @@ export const dashboardRoutes = [
         path: 'super-admin/impostazioni/*',
         element: <AdminSettingsDashboard />,
       },
-      { path: 'super-admin/ticket', element: <TicketAdminDashboard /> },
+      { path: 'super-admin/ticket', element: <TicketView /> },
       { path: 'super-admin/feedback', element: <FeedbackView /> },
       {
         path: 'super-admin/figura-previste',
@@ -66,7 +66,7 @@ export const dashboardRoutes = [
       },
       {
         path: 'super-admin/report',
-        element: <AdminReport />,
+        element: <AdminReportView />,
       },
     ],
   },
