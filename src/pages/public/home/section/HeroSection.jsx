@@ -5,8 +5,10 @@ import {
   Heading,
   Paragraph,
 } from '../../../../components/ui';
+import { useTranslation } from 'react-i18next';
 
 const HeroSection = () => {
+  const { t } = useTranslation();
 
   return (
     <Container
@@ -15,19 +17,17 @@ const HeroSection = () => {
     >
       {/* Left side — text */}
       <div className="space-y-6 sm:space-y-8">
-        <Heading level={1}>UnoSicurezza</Heading>
+        <Heading level={1}>{t('homeView.heroTitle')}</Heading>
         <Heading level={3} className="my-5">
-          Ogni nuova competenza è un passo avanti verso il successo.
+          {t('homeView.heroSubtitle')}
         </Heading>
         <div>
-          <Paragraph>
-            Essere in regola è: proteggere chi lavora con te.
-          </Paragraph>
+          <Paragraph>{t('homeView.heroDescriptionLineOne')}</Paragraph>
           <Paragraph className="my-4">
-            Scegli la sicurezza, scegli noi.
+            {t('homeView.heroDescriptionLineTwo')}
           </Paragraph>
         </div>
-        <Button label="Esplora i nostri servizi" variant="primary" size="lg" />
+        <Button label={t('homeView.heroButton')} variant="primary" size="lg" />
       </div>
 
       {/* Right side — image */}

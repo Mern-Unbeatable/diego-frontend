@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
+import { MdLanguage } from 'react-icons/md';
 import { GrClose } from 'react-icons/gr';
 import { IoMenu } from 'react-icons/io5';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Container } from '../../components/ui';
 
 const navItems = [
@@ -140,6 +142,10 @@ const MainNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const location = useLocation();
+  const { i18n } = useTranslation();
+  const isHomePage = location.pathname === '/';
+
+  const currentLanguage = (i18n.language || 'it').split('-')[0];
 
   const isActive = (item) => {
     if (item.path === location.pathname) return true;
@@ -152,6 +158,10 @@ const MainNavbar = () => {
       );
     }
     return false;
+  };
+
+  const handleLanguageChange = (event) => {
+    i18n.changeLanguage(event.target.value);
   };
 
   return (
@@ -253,7 +263,22 @@ const MainNavbar = () => {
           </div>
 
           {/* --- E-Learning Button (Desktop) --- */}
-          <div className="hidden shrink-0 xl:block">
+          <div className="hidden shrink-0 items-center gap-3 xl:flex">
+            {isHomePage && (
+              <div className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2">
+                <MdLanguage size={20} className="text-[#73BFA1]" />
+                <select
+                  value={currentLanguage}
+                  onChange={handleLanguageChange}
+                  className="bg-transparent text-sm font-semibold text-gray-700 focus:outline-none"
+                >
+                  <option value="en">English</option>
+                  <option value="it">Italiano</option>
+                  <option value="ar">العربية</option>
+                  <option value="zh">中文</option>
+                </select>
+              </div>
+            )}
             <Link
               to="/auth/register/choose-language"
               className="inline-block rounded-full bg-[#73BFA1] px-5 py-2.5 text-sm font-semibold whitespace-nowrap text-white xl:px-8 xl:py-3 xl:text-base"
@@ -278,6 +303,21 @@ const MainNavbar = () => {
           <div className="shadow-5xl absolute top-full right-0 left-0 z-99 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white xl:hidden">
             <nav>
               <div className="flex flex-col space-y-3 px-1 pt-6 pb-6 sm:px-2">
+                {isHomePage && (
+                  <div className="mb-2 flex items-center gap-2 rounded-lg border border-gray-200 p-2">
+                    <MdLanguage size={20} className="text-[#73BFA1]" />
+                    <select
+                      value={currentLanguage}
+                      onChange={handleLanguageChange}
+                      className="w-full bg-transparent text-sm font-semibold text-gray-700 focus:outline-none"
+                    >
+                      <option value="en">English</option>
+                      <option value="it">Italiano</option>
+                      <option value="ar">العربية</option>
+                      <option value="zh">中文</option>
+                    </select>
+                  </div>
+                )}
                 {navItems.map((item, index) => (
                   <div key={index}>
                     {!item.dropdown ? (

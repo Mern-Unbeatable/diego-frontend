@@ -4,46 +4,48 @@ import TextAreaField from '../../../../components/ui/forms/TextAreaField';
 import Paragraph from '../../../../components/ui/typography/Paragraph';
 import Container from '../../../../components/ui/layouts/Container';
 import Heading from '../../../../components/ui/typography/Heading';
+import { useTranslation } from 'react-i18next';
 
 
 const ReviewSection = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="mt-20 items-center justify-center overflow-hidden md:flex md:gap-8">
       <Container className="w-full md:w-1/2">
         <div className="space-y-8">
           <Heading level={3} className="">
-            Condividi la tua recensione con noi
+            {t('homeView.reviewTitle')}
           </Heading>
           <Paragraph className="">
-            'Compila il modulo per condividere la tua esperienza. La tua
-            recensione sarà visibile dopo l’approvazione.'
+            {t('homeView.reviewDescription')}
           </Paragraph>
           <InputField
             title="name"
             type="text"
             name="name"
-            placeholder="Name *"
+            placeholder={t('homeView.namePlaceholder')}
           />
         </div>
         <div className="my-5 space-y-8">
           <Heading level={3} className="">
-            Feedback sulla sessione
+            {t('homeView.feedbackTitle')}
           </Heading>
           <div className="space-y-4">
-            <Paragraph>Lascia un commento</Paragraph>
-            <Paragraph>Valuta la tua esperienza qui sotto</Paragraph>
-            <Paragraph>⭐⭐⭐⭐⭐ 4/5 stars</Paragraph>
+            <Paragraph>{t('homeView.leaveComment')}</Paragraph>
+            <Paragraph>{t('homeView.rateExperience')}</Paragraph>
+            <Paragraph>{t('homeView.ratingText')}</Paragraph>
           </div>
 
           <TextAreaField
-            id="Lascia un commento"
-            title="Lascia un commento"
+            id={t('homeView.leaveComment')}
+            title={t('homeView.leaveComment')}
             name="textarea"
             className=""
-            placeholder="Scrivi qualcosa  sulla tua esperienza..."
+            placeholder={t('homeView.textAreaPlaceholder')}
           />
         </div>
-        <Button label="Invia" size="lg" className="w-full" />
+        <Button label={t('homeView.submitButton')} size="lg" className="w-full" />
       </Container>
 
       <div className="mt-10 flex w-full justify-center md:mt-0 md:w-1/2">

@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import CourseCard from './CourseCard';
+import { useTranslation } from 'react-i18next';
 
 import { useCarousel } from '../../../../config/hooks/useCarousel';
 import { Heading, Container, Button } from '../../../../components/ui';
@@ -7,6 +8,7 @@ import { COURSE_DATA } from '../../../../config/courses';
 
 
 const CourseCatalog = () => {
+  const { t } = useTranslation();
   const carouselRef = useRef(null);
   const {
     state,
@@ -95,7 +97,7 @@ const CourseCatalog = () => {
   return (
     <Container size="full" className="py-12 sm:py-16 lg:py-20">
       <Heading level={2} className="mb-10 sm:mb-14 lg:mb-20">
-        Esplora il nostro catalogo corsi
+        {t('homeView.exploreCatalog')}
       </Heading>
 
       <div>
@@ -106,7 +108,7 @@ const CourseCatalog = () => {
           <Button
             size="lg"
             variant="outline"
-            label={`"Esplora tutti i nostri corsi"`}
+            label={t('homeView.exploreAllCourses')}
             className="w-full max-w-[360px] font-semibold text-[#73BFA1] sm:w-auto"
           />
         </div>

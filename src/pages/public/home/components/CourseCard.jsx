@@ -2,9 +2,11 @@ import { IoIosStar } from 'react-icons/io';
 import { IoStopwatchOutline } from 'react-icons/io5';
 import { Button, Heading, Paragraph } from '../../../../components/ui';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const handleButtonAction = (e, action) => {
     navigate('/training/course/details');
 
@@ -93,15 +95,15 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
         {/* Actions */}
         <div className="mt-4 flex flex-wrap justify-between gap-3">
           <Button
-            label="Iscriviti ora"
-            onClick={(e) => handleButtonAction(e, 'Iscriviti ora')}
+            label={t('homeView.enrollNow')}
+            onClick={(e) => handleButtonAction(e, t('homeView.enrollNow'))}
             className="w-full rounded-full font-semibold"
             style={{ backgroundColor: '#3FC89E', color: '#fff' }}
           />
           <Button
-            label="Dettagli"
+            label={t('homeView.details')}
             variant="outline"
-            onClick={(e) => handleButtonAction(e, 'Dettagli')}
+            onClick={(e) => handleButtonAction(e, t('homeView.details'))}
             className="w-full rounded-full border-gray-300 font-semibold text-gray-700 hover:border-gray-400"
           />
         </div>
