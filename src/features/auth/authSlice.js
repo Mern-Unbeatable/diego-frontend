@@ -1,15 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginUser } from './authAPI';
 import { STORAGE } from '../../config/storage/storageKeys';
+import { loginAPI } from './authAPI';
 
-// PLATFORM_ADMIN
-// COMPANY_ADMIN
-// COMPANY_EMPLOYEE
-// LICENSE_USER
-// PRIVATE_USER
-
-const storedUser = 'COMPANY_ADMIN'; // STORAGE.getUser(); // For testing purposes, we can set a default user role here. In production, you would retrieve the user from storage.
-const storedToken = 'Asdf1234'; // STORAGE.getToken(); // For testing purposes, we can set a default token here. In production, you would retrieve the token from storage.
+const storedUser = 'PLATFORM_ADMIN'; // Hardcoded for testing purposes
+const storedToken = 'sample-token'; // Hardcoded for testing purposes
 
 const initialState = {
   user: storedUser || null,
@@ -38,17 +32,17 @@ const authSlice = createSlice({
       //===================================
       // ✅ LOGIN CASE
       //===================================
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginAPI.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(loginAPI.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user || null;
         state.token = action.payload.token || null;
         state.isAuthenticated = !!action.payload.user && !!action.payload.token;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(loginAPI.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

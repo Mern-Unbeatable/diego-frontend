@@ -20,24 +20,17 @@
  */
 
 import axios from 'axios';
-import { API_CONFIG } from './config/constants';
-import { ENDPOINT } from './config/endpoints';
-import {
-  getToken,
-  setToken,
-  getRefreshToken,
-  removeToken,
-  removeRefreshToken,
-  removeUser,
-} from '../utils/storage';
+import APP_CONFIG from '../app.config.js';
+import { endpoints } from './httpEndpoint';
+import { STORAGE } from '../storage/storageKeys';
 
 // ============================================================================
 // AXIOS INSTANCE CONFIGURATION
 // ============================================================================
 
 export const axiosInstance = axios.create({
-  baseURL: API_CONFIG.BASE_URL,
-  timeout: API_CONFIG.TIMEOUT,
+  baseURL: APP_CONFIG.apiBaseUrl,
+  timeout: 30000,
   headers: { 'Content-Type': 'application/json' },
   // Don't throw on any status code - we handle errors in interceptor
   validateStatus: () => true,
@@ -100,9 +93,9 @@ export const setLogoutCallback = (callback) => {
  */
 const performLogout = () => {
   // Clear all auth data
-  removeToken();
-  removeRefreshToken();
-  removeUser();
+  STORAGE.clearToken();
+  STORAGE.clearRefreshToken?.();
+  STORAGE.clearUser();
 
   // Trigger app-level logout (navigation, state reset, etc.)
   if (typeof logoutCallback === 'function') {
@@ -120,7 +113,7 @@ const performLogout = () => {
  * @throws {Error} If refresh fails or no refresh token available
  */
 const refreshAccessToken = async () => {
-  const refreshToken = getRefreshToken();
+  const refreshToken = STORAGE.getRefreshToken();
 
   if (!refreshToken) {
     throw new Error('No refresh token available');
@@ -129,11 +122,11 @@ const refreshAccessToken = async () => {
   try {
     // Use vanilla axios to avoid interceptor recursion
     const response = await axios.post(
-      `${API_CONFIG.BASE_URL}${ENDPOINT.AUTH.REFRESH}`,
+      `${APP_CONFIG.apiBaseUrl}${endpoints.auth.REFRESH}`,
       { refreshToken },
       {
         headers: { 'Content-Type': 'application/json' },
-        timeout: API_CONFIG.TIMEOUT,
+        timeout: 30000,
       },
     );
 
@@ -150,10 +143,10 @@ const refreshAccessToken = async () => {
     }
 
     // Store new tokens
-    setToken(newAccessToken);
+    STORAGE.setToken(newAccessToken);
     if (newRefreshToken) {
       // Backend may rotate refresh tokens
-      setToken(newRefreshToken);
+      STORAGE.setRefreshToken(newRefreshToken);
     }
 
     return newAccessToken;
@@ -170,7 +163,7 @@ const refreshAccessToken = async () => {
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = getToken();
+    const token = STORAGE.getToken();
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

@@ -1,4 +1,4 @@
-export const roleToDashboardPath = {
+export const dashboardPath = {
   PLATFORM_ADMIN: '/dashboard/super-admin',
   COMPANY_ADMIN: '/dashboard/company-admin',
   COMPANY_EMPLOYEE: '/dashboard/company-admin',
@@ -13,4 +13,4 @@ export const getUserRole = (user) => {
   return null;
 };
 
-export const getDashboardPath = (role) => roleToDashboardPath[role] || null;
+export const getDashboardPath = (role) => dashboardPath[role] || null;
