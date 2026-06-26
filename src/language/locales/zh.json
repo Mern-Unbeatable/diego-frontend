@@ -3,6 +3,47 @@
   "language": "语言",
   "dashboard": "仪表板",
   "logout": "退出登录",
+  "navbar": {
+  "home": "首页",
+  "services": "服务",
+  "training": "培训",
+  "whoWeAre": "关于我们",
+  "workWithUs": "与我们合作",
+  "contactUs": "联系我们",
+  "eLearning": "在线学习",
+  "servicesDropdown": {
+    "seveso": "塞韦索",
+    "corsiSeveso": "SEVESO课程",
+    "sicurezza": "安全",
+    "servizioASPP": "ASPP和RSPP服务",
+    "redazioneDVR": "DVR起草",
+    "pianiEmergenza": "应急计划",
+    "fulminazione": "防雷保护",
+    "legionella": "军团菌",
+    "potabilitaAcqua": "饮用水安全",
+    "radon": "氡气",
+    "analisiLaboratorio": "实验室分析",
+    "buildingManagement": "建筑管理",
+    "ambiente": "环境",
+    "rentri": "RENTRI",
+    "videosorveglianza": "视频监控",
+    "gestioneAutorizzazione": "设备授权管理",
+    "medicinaLavoro": "职业医学",
+    "incarichiMedico": "合格医师任命",
+    "gestioneVisite": "医疗检查管理",
+    "analisiLab": "实验室分析",
+    "condominio": "公寓管理",
+    "gestioneImmobiliare": "物业管理"
+  },
+  "trainingDropdown": {
+    "nostraPiattaforma": "我们的平台",
+    "comeFunziona": "如何运作",
+    "corsi": "课程",
+    "corsiSeveso": "SEVESO课程",
+    "corsiObbligatori": "必修课程",
+    "catalogo": "课程目录"
+  }
+},
   "homeView": {
     "section1": {
       "title": "一种安全",
@@ -30,5 +71,25 @@
       "enrollNow": "立即报名",
       "details": "详情"
     }
-  }
+  },
+  "footer": {
+  "product": "产品",
+  "overview": "概览",
+  "features": "功能特点",
+  "solutions": "解决方案",
+  "tutorial": "教程",
+  "pricing": "价格",
+  "company": "公司",
+  "whoWeAre": "关于我们",
+  "course": "课程",
+  "news": "新闻",
+  "social": "社交媒体",
+  "legal": "法律",
+  "terms": "条款",
+  "privacy": "隐私政策",
+  "cookies": "Cookie政策",
+  "contact": "联系我们",
+  "copyright": "© 2022 UnoSicurezza. 保留所有权利。",
+  "downloadApp": "下载应用"
+}
 }

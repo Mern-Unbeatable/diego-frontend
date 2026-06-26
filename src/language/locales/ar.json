@@ -3,6 +3,47 @@
   "language": "اللغة",
   "dashboard": "لوحة التحكم",
   "logout": "تسجيل الخروج",
+  "navbar": {
+  "home": "الرئيسية",
+  "services": "الخدمات",
+  "training": "التدريب",
+  "whoWeAre": "من نحن",
+  "workWithUs": "تعاون معنا",
+  "contactUs": "اتصل بنا",
+  "eLearning": "التعلم الإلكتروني",
+  "servicesDropdown": {
+    "seveso": "سيفيزو",
+    "corsiSeveso": "دورات SEVESO",
+    "sicurezza": "السلامة",
+    "servizioASPP": "خدمة ASPP و RSPP",
+    "redazioneDVR": "إعداد DVR",
+    "pianiEmergenza": "خطط الطوارئ",
+    "fulminazione": "الحماية من الصواعق",
+    "legionella": "الليجيونيلا",
+    "potabilitaAcqua": "صلاحية مياه الشرب",
+    "radon": "الرادون",
+    "analisiLaboratorio": "تحليلات المختبر",
+    "buildingManagement": "إدارة المباني",
+    "ambiente": "البيئة",
+    "rentri": "RENTRI",
+    "videosorveglianza": "المراقبة بالفيديو",
+    "gestioneAutorizzazione": "إدارة تراخيص المنشآت",
+    "medicinaLavoro": "طب العمل",
+    "incarichiMedico": "مهام الطبيب المختص",
+    "gestioneVisite": "إدارة الزيارات الطبية",
+    "analisiLab": "تحليلات المختبر",
+    "condominio": "إدارة العقارات المشتركة",
+    "gestioneImmobiliare": "إدارة العقارات"
+  },
+  "trainingDropdown": {
+    "nostraPiattaforma": "منصتنا",
+    "comeFunziona": "كيف تعمل",
+    "corsi": "الدورات",
+    "corsiSeveso": "دورات SEVESO",
+    "corsiObbligatori": "الدورات الإلزامية",
+    "catalogo": "الكتالوج"
+  }
+},
   "homeView": {
     "section1": {
       "title": "سلامة واحدة",
@@ -30,5 +71,25 @@
       "enrollNow": "سجّل الآن",
       "details": "التفاصيل"
     }
-  }
+  },
+  "footer": {
+  "product": "المنتج",
+  "overview": "نظرة عامة",
+  "features": "المميزات",
+  "solutions": "الحلول",
+  "tutorial": "الدروس التعليمية",
+  "pricing": "الأسعار",
+  "company": "الشركة",
+  "whoWeAre": "من نحن",
+  "course": "الدورة",
+  "news": "الأخبار",
+  "social": "التواصل الاجتماعي",
+  "legal": "قانوني",
+  "terms": "الشروط",
+  "privacy": "الخصوصية",
+  "cookies": "ملفات تعريف الارتباط",
+  "contact": "اتصل بنا",
+  "copyright": "© 2022 UnoSicurezza. جميع الحقوق محفوظة.",
+  "downloadApp": "تحميل التطبيق"
+}
 }

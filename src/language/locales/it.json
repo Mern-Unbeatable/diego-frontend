@@ -3,6 +3,48 @@
   "language": "Lingua",
   "dashboard": "Pannello di controllo",
   "logout": "Disconnettersi",
+  "navbar": {
+  "home": "Home",
+  "services": "Servizi",
+  "training": "Formazione",
+  "whoWeAre": "Chi siamo",
+  "workWithUs": "Collabora con noi",
+  "contactUs": "Contattaci",
+  "eLearning": "E-Learning",
+  "servicesDropdown": {
+    "seveso": "Seveso",
+    "corsiSeveso": "Corsi SEVESO",
+    "sicurezza": "Sicurezza",
+    "servizioASPP": "Servizio ASPP e RSPP",
+    "redazioneDVR": "Redazione DVR",
+    "pianiEmergenza": "Piani di emergenza",
+    "fulminazione": "Fulminazione",
+    "legionella": "Legionella",
+    "potabilitaAcqua": "Potabilità acqua",
+    "radon": "Radon",
+    "analisiLaboratorio": "Analisi di laboratorio",
+    "buildingManagement": "Building management",
+    "ambiente": "Ambiente",
+    "rentri": "RENTRI",
+    "videosorveglianza": "Videosorveglianza",
+    "gestioneAutorizzazione": "Gestione autorizzazione impianti",
+    "medicinaLavoro": "Medicina del lavoro",
+    "incarichiMedico": "Incarichi medico competente",
+    "gestioneVisite": "Gestione visite mediche",
+    "analisiLab": "Analisi laboratorio",
+    "condominio": "Condominio",
+    "gestioneImmobiliare": "Gestione immobiliare"
+  },
+  "trainingDropdown": {
+    "nostraPiattaforma": "La nostra piattaforma",
+    "comeFunziona": "Come funziona",
+    "corsi": "Corsi",
+    "corsiSeveso": "Corsi SEVESO",
+    "corsiObbligatori": "Corsi obbligatori",
+    "catalogo": "Catalogo"
+  }
+},
+
   "homeView": {
     "section1": {
       "title": "UnoSicurezza",
@@ -30,5 +72,25 @@
       "enrollNow": "Iscriviti ora",
       "details": "Dettagli"
     }
-  }
+  },
+  "footer": {
+  "product": "Prodotto",
+  "overview": "Panoramica",
+  "features": "Caratteristiche",
+  "solutions": "Soluzioni",
+  "tutorial": "Esercitazione",
+  "pricing": "Prezzi",
+  "company": "Azienda",
+  "whoWeAre": "Chi siamo",
+  "course": "Corso",
+  "news": "Notizia",
+  "social": "Sociale",
+  "legal": "Legale",
+  "terms": "Termini",
+  "privacy": "Privacy",
+  "cookies": "Biscotti",
+  "contact": "Contatto",
+  "copyright": "© 2022 UnoSicurezza. All rights reserved.",
+  "downloadApp": "Download App"
+}
 }

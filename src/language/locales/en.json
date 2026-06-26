@@ -3,6 +3,47 @@
   "language": "Language",
   "dashboard": "Dashboard",
   "logout": "Logout",
+  "navbar": {
+  "home": "Home",
+  "services": "Services",
+  "training": "Training",
+  "whoWeAre": "Who we are",
+  "workWithUs": "Work with us",
+  "contactUs": "Contact us",
+  "eLearning": "E-Learning",
+  "servicesDropdown": {
+    "seveso": "Seveso",
+    "corsiSeveso": "SEVESO Courses",
+    "sicurezza": "Safety",
+    "servizioASPP": "ASPP and RSPP Service",
+    "redazioneDVR": "DVR Drafting",
+    "pianiEmergenza": "Emergency Plans",
+    "fulminazione": "Lightning Protection",
+    "legionella": "Legionella",
+    "potabilitaAcqua": "Water Potability",
+    "radon": "Radon",
+    "analisiLaboratorio": "Laboratory Analysis",
+    "buildingManagement": "Building Management",
+    "ambiente": "Environment",
+    "rentri": "RENTRI",
+    "videosorveglianza": "Video Surveillance",
+    "gestioneAutorizzazione": "Plant Authorization Management",
+    "medicinaLavoro": "Occupational Medicine",
+    "incarichiMedico": "Competent Medical Appointments",
+    "gestioneVisite": "Medical Visit Management",
+    "analisiLab": "Laboratory Analysis",
+    "condominio": "Condominium",
+    "gestioneImmobiliare": "Property Management"
+  },
+  "trainingDropdown": {
+    "nostraPiattaforma": "Our Platform",
+    "comeFunziona": "How it works",
+    "corsi": "Courses",
+    "corsiSeveso": "SEVESO Courses",
+    "corsiObbligatori": "Mandatory Courses",
+    "catalogo": "Catalog"
+  }
+},
   "homeView": {
     "section1": {
       "title": "One Security",
@@ -30,5 +71,25 @@
       "enrollNow": "Enroll now",
       "details": "Details"
     }
-  }
+  },
+  "footer": {
+  "product": "Product",
+  "overview": "Overview",
+  "features": "Features",
+  "solutions": "Solutions",
+  "tutorial": "Tutorial",
+  "pricing": "Pricing",
+  "company": "Company",
+  "whoWeAre": "Who we are",
+  "course": "Course",
+  "news": "News",
+  "social": "Social",
+  "legal": "Legal",
+  "terms": "Terms",
+  "privacy": "Privacy",
+  "cookies": "Cookies",
+  "contact": "Contact",
+  "copyright": "© 2022 UnoSicurezza. All rights reserved.",
+  "downloadApp": "Download App"
+}
 }
