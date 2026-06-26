@@ -1,10 +1,10 @@
 import React from 'react';
 import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import { Save, CreditCard, Mail, Palette, Plug } from 'lucide-react';
-import FinancialSettings from './FinancialSettings';
-import SystemSettings from './SystemSettings';
-import BrandSettings from './BrandSettings';
-import APISettings from './ApiSettings';
+import FinancialSettings from '../components/FinancialSettings';
+import SystemSettings from '../components/SystemSettings';
+import BrandSettings from '../components/BrandSettings';
+import APISettings from '../components/ApiSettings';
 
 export default function SettingsLayout() {
   const location = useLocation();

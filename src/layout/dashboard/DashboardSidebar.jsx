@@ -5,8 +5,13 @@ import { useSelector } from 'react-redux';
 import {
   IoAlbumsOutline,
   IoBusinessOutline,
+  IoCardOutline,
+  IoChatbubbleOutline,
   IoDocumentTextOutline,
   IoHomeOutline,
+  IoLockClosedOutline,
+  IoNotificationsOutline,
+  IoPersonOutline,
   IoRibbonOutline,
   IoSettingsOutline,
   IoTicketOutline,
@@ -25,12 +30,12 @@ const linksByRole = {
       icon: <IoHomeOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/super-admin/gestione-licenze',
+      path: '/dashboard/super-admin/license-management',
       label: 'Gestione licenze',
       icon: <IoDocumentTextOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/super-admin/impostazioni',
+      path: '/dashboard/super-admin/settings',
       label: 'Impostazioni',
       icon: <IoSettingsOutline className="text-[19px]" />,
     },
@@ -45,7 +50,7 @@ const linksByRole = {
       icon: <LiaThumbsUp className="text-[19px]" />,
     },
     {
-      path: '/dashboard/super-admin/figura-previste',
+      path: '/dashboard/super-admin/figures',
       label: 'Figura previste LMS CSR 59',
       icon: <BsUpload className="text-[18px]" />,
     },
@@ -63,12 +68,12 @@ const linksByRole = {
       icon: <IoHomeOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/company-admin/gestisci-formazione',
+      path: '/dashboard/company-admin/training',
       label: 'Gestisci la formazione',
       icon: <IoBusinessOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/company-admin/attestati',
+      path: '/dashboard/company-admin/certificates',
       label: 'I tuoi attestati',
       icon: <IoRibbonOutline className="text-[19px]" />,
     },
@@ -109,34 +114,32 @@ const linksByRole = {
       icon: <IoHomeOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/license',
+      path: '/dashboard/license-user/license',
       label: 'Licenze',
       icon: <IoAlbumsOutline className="text-[19px]" />,
     },
-
     {
-      path: '/dashboard/enrolled-students',
+      path: '/dashboard/license-user/enrolled-students',
       label: 'Studenti iscritti',
       icon: <IoAlbumsOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/course-list',
+      path: '/dashboard/license-user/course-list',
       label: 'Course List',
       icon: <IoDocumentTextOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/ticket',
+      path: '/dashboard/license-user/ticket',
       label: 'Ticket',
       icon: <IoDocumentTextOutline className="text-[19px]" />,
     },
-
     {
-      path: '/dashboard/license-report',
+      path: '/dashboard/license-user/license-report',
       label: 'Report',
       icon: <IoAlbumsOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/license-privacy',
+      path: '/dashboard/license-user/license-privacy',
       label: 'Privacy & policy',
       icon: <IoAlbumsOutline className="text-[19px]" />,
     },
@@ -147,12 +150,44 @@ const linksByRole = {
       path: '/dashboard/private-user',
       label: 'Dashboard',
       icon: <IoHomeOutline className="text-[19px]" />,
+      end: true, // Exact match for root path
     },
     {
-      path: '/dashboard/private-user-ticket',
-      label: 'Ticket',
+      path: '/dashboard/private-user/ticket',
+      label: 'Support Tickets',
       icon: <IoTicketOutline className="text-[19px]" />,
     },
+    {
+      path: '/dashboard/private-user/feedback',
+      label: 'Feedback',
+      icon: <IoChatbubbleOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/private-user/profile',
+      label: 'Profile',
+      icon: <IoPersonOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/private-user/credentials',
+      label: 'Credentials',
+      icon: <IoCardOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/private-user/notifications',
+      label: 'Notifications',
+      icon: <IoNotificationsOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/private-user/certificates',
+      label: 'My Certificates',
+      icon: <IoDocumentTextOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/private-user/privacy-policy',
+      label: 'Privacy Policy',
+      icon: <IoLockClosedOutline className="text-[19px]" />,
+    },
+    // Note: '/dashboard/private-user/course/:id' is dynamic, so not added to sidebar
   ],
 };
 

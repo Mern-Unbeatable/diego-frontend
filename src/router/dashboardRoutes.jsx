@@ -1,147 +1,194 @@
+import { lazy } from 'react';
+import { Navigate } from 'react-router-dom';
 import { ROLES } from '../config/roles';
 
-// ✅ super admin
-import SuperAdminView from '../pages/dash/super/01-home/SuperAdminView.jsx';
-import LicenseManagementView from '../pages/dash/super/02-License/LicenseManagementView.jsx';
-import AdminSettingsDashboard from '../pages/dash/super/sections/AdminSettingsDashboard.jsx';
-import TicketView from '../pages/dash/super/04-Ticket/TicketView.jsx';
-import FeedbackView from '../pages/dash/super/05-Feedback/FeedbackView.jsx';
-import FiguresView from '../pages/dash/super/06-Figures/FiguresView.jsx';
-import AdminReportView from '../pages/dash/super/07-Report/AdminReportView.jsx';
+const SuperAdminView = lazy(
+  () => import('../pages/dash/super/01-home/SuperAdminView.jsx'),
+);
+const LicenseManagementView = lazy(
+  () => import('../pages/dash/super/02-License/LicenseManagementView.jsx'),
+);
+const AdminSettingsDashboard = lazy(
+  () => import('../pages/dash/super/03-Settings/AdminSettingsDashboard.jsx'),
+);
+const TicketView = lazy(
+  () => import('../pages/dash/super/04-Ticket/TicketView.jsx'),
+);
+const FeedbackView = lazy(
+  () => import('../pages/dash/super/05-Feedback/FeedbackView.jsx'),
+);
+const FiguresView = lazy(
+  () => import('../pages/dash/super/06-Figures/FiguresView.jsx'),
+);
+const AdminReportView = lazy(
+  () => import('../pages/dash/super/07-Report/AdminReportView.jsx'),
+);
 
-// ✅ freelancer
-import FreelancerAddCource from '../pages/dash/freelancer/components/FreelancerAddCource.jsx';
-import FreelancerTicket from '../pages/dash/freelancer/components/FreelancerTicket.jsx';
-import EnrolledStudents from '../pages/dash/freelancer/components/EnrolledStudents.jsx';
-import LicenPrivaceyView from '../pages/dash/freelancer/LicenPrivaceyView.jsx';
-import FreelancerView from '../pages/dash/freelancer/FreelancerView';
-import ReportDetail from '../pages/dash/freelancer/sections/ReportDetail';
-import LicenView from '../pages/dash/freelancer/LicenPrivaceyView.jsx';
-import License from '../pages/dash/freelancer/sections/License';
-import Report from '../pages/dash/freelancer/sections/Report';
+const FreelancerView = lazy(
+  () => import('../pages/dash/freelancer/FreelancerView'),
+);
+const FreelancerAddCourse = lazy(
+  () => import('../pages/dash/freelancer/components/FreelancerAddCource.jsx'),
+);
+const FreelancerTicket = lazy(
+  () => import('../pages/dash/freelancer/components/FreelancerTicket.jsx'),
+);
+const EnrolledStudents = lazy(
+  () => import('../pages/dash/freelancer/components/EnrolledStudents.jsx'),
+);
+const LicensePage = lazy(
+  () => import('../pages/dash/freelancer/sections/License'),
+);
+const LicensePrivacyView = lazy(
+  () => import('../pages/dash/freelancer/LicenPrivaceyView.jsx'),
+);
+const ReportPage = lazy(
+  () => import('../pages/dash/freelancer/sections/Report'),
+);
 
-// ✅ Student Admin
-import StudentHomeView from '../pages/dash/student/StudentHomeView.jsx';
-import StudentIPofile from '../pages/dash/student/components/StudentIPofile.jsx';
-import CertificatePage from '../pages/dash/student/components/CertificatePage.jsx';
-import CredentialsReceived from '../pages/dash/student/CredentialsReceived.jsx';
-import SupportFeedbackView from '../pages/dash/student/SupportFeedbackView.jsx';
-import NotificationsView from '../pages/dash/student/NotificationsView.jsx';
-import CourseContentView from '../pages/dash/student/CourseContentView.jsx';
-import SupportTicketView from '../pages/dash/student/SupportTicketView.jsx';
-import PrivacyPolicyView from '../pages/dash/student/PrivacyPolicyView.jsx';
-import QuizesView from '../pages/dash/student/QuizesView.jsx';
-import QuizResult from '../pages/dash/student/QuizResult.jsx';
+const StudentHomeView = lazy(
+  () => import('../pages/dash/student/StudentHomeView.jsx'),
+);
+const StudentProfileView = lazy(
+  () => import('../pages/dash/student/components/StudentIPofile.jsx'),
+);
+const CertificatePage = lazy(
+  () => import('../pages/dash/student/components/CertificatePage.jsx'),
+);
+const CredentialsReceived = lazy(
+  () => import('../pages/dash/student/CredentialsReceived.jsx'),
+);
+const SupportFeedbackView = lazy(
+  () => import('../pages/dash/student/SupportFeedbackView.jsx'),
+);
+const NotificationsView = lazy(
+  () => import('../pages/dash/student/NotificationsView.jsx'),
+);
+const CourseContentView = lazy(
+  () => import('../pages/dash/student/CourseContentView.jsx'),
+);
+const SupportTicketView = lazy(
+  () => import('../pages/dash/student/SupportTicketView.jsx'),
+);
+const PrivacyPolicyView = lazy(
+  () => import('../pages/dash/student/PrivacyPolicyView.jsx'),
+);
 
-// ✅ Company Admin
-import CompanyHome from '../components/company/CompanyHome.jsx';
-import CompanyCourseList from '../pages/dash/company/CompanyCourseList.jsx';
-import CompanyTrainingView from '../pages/dash/company/CompanyTrainingView.jsx';
-import CompanyCourseRosterView from '../pages/dash/company/CompanyCourseRosterView.jsx';
-import CompanyTicketListView from '../pages/dash/company/CompanyTicketListView.jsx';
-import CompanyOpenTicketView from '../pages/dash/company/CompanyOpenTicketView.jsx';
-import CompanyTicketDetailView from '../pages/dash/company/CompanyTicketDetailView.jsx';
-import CompanyCertificatesView from '../pages/dash/company/CompanyCertificatesView.jsx';
-import CompanyPrivacyPolicyView from '../pages/dash/company/CompanyPrivacyPolicyView.jsx';
+const CompanyHome = lazy(() => import('../components/company/CompanyHome.jsx'));
+const CompanyCourseList = lazy(
+  () => import('../pages/dash/company/CompanyCourseList.jsx'),
+);
+const CompanyTrainingView = lazy(
+  () => import('../pages/dash/company/CompanyTrainingView.jsx'),
+);
+const CompanyCourseRosterView = lazy(
+  () => import('../pages/dash/company/CompanyCourseRosterView.jsx'),
+);
+const CompanyTicketListView = lazy(
+  () => import('../pages/dash/company/CompanyTicketListView.jsx'),
+);
+const CompanyOpenTicketView = lazy(
+  () => import('../pages/dash/company/CompanyOpenTicketView.jsx'),
+);
+const CompanyTicketDetailView = lazy(
+  () => import('../pages/dash/company/CompanyTicketDetailView.jsx'),
+);
+const CompanyCertificatesView = lazy(
+  () => import('../pages/dash/company/CompanyCertificatesView.jsx'),
+);
+const CompanyPrivacyPolicyView = lazy(
+  () => import('../pages/dash/company/CompanyPrivacyPolicyView.jsx'),
+);
 
+/**
+ * Dashboard routes for supported user roles.
+ * Each role group contains its own route definitions and redirect aliases.
+ */
 export const dashboardRoutes = [
   {
-    //  ✅ SUPER_ADMIN
-    roles: [ROLES.SUPER_ADMIN],
+    /** ✅ Super admin route group */
+    id: 'SUPER_ADMIN',
+    roles: [ROLES.PLATFORM_ADMIN],
     routes: [
       { path: 'super-admin', element: <SuperAdminView /> },
       {
-        path: 'super-admin/gestione-licenze',
+        path: 'super-admin/license-management',
         element: <LicenseManagementView />,
       },
-      {
-        path: 'super-admin/impostazioni/*',
-        element: <AdminSettingsDashboard />,
-      },
+      { path: 'super-admin/settings/*', element: <AdminSettingsDashboard /> },
       { path: 'super-admin/ticket', element: <TicketView /> },
       { path: 'super-admin/feedback', element: <FeedbackView /> },
-      {
-        path: 'super-admin/figura-previste',
-        element: <FiguresView />,
-      },
-      {
-        path: 'super-admin/report',
-        element: <AdminReportView />,
-      },
-    ],
-  },
-  {
-    //  ✅ LICENSE_USER
-    roles: [ROLES.LICENSE_USER],
-    routes: [
-      { path: 'license-user', element: <FreelancerView /> },
-      { path: 'license-user-teacher', element: <FreelancerView /> },
-      { path: 'license', element: <License /> },
-      { path: 'license-privacy', element: <LicenPrivaceyView /> },
-      { path: 'license-report', element: <Report /> },
-      { path: 'enrolled-students', element: <EnrolledStudents /> },
-      { path: 'course-list', element: <FreelancerAddCource /> },
-      { path: 'ticket', element: <FreelancerTicket /> },
+      { path: 'super-admin/figures', element: <FiguresView /> },
+      { path: 'super-admin/report', element: <AdminReportView /> },
     ],
   },
 
   {
-    //  ✅ COMPANY_ADMIN
+    /** ✅ Company admin route group */
+    id: 'COMPANY_ADMIN',
     roles: [ROLES.COMPANY_ADMIN],
     routes: [
       { path: 'company-admin', element: <CompanyHome /> },
+      { path: 'company-admin/training', element: <CompanyTrainingView /> },
       {
-        path: 'company-admin/gestisci-formazione',
-        element: <CompanyTrainingView />,
-      },
-      {
-        path: 'company-admin/gestisci-formazione/corsi/:courseId',
+        path: 'company-admin/training/courses/:courseId',
         element: <CompanyCourseRosterView />,
       },
       { path: 'company-admin/ticket', element: <CompanyTicketListView /> },
-      {
-        path: 'company-admin/ticket/nuovo',
-        element: <CompanyOpenTicketView />,
-      },
+      { path: 'company-admin/ticket/new', element: <CompanyOpenTicketView /> },
       {
         path: 'company-admin/ticket/:ticketId',
         element: <CompanyTicketDetailView />,
       },
-      { path: 'company-admin/attestati', element: <CompanyCertificatesView /> },
+      {
+        path: 'company-admin/certificates',
+        element: <CompanyCertificatesView />,
+      },
       {
         path: 'company-admin/privacy-policy',
         element: <CompanyPrivacyPolicyView />,
       },
       { path: 'company-admin/my-courses', element: <CompanyCourseList /> },
-
-      // Legacy aliases
-      { path: 'company-admin-info', element: <CompanyTrainingView /> },
-      { path: 'company-admin-teacher', element: <CompanyTrainingView /> },
-      { path: 'company-admin-courses', element: <CompanyCourseRosterView /> },
-      { path: 'company-admin-videos', element: <CompanyCertificatesView /> },
-      { path: 'company-admin-settings', element: <CompanyPrivacyPolicyView /> },
     ],
   },
+
   {
-    //  ✅ COMPANY_EMPLOYEE
+    /** ✅ Company employee route group */
+    id: 'COMPANY_EMPLOYEE',
     roles: [ROLES.COMPANY_EMPLOYEE],
     routes: [{ path: 'company-employee', element: <CompanyCourseList /> }],
   },
 
   {
-    //  ✅ PRIVATE_USER
+    /** ✅ License user route group */
+    id: 'LICENSE_USER',
+    roles: [ROLES.LICENSE_USER],
+    routes: [
+      { path: 'license-user', element: <FreelancerView /> },
+      { path: 'license-user/license', element: <LicensePage /> },
+      { path: 'license-user/license-privacy', element: <LicensePrivacyView /> },
+      { path: 'license-user/license-report', element: <ReportPage /> },
+      { path: 'license-user/enrolled-students', element: <EnrolledStudents /> },
+      { path: 'license-user/course-list', element: <FreelancerAddCourse /> },
+      { path: 'license-user/ticket', element: <FreelancerTicket /> },
+    ],
+  },
+
+  {
+    /** ✅ Private user route group */
+    id: 'PRIVATE_USER',
     roles: [ROLES.PRIVATE_USER],
     routes: [
       { path: 'private-user', element: <StudentHomeView /> },
-      { path: 'private-user-ticket', element: <SupportTicketView /> },
+      { path: 'private-user/ticket', element: <SupportTicketView /> },
       {
-        path: 'private-user/ticket-feedback',
+        path: 'private-user/feedback',
         element: <SupportFeedbackView />,
       },
-      { path: 'private-user/profile', element: <StudentIPofile /> },
+      { path: 'private-user/profile', element: <StudentProfileView /> },
       { path: 'private-user/credentials', element: <CredentialsReceived /> },
       { path: 'private-user/notifications', element: <NotificationsView /> },
-      { path: 'private-user/attestati', element: <CertificatePage /> },
+      { path: 'private-user/certificates', element: <CertificatePage /> },
       { path: 'private-user/privacy-policy', element: <PrivacyPolicyView /> },
       { path: 'private-user/course/:id', element: <CourseContentView /> },
     ],
