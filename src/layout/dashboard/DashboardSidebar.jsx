@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom';
-import { useUIStore } from '../../features/zustand';
+import { LiaThumbsUp } from 'react-icons/lia';
+import { BsUpload } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 import {
   IoAlbumsOutline,
   IoBusinessOutline,
@@ -9,10 +11,11 @@ import {
   IoSettingsOutline,
   IoTicketOutline,
 } from 'react-icons/io5';
-import { LiaThumbsUp } from 'react-icons/lia';
-import { BsUpload } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
+
 import { ROLES } from '../../config/roles';
+
+import { useUIStore } from '../../features/zustand';
+import { getUserRole } from '../../utils/authUtils';
 
 const linksByRole = {
   [ROLES.PLATFORM_ADMIN]: [
@@ -88,14 +91,9 @@ const linksByRole = {
 
   [ROLES.COMPANY_EMPLOYEE]: [
     {
-      path: '/dashboard/company-user',
+      path: '/dashboard/company-admin/my-courses',
       label: 'Dashboard',
       icon: <IoHomeOutline className="text-[19px]" />,
-    },
-    {
-      path: '/dashboard/company-admin/my-courses',
-      label: 'Courses',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
     },
   ],
 
@@ -154,15 +152,10 @@ const linksByRole = {
 };
 
 const DashboardSidebar = () => {
-  // DEV MODE: set true to test sidebar links without real login role.
-  const DEV_BYPASS_AUTH = true;
-  // Change this value to test another role quickly.
-  const DEV_MANUAL_ROLE = ROLES.PLATFORM_ADMIN;
-
   const { setActiveLink } = useUIStore();
-  const { user, tempRole } = useSelector((state) => state.auth);
-  const roles = DEV_BYPASS_AUTH ? DEV_MANUAL_ROLE : tempRole || user?.role;
-  const links = linksByRole[roles] || [];
+  const { user } = useSelector((state) => state.auth);
+  const role = getUserRole(user);
+  const links = linksByRole[role] || [];
 
   return (
     <aside className="fixed top-0 left-0 z-30 h-screen w-[300px] overflow-y-auto bg-white shadow-md">

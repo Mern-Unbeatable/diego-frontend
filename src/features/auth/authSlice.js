@@ -2,7 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { STORAGE } from '../../config/storage/storageKeys';
 import { loginAPI } from './authAPI';
 
-const storedUser = 'PLATFORM_ADMIN'; // Hardcoded for testing purposes
+//  PLATFORM_ADMIN
+//  COMPANY_ADMIN
+//  COMPANY_EMPLOYEE
+//  LICENSE_USER
+//  PRIVATE_USER
+
+const storedUser = 'PRIVATE_USER'; // Hardcoded for testing purposes
 const storedToken = 'sample-token'; // Hardcoded for testing purposes
 
 const initialState = {
