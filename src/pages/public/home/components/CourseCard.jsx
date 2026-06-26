@@ -95,15 +95,15 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
         {/* Actions */}
         <div className="mt-4 flex flex-wrap justify-between gap-3">
           <Button
-            label={t('homeView.enrollNow')}
-            onClick={(e) => handleButtonAction(e, t('homeView.enrollNow'))}
+            label={t('homeView.courseCard.enrollNow')}
+            onClick={(e) => handleButtonAction(e, t('homeView.courseCard.enrollNow'))}
             className="w-full rounded-full font-semibold"
             style={{ backgroundColor: '#3FC89E', color: '#fff' }}
           />
           <Button
-            label={t('homeView.details')}
+            label={t('homeView.courseCard.details')}
             variant="outline"
-            onClick={(e) => handleButtonAction(e, t('homeView.details'))}
+            onClick={(e) => handleButtonAction(e, t('homeView.courseCard.details'))}
             className="w-full rounded-full border-gray-300 font-semibold text-gray-700 hover:border-gray-400"
           />
         </div>

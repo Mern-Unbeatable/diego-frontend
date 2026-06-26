@@ -1,0 +1,34 @@
+{
+  "welcome": "مرحبًا بك في منصتنا!",
+  "language": "اللغة",
+  "dashboard": "لوحة التحكم",
+  "logout": "تسجيل الخروج",
+  "homeView": {
+    "hero": {
+      "title": "سلامة واحدة",
+      "subtitle": "كل مهارة جديدة هي خطوة إلى الأمام نحو النجاح.",
+      "descriptionLineOne": "الالتزام يعني حماية من يعملون معك.",
+      "descriptionLineTwo": "اختر السلامة، اخترنا.",
+      "button": "استكشف خدماتنا"
+    },
+    "review": {
+      "title": "شاركنا مراجعتك",
+      "description": "املأ النموذج لمشاركة تجربتك. ستظهر مراجعتك بعد الموافقة.",
+      "namePlaceholder": "الاسم *",
+      "feedbackTitle": "ملاحظات الجلسة",
+      "leaveComment": "اترك تعليقًا",
+      "rateExperience": "قيّم تجربتك أدناه",
+      "ratingText": "⭐⭐⭐⭐⭐ 4/5 نجوم",
+      "textAreaPlaceholder": "اكتب شيئًا عن تجربتك...",
+      "submitButton": "إرسال"
+    },
+    "catalog": {
+      "exploreCatalog": "استكشف كتالوج خدماتنا",
+      "exploreAllCourses": "استكشف جميع دوراتنا"
+    },
+    "courseCard": {
+      "enrollNow": "سجّل الآن",
+      "details": "التفاصيل"
+    }
+  }
+}

@@ -15,37 +15,37 @@ const ReviewSection = () => {
       <Container className="w-full md:w-1/2">
         <div className="space-y-8">
           <Heading level={3} className="">
-            {t('homeView.reviewTitle')}
+            {t('homeView.review.title')}
           </Heading>
           <Paragraph className="">
-            {t('homeView.reviewDescription')}
+            {t('homeView.review.description')}
           </Paragraph>
           <InputField
             title="name"
             type="text"
             name="name"
-            placeholder={t('homeView.namePlaceholder')}
+            placeholder={t('homeView.review.namePlaceholder')}
           />
         </div>
         <div className="my-5 space-y-8">
           <Heading level={3} className="">
-            {t('homeView.feedbackTitle')}
+            {t('homeView.review.feedbackTitle')}
           </Heading>
           <div className="space-y-4">
-            <Paragraph>{t('homeView.leaveComment')}</Paragraph>
-            <Paragraph>{t('homeView.rateExperience')}</Paragraph>
-            <Paragraph>{t('homeView.ratingText')}</Paragraph>
+            <Paragraph>{t('homeView.review.leaveComment')}</Paragraph>
+            <Paragraph>{t('homeView.review.rateExperience')}</Paragraph>
+            <Paragraph>{t('homeView.review.ratingText')}</Paragraph>
           </div>
 
           <TextAreaField
-            id={t('homeView.leaveComment')}
-            title={t('homeView.leaveComment')}
+            id={t('homeView.review.leaveComment')}
+            title={t('homeView.review.leaveComment')}
             name="textarea"
             className=""
-            placeholder={t('homeView.textAreaPlaceholder')}
+            placeholder={t('homeView.review.textAreaPlaceholder')}
           />
         </div>
-        <Button label={t('homeView.submitButton')} size="lg" className="w-full" />
+        <Button label={t('homeView.review.submitButton')} size="lg" className="w-full" />
       </Container>
 
       <div className="mt-10 flex w-full justify-center md:mt-0 md:w-1/2">

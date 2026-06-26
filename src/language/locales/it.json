@@ -1,0 +1,34 @@
+{
+  "welcome": "Benvenuto sulla nostra piattaforma!",
+  "language": "Lingua",
+  "dashboard": "Pannello di controllo",
+  "logout": "Disconnettersi",
+  "homeView": {
+    "hero": {
+      "title": "UnoSicurezza",
+      "subtitle": "Ogni nuova competenza è un passo avanti verso il successo.",
+      "descriptionLineOne": "Essere in regola è: proteggere chi lavora con te.",
+      "descriptionLineTwo": "Scegli la sicurezza, scegli noi.",
+      "button": "Esplora i nostri servizi"
+    },
+    "review": {
+      "title": "Condividi la tua recensione con noi",
+      "description": "Compila il modulo per condividere la tua esperienza. La tua recensione sarà visibile dopo l'approvazione.",
+      "namePlaceholder": "Name *",
+      "feedbackTitle": "Feedback sulla sessione",
+      "leaveComment": "Lascia un commento",
+      "rateExperience": "Valuta la tua esperienza qui sotto",
+      "ratingText": "⭐⭐⭐⭐⭐ 4/5 stars",
+      "textAreaPlaceholder": "Scrivi qualcosa sulla tua esperienza...",
+      "submitButton": "Invia"
+    },
+    "catalog": {
+      "exploreCatalog": "Esplora il nostro catalogo servizi",
+      "exploreAllCourses": "Esplora tutti i nostri corsi"
+    },
+    "courseCard": {
+      "enrollNow": "Iscriviti ora",
+      "details": "Dettagli"
+    }
+  }
+}

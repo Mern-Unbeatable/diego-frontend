@@ -1,0 +1,34 @@
+{
+  "welcome": "Welcome to our platform!",
+  "language": "Language",
+  "dashboard": "Dashboard",
+  "logout": "Logout",
+  "homeView": {
+    "hero": {
+      "title": "One Security",
+      "subtitle": "Every new skill is a step forward toward success.",
+      "descriptionLineOne": "Being compliant means protecting the people who work with you.",
+      "descriptionLineTwo": "Choose safety, choose us.",
+      "button": "Explore our services"
+    },
+    "review": {
+      "title": "Share your review with us",
+      "description": "Fill out the form to share your experience. Your review will be visible after approval.",
+      "namePlaceholder": "Name *",
+      "feedbackTitle": "Session feedback",
+      "leaveComment": "Leave a comment",
+      "rateExperience": "Rate your experience below",
+      "ratingText": "⭐⭐⭐⭐⭐ 4/5 stars",
+      "textAreaPlaceholder": "Write something about your experience...",
+      "submitButton": "Submit"
+    },
+    "catalog": {
+      "exploreCatalog": "Explore our service catalog",
+      "exploreAllCourses": "Explore all our courses"
+    },
+    "courseCard": {
+      "enrollNow": "Enroll now",
+      "details": "Details"
+    }
+  }
+}

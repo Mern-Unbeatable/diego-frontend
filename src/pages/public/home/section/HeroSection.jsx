@@ -17,17 +17,17 @@ const HeroSection = () => {
     >
       {/* Left side — text */}
       <div className="space-y-6 sm:space-y-8">
-        <Heading level={1}>{t('homeView.heroTitle')}</Heading>
+        <Heading level={1}>{t('homeView.hero.title')}</Heading>
         <Heading level={3} className="my-5">
-          {t('homeView.heroSubtitle')}
+          {t('homeView.hero.subtitle')}
         </Heading>
         <div>
-          <Paragraph>{t('homeView.heroDescriptionLineOne')}</Paragraph>
+          <Paragraph>{t('homeView.hero.descriptionLineOne')}</Paragraph>
           <Paragraph className="my-4">
-            {t('homeView.heroDescriptionLineTwo')}
+            {t('homeView.hero.descriptionLineTwo')}
           </Paragraph>
         </div>
-        <Button label={t('homeView.heroButton')} variant="primary" size="lg" />
+        <Button label={t('homeView.hero.button')} variant="primary" size="lg" />
       </div>
 
       {/* Right side — image */}
