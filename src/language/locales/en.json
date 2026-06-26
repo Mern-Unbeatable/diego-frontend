@@ -72,6 +72,116 @@
       "details": "Details"
     }
   },
+  "chiSiamo": {
+  "bannerTitle": "Who We Are",
+  "intro": "We are a group of professionals dealing with property management, training, safety and health for companies and condominiums.",
+  "objectiveLabel": "Our goal is to make regulatory compliance easier and help our clients work and live in safer, more organized environments.",
+  "whatWeDoLabel": "What we do:",
+  "formazione": "Training:",
+  "formazioneDesc": "we offer clear and practical courses, also online, thanks to an easy-to-use platform designed for workers, managers and training institutions.",
+  "sicurezza": "Safety:",
+  "sicurezzaDesc": "we support companies and condominiums with document compliance, mandatory courses, emergency plans and inspections to ensure increasingly safe workplaces in line with regulations.",
+  "salute": "Health:",
+  "saluteDesc": "we carry out laboratory analyses to prevent risks, provide support in occupational medicine and protect people's health.",
+  "tagline": "Training and safety, the engine for a calmer and more successful future.",
+  "missionTitle": "Our Mission",
+  "missionDesc": "Our mission is to support micro, small, medium and large enterprises through targeted training paths, strategic consulting services and efficient management of document compliance. We believe in continuous growth, process simplification and skills development.",
+  "pillarsTitle": "Our Pillars",
+  "mission": {
+    "card1Title": "Safety First",
+    "card1Desc": "Workplace safety is at the center of everything we do, with the goal of creating safer work environments.",
+    "card2Title": "Technological Innovation",
+    "card2Desc": "We use reliable and proven systems to offer quality, accessible and functional training paths.",
+    "card3Title": "Customer Orientation",
+    "card3Desc": "Every solution is designed around the specific needs of the client, ensuring concrete results.",
+    "card4Title": "Training Excellence",
+    "card4Desc": "Quality standards in every course, with cutting-edge teaching methodologies."
+  },
+  "pillars": {
+    "card1Title": "Practical Application of Regulations",
+    "card1Desc": "We are constantly dedicated to continuous updates in compliance with current regulations.",
+    "card2Title": "Innovative Technological Infrastructure",
+    "card2Desc": "An LMS platform designed to offer simple, effective and always up-to-date training paths in line with current regulations.",
+    "card3Title": "Multi-Sector Training",
+    "card3Desc": "A single platform that includes diversified courses and personalized training paths, designed for every need."
+  }
+},
+  "workWithUs": {
+  "bannerTitle": "Work with UnoSicurezza",
+  "badge": "Partnership",
+  "heroTitle": "Join the UnoSicurezza network",
+  "heroDescription": "The platform is available in cloud mode according to security, reliability and data protection standards. Find out how to collaborate with us for training, safety and professionals.",
+
+  "section1": {
+    "title": "For Training Entities",
+    "description": "We provide a dedicated space on our platform where you can:",
+    "bullet1": "offer your courses on health and safety at work",
+    "bullet2": "manage users and training paths independently",
+    "bottomText": "A practical and professional solution to enhance your services and ensure clients always have up-to-date and certified mandatory training.",
+    "buttonText": "Contact us and we'll take care of the rest!",
+    "contactFormTitle": "Click here to contact us",
+    "aziendaPlaceholder": "Company*"
+  },
+
+  "section2": {
+    "title": "For Professionals",
+    "description": "If you work in the field of health and safety at work, join our network and offer your services in collaboration with us.",
+    "subText": "You will have the opportunity to:",
+    "bullet1": "Trainers and instructors who want to create their own online school capable of generating immediate revenue.",
+    "bullet2": "A simple, intuitive platform with professional tools for creating online courses and training.",
+    "buttonText": "Contact us for a proposal",
+    "contactFormTitle": "Click here to contact us",
+    "bottomText": "A collaboration that allows you to grow professionally and give greater completeness to your services.",
+    "qualificaPlaceholder": "Qualification*"
+  },
+
+  "section3": {
+    "title": "Benefits of collaboration",
+    "description": "Our platform allows you to focus on training content while we take care of the technology and regulatory compliance.",
+    "benefit1Title": "Ready-to-use platform",
+    "benefit1Desc": "Immediate access to our advanced LMS platform without development costs.",
+    "benefit2Title": "Autonomous management",
+    "benefit2Desc": "Total and centralized management of every aspect: courses, reports and personal area in one interface.",
+    "benefit3Title": "Course creation",
+    "benefit3Desc": "Ability to upload your training content in SCORM format and many other formats.",
+    "benefit4Title": "Compliant certifications",
+    "benefit4Desc": "Issuance of certifications compliant with Italian regulations.",
+    "licenseTitle": "License user model",
+    "feature1": "Complete LMS platform",
+    "feature2": "Autonomous learner management",
+    "feature3": "Course upload (SCORM, PPT, etc.)",
+    "feature4": "Download reports and training certificates with one click",
+    "feature5": "Personalized technical support via ticket",
+    "compliance": "Guaranteed compliance with D.Lgs. 81/08"
+  },
+
+  "section4": {
+    "title": "Collaboration request",
+    "subtitle": "Fill out the form to receive more information about the partnership",
+    "nomeAzienda": "Company name *",
+    "nomeAziendaPlaceholder": "Name...",
+    "tipoCollaborazione": "Type of collaboration *",
+    "tipo1": "Training Entity",
+    "tipo2": "HR Consultant",
+    "tipo3": "Consulting Company",
+    "tipo4": "Company",
+    "tipo5": "Other",
+    "referente": "Contact person *",
+    "referentePlaceholder": "Your name...",
+    "email": "E-mail *",
+    "emailPlaceholder": "mario.rossi@gmail.com",
+    "telefono": "Phone *",
+    "telefonoPlaceholder": "+39 123 456 7890",
+    "dimensione": "Company size *",
+    "dim1": "Startup (1-10 employees)",
+    "dim2": "Small (11-50 employees)",
+    "dim3": "Medium (51-250 employees)",
+    "dim4": "Large (250+ employees)",
+    "descrizione": "Describe your business and your goals",
+    "descrizionePlaceholder": "Share with us how we can build a valuable partnership together...",
+    "submit": "Send request"
+  }
+},
   "contactUs": {
   "bannerTitle": "Contact Us",
   "heroTitle": "We are at your disposal",

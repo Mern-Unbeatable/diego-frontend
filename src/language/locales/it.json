@@ -73,6 +73,116 @@
       "details": "Dettagli"
     }
   },
+  "chiSiamo": {
+  "bannerTitle": "Chi siamo",
+  "intro": "Siamo un gruppo di professionisti che si occupa di amministrazione stabili, formazione, sicurezza e salute per aziende e condomini.",
+  "objectiveLabel": "Il nostro obiettivo è rendere più facile il rispetto della normativa e aiutare i nostri clienti a lavorare e vivere in ambienti più sicuri e organizzati.",
+  "whatWeDoLabel": "Cosa facciamo:",
+  "formazione": "Formazione:",
+  "formazioneDesc": "offriamo corsi chiari e pratici, anche online, grazie ad una piattaforma semplice da usare, pensata per lavoratori, responsabili e enti di formazione.",
+  "sicurezza": "Sicurezza:",
+  "sicurezzaDesc": "supportiamo aziende e condomini con adempimenti documentali, corsi obbligatori, piani di emergenza e controlli per garantire ambienti di lavoro sempre più sicuri ed in conformità alla normativa.",
+  "salute": "Salute:",
+  "saluteDesc": "realizziamo analisi di laboratorio per prevenire rischi, forniamo ausilio nella medicina del lavoro e proteggiamo la salute delle persone.",
+  "tagline": "Formazione e sicurezza, il motore per un futuro più sereno e di successo.",
+  "missionTitle": "La Nostra Missione",
+  "missionDesc": "La nostra missione è supportare le micro, piccole, medie e grandi imprese attraverso percorsi di formazione mirati, servizi di consulenza strategica e gestione efficiente degli adempimenti documentali. Crediamo nella crescita continua, nella semplificazione dei processi e nella valorizzazione delle competenze.",
+  "pillarsTitle": "I nostri pilastri",
+  "mission": {
+    "card1Title": "Sicurezza Prima di Tutto",
+    "card1Desc": "La sicurezza sul lavoro è al centro di tutto ciò che facciamo, con l'obiettivo di creare ambienti di lavoro più sicuri.",
+    "card2Title": "Innovazione Tecnologica",
+    "card2Desc": "Utilizziamo sistemi affidabili e collaudati per offrire percorsi formativi di qualità, accessibili e funzionali.",
+    "card3Title": "Orientamento al Cliente",
+    "card3Desc": "Ogni soluzione è progettata sulle specifiche esigenze del cliente, garantendo risultati concreti.",
+    "card4Title": "Eccellenza Formativa",
+    "card4Desc": "Standard di qualità in ogni corso, con metodologie didattiche all'avanguardia."
+  },
+  "pillars": {
+    "card1Title": "Applicazione concreta della normativa",
+    "card1Desc": "Ci dedichiamo con costanza all'aggiornamento continuo in conformità con la normativa vigente.",
+    "card2Title": "Infrastruttura tecnologica innovativa",
+    "card2Desc": "Piattaforma LMS pensata per offrire percorsi formativi semplici, efficaci e sempre aggiornati rispetto alla normativa vigente.",
+    "card3Title": "Formazione Multi-Settoriale",
+    "card3Desc": "Un'unica piattaforma che racchiude corsi diversificati e percorsi formativi personalizzati, pensati per ogni esigenza."
+  }
+},
+  "workWithUs": {
+  "bannerTitle": "Collabora con UnoSicurezza",
+  "badge": "Partnership",
+  "heroTitle": "Unisciti alla rete di UnoSicurezza",
+  "heroDescription": "La piattaforma è disponibile in modalità cloud secondo gli standard di sicurezza, affidabilità e protezione dei dati. Scopri come collaborare con noi per formazione, sicurezza e professionisti.",
+
+  "section1": {
+    "title": "Per gli Enti di Formazione",
+    "description": "Mettiamo a disposizione uno spazio dedicato sulla nostra piattaforma dove potrai:",
+    "bullet1": "proporre i tuoi corsi in materia di salute e sicurezza sul lavoro",
+    "bullet2": "gestire utenti e percorsi formativi in autonomia",
+    "bottomText": "Una soluzione pratica e professionale per valorizzare i tuoi servizi e garantire ai clienti percorsi formativi obbligatori sempre aggiornati e certificati.",
+    "buttonText": "Contattaci e al resto ci pensiamo noi!",
+    "contactFormTitle": "Clicca qui per contattarci",
+    "aziendaPlaceholder": "Azienda*"
+  },
+
+  "section2": {
+    "title": "Per i professionisti",
+    "description": "Se operi nel campo della salute e sicurezza sul lavoro, entra nella nostra rete e proponi i tuoi servizi in collaborazione con noi.",
+    "subText": "Avrai l'opportunità di:",
+    "bullet1": "I docenti e i trainer che vogliono creare una propria scuola online acquisiti in grado di generare ricavi immediati.",
+    "bullet2": "Una piattaforma semplice, intuitiva e con strumenti professionali per la creazione di corsi online e training.",
+    "buttonText": "Contattaci di una proposizione",
+    "contactFormTitle": "Clicca qui per contattarci",
+    "bottomText": "Una collaborazione che ti permette di crescere professionalmente e dare maggiore completezza ai tuoi servizi.",
+    "qualificaPlaceholder": "Qualifica*"
+  },
+
+  "section3": {
+    "title": "Vantaggi della collaborazione",
+    "description": "La nostra piattaforma ti permette di concentrarti sui contenuti formativi mentre noi ci occupiamo della tecnologia e della conformità normativa.",
+    "benefit1Title": "Piattaforma pronta all'uso",
+    "benefit1Desc": "Accesso immediato alla nostra piattaforma LMS avanzata senza costi di sviluppo.",
+    "benefit2Title": "Gestione autonoma",
+    "benefit2Desc": "Gestione totale e centralizzata di ogni aspetto: corsi, report e area personale in un'unica interfaccia.",
+    "benefit3Title": "Creazione corsi",
+    "benefit3Desc": "Possibilità di caricare i tuoi contenuti formativi in formato SCORM e tanti altri formati.",
+    "benefit4Title": "Certificazioni conformi",
+    "benefit4Desc": "Rilascio di certificazioni conformi alle normative italiane.",
+    "licenseTitle": "Modello utente licenza",
+    "feature1": "Piattaforma LMS completa",
+    "feature2": "Gestione autonoma dei corsisti",
+    "feature3": "Caricamento corsi (SCORM, PPT, ecc.)",
+    "feature4": "Download report e attestati di formazione a portata di un clic",
+    "feature5": "Supporto tecnico personalizzato via ticket",
+    "compliance": "Conformità garantita D.Lgs. 81/08"
+  },
+
+  "section4": {
+    "title": "Richiesta di collaborazione",
+    "subtitle": "Compila il form per ricevere maggiori informazioni sulla partnership",
+    "nomeAzienda": "Nome azienda *",
+    "nomeAziendaPlaceholder": "Denominazione...",
+    "tipoCollaborazione": "Tipo di collaborazione *",
+    "tipo1": "Ente di Formazione",
+    "tipo2": "Consulente HR",
+    "tipo3": "Azienda di consulenza",
+    "tipo4": "Azienda",
+    "tipo5": "Altro",
+    "referente": "Nominativo referente *",
+    "referentePlaceholder": "Il tuo nome...",
+    "email": "E-mail *",
+    "emailPlaceholder": "mario.rossi@gmail.it",
+    "telefono": "Telefono *",
+    "telefonoPlaceholder": "+39 123 456 7890",
+    "dimensione": "Dimensione azienda *",
+    "dim1": "Startup (1-10 dipendenti)",
+    "dim2": "Piccola (11-50 dipendenti)",
+    "dim3": "Media (51-250 dipendenti)",
+    "dim4": "Grande (250+ dipendenti)",
+    "descrizione": "Descrivi la tua attività e i tuoi obiettivi",
+    "descrizionePlaceholder": "Condividi con noi le come possiamo costruire insieme una partnership di valore...",
+    "submit": "Invia richiesta"
+  }
+},
   "contactUs": {
   "bannerTitle": "Contattaci",
   "heroTitle": "Siamo a tua disposizione",
