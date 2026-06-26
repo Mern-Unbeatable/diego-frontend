@@ -694,7 +694,7 @@ const MainNavbar = () => {
 
           {/* --- E-Learning Button (Desktop) --- */}
           <div className="hidden shrink-0 items-center gap-3 xl:flex">
-            {isHomePage && (
+            {/* {isHomePage && (
               <div className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2">
                 <MdLanguage size={20} className="text-[#73BFA1]" />
                 <select
@@ -708,7 +708,7 @@ const MainNavbar = () => {
                   <option value="zh">中文</option>
                 </select>
               </div>
-            )}
+            )} */}
             <Link
               to="/auth/register/choose-language"
               className="inline-block rounded-full bg-[#73BFA1] px-5 py-2.5 text-sm font-semibold whitespace-nowrap text-white xl:px-8 xl:py-3 xl:text-base"
@@ -733,7 +733,7 @@ const MainNavbar = () => {
           <div className="shadow-5xl absolute top-full right-0 left-0 z-99 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white xl:hidden">
             <nav>
               <div className="flex flex-col space-y-3 px-1 pt-6 pb-6 sm:px-2">
-                {isHomePage && (
+                {/* {isHomePage && (
                   <div className="mb-2 flex items-center gap-2 rounded-lg border border-gray-200 p-2">
                     <MdLanguage size={20} className="text-[#73BFA1]" />
                     <select
@@ -747,7 +747,7 @@ const MainNavbar = () => {
                       <option value="zh">中文</option>
                     </select>
                   </div>
-                )}
+                )} */}
 
                 {navItems.map((item, index) => (
                   <div key={index}>
