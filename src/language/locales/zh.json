@@ -72,6 +72,31 @@
       "details": "详情"
     }
   },
+  "contactUs": {
+  "bannerTitle": "联系我们",
+  "heroTitle": "我们随时为您服务",
+  "heroDescription": "您是否想了解更多关于我们培训、安全服务的信息或获取报价？请填写下面的表格或使用我们的直接联系方式，我们将尽快回复您。",
+  "formTitle": "联系表单",
+  "nome": "名字*",
+  "nomePlaceholder": "您的名字",
+  "cognome": "姓氏*",
+  "cognomePlaceholder": "您的姓氏",
+  "azienda": "公司*",
+  "aziendaPlaceholder": "您的公司名称",
+  "piva": "税号*",
+  "pivaPlaceholder": "增值税号",
+  "telefono": "电话 / 手机号码*",
+  "telefonoPlaceholder": "+39 123 456 7890",
+  "email": "电子邮件*",
+  "emailPlaceholder": "your.email@example.com",
+  "messaggioPlaceholder": "留下留言",
+  "submit": "提交",
+  "cancel": "取消",
+  "emailCardTitle": "电子邮件",
+  "emailCardSub": "如有任何疑问请发送邮件",
+  "phoneCardTitle": "电话",
+  "phoneCardSub": "周一至周五 9:00-18:00"
+},
   "footer": {
   "product": "产品",
   "overview": "概览",

@@ -73,6 +73,31 @@
       "details": "Dettagli"
     }
   },
+  "contactUs": {
+  "bannerTitle": "Contattaci",
+  "heroTitle": "Siamo a tua disposizione",
+  "heroDescription": "Vuoi ricevere maggiori informazioni sui nostri servizi di formazione, sicurezza o un preventivo? Compila il form qui sotto oppure utilizza i nostri contatti diretti. Ti risponderemo al più presto.",
+  "formTitle": "Form di contatto",
+  "nome": "Nome*",
+  "nomePlaceholder": "Il tuo nome",
+  "cognome": "Cognome*",
+  "cognomePlaceholder": "Il tuo cognome",
+  "azienda": "Azienda*",
+  "aziendaPlaceholder": "Nome della tua azienda",
+  "piva": "P.IVA*",
+  "pivaPlaceholder": "Partita IVA",
+  "telefono": "Numero di telefono/cellulare*",
+  "telefonoPlaceholder": "+39 123 456 7890",
+  "email": "E-mail*",
+  "emailPlaceholder": "tua.email@esempio.com",
+  "messaggioPlaceholder": "Lascia un messaggio",
+  "submit": "Invia",
+  "cancel": "Annulla",
+  "emailCardTitle": "E-mail",
+  "emailCardSub": "Scrivi per qualsiasi informazione",
+  "phoneCardTitle": "Telefono",
+  "phoneCardSub": "Lun-Ven 9.00-18.00"
+},
   "footer": {
   "product": "Prodotto",
   "overview": "Panoramica",

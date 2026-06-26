@@ -72,6 +72,31 @@
       "details": "Details"
     }
   },
+  "contactUs": {
+  "bannerTitle": "Contact Us",
+  "heroTitle": "We are at your disposal",
+  "heroDescription": "Would you like more information about our training, safety services, or a quote? Fill out the form below or use our direct contacts. We will get back to you as soon as possible.",
+  "formTitle": "Contact Form",
+  "nome": "First Name*",
+  "nomePlaceholder": "Your first name",
+  "cognome": "Last Name*",
+  "cognomePlaceholder": "Your last name",
+  "azienda": "Company*",
+  "aziendaPlaceholder": "Your company name",
+  "piva": "VAT Number*",
+  "pivaPlaceholder": "VAT Number",
+  "telefono": "Phone / Mobile Number*",
+  "telefonoPlaceholder": "+39 123 456 7890",
+  "email": "E-mail*",
+  "emailPlaceholder": "your.email@example.com",
+  "messaggioPlaceholder": "Leave a message",
+  "submit": "Submit",
+  "cancel": "Cancel",
+  "emailCardTitle": "E-mail",
+  "emailCardSub": "Write for any information",
+  "phoneCardTitle": "Phone",
+  "phoneCardSub": "Mon-Fri 9.00-18.00"
+},
   "footer": {
   "product": "Product",
   "overview": "Overview",

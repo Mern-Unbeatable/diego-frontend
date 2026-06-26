@@ -72,6 +72,31 @@
       "details": "التفاصيل"
     }
   },
+  "contactUs": {
+  "bannerTitle": "اتصل بنا",
+  "heroTitle": "نحن في خدمتك",
+  "heroDescription": "هل تريد الحصول على مزيد من المعلومات حول خدمات التدريب أو السلامة أو عرض أسعار؟ املأ النموذج أدناه أو استخدم جهات الاتصال المباشرة. سنرد عليك في أقرب وقت ممكن.",
+  "formTitle": "نموذج الاتصال",
+  "nome": "الاسم الأول*",
+  "nomePlaceholder": "اسمك الأول",
+  "cognome": "اسم العائلة*",
+  "cognomePlaceholder": "اسم عائلتك",
+  "azienda": "الشركة*",
+  "aziendaPlaceholder": "اسم شركتك",
+  "piva": "الرقم الضريبي*",
+  "pivaPlaceholder": "الرقم الضريبي",
+  "telefono": "رقم الهاتف / الجوال*",
+  "telefonoPlaceholder": "+39 123 456 7890",
+  "email": "البريد الإلكتروني*",
+  "emailPlaceholder": "بريدك@مثال.com",
+  "messaggioPlaceholder": "اترك رسالة",
+  "submit": "إرسال",
+  "cancel": "إلغاء",
+  "emailCardTitle": "البريد الإلكتروني",
+  "emailCardSub": "اكتب لأي استفسار",
+  "phoneCardTitle": "الهاتف",
+  "phoneCardSub": "الاثنين-الجمعة 9.00-18.00"
+},
   "footer": {
   "product": "المنتج",
   "overview": "نظرة عامة",
