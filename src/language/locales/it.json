@@ -4,14 +4,14 @@
   "dashboard": "Pannello di controllo",
   "logout": "Disconnettersi",
   "homeView": {
-    "hero": {
+    "section1": {
       "title": "UnoSicurezza",
       "subtitle": "Ogni nuova competenza è un passo avanti verso il successo.",
       "descriptionLineOne": "Essere in regola è: proteggere chi lavora con te.",
       "descriptionLineTwo": "Scegli la sicurezza, scegli noi.",
       "button": "Esplora i nostri servizi"
     },
-    "review": {
+    "section2": {
       "title": "Condividi la tua recensione con noi",
       "description": "Compila il modulo per condividere la tua esperienza. La tua recensione sarà visibile dopo l'approvazione.",
       "namePlaceholder": "Name *",
@@ -22,11 +22,11 @@
       "textAreaPlaceholder": "Scrivi qualcosa sulla tua esperienza...",
       "submitButton": "Invia"
     },
-    "catalog": {
+    "section3": {
       "exploreCatalog": "Esplora il nostro catalogo servizi",
       "exploreAllCourses": "Esplora tutti i nostri corsi"
     },
-    "courseCard": {
+    "section4": {
       "enrollNow": "Iscriviti ora",
       "details": "Dettagli"
     }

@@ -97,7 +97,7 @@ const CourseCatalog = () => {
   return (
     <Container size="full" className="py-12 sm:py-16 lg:py-20">
       <Heading level={2} className="mb-10 sm:mb-14 lg:mb-20">
-        {t('homeView.catalog.exploreCatalog')}
+        {t('homeView.section3.exploreCatalog')}
       </Heading>
 
       <div>
@@ -108,7 +108,7 @@ const CourseCatalog = () => {
           <Button
             size="lg"
             variant="outline"
-            label={t('homeView.catalog.exploreAllCourses')}
+            label={t('homeView.section3.exploreAllCourses')}
             className="w-full max-w-[360px] font-semibold text-[#73BFA1] sm:w-auto"
           />
         </div>

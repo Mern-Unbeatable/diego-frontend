@@ -4,14 +4,14 @@
   "dashboard": "仪表板",
   "logout": "退出登录",
   "homeView": {
-    "hero": {
+    "section1": {
       "title": "一种安全",
       "subtitle": "每一项新技能，都是迈向成功的一步。",
       "descriptionLineOne": "合规意味着保护与你一起工作的人。",
       "descriptionLineTwo": "选择安全，选择我们。",
       "button": "探索我们的服务"
     },
-    "review": {
+    "section2": {
       "title": "与我们分享你的评价",
       "description": "填写表单分享你的体验。你的评价将在审核后显示。",
       "namePlaceholder": "姓名 *",
@@ -22,11 +22,11 @@
       "textAreaPlaceholder": "写下你对本次体验的感受...",
       "submitButton": "提交"
     },
-    "catalog": {
+    "section3": {
       "exploreCatalog": "探索我们的服务目录",
       "exploreAllCourses": "探索我们所有课程"
     },
-    "courseCard": {
+    "section4": {
       "enrollNow": "立即报名",
       "details": "详情"
     }

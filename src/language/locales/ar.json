@@ -4,14 +4,14 @@
   "dashboard": "لوحة التحكم",
   "logout": "تسجيل الخروج",
   "homeView": {
-    "hero": {
+    "section1": {
       "title": "سلامة واحدة",
       "subtitle": "كل مهارة جديدة هي خطوة إلى الأمام نحو النجاح.",
       "descriptionLineOne": "الالتزام يعني حماية من يعملون معك.",
       "descriptionLineTwo": "اختر السلامة، اخترنا.",
       "button": "استكشف خدماتنا"
     },
-    "review": {
+    "section2": {
       "title": "شاركنا مراجعتك",
       "description": "املأ النموذج لمشاركة تجربتك. ستظهر مراجعتك بعد الموافقة.",
       "namePlaceholder": "الاسم *",
@@ -22,11 +22,11 @@
       "textAreaPlaceholder": "اكتب شيئًا عن تجربتك...",
       "submitButton": "إرسال"
     },
-    "catalog": {
+    "section3": {
       "exploreCatalog": "استكشف كتالوج خدماتنا",
       "exploreAllCourses": "استكشف جميع دوراتنا"
     },
-    "courseCard": {
+    "section4": {
       "enrollNow": "سجّل الآن",
       "details": "التفاصيل"
     }

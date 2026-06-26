@@ -15,37 +15,37 @@ const ReviewSection = () => {
       <Container className="w-full md:w-1/2">
         <div className="space-y-8">
           <Heading level={3} className="">
-            {t('homeView.review.title')}
+            {t('homeView.section2.title')}
           </Heading>
           <Paragraph className="">
-            {t('homeView.review.description')}
+            {t('homeView.section2.description')}
           </Paragraph>
           <InputField
             title="name"
             type="text"
             name="name"
-            placeholder={t('homeView.review.namePlaceholder')}
+            placeholder={t('homeView.section2.namePlaceholder')}
           />
         </div>
         <div className="my-5 space-y-8">
           <Heading level={3} className="">
-            {t('homeView.review.feedbackTitle')}
+            {t('homeView.section2.feedbackTitle')}
           </Heading>
           <div className="space-y-4">
-            <Paragraph>{t('homeView.review.leaveComment')}</Paragraph>
-            <Paragraph>{t('homeView.review.rateExperience')}</Paragraph>
-            <Paragraph>{t('homeView.review.ratingText')}</Paragraph>
+            <Paragraph>{t('homeView.section2.leaveComment')}</Paragraph>
+            <Paragraph>{t('homeView.section2.rateExperience')}</Paragraph>
+            <Paragraph>{t('homeView.section2.ratingText')}</Paragraph>
           </div>
 
           <TextAreaField
-            id={t('homeView.review.leaveComment')}
-            title={t('homeView.review.leaveComment')}
+            id={t('homeView.section2.leaveComment')}
+            title={t('homeView.section2.leaveComment')}
             name="textarea"
             className=""
-            placeholder={t('homeView.review.textAreaPlaceholder')}
+            placeholder={t('homeView.section2.textAreaPlaceholder')}
           />
         </div>
-        <Button label={t('homeView.review.submitButton')} size="lg" className="w-full" />
+        <Button label={t('homeView.section2.submitButton')} size="lg" className="w-full" />
       </Container>
 
       <div className="mt-10 flex w-full justify-center md:mt-0 md:w-1/2">
