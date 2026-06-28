@@ -2,5 +2,819 @@
   "welcome": "Welcome to our platform!",
   "language": "Language",
   "dashboard": "Dashboard",
-  "logout": "Logout"
+  "logout": "Logout",
+  "navbar": {
+    "home": "Home",
+    "services": "Services",
+    "training": "Training",
+    "whoWeAre": "Who we are",
+    "workWithUs": "Work with us",
+    "contactUs": "Contact us",
+    "eLearning": "E-Learning",
+    "servicesDropdown": {
+      "seveso": "Seveso",
+      "corsiSeveso": "SEVESO Courses",
+      "sicurezza": "Safety",
+      "servizioASPP": "ASPP and RSPP Service",
+      "redazioneDVR": "DVR Drafting",
+      "pianiEmergenza": "Emergency Plans",
+      "fulminazione": "Lightning Protection",
+      "legionella": "Legionella",
+      "potabilitaAcqua": "Water Potability",
+      "radon": "Radon",
+      "analisiLaboratorio": "Laboratory Analysis",
+      "buildingManagement": "Building Management",
+      "ambiente": "Environment",
+      "rentri": "RENTRI",
+      "videosorveglianza": "Video Surveillance",
+      "gestioneAutorizzazione": "Plant Authorization Management",
+      "medicinaLavoro": "Occupational Medicine",
+      "incarichiMedico": "Competent Medical Appointments",
+      "gestioneVisite": "Medical Visit Management",
+      "analisiLab": "Laboratory Analysis",
+      "condominio": "Condominium",
+      "gestioneImmobiliare": "Property Management"
+    },
+    "trainingDropdown": {
+      "nostraPiattaforma": "Our Platform",
+      "comeFunziona": "How it works",
+      "corsi": "Courses",
+      "corsiSeveso": "SEVESO Courses",
+      "corsiObbligatori": "Mandatory Courses",
+      "catalogo": "Catalog"
+    }
+  },
+  "homeView": {
+    "section1": {
+      "title": "One Security",
+      "subtitle": "Every new skill is a step forward toward success.",
+      "descriptionLineOne": "Being compliant means protecting the people who work with you.",
+      "descriptionLineTwo": "Choose safety, choose us.",
+      "button": "Explore our services"
+    },
+    "section2": {
+      "title": "Share your review with us",
+      "description": "Fill out the form to share your experience. Your review will be visible after approval.",
+      "namePlaceholder": "Name *",
+      "feedbackTitle": "Session feedback",
+      "leaveComment": "Leave a comment",
+      "rateExperience": "Rate your experience below",
+      "ratingText": "⭐⭐⭐⭐⭐ 4/5 stars",
+      "textAreaPlaceholder": "Write something about your experience...",
+      "submitButton": "Submit"
+    },
+    "section3": {
+      "exploreCatalog": "Explore our service catalog",
+      "exploreAllCourses": "Explore all our courses"
+    },
+    "section4": {
+      "enrollNow": "Enroll now",
+      "details": "Details"
+    }
+  },
+  "servicesPages": {
+    "section1": {
+      "serviceDetailsTitle": "Service details",
+      "serviceIncludesTitle": "What the service includes",
+      "includeItems": [
+        "Initial consultancy and analysis of the current situation",
+        "Preparation of the required documentation",
+        "Training of involved personnel",
+        "Ongoing support and updates"
+      ]
+    },
+    "section2": {
+      "bannerTitle": "Services",
+      "bannerDescription": "Explore our services and contact us",
+      "loading": "Loading",
+      "categoryTitle": "Services"
+    },
+    "section3": {
+      "bannerTitle": "SEVESO Courses",
+      "bannerDescription": "Consultancy for the Seveso directive on the prevention of major accidents",
+      "description": "Courses designed to help companies and operators subject to Legislative Decree 105/2015 improve their capabilities in the safe management of all relevant processes. The operator must state in the document their commitment to implement, adopt, maintain and continuously improve their safety management system. For this reason, UnoSicurezza offers a wide range of tailored courses that meet operator needs and comply with the mandatory principle of continuous training (Legislative Decree 105/2015, art. 14, Appendix 1 of Annex B), thanks to collaboration with your HS group."
+    },
+    "section4": {
+      "bannerTitle": "Services",
+      "bannerDescription": "Explore our services and contact us",
+      "description": "Safety is not merely a theoretical topic to overlook during daily work activities. Sometimes it may seem complex because the right knowledge is missing. Other times, people think compliance ends once done, but that is a serious mistake. Safety requires continuous maintenance and improvement in line with legal requirements. For this reason, UnoSicurezza helps companies provide:",
+      "aspp": "(Worker in charge of prevention and protection service)",
+      "rspp": "(Manager in charge of prevention and protection service)"
+    },
+    "section5": {
+      "bannerTitle": "DVR - Risk Assessment Document",
+      "bannerDescription": "Drafting and updating of the Risk Assessment Document",
+      "description": "The Risk Assessment Document (DVR). We provide complete services for risk assessment, document drafting, staff training and periodic updates in accordance with Legislative Decree 81/2008."
+    },
+    "section6": {
+      "bannerTitle": "Emergency plan",
+      "descriptionLead": "For compliance with article 18, paragraph 1, letter t), the employer:",
+      "descriptionBody": "Must adopt necessary measures for fire prevention and workplace evacuation, as well as for serious and immediate danger, according to article 43. These measures must be adequate:",
+      "obligations": [
+        "to the nature of the activity",
+        "to the size of the company or production unit",
+        "to the number of people present"
+      ],
+      "descriptionCta": "At UnoSicurezza, we can help you with this!"
+    },
+    "section7": {
+      "bannerTitle": "Lightning protection",
+      "bannerDescription": "Adapt your structure to regulations: assess lightning risk.",
+      "description": "Art. 17 of Legislative Decree 81/08 defines non-delegable employer duties: the employer cannot delegate the assessment of all risks and the related preparation of the document required by article 28, as well as compliance with CEI standards. Among all risks is also the risk that the building may be exposed to lightning discharges. At UnoSicurezza, we can help you with this!"
+    },
+    "section8": {
+      "bannerTitle": "Legionella",
+      "bannerDescription": "Legionella risk assessment and control plans",
+      "paragraph1": "We carry out sampling and analysis at selected points of the water system, with official test reports and comparison against parameter limit values provided by Legislative Decree 18/2023 for Legionella determination. Results are delivered clearly and comprehensively.",
+      "paragraph2": "At UnoSicurezza, we help our partners avoid hidden risks often underestimated in daily operations. One of the most overlooked risks is Legionella bacteria: a microorganism that, if not identified and managed, can cause serious health issues and major liabilities for employers.",
+      "paragraph3": "Entrust us with managing this critical issue.",
+      "specialItems": [
+        "Official test reports",
+        "Technical evaluation of findings",
+        "Sampling in points with higher probability of bacterial proliferation",
+        "Laboratory analysis with comparison to limits required by current regulations",
+        "Legionella risk assessment and preparation of related documentation"
+      ]
+    },
+    "section9": {
+      "bannerTitle": "Radon",
+      "bannerDescription": "Measurements and assessments of radon gas in workplaces",
+      "description": "Underground and semi-underground workplaces located in priority areas? Radon risk assessment in workplaces, under Legislative Decree 101/2020, is mandatory for employers to protect workers' health. Risk is assessed by measuring radon concentration in air, expressed in Bq/m3. The UnoSicurezza team provides:",
+      "riskItems": [
+        "Concentration measurements",
+        "Risk assessment",
+        "Appointment of the qualified expert"
+      ]
+    },
+    "section10": {
+      "bannerTitle": "Water potability",
+      "bannerDescription": "Water potability analysis for condominiums, homes and companies",
+      "paragraph1": "The quality and safety of water intended for human consumption in Italy are regulated by Legislative Decree 18/2023, implementing European Directive 2020/2184. This regulation defines limit values for chemical and microbiological parameters required to ensure water potability.",
+      "paragraph2": "Periodic verification of water compliance is fundamental not only to protect people's health, but also to meet obligations for condominium administrators and companies.",
+      "paragraph3": "We offer a complete sampling and laboratory analysis service, including:",
+      "sampleAtHome": "Home sampling - one of our specialized technicians visits the indicated sampling point (tap or other accessible point).",
+      "fullAnalysisLead": "Complete potability analysis (Legislative Decree 18/2023) - compliance verification for microbiological, chemical and indicator parameters required by law, with determination of over 60 parameters, including:",
+      "parameterItems": [
+        "coliform bacteria, Escherichia coli, intestinal enterococci, Clostridium perfringens;",
+        "heavy metals (lead, arsenic, mercury, cadmium, nickel, chromium);",
+        "organic and inorganic contaminants (nitrates, nitrites, PFAS, trihalomethanes, polycyclic aromatic hydrocarbons, pesticides);",
+        "indicator parameters (pH, turbidity, hardness, conductivity, odor, color, taste)."
+      ],
+      "reportNote": "At the end of the analyses, an official test report is issued, showing detected values and comparison against limits set by Legislative Decree 18/2023."
+    },
+    "section11": {
+      "bannerTitle": "Laboratory analysis",
+      "bannerDescription": "We provide complete laboratory analysis services to ensure quality, safety and compliance of products and environments. Through certified methods, we analyze samples of water, air, waste and materials to identify possible contamination and ensure compliance with current regulations.",
+      "intro": "Our goal is to transform regulatory obligations into prevention and value enhancement tools, offering integrated solutions for environmental protection.",
+      "sections": [
+        {
+          "title": "Waste management",
+          "items": [
+            "Correct waste management is a central element of environmental sustainability.",
+            "On-site sampling and laboratory analyses;",
+            "Leaching tests for reuse or plant disposal."
+          ]
+        },
+        {
+          "title": "Water",
+          "description": "Water discharges and groundwater monitoring must comply with precise requirements. We handle:",
+          "items": [
+            "Correct waste management is a central element of environmental safety.",
+            "Sampling and laboratory analyses;",
+            "Monitoring through piezometers and artisanal wells for quarries, treatment plants and industrial companies."
+          ]
+        },
+        {
+          "title": "Atmospheric emissions",
+          "description": "Industrial and artisanal emissions are regulated by strict standards. Our services include:",
+          "items": [
+            "Identification of processes subject to regulations;",
+            "Preparation of authorization requests;",
+            "Stack sampling and analyses;",
+            "Determination of main pollutants (dust, metals, acids, VOCs, SOx, NOx, CO, CO2, dioxins)."
+          ]
+        },
+        {
+          "title": "Asbestos",
+          "description": "For asbestos risk management we offer:",
+          "items": [
+            "Assessment of material condition with certified algorithms;",
+            "Sampling and qualitative/quantitative analyses with FT-IR and XRD techniques;",
+            "Stack sampling and analyses;",
+            "Determination of main pollutants (dust, metals, acids, VOCs, SOx, NOx, CO, CO2, dioxins).",
+            "Monitoring of airborne fibers (MOCF and SEM)."
+          ]
+        }
+      ]
+    },
+    "section12": {
+      "bannerTitle": "Building management",
+      "bannerDescription": "Measurements and assessments of radon gas in workplaces",
+      "description": "The UnoSicurezza team offers building management and condominium administration services to support building owners/managers who want to optimize processes related to:",
+      "processItems": [
+        "Maintenance and repairs",
+        "Energy and efficiency management",
+        "Safety and regulatory compliance"
+      ],
+      "cta": "Rely on us and contact us!"
+    },
+    "section13": {
+      "bannerTitle": "RENTRI",
+      "paragraph1": "RENTRI is the tool through which the Ministry of Environment and Energy Security structures the waste traceability system and enables digitization of documents related to waste movement and transport.",
+      "paragraph2": "Specifically, RENTRI allows to:",
+      "listItems": [
+        "provide public administration with a continuous flow of data and information on waste movement, supporting environmental policies and regional planning;",
+        "support control authorities in preventing and combating illegal waste management by facilitating verification through digital documents;",
+        "fulfill obligations for companies quickly and easily by streamlining procedures, also through digital transition support tools made available by the Ministry;",
+        "reduce time for transmitting data needed for reporting and monitoring achievement of European recovery and recycling targets;",
+        "digitally manage millions of paper documents."
+      ],
+      "paragraph3": "Rely on UnoSicurezza, a company that supports its partners step by step in fulfilling their obligations."
+    },
+    "section14": {
+      "bannerTitle": "Plant authorization management",
+      "bannerDescription": "Do you have a video surveillance/satellite localization system that records and includes employees?",
+      "description": "The use of audiovisual systems and other tools that may enable remote monitoring of workers' activities is permitted only for organizational and production needs, workplace safety and protection of company assets (art. 4, paragraph 1, law no. 300/1970), except tools used for work performance (e.g. computers, phones, tablets) or for access/presence detection (badge readers), pursuant to art. 4, paragraph 2, law no. 300/1970."
+    },
+    "section15": {
+      "bannerTitle": "Plant authorization management and appointment of the competent doctor",
+      "bannerDescription": "Do you have a company with one or more employees? Do you want to be sure you comply with all obligations for workers' health protection?",
+      "description": "Appointment of the competent doctor is mandatory under Legislative Decree 81/08, especially articles 18 and 41, and is fundamental for protecting workers' health. The competent doctor collaborates in risk assessment, carries out health surveillance and contributes to prevention of occupational diseases and injuries, ensuring company compliance with current regulations."
+    },
+    "section16": {
+      "bannerTitle": "Medical visits management",
+      "bannerDescription": "Do you have a company with one or more employees? Do you want to be sure you have not missed any obligation for employee health protection?",
+      "description": "Appointment of the competent doctor is mandatory under Legislative Decree 81/08, especially articles 18 and 41, and is fundamental for protecting workers' health. The competent doctor collaborates in risk assessment, carries out health surveillance and contributes to prevention of occupational diseases and injuries, ensuring company compliance with current regulations."
+    },
+    "section17": {
+      "bannerTitle": "Laboratory analysis",
+      "bannerDescription": "Do you have a company with one or more employees? Do you want to be sure you have not missed any obligation for employee health protection?",
+      "description": "In some specific cases, depending on the role performed, laboratory analyses are required to complete fitness-for-work assessment. These checks, required by Legislative Decree 81/08, verify that workers are in optimal physical condition to carry out activities safely. This is not only a legal requirement, but a concrete prevention and protection measure designed to safeguard staff wellbeing and maintain high safety standards within the company."
+    },
+    "section18": {
+      "bannerTitle": "Property management",
+      "bannerDescription": "Do you manage buildings and want full support for condominium compliance and administration?",
+      "description": "We support condominium managers and property owners with practical and regulatory services aimed at improving management efficiency, documentation control, safety obligations and organizational continuity. Our approach helps reduce operational burden while keeping every process aligned with regulations."
+    },
+    "section19": {
+      "title": "Request information",
+      "subtitle": "Fill in the form to request information about the {{service}} service.",
+      "defaultService": "ASPP and RSPP",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "company": "Company",
+      "vat": "VAT number",
+      "phone": "Phone",
+      "email": "Email",
+      "message": "Message",
+      "attachDocuments": "Attach documents (PDF, Word, Excel)",
+      "dropHere": "Drop files here...",
+      "clickToUpload": "Click to upload",
+      "orDragHere": "files or drag them here",
+      "maxFileSize": "Maximum 25MB per file",
+      "privacyTitle": "Privacy notice",
+      "privacyText": "The undersigned authorizes processing of personal data in compliance with current personal data protection laws and, in particular, Regulation (EU) 2016/679, Legislative Decree no. 196 of 30/06/2003 and subsequent amendments and integrations, as last amended by Legislative Decree no. 101 of 10/08/2018, and further authorizes the recipient to process data for provision of requested services.",
+      "sending": "Sending...",
+      "submit": "Send request",
+      "successAlert": "Request sent successfully!",
+      "errorAlert": "Error while sending request",
+      "bytes": "Bytes",
+      "kb": "KB",
+      "mb": "MB",
+      "gb": "GB"
+    }
+  },
+  "trainingPages": {
+    "section1": {
+      "trainingViewTitle": "Training"
+    },
+    "section2": {
+      "bannerTitle": "Discover our SEVESO courses"
+    },
+    "section3": {
+      "bannerTitle": "UnoSicurezza - LMS Platform"
+    },
+    "section4": {
+      "bannerTitle": "Discover our SEVESO courses"
+    },
+    "section5": {
+      "bannerTitle": "Catalog",
+      "platformTitle": "The online training platform for your company",
+      "ratingValue": "4.5",
+      "ratingCount": "(44,566)",
+      "signUp": "Sign up",
+      "details": "Details"
+    },
+    "section6": {
+      "searchPlaceholder": "Search courses...",
+      "allCategories": "All categories",
+      "categorySafety": "Safety",
+      "categoryManagers": "Managers",
+      "categoryGeneral": "General",
+      "allDurations": "All durations",
+      "hours4": "4 hours",
+      "hours6": "6 hours",
+      "hours12": "12 hours",
+      "hours16": "16 hours",
+      "searchButton": "Search"
+    },
+    "section7": {
+      "title": "Mandatory courses",
+      "courses": [
+        {
+          "title": "SEVESO Training - annual package",
+          "description": "The 'Seveso III' course refers to EU Directive 2012/18/EU on the prevention of major accidents involving dangerous substances...",
+          "oldPrice": "60,00€",
+          "price": "50,00 €"
+        },
+        {
+          "title": "Employer (New) 16 hours",
+          "description": "Agreement, pursuant to article 37, paragraph 2, of Legislative Decree no. 81 of 9 April 2008, between the Government, regions and autonomous provinces...",
+          "oldPrice": "180,00€",
+          "price": "110,00 €"
+        },
+        {
+          "title": "General 4 hours",
+          "description": "Agreement, pursuant to article 37, paragraph 2, of Legislative Decree no. 81 of 9 April 2008, between the Government, regions and autonomous provinces...",
+          "oldPrice": "50,00€",
+          "price": "40,00 €"
+        },
+        {
+          "title": "Specific low risk 4 hours (New)",
+          "description": "Agreement, pursuant to article 37, paragraph 2, of Legislative Decree no. 81 of 9 April 2008, between the Government, regions and autonomous provinces...",
+          "oldPrice": "50,00€",
+          "price": "40,00 €"
+        },
+        {
+          "title": "Managers 12 hours",
+          "description": "Agreement, pursuant to article 37, paragraph 2, of Legislative Decree no. 81 of 9 April 2008, between the Government, regions and autonomous provinces...",
+          "oldPrice": "160,00€",
+          "price": "120,00 €"
+        },
+        {
+          "title": "Managers update 6 hours",
+          "description": "Agreement, pursuant to article 37, paragraph 2, of Legislative Decree no. 81 of 9 April 2008, between the Government, regions and autonomous provinces...",
+          "oldPrice": "50,00€",
+          "price": "40,00 €"
+        }
+      ]
+    },
+    "section8": {
+      "title": "Course overview",
+      "headers": {
+        "course": "Course",
+        "description": "Description",
+        "duration": "Duration",
+        "type": "Type"
+      },
+      "tableRows": [
+        {
+          "name": "Single course",
+          "description": "The single course offers direct access for one specific training need.",
+          "duration": "30 min",
+          "type": "Single"
+        },
+        {
+          "name": "Advanced Seveso course",
+          "description": "A complete package aligned with EU Directive 2012/18/EU for major accident prevention.",
+          "duration": "30 min/course",
+          "type": "Package"
+        }
+      ],
+      "howItWorksTitle": "How it works",
+      "howItWorksSteps": [
+        "Contact UnoSicurezza teams",
+        "Choose the product: single course or training package",
+        "Collect requirements through form or technical inspection",
+        "Create the customized course with logo, references, media and procedures",
+        "Upload to LMS platform with delivery and monitoring automation",
+        "Asynchronous e-learning delivery from desktop and mobile",
+        "Final test",
+        "Certificate release at the end of the course"
+      ]
+    },
+    "section9": {
+      "steps": [
+        {
+          "title": "Contact",
+          "desc": "with UnoSicurezza team"
+        },
+        {
+          "title": "Product selection",
+          "desc": "single course or quarterly package"
+        },
+        {
+          "title": "Requirements collection",
+          "desc": "via online form or technical on-site inspection"
+        },
+        {
+          "title": "Custom course creation",
+          "desc": "with logo, references, photos, videos, procedures and internal manuals"
+        },
+        {
+          "title": "LMS platform upload",
+          "desc": "automated delivery and training activity monitoring"
+        },
+        {
+          "title": "Course delivery",
+          "desc": "e-learning access from PC, tablet and smartphone"
+        }
+      ]
+    },
+    "section10": {
+      "headerTitle": "Find the right solution for you",
+      "headerDescription": "Your training without boundaries. Access our workplace safety, privacy and food hygiene courses. Always updated and designed for your needs. Anywhere and anytime, our eLearning platform provides smart and effective training fully compliant with authority requirements.",
+      "headerCta": "Explore all our courses",
+      "sections": [
+        {
+          "title": "Single user - Level 1",
+          "badge": "Fast and intuitive team management",
+          "contents": [
+            "Level 1 is designed for users who buy a single course. After login with received credentials, the user directly accesses the purchased course without further steps."
+          ]
+        },
+        {
+          "title": "Company - Level 2",
+          "contents": [
+            "Level 2 is designed for companies buying multiple training packages for employees with simple centralized management.",
+            "How it works",
+            "Credential delivery: the company receives admin credentials and assigns unique credentials to each employee.",
+            "First employee access: each employee completes profiling data to validate the path and generate the certificate.",
+            "Admin features: assign courses, monitor progress, view reports and download certificates.",
+            "Cloud archive: certificates and reports are stored securely in cloud with search, export, notifications and backups.",
+            "The system guarantees order and accessibility over time."
+          ]
+        },
+        {
+          "title": "Training entity - Level 3",
+          "contents": [
+            "Level 3 is for accredited training entities purchasing a platform license with multi-tenant access and full autonomy in managing learners and courses.",
+            "How it works",
+            "Activation and access: the entity receives credentials and technical manual.",
+            "Courses: assignment and monitoring of learning progress.",
+            "Customized certificates: automatic generation for learners.",
+            "Detailed reporting: attendance, usage time and test results compliant with authority requirements.",
+            "With Level 3, training entities gain full control of activities with professional management."
+          ]
+        }
+      ]
+    },
+    "section11": {
+      "backToCatalog": "Back to catalog",
+      "rating": "4/5 stars",
+      "title": "SEVESO Training",
+      "description": "Advanced course for risk management in industries exposed to major accidents according to Legislative Decree 105/2015. The course provides specific skills for prevention of major accidents and emergency management.",
+      "objectivesTitle": "Objectives",
+      "objectives": [
+        "Understand SEVESO III regulations",
+        "Identify major accident risks",
+        "Develop effective emergency plans",
+        "Manage emergency communication"
+      ],
+      "specialPrice": "Special price",
+      "duration": "Duration 16 hours",
+      "code": "Code:",
+      "enrollNow": "Enroll now"
+    },
+    "section12": {
+      "frameLabel": "Frame 1281154065",
+      "select": "Select",
+      "singleCourse": {
+        "title": "Single course",
+        "description": "Perfect for individual access and attendance",
+        "item1": "1 user",
+        "item2": "Full course access",
+        "item3": "Certificate download available"
+      },
+      "companyPackage": {
+        "title": "Company package",
+        "description": "Solution to support companies in monitoring regulatory deadlines, ensuring timely assistance and compliance",
+        "subtitle": "Training: the right size for you",
+        "item1": "1-20 users - €150/user",
+        "item2": "21-50 users - €420/user",
+        "item3": "51-200 users - €1000/user",
+        "item4": "Includes administration panel"
+      }
+    }
+  },
+  "paymentPages": {
+    "section1": {
+      "continueShopping": "Continue shopping",
+      "title": "Cart",
+      "contains": "The cart contains:",
+      "courseDescription": "Course description",
+      "courseName": "Afrobeat"
+    },
+    "section2": {
+      "title": "Card details",
+      "network": "Card network",
+      "seeAll": "See all",
+      "nameOnCard": "Name on card",
+      "cardNumber": "Number",
+      "expiryDate": "Expiry date",
+      "cvv": "CVV",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "payNow": "Pay now"
+    },
+    "section3": {
+      "close": "Close",
+      "title": "Purchase completed successfully",
+      "description": "Thank you for purchasing on UnoSicurezza!",
+      "backHome": "Back to Home"
+    }
+  },
+  "chiSiamo": {
+    "section1": {
+      "bannerTitle": "Who We Are",
+      "intro": "We are a group of professionals dealing with property management, training, safety and health for companies and condominiums.",
+      "objectiveLabel": "Our goal is to make regulatory compliance easier and help our clients work and live in safer, more organized environments.",
+      "whatWeDoLabel": "What we do:",
+      "formazione": "Training:",
+      "formazioneDesc": "we offer clear and practical courses, also online, thanks to an easy-to-use platform designed for workers, managers and training institutions.",
+      "sicurezza": "Safety:",
+      "sicurezzaDesc": "we support companies and condominiums with document compliance, mandatory courses, emergency plans and inspections to ensure increasingly safe workplaces in line with regulations.",
+      "salute": "Health:",
+      "saluteDesc": "we carry out laboratory analyses to prevent risks, provide support in occupational medicine and protect people's health.",
+      "tagline": "Training and safety, the engine for a calmer and more successful future.",
+      "missionTitle": "Our Mission",
+      "missionDesc": "Our mission is to support micro, small, medium and large enterprises through targeted training paths, strategic consulting services and efficient management of document compliance. We believe in continuous growth, process simplification and skills development.",
+      "pillarsTitle": "Our Pillars"
+    },
+    "section2": {
+      "card1Title": "Safety First",
+      "card1Desc": "Workplace safety is at the center of everything we do, with the goal of creating safer work environments.",
+      "card2Title": "Technological Innovation",
+      "card2Desc": "We use reliable and proven systems to offer quality, accessible and functional training paths.",
+      "card3Title": "Customer Orientation",
+      "card3Desc": "Every solution is designed around the specific needs of the client, ensuring concrete results.",
+      "card4Title": "Training Excellence",
+      "card4Desc": "Quality standards in every course, with cutting-edge teaching methodologies."
+    },
+    "section3": {
+      "card1Title": "Practical Application of Regulations",
+      "card1Desc": "We are constantly dedicated to continuous updates in compliance with current regulations.",
+      "card2Title": "Innovative Technological Infrastructure",
+      "card2Desc": "An LMS platform designed to offer simple, effective and always up-to-date training paths in line with current regulations.",
+      "card3Title": "Multi-Sector Training",
+      "card3Desc": "A single platform that includes diversified courses and personalized training paths, designed for every need."
+    }
+  },
+  "workWithUs": {
+    "section1": {
+      "title": "For Training Entities",
+      "description": "We provide a dedicated space on our platform where you can:",
+      "bullet1": "offer your courses on health and safety at work",
+      "bullet2": "manage users and training paths independently",
+      "bottomText": "A practical and professional solution to enhance your services and ensure clients always have up-to-date and certified mandatory training.",
+      "buttonText": "Contact us and we'll take care of the rest!",
+      "contactFormTitle": "Click here to contact us",
+      "aziendaPlaceholder": "Company*"
+    },
+    "section2": {
+      "title": "For Professionals",
+      "description": "If you work in the field of health and safety at work, join our network and offer your services in collaboration with us.",
+      "subText": "You will have the opportunity to:",
+      "bullet1": "Trainers and instructors who want to create their own online school capable of generating immediate revenue.",
+      "bullet2": "A simple, intuitive platform with professional tools for creating online courses and training.",
+      "buttonText": "Contact us for a proposal",
+      "contactFormTitle": "Click here to contact us",
+      "bottomText": "A collaboration that allows you to grow professionally and give greater completeness to your services.",
+      "qualificaPlaceholder": "Qualification*"
+    },
+    "section3": {
+      "title": "Benefits of collaboration",
+      "description": "Our platform allows you to focus on training content while we take care of the technology and regulatory compliance.",
+      "benefit1Title": "Ready-to-use platform",
+      "benefit1Desc": "Immediate access to our advanced LMS platform without development costs.",
+      "benefit2Title": "Autonomous management",
+      "benefit2Desc": "Total and centralized management of every aspect: courses, reports and personal area in one interface.",
+      "benefit3Title": "Course creation",
+      "benefit3Desc": "Ability to upload your training content in SCORM format and many other formats.",
+      "benefit4Title": "Compliant certifications",
+      "benefit4Desc": "Issuance of certifications compliant with Italian regulations.",
+      "licenseTitle": "License user model",
+      "feature1": "Complete LMS platform",
+      "feature2": "Autonomous learner management",
+      "feature3": "Course upload (SCORM, PPT, etc.)",
+      "feature4": "Download reports and training certificates with one click",
+      "feature5": "Personalized technical support via ticket",
+      "compliance": "Guaranteed compliance with D.Lgs. 81/08"
+    },
+    "section4": {
+      "title": "Collaboration request",
+      "subtitle": "Fill out the form to receive more information about the partnership",
+      "nomeAzienda": "Company name *",
+      "nomeAziendaPlaceholder": "Name...",
+      "tipoCollaborazione": "Type of collaboration *",
+      "tipo1": "Training Entity",
+      "tipo2": "HR Consultant",
+      "tipo3": "Consulting Company",
+      "tipo4": "Company",
+      "tipo5": "Other",
+      "referente": "Contact person *",
+      "referentePlaceholder": "Your name...",
+      "email": "E-mail *",
+      "emailPlaceholder": "mario.rossi@gmail.com",
+      "telefono": "Phone *",
+      "telefonoPlaceholder": "+39 123 456 7890",
+      "dimensione": "Company size *",
+      "dim1": "Startup (1-10 employees)",
+      "dim2": "Small (11-50 employees)",
+      "dim3": "Medium (51-250 employees)",
+      "dim4": "Large (250+ employees)",
+      "descrizione": "Describe your business and your goals",
+      "descrizionePlaceholder": "Share with us how we can build a valuable partnership together...",
+      "submit": "Send request"
+    },
+    "section5": {
+      "bannerTitle": "Work with UnoSicurezza",
+      "badge": "Partnership",
+      "heroTitle": "Join the UnoSicurezza network",
+      "heroDescription": "The platform is available in cloud mode according to security, reliability and data protection standards. Find out how to collaborate with us for training, safety and professionals."
+    },
+    "section6": {
+      "contactTitle": "Click here to contact us"
+    }
+  },
+  "contactUs": {
+    "section1": {
+      "bannerTitle": "Contact Us",
+      "heroTitle": "We are at your disposal",
+      "heroDescription": "Would you like more information about our training, safety services, or a quote? Fill out the form below or use our direct contacts. We will get back to you as soon as possible.",
+      "formTitle": "Contact Form",
+      "nome": "First Name*",
+      "nomePlaceholder": "Your first name",
+      "cognome": "Last Name*",
+      "cognomePlaceholder": "Your last name",
+      "azienda": "Company*",
+      "aziendaPlaceholder": "Your company name",
+      "piva": "VAT Number*",
+      "pivaPlaceholder": "VAT Number",
+      "telefono": "Phone / Mobile Number*",
+      "telefonoPlaceholder": "+39 123 456 7890",
+      "email": "E-mail*",
+      "emailPlaceholder": "your.email@example.com",
+      "messaggioPlaceholder": "Leave a message",
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "emailCardTitle": "E-mail",
+      "emailCardSub": "Write for any information",
+      "phoneCardTitle": "Phone",
+      "phoneCardSub": "Mon-Fri 9.00-18.00"
+    }
+  },
+  "auth": {
+    "common": {
+      "logoAlt": "Logo",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "Type your email",
+      "goAhead": "Go ahead",
+      "back": "Back",
+      "verifyOtp": "Verify OTP",
+      "confirm": "Confirm",
+      "proceed": "Proceed",
+      "close": "Close"
+    },
+    "login": {
+      "enterEmailAlert": "Enter email first",
+      "enterOtpTitle": "Enter the OTP sent to your email",
+      "enterEmailTitle": "Enter your e-mail",
+      "otpSentTo": "OTP sent to"
+    },
+    "register": {
+      "enterEmailAlert": "Please enter your email address",
+      "enterEmailTitle": "Enter your email",
+      "otpIllustrationAlt": "OTP verification",
+      "emailIllustrationAlt": "Email sign up"
+    },
+    "chooseLanguage": {
+      "heroTitleLine1": "Let's change the experience of learning",
+      "heroTitleLine2": "something new.",
+      "illustrationAlt": "Learning illustration",
+      "heroDescription": "Our journey to ensure quality education for all at low cost.",
+      "title": "Choose a preferred language"
+    },
+    "changePassword": {
+      "fillAllFieldsAlert": "Fill all fields",
+      "passwordTooShortAlert": "Password too short",
+      "passwordMismatchAlert": "Passwords do not match",
+      "illustrationAlt": "Password reset",
+      "newPasswordLabel": "New password*",
+      "newPasswordPlaceholder": "Enter new password",
+      "repeatPasswordLabel": "Repeat password*",
+      "repeatPasswordPlaceholder": "Confirm password"
+    },
+    "setup": {
+      "profileTitle": "Set up your user profile",
+      "tabs": {
+        "role": "Role",
+        "information": "Information",
+        "password": "Password"
+      },
+      "steps": {
+        "step2of3": "Steps 2/3",
+        "step3of3": "Steps 3/3"
+      },
+      "role": {
+        "title": "Role",
+        "subtitle": "You are a:",
+        "options": {
+          "standard": "Standard user - Lv. 1",
+          "business": "Company - Lv. 2",
+          "licensed": "Licensed user - Lv. 3"
+        }
+      },
+      "infoRouter": {
+        "roleRequiredTitle": "Role Selection Required",
+        "roleRequiredDescription": "Please select a role first.",
+        "backToRoleSelection": "Go back to role selection"
+      },
+      "info": {
+        "title": "Information",
+        "firstNameLabel": "First name",
+        "firstNamePlaceholder": "Type your first name",
+        "lastNameLabel": "Last name",
+        "lastNamePlaceholder": "Type your last name",
+        "birthDateLabel": "Birth date",
+        "birthDatePlaceholder": "Select your birth date",
+        "cityLabel": "City",
+        "cityPlaceholder": "Enter city of birth",
+        "countryLabel": "Country",
+        "countryPlaceholder": "Type your country",
+        "addressLabel": "Address",
+        "addressPlaceholder": "Street, number, ZIP code, city, province, country",
+        "companyNameLabel": "Company name",
+        "companyNamePlaceholder": "Enter company name",
+        "officeLabel": "Office",
+        "officePlaceholder": "Enter registered office address",
+        "vatNumberLabel": "VAT number",
+        "vatNumberPlaceholder": "Enter VAT number",
+        "taxCodeLabel": "Tax code",
+        "taxCodePlaceholder": "Enter tax code",
+        "citizenshipTitle": "Citizenship",
+        "citizenshipForeign": "Foreign",
+        "citizenshipItalian": "Italian"
+      },
+      "password": {
+        "title": "Create your password",
+        "newPasswordLabel": "New password*",
+        "newPasswordPlaceholder": "Enter password",
+        "minLengthRule": "Minimum length: 8 characters (12 or more recommended)",
+        "mustIncludeTitle": "It must include at least:",
+        "ruleUppercase": "1 uppercase letter (A-Z)",
+        "ruleLowercase": "1 lowercase letter (a-z)",
+        "ruleNumber": "1 number (0-9)",
+        "ruleSpecial": "1 special character (!, ?, $, %, &)",
+        "noPersonalInfoRule": "It must not contain username, real name, or other easy-to-guess information",
+        "confirmPasswordLabel": "Confirm password*",
+        "confirmPasswordPlaceholder": "842000@Sa"
+      },
+      "companyInfo": {
+        "title": "Company information",
+        "companyNameLabel": "Company legal name*",
+        "companyNamePlaceholder": "Enter full company name",
+        "officeLabel": "Registered office address*",
+        "officePlaceholder": "Enter registered office address",
+        "vatLabel": "VAT number*",
+        "vatPlaceholder": "Enter VAT number",
+        "taxCodeLabel": "Tax code (if different from VAT)*",
+        "emailLabel": "Contact e-mail*"
+      },
+      "freelancer": {
+        "subdomainLabel": "Subdomain*",
+        "subdomainPlaceholder": "freelanceradmin.com",
+        "serviceTypeLabel": "Service type*",
+        "serviceTypePlaceholder": "License"
+      },
+      "subdomainModal": {
+        "title": "Subdomain",
+        "description1": "Enter your domain and we will take care of the rest.",
+        "description2": "Enter the purchased domain. We will make your company name visible.",
+        "buyButton": "Buy subdomain",
+        "tipTitle": "Tip:",
+        "tipText": "after purchase, provide the domain and we will connect it automatically."
+      }
+    }
+  },
+  "footer": {
+    "product": "Product",
+    "overview": "Overview",
+    "features": "Features",
+    "solutions": "Solutions",
+    "tutorial": "Tutorial",
+    "pricing": "Pricing",
+    "company": "Company",
+    "whoWeAre": "Who we are",
+    "course": "Course",
+    "news": "News",
+    "social": "Social",
+    "legal": "Legal",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "contact": "Contact",
+    "copyright": "© 2022 UnoSicurezza. All rights reserved.",
+    "downloadApp": "Download App"
+  }
 }
