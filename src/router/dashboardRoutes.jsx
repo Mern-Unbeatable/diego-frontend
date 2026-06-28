@@ -74,30 +74,33 @@ const PrivacyPolicyView = lazy(
   () => import('../pages/dash/student/PrivacyPolicyView.jsx'),
 );
 
-const CompanyHome = lazy(() => import('../components/company/CompanyHome.jsx'));
+const CompanyHomeView = lazy(
+  () => import('../pages/dash/company/01-Home/CompanyHomeView.jsx'),
+);
 const CompanyCourseList = lazy(
-  () => import('../pages/dash/company/CompanyCourseList.jsx'),
+  () => import('../pages/dash/company/05-Courses/CompanyCourseList.jsx'),
 );
 const CompanyTrainingView = lazy(
-  () => import('../pages/dash/company/CompanyTrainingView.jsx'),
+  () => import('../pages/dash/company/02-Training/CompanyTrainingView.jsx'),
 );
 const CompanyCourseRosterView = lazy(
-  () => import('../pages/dash/company/CompanyCourseRosterView.jsx'),
+  () => import('../pages/dash/company/05-Courses/CompanyCourseRosterView.jsx'),
 );
 const CompanyTicketListView = lazy(
-  () => import('../pages/dash/company/CompanyTicketListView.jsx'),
+  () => import('../pages/dash/company/04-Ticket/CompanyTicketListView.jsx'),
 );
 const CompanyOpenTicketView = lazy(
-  () => import('../pages/dash/company/CompanyOpenTicketView.jsx'),
+  () => import('../pages/dash/company/04-Ticket/CompanyOpenTicketView.jsx'),
 );
 const CompanyTicketDetailView = lazy(
-  () => import('../pages/dash/company/CompanyTicketDetailView.jsx'),
+  () => import('../pages/dash/company/04-Ticket/CompanyTicketDetailView.jsx'),
 );
 const CompanyCertificatesView = lazy(
-  () => import('../pages/dash/company/CompanyCertificatesView.jsx'),
+  () =>
+    import('../pages/dash/company/03-Certificates/CompanyCertificatesView.jsx'),
 );
 const CompanyPrivacyPolicyView = lazy(
-  () => import('../pages/dash/company/CompanyPrivacyPolicyView.jsx'),
+  () => import('../pages/dash/company/06-Privacy/CompanyPrivacyPolicyView.jsx'),
 );
 
 /**
@@ -128,7 +131,7 @@ export const dashboardRoutes = [
     id: 'COMPANY_ADMIN',
     roles: [ROLES.COMPANY_ADMIN],
     routes: [
-      { path: 'company-admin', element: <CompanyHome /> },
+      { path: 'company-admin', element: <CompanyHomeView /> },
       { path: 'company-admin/training', element: <CompanyTrainingView /> },
       {
         path: 'company-admin/training/courses/:courseId',

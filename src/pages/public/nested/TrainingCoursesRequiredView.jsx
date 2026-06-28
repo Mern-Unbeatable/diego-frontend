@@ -1,13 +1,11 @@
 import Banner from '../../../components/common/Banner';
-import banner from '../../../../src/assets/images/course/course.png'
 import { Container } from '../../../components/ui';
-import HowWorks from '../nested/HowWorks'
+import HowWorks from '../nested/HowWorks';
 const TrainingOurPlatformView = () => {
   return (
-    <Container className=' '>
+    <Container className=" ">
       <Banner
-
-        image={banner}
+        image="/images/course/course3.png"
         title={'UnoSicurezza - Piattaforma LMS'}
       />
       <HowWorks />
@@ -15,4 +13,4 @@ const TrainingOurPlatformView = () => {
   );
 };
 
-export default TrainingOurPlatformView; 
+export default TrainingOurPlatformView;

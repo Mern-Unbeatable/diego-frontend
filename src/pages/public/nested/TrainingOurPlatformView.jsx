@@ -1,14 +1,12 @@
 import Banner from '../../../components/common/Banner';
-import banner from '../../../../src/assets/images/course/course2.png'
-import { Container } from '../../../components/ui';
 import CourseOverview from '../../../components/training/CourseOverview';
+import { Container } from '../../../components/ui';
 
 const TrainingOurPlatformView = () => {
   return (
-    <Container className=' '>
+    <Container className=" ">
       <Banner
-
-        image={banner}
+        image="/images/course/course3.png"
         title={'Scopri i nostri corsi SEVESO'}
       />
       <CourseOverview />
@@ -16,4 +14,4 @@ const TrainingOurPlatformView = () => {
   );
 };
 
-export default TrainingOurPlatformView; 
+export default TrainingOurPlatformView;
