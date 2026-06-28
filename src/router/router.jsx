@@ -17,8 +17,8 @@ import PublicGuard from './guards/PublicGuard.jsx';
 
 // ✅ Route Config
 import { publicRoutes } from './publicRoutes.jsx'; // public
-import { nestedPublicRoutes } from './nestedPublicRoutes.jsx'; // public
-import { dashboardRoutes } from './dashboardRoutes.jsx'; // dashboard
+import { nestedPublicRoutes } from './publicNestedRoutes.jsx'; // public
+import { dashboardRoutes } from './dashRoutes.jsx'; // dashboard
 import { authRoutes, setupRoutes } from './authRoutes.jsx'; // Auth
 
 //  ✅ Error

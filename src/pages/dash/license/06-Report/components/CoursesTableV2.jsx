@@ -16,7 +16,8 @@ const CoursesTableV2 = ({ courses = [], loading = false }) => {
     if (status === 'Pubblicato') return 'bg-green-100 text-green-700';
     if (status === 'In approvazione') return 'bg-blue-100 text-blue-700';
     if (status === 'Non approvato') return 'bg-red-100 text-red-700';
-    if (status === 'In immatricolazione' || status === 'In manutenzione') return 'bg-yellow-100 text-yellow-700';
+    if (status === 'In immatricolazione' || status === 'In manutenzione')
+      return 'bg-yellow-100 text-yellow-700';
     return 'bg-gray-100 text-gray-700';
   };
 
@@ -24,15 +25,18 @@ const CoursesTableV2 = ({ courses = [], loading = false }) => {
     return (
       <div className="w-full">
         <div className="animate-pulse">
-          <div className="h-8 w-48 bg-gray-200 rounded mb-6"></div>
-          <div className="h-96 bg-gray-200 rounded"></div>
+          <div className="mb-6 h-8 w-48 rounded bg-gray-200"></div>
+          <div className="h-96 rounded bg-gray-200"></div>
         </div>
       </div>
     );
   }
 
   const totalPages = Math.ceil(courses.length / 5);
-  const displayedCourses = courses.slice((currentPage - 1) * 5, currentPage * 5);
+  const displayedCourses = courses.slice(
+    (currentPage - 1) * 5,
+    currentPage * 5,
+  );
 
   return (
     <div className="w-full">
@@ -63,11 +67,14 @@ const CoursesTableV2 = ({ courses = [], loading = false }) => {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {displayedCourses.map((course) => (
-              <tr key={course.id} className="hover:bg-gray-50 transition-colors">
+              <tr
+                key={course.id}
+                className="transition-colors hover:bg-gray-50"
+              >
                 <td className="px-6 py-4 text-base font-normal text-black">
-                  <button 
+                  <button
                     onClick={() => handleCourseClick(course.id)}
-                    className="text-left hover:text-[#73BFA1] hover:underline transition-colors font-medium"
+                    className="text-left font-medium transition-colors hover:text-[#73BFA1] hover:underline"
                   >
                     {course.title}
                   </button>
@@ -79,16 +86,18 @@ const CoursesTableV2 = ({ courses = [], loading = false }) => {
                   {course.enrolled}
                 </td>
                 <td className="px-6 py-4">
-                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${getStatusColor(course.status)}`}>
+                  <span
+                    className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${getStatusColor(course.status)}`}
+                  >
                     {course.status}
                   </span>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <button className="text-gray-600 hover:text-gray-900 transition-colors">
+                    <button className="text-gray-600 transition-colors hover:text-gray-900">
                       <RiEdit2Line className="h-5 w-5" />
                     </button>
-                    <button className="text-red-600 hover:text-red-700 transition-colors">
+                    <button className="text-red-600 transition-colors hover:text-red-700">
                       <AiOutlineDelete className="h-5 w-5" />
                     </button>
                   </div>
@@ -101,13 +110,14 @@ const CoursesTableV2 = ({ courses = [], loading = false }) => {
         {/* Pagination */}
         <div className="flex items-center justify-between border-t border-gray-200 bg-white px-6 py-4">
           <div className="text-sm text-gray-600">
-            Showing {Math.min(displayedCourses.length, courses.length)} of {courses.length} courses
+            Showing {Math.min(displayedCourses.length, courses.length)} of{' '}
+            {courses.length} courses
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
-              className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Precedente
             </button>
@@ -128,9 +138,11 @@ const CoursesTableV2 = ({ courses = [], loading = false }) => {
               );
             })}
             <button
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              onClick={() =>
+                setCurrentPage(Math.min(totalPages, currentPage + 1))
+              }
               disabled={currentPage === totalPages}
-              className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Prossimo
             </button>

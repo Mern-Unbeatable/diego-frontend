@@ -73,7 +73,9 @@ const LicenseComponent = () => {
   return (
     <>
       <div className="mt-10 w-full rounded-xl bg-white p-6 shadow-sm">
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">Le tue licenze</h2>
+        <h2 className="mb-6 text-2xl font-bold text-gray-900">
+          Le tue licenze
+        </h2>
 
         <div className="mb-6 flex flex-wrap gap-3">
           <button
@@ -101,10 +103,19 @@ const LicenseComponent = () => {
 
         <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
           {filteredLicenses.map((license) => (
-            <div key={license.id} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-              <h3 className="mb-3 text-xl font-semibold text-gray-900">{license.name}</h3>
-              <p className="mb-2 text-sm font-medium text-gray-700">{license.role}</p>
-              <p className="mb-4 text-sm text-gray-600">Scadenza: {license.expiryDate}</p>
+            <div
+              key={license.id}
+              className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm"
+            >
+              <h3 className="mb-3 text-xl font-semibold text-gray-900">
+                {license.name}
+              </h3>
+              <p className="mb-2 text-sm font-medium text-gray-700">
+                {license.role}
+              </p>
+              <p className="mb-4 text-sm text-gray-600">
+                Scadenza: {license.expiryDate}
+              </p>
 
               {license.status !== 'active' ? (
                 <button
@@ -126,7 +137,10 @@ const LicenseComponent = () => {
         ) : null}
       </div>
 
-      <LicenseRenewModal open={renewModalOpen} onClose={() => setRenewModalOpen(false)} />
+      <LicenseRenewModal
+        open={renewModalOpen}
+        onClose={() => setRenewModalOpen(false)}
+      />
     </>
   );
 };

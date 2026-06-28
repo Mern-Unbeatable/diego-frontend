@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Plus, Edit2, Trash2, Eye, X, Play, Pause } from 'lucide-react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { RiEdit2Line } from 'react-icons/ri';
-import AddCourseModal from '../../super/01-home/components/AddCourseModal';
+import AddCourseModal from '../../../super/01-home/components/AddCourseModal';
 
 const CoursesTable = () => {
   const [courses, setCourses] = useState([]);

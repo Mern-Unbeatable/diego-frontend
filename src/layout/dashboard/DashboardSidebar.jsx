@@ -134,12 +134,12 @@ const linksByRole = {
       icon: <IoDocumentTextOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/license-user/license-report',
+      path: '/dashboard/license-user/report',
       label: 'Report',
       icon: <IoAlbumsOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/license-user/license-privacy',
+      path: '/dashboard/license-user/privacy-policy',
       label: 'Privacy & policy',
       icon: <IoAlbumsOutline className="text-[19px]" />,
     },
