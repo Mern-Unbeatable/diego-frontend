@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 
 // Adjust paths if your folders differ
-import SuperAdminDashboard from './components/SuperAdminDashboard';
-import EmergencySuperAdminDashboard from './components/EmergencySuperAdminDashboard';
-import LicenseeSuperAdminDashboard from './components/LicenseeSuperAdminDashboard';
+import KPIStateCards from './components/KPIStateCards';
+import EmergencyControlPanel from './components/EmergencyControlPanel';
+import LicenseeManagement from './components/LicenseeManagement';
 import AddCourseModal from './components/AddCourseModal';
 
 function SuperAdminView() {
@@ -24,9 +24,10 @@ function SuperAdminView() {
     <div className="min-h-screen w-full">
       <div className="space-y-8">
         {/* Top KPI cards */}
-        <SuperAdminDashboard
+        <KPIStateCards
+          revenue7d={82350}
+          revenueTrend={8}
           revenue30d={247650}
-          revenueTrend={12}
           activeUsers={47650}
           usersTrend={12}
           licenses={{ total: 156, active: 142, trial: 14, trend: 12 }}
@@ -37,9 +38,9 @@ function SuperAdminView() {
         />
 
         {/* Emergency control panel (the grey block with 4 toggle cards) */}
-        <EmergencySuperAdminDashboard />
+        <EmergencyControlPanel />
         {/* Licensees table with toolbar (search, export, edit) */}
-        <LicenseeSuperAdminDashboard />
+        <LicenseeManagement />
       </div>
 
       {/* Add Course Modal */}

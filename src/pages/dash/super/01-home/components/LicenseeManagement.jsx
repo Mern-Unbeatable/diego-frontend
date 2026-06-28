@@ -34,7 +34,7 @@ const ProgressBar = ({ value, max }) => {
   );
 };
 
-export default function LicenziatariTable({
+export default function LicenseeManagement({
   rows = [
     {
       azienda: 'TechCorp Training',

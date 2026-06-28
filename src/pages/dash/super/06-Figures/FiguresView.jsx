@@ -1,6 +1,6 @@
 import React from 'react';
 import FigurePrevisteDashboard from './components/FigurePrevisteDashboard';
-import TrainingProjectManagerSection from '../components/TrainingProjectManagerSection';
+import TrainingProjectManagerSection from './components/TrainingProjectManagerSection';
 
 export default function FiguresView() {
   return (

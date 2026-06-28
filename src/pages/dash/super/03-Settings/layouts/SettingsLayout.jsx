@@ -4,7 +4,7 @@ import { Save, CreditCard, Mail, Palette, Plug } from 'lucide-react';
 import FinancialSettings from '../components/FinancialSettings';
 import SystemSettings from '../components/SystemSettings';
 import BrandSettings from '../components/BrandSettings';
-import APISettings from '../components/ApiSettings';
+import ApiSettings from '../components/ApiSettings';
 
 export default function SettingsLayout() {
   const location = useLocation();
@@ -33,7 +33,7 @@ export default function SettingsLayout() {
       to: `${basePath}/api`,
       label: 'API & Integrazioni',
       icon: <Plug className="h-4 w-4" />,
-      component: <APISettings />,
+      component: <ApiSettings />,
     },
   ];
 
@@ -92,7 +92,7 @@ export default function SettingsLayout() {
             <Route path="finance" element={<FinancialSettings />} />
             <Route path="system" element={<SystemSettings />} />
             <Route path="brand" element={<BrandSettings />} />
-            <Route path="api" element={<APISettings />} />
+            <Route path="api" element={<ApiSettings />} />
             <Route path="*" element={<FinancialSettings />} />
           </Routes>
         </section>

@@ -8,10 +8,10 @@ import {
   X,
   ChevronDown,
 } from 'lucide-react';
-import EditLicenseModal from '../components/EditLicenseModal';
-import AddLicenseModal from '../components/AddLicenseModal';
-import LicenseDetailsModal from '../components/LicenseDetailsModal';
-import PersonalDetailsModal from '../components/PersonalDetailsModal';
+import EditLicenseModal from './components/EditLicenseModal';
+import AddLicenseModal from './components/AddLicenseModal';
+import LicenseDetailsModal from './components/LicenseDetailsModal';
+import PersonalDetailsModal from '../07-Report/components/PersonalDetailsModal';
 
 const euro = new Intl.NumberFormat('it-IT', {
   style: 'currency',

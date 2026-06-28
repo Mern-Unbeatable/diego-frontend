@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 
 // ONE-FUNCTION VERSION — no extra components
-export default function SuperAdminDashboard({
+export default function KPIStateCards({
   revenue30d = 247650,
   revenueTrend = 12,
   activeUsers = 47650,

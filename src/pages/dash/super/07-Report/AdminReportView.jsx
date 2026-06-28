@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Download, Pencil, Search, Send } from 'lucide-react';
-import PersonalDetailsModal from '../components/PersonalDetailsModal';
+import PersonalDetailsModal from './components/PersonalDetailsModal';
 
 const enrolledStudents = [
   {
