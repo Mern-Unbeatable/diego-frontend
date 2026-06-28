@@ -8,7 +8,7 @@ import {
   Trash2,
   User,
 } from 'lucide-react';
-import FullTrainingReportModal from '../../components/FullTrainingReportModal';
+import FullTrainingReportModal from './FullTrainingReportModal';
 
 const fallbackProfile = {
   name: 'Franco rossi',
