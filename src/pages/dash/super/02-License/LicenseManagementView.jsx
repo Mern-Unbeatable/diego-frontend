@@ -127,7 +127,7 @@ export default function LicenseManagementView({
   const rows = filtered.slice(start, start + pageSize);
 
   return (
-    <div className="m-8 rounded-3xl bg-white p-4 shadow-sm ring-1 ring-black/5 md:m-8 md:p-8">
+    <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-black/5">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3 px-2 md:gap-4">
         <h2 className="flex-1 text-[26px] font-semibold text-gray-900 md:text-[28px]">

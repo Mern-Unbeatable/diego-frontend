@@ -84,7 +84,7 @@ export default function LicenziatariTable({
   });
 
   return (
-    <div className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-black/5 md:p-6">
+    <div className="rounded-3xl p-4 shadow-sm ring-1 ring-black/5 md:p-6">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3 px-2 md:gap-4">
         <h2 className="flex-1 text-2xl font-semibold text-gray-900 md:text-[28px]">

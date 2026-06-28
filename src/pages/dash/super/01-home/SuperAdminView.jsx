@@ -21,8 +21,8 @@ function SuperAdminView() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-white">
-      <div className="space-y-8 px-4 py-6 md:space-y-10 md:px-6 md:py-8 lg:px-8">
+    <div className="min-h-screen w-full">
+      <div className="space-y-8">
         {/* Top KPI cards */}
         <SuperAdminDashboard
           revenue30d={247650}

@@ -47,7 +47,7 @@ export default function SettingsLayout() {
   };
 
   return (
-    <div className="m-0 rounded-3xl bg-white shadow-sm ring-1 ring-black/5 md:m-8">
+    <div className="rounded-3xl bg-white shadow-sm ring-1 ring-black/5">
       {/* Header */}
       <div className="flex items-center justify-between gap-4 rounded-t-3xl bg-gray-50 px-6 py-4">
         <h1 className="text-xl font-semibold text-gray-900">

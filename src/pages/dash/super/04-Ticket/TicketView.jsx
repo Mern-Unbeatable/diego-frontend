@@ -12,7 +12,7 @@ export default function TicketView() {
   ];
 
   return (
-    <div className="min-h-screen w-full bg-gray-100">
+    <div className="">
       <div className="h-full">
         {/* Tabs */}
         <div className="border-b border-gray-200 bg-white">
@@ -34,7 +34,7 @@ export default function TicketView() {
         </div>
 
         {/* Content */}
-        <section className="p-6">
+        <section className="">
           <TicketSection activeTab={activeTab} />
         </section>
       </div>

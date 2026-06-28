@@ -67,7 +67,7 @@ export default function EmergencyControlPanel() {
   );
 
   return (
-    <div className="rounded-3xl bg-gray-50 p-8">
+    <div className="rounded-3xl border border-gray-200 bg-white p-8">
       <h1 className="mb-8 text-2xl font-semibold text-gray-900">
         Pannello di controllo in emergenza
       </h1>

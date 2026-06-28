@@ -102,7 +102,7 @@ export default function FeedbackSection({
   };
 
   return (
-    <div className="m-4 space-y-6 md:m-8">
+    <div className="space-y-6">
       <h1 className="text-2xl font-semibold text-gray-900">
         Feedback del cliente
       </h1>

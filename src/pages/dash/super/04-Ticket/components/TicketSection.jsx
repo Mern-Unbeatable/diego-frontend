@@ -156,7 +156,7 @@ export default function TicketSection({ activeTab = 'panoramica' }) {
   if (activeTab === 'panoramica') {
     return (
       <div>
-        <h2 className="mb-4 text-lg font-medium text-gray-800">
+        <h2 className="my-4 text-lg font-medium text-gray-800">
           Azioni richieste
         </h2>
 

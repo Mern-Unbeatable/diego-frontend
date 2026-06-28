@@ -91,7 +91,7 @@ export default function AdminReportView() {
   };
 
   return (
-    <section className="w-full bg-[#f6f6f6] p-6 md:p-8">
+    <section className="">
       <div className="mx-auto w-full">
         <div className="mb-11 flex items-center justify-between">
           <h2 className="text-2xl font-semibold text-[#111111]">

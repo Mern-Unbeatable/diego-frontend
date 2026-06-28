@@ -14,7 +14,7 @@ const DashboardLayout = () => {
         <DashboardNavbar />
         {/* <DevRoleSwitcher /> */}
 
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto p-12">
           <Outlet />
         </main>
       </div>
