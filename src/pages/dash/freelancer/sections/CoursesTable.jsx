@@ -150,9 +150,9 @@ const CoursesTable = () => {
 
   return (
     <>
-      <div className="w-full rounded-xl bg-white py-6 lg:py-10">
+      <div className="">
         {/* Header */}
-        <div className="mb-6 flex flex-col items-start justify-between gap-4 px-6 sm:flex-row sm:items-center">
+        <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <h2 className="text-2xl font-bold text-gray-900">I miei corsi</h2>
           <div className="flex w-full items-center gap-3 sm:w-auto">
             {/* Search Input */}
