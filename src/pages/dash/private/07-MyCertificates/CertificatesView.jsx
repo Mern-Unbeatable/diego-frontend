@@ -1,11 +1,11 @@
 import React from 'react';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import CertificateCard from './certificate/CertificateCard';
-import EmptyCertificateState from './certificate/EmptyCertificateState';
+import CertificateCard from './components/CertificateCard';
+import EmptyCertificateState from './components/EmptyCertificateState';
 import { Container } from '../../../../components/ui';
 
-const CertificatePage = () => {
+const CertificatesView = () => {
   const navigate = useNavigate();
 
   // Example certificates data - replace with actual data from API/Redux
@@ -66,4 +66,4 @@ const CertificatePage = () => {
   );
 };
 
-export default CertificatePage;
+export default CertificatesView;

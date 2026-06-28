@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from '../../../components/ui/layouts/Card';
-import { Heading, Paragraph } from '../../../components/ui';
+import Card from '../../../../components/ui/layouts/Card';
+import { Heading, Paragraph } from '../../../../components/ui';
 import { Bell } from 'lucide-react';
 import { FaChevronLeft } from 'react-icons/fa';
 

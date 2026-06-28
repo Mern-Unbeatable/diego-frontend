@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Card from '../../../../components/ui/layouts/Card';
+import Card from '../../../../../components/ui/layouts/Card';
 import { FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa';
 import { IoIosStarOutline, IoMdStar } from 'react-icons/io';
 

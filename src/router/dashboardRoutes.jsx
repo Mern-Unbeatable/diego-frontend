@@ -2,6 +2,9 @@ import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import { ROLES } from '../config/roles';
 
+//==========================================================================
+// SUPER_ADMIN
+//==========================================================================
 const SuperAdminView = lazy(
   () => import('../pages/dash/super/01-home/SuperAdminView.jsx'),
 );
@@ -24,8 +27,43 @@ const AdminReportView = lazy(
   () => import('../pages/dash/super/07-Report/AdminReportView.jsx'),
 );
 
+//==========================================================================
+// COMPANY_ADMIN
+//==========================================================================
+const CompanyHomeView = lazy(
+  () => import('../pages/dash/company/01-Home/CompanyHomeView.jsx'),
+);
+const CompanyTrainingView = lazy(
+  () => import('../pages/dash/company/02-Training/CompanyTrainingView.jsx'),
+);
+const CompanyCertificatesView = lazy(
+  () =>
+    import('../pages/dash/company/03-Certificates/CompanyCertificatesView.jsx'),
+);
+const CompanyTicketListView = lazy(
+  () => import('../pages/dash/company/04-Ticket/CompanyTicketListView.jsx'),
+);
+const CompanyOpenTicketView = lazy(
+  () => import('../pages/dash/company/04-Ticket/CompanyOpenTicketView.jsx'),
+);
+const CompanyTicketDetailView = lazy(
+  () => import('../pages/dash/company/04-Ticket/CompanyTicketDetailView.jsx'),
+);
+const CompanyCourseList = lazy(
+  () => import('../pages/dash/company/05-Courses/CompanyCourseList.jsx'),
+);
+const CompanyCourseRosterView = lazy(
+  () => import('../pages/dash/company/05-Courses/CompanyCourseRosterView.jsx'),
+);
+const CompanyPrivacyPolicyView = lazy(
+  () => import('../pages/dash/company/06-Privacy/CompanyPrivacyPolicyView.jsx'),
+);
+
+//==========================================================================
+// COMPANY_EMPLOYEE
+//==========================================================================
 const FreelancerView = lazy(
-  () => import('../pages/dash/freelancer/FreelancerView'),
+  () => import('../pages/dash/freelancer/FreelancerView.jsx'),
 );
 const FreelancerAddCourse = lazy(
   () => import('../pages/dash/freelancer/components/FreelancerAddCource.jsx'),
@@ -37,75 +75,53 @@ const EnrolledStudents = lazy(
   () => import('../pages/dash/freelancer/components/EnrolledStudents.jsx'),
 );
 const LicensePage = lazy(
-  () => import('../pages/dash/freelancer/sections/License'),
+  () => import('../pages/dash/freelancer/sections/License.jsx'),
 );
 const LicensePrivacyView = lazy(
   () => import('../pages/dash/freelancer/LicenPrivaceyView.jsx'),
 );
 const ReportPage = lazy(
-  () => import('../pages/dash/freelancer/sections/Report'),
+  () => import('../pages/dash/freelancer/sections/Report.jsx'),
 );
 
+//==========================================================================
+// PRIVATE_USER
+//==========================================================================
 const StudentHomeView = lazy(
-  () => import('../pages/dash/student/StudentHomeView.jsx'),
+  () => import('../pages/dash/private/01-Home/StudentHomeView.jsx'),
 );
 const StudentProfileView = lazy(
-  () => import('../pages/dash/student/components/StudentIPofile.jsx'),
+  () => import('../pages/dash/private/components/StudentProfileView.jsx'),
 );
-const CertificatePage = lazy(
-  () => import('../pages/dash/student/components/CertificatePage.jsx'),
+const CertificatesView = lazy(
+  () => import('../pages/dash/private/07-MyCertificates/CertificatesView.jsx'),
 );
-const CredentialsReceived = lazy(
-  () => import('../pages/dash/student/CredentialsReceived.jsx'),
+const CredentialsView = lazy(
+  () => import('../pages/dash/private/05-Credentials/CredentialsView.jsx'),
 );
 const SupportFeedbackView = lazy(
-  () => import('../pages/dash/student/SupportFeedbackView.jsx'),
+  () => import('../pages/dash/private/03-Feedback/SupportFeedbackView.jsx'),
 );
 const NotificationsView = lazy(
-  () => import('../pages/dash/student/NotificationsView.jsx'),
-);
-const CourseContentView = lazy(
-  () => import('../pages/dash/student/CourseContentView.jsx'),
+  () => import('../pages/dash/private/06-Notifications/NotificationsView.jsx'),
 );
 const SupportTicketView = lazy(
-  () => import('../pages/dash/student/SupportTicketView.jsx'),
+  () => import('../pages/dash/private/02-Tickets/SupportTicketView.jsx'),
 );
 const PrivacyPolicyView = lazy(
-  () => import('../pages/dash/student/PrivacyPolicyView.jsx'),
+  () => import('../pages/dash/private/08-PrivacyPolicy/PrivacyPolicyView.jsx'),
 );
-
-const CompanyHomeView = lazy(
-  () => import('../pages/dash/company/01-Home/CompanyHomeView.jsx'),
+const CourseDetailsView = lazy(
+  () => import('../pages/dash/private/09-Course/CourseDetailsView.jsx'),
 );
-const CompanyCourseList = lazy(
-  () => import('../pages/dash/company/05-Courses/CompanyCourseList.jsx'),
-);
-const CompanyTrainingView = lazy(
-  () => import('../pages/dash/company/02-Training/CompanyTrainingView.jsx'),
-);
-const CompanyCourseRosterView = lazy(
-  () => import('../pages/dash/company/05-Courses/CompanyCourseRosterView.jsx'),
-);
-const CompanyTicketListView = lazy(
-  () => import('../pages/dash/company/04-Ticket/CompanyTicketListView.jsx'),
-);
-const CompanyOpenTicketView = lazy(
-  () => import('../pages/dash/company/04-Ticket/CompanyOpenTicketView.jsx'),
-);
-const CompanyTicketDetailView = lazy(
-  () => import('../pages/dash/company/04-Ticket/CompanyTicketDetailView.jsx'),
-);
-const CompanyCertificatesView = lazy(
-  () =>
-    import('../pages/dash/company/03-Certificates/CompanyCertificatesView.jsx'),
-);
-const CompanyPrivacyPolicyView = lazy(
-  () => import('../pages/dash/company/06-Privacy/CompanyPrivacyPolicyView.jsx'),
+const CourseHomeView = lazy(
+  () => import('../pages/dash/private/09-Course/CourseHomeView.jsx'),
 );
 
 /**
  * Dashboard routes for supported user roles.
  * Each role group contains its own route definitions and redirect aliases.
+ *
  */
 export const dashboardRoutes = [
   {
@@ -189,11 +205,12 @@ export const dashboardRoutes = [
         element: <SupportFeedbackView />,
       },
       { path: 'private-user/profile', element: <StudentProfileView /> },
-      { path: 'private-user/credentials', element: <CredentialsReceived /> },
+      { path: 'private-user/credentials', element: <CredentialsView /> },
       { path: 'private-user/notifications', element: <NotificationsView /> },
-      { path: 'private-user/certificates', element: <CertificatePage /> },
+      { path: 'private-user/certificates', element: <CertificatesView /> },
       { path: 'private-user/privacy-policy', element: <PrivacyPolicyView /> },
-      { path: 'private-user/course/:id', element: <CourseContentView /> },
+      { path: 'private-user/course', element: <CourseHomeView /> },
+      { path: 'private-user/course/:id', element: <CourseDetailsView /> },
     ],
   },
 ];

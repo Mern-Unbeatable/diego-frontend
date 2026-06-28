@@ -18,7 +18,7 @@ import { FiEdit } from 'react-icons/fi';
 import StudentInfoModal from './modal/StudentInfoModal';
 import rightDownSideBg from '/image/student/ciao.png';
 
-const StudentIPofile = () => {
+const StudentProfileView = () => {
   const menu = [
     { id: 1, icon: <FaHome />, label: 'Home' },
     {
@@ -192,4 +192,4 @@ const StudentIPofile = () => {
   );
 };
 
-export default StudentIPofile;
+export default StudentProfileView;

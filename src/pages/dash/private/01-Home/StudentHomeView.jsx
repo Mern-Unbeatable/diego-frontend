@@ -4,7 +4,7 @@ import ProfileSidebar from './components/ProfileSidebar';
 const StudentHomeView = () => {
   return (
     <div className="bg-gray-50">
-      <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-4">
+      <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-4">
         {/* Left side - Main content (3/4 width) */}
         <div className="flex h-full flex-col space-y-6 lg:col-span-3">
           <LeftContent />
@@ -19,6 +19,5 @@ const StudentHomeView = () => {
     </div>
   );
 };
-
 
 export default StudentHomeView;

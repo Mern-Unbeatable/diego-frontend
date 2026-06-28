@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaCloudUploadAlt } from 'react-icons/fa';
-import { Button } from '../../../components/ui';
+import { Button } from '../../../../components/ui';
 
 const SupportTicketView = () => {
   const navigate = useNavigate();

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Card from '../../../components/ui/layouts/Card';
-import { Heading } from '../../../components/ui';
+import Card from '../../../../components/ui/layouts/Card';
+import { Heading } from '../../../../components/ui';
 import { FaChevronLeft, FaRegCopy } from 'react-icons/fa';
 
-const CredentialsReceived = () => {
+const CredentialsView = () => {
   const navigate = useNavigate();
 
   const credentials = {
@@ -98,4 +98,4 @@ const CredentialsReceived = () => {
   );
 };
 
-export default CredentialsReceived;
+export default CredentialsView;

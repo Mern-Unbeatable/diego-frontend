@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa';
-import CourseMain from './components/course/CourseMain';
-import CourseProgram from './components/course/CourseProgram';
+import CourseMain from '../components/course/CourseMain';
+import CourseProgram from '../components/course/CourseProgram';
 
 const quizQuestions = [
   {
@@ -61,7 +61,12 @@ const quizQuestions = [
   {
     id: 9,
     text: 'Before using equipment, you should?',
-    options: ['Ignore instructions', 'Read instructions', 'Run quickly', 'Switch off lights'],
+    options: [
+      'Ignore instructions',
+      'Read instructions',
+      'Run quickly',
+      'Switch off lights',
+    ],
     answer: 'Read instructions',
   },
   {
@@ -171,9 +176,12 @@ const CourseContentView = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
           {!result ? (
             <div className="w-full max-w-[980px] rounded-2xl bg-[#eff8f4] p-6 md:p-8">
-              <h2 className="text-3xl font-semibold text-[#1d1d1d] md:text-[42px]">Anteprima quiz</h2>
-              <p className="mb-5 mt-2 text-sm text-[#5a5a5a] md:text-base">
-                You must score at least <span className="font-semibold">70%</span> to pass this quiz.
+              <h2 className="text-3xl font-semibold text-[#1d1d1d] md:text-[42px]">
+                Anteprima quiz
+              </h2>
+              <p className="mt-2 mb-5 text-sm text-[#5a5a5a] md:text-base">
+                You must score at least{' '}
+                <span className="font-semibold">70%</span> to pass this quiz.
               </p>
 
               <div className="rounded-xl border border-[#8cd4b6] bg-white p-5 md:p-6">
@@ -186,11 +194,16 @@ const CourseContentView = () => {
                   </span>
                 </div>
 
-                <p className="mb-4 text-base text-[#2a2a2a] md:text-xl">{currentItem.text}</p>
+                <p className="mb-4 text-base text-[#2a2a2a] md:text-xl">
+                  {currentItem.text}
+                </p>
 
                 <div className="space-y-3">
                   {currentItem.options.map((option) => (
-                    <label key={option} className="flex items-center gap-3 text-sm text-[#222] md:text-base">
+                    <label
+                      key={option}
+                      className="flex items-center gap-3 text-sm text-[#222] md:text-base"
+                    >
                       <input
                         type="radio"
                         name={`question-${currentItem.id}`}
@@ -245,7 +258,8 @@ const CourseContentView = () => {
               </div>
 
               <div className="mt-4 rounded-xl border border-[#8cd4b6] bg-[#edf8f3] px-4 py-3 text-sm text-[#69ab93] md:text-base">
-                <span className="font-semibold">Tip:</span> Navigate using Previous/Next. On the last question press Submit to finish.
+                <span className="font-semibold">Tip:</span> Navigate using
+                Previous/Next. On the last question press Submit to finish.
               </div>
 
               <div className="mt-4 flex justify-end">
@@ -260,36 +274,50 @@ const CourseContentView = () => {
             </div>
           ) : (
             <div className="w-full max-w-[760px] rounded-2xl bg-[#eff8f4] p-6 md:p-10">
-              <h2 className="text-center text-[34px] font-semibold text-[#70be9f] md:text-[52px]">Risultati del quiz</h2>
+              <h2 className="text-center text-[34px] font-semibold text-[#70be9f] md:text-[52px]">
+                Risultati del quiz
+              </h2>
               {result.passed ? (
                 <p className="mt-3 text-center text-[28px] text-[#70be9f] md:text-[40px]">
                   Congratulazioni. Hai superato il test!
                 </p>
               ) : (
                 <p className="mx-auto mt-3 max-w-[580px] text-center text-[24px] leading-snug text-[#ff5b5b] md:text-[40px]">
-                  Il tuo punteggio attuale e inferiore al 70%. Ti invitiamo a ripetere il test per migliorare il risultato e consolidare le competenze acquisite.
+                  Il tuo punteggio attuale e inferiore al 70%. Ti invitiamo a
+                  ripetere il test per migliorare il risultato e consolidare le
+                  competenze acquisite.
                 </p>
               )}
 
               <div className="relative mx-auto mt-6 max-w-[460px] rounded-xl bg-white/70 p-5 md:p-7">
-                <div className="absolute -right-3 -top-3 h-12 w-12 rounded-bl-3xl rounded-tr-xl bg-[#e7f2ec]" />
-                <h3 className="mb-4 text-xl font-semibold text-[#303030] md:text-[42px]">Punteggi</h3>
+                <div className="absolute -top-3 -right-3 h-12 w-12 rounded-tr-xl rounded-bl-3xl bg-[#e7f2ec]" />
+                <h3 className="mb-4 text-xl font-semibold text-[#303030] md:text-[42px]">
+                  Punteggi
+                </h3>
                 <div className="space-y-2 text-sm md:text-[24px]">
                   <div className="flex items-center justify-between">
                     <span className="text-[#444]">Punteggio ottenuto</span>
-                    <span className={`font-semibold ${result.passed ? 'text-[#303030]' : 'text-[#ff5b5b]'}`}>
+                    <span
+                      className={`font-semibold ${result.passed ? 'text-[#303030]' : 'text-[#ff5b5b]'}`}
+                    >
                       {result.score}%
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[#444]">Totale risposte corrette</span>
+                    <span className="text-[#444]">
+                      Totale risposte corrette
+                    </span>
                     <span className="font-semibold text-[#303030]">
                       {result.correct}/{result.total}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[#444]">Tempo totale impiegato nel test</span>
-                    <span className="font-semibold text-[#303030]">{result.time}</span>
+                    <span className="text-[#444]">
+                      Tempo totale impiegato nel test
+                    </span>
+                    <span className="font-semibold text-[#303030]">
+                      {result.time}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -320,6 +348,5 @@ const CourseContentView = () => {
     </div>
   );
 };
-
 
 export default CourseContentView;
