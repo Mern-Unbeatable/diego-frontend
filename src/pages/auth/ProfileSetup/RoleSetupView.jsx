@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
-import { Divider } from '../../../../../components/ui';
 
 const roles = [
   {
@@ -52,7 +51,7 @@ const RoleCard = ({ label, image, isSelected, onClick }) => {
   );
 };
 
-const SetupRole = () => {
+const RoleSetupView = () => {
   const [selectedRole, setSelectedRole] = useState('standard');
   const navigate = useNavigate();
 
@@ -64,38 +63,38 @@ const SetupRole = () => {
   };
 
   return (
-    <div className="">
-      <form onSubmit={handleSubmit}>
-        <div className="px-8">
-          <h1 className="text-3xl font-bold text-gray-900">Ruolo</h1>
-          <p className="mt-2 text-gray-600">Tu sei un:</p>
-        </div>
+    <form onSubmit={handleSubmit}>
+      <div className="px-8">
+        <h1 className="text-3xl font-bold text-gray-900">Ruolo</h1>
+        <p className="mt-2 text-gray-600">Tu sei un:</p>
+      </div>
 
-        <div className="mt-8 grid max-w-2xl grid-cols-1 gap-6 px-8 sm:grid-cols-2">
-          {roles.map((role) => (
-            <RoleCard
-              key={role.id}
-              label={role.label}
-              image={role.image}
-              isSelected={selectedRole === role.id}
-              onClick={() => setSelectedRole(role.id)}
-            />
-          ))}
-        </div>
+      <div className="mt-8 grid max-w-2xl grid-cols-1 gap-6 px-8 sm:grid-cols-2">
+        {roles.map((role) => (
+          <RoleCard
+            key={role.id}
+            label={role.label}
+            image={role.image}
+            isSelected={selectedRole === role.id}
+            onClick={() => setSelectedRole(role.id)}
+          />
+        ))}
+      </div>
 
-        <Divider className="mt-10" />
+      <div className="mt-10">
+        <div className="border-t border-gray-200" />
+      </div>
 
-        <div className="mt-8 flex justify-end px-8">
-          <button
-            type="submit"
-            className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
-          >
-            Procedi
-          </button>
-        </div>
-      </form>
-    </div>
+      <div className="mt-8 flex justify-end px-8">
+        <button
+          type="submit"
+          className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
+        >
+          Procedi
+        </button>
+      </div>
+    </form>
   );
 };
 
-export default SetupRole;
+export default RoleSetupView;

@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { BackpackIcon } from 'lucide-react';
+import { BiArrowBack } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
 import {
   Divider,
@@ -6,12 +9,9 @@ import {
   InputField,
   Label,
   Paragraph,
-} from '../../components/ui';
-import { useNavigate } from 'react-router-dom';
-import { BackpackIcon } from 'lucide-react';
-import { BiArrowBack } from 'react-icons/bi';
+} from '../../../../components/ui';
 
-const CompanyInformation = () => {
+const CompanyInfoForm = () => {
   const [selected, setSelected] = useState('');
   const navigate = useNavigate();
 
@@ -36,12 +36,14 @@ const CompanyInformation = () => {
       <div className="mx-auto w-full max-w-5xl space-y-4 px-6 py-4">
         <div className="mb-6 flex items-center justify-between">
           <Paragraph className="flex items-center gap-x-2 text-sm text-gray-600">
-            {' '}
-            <BiArrowBack /> Steps 2/3
+            <Link
+              to={`/auth/register/setup-role`}
+              className="flex items-center gap-x-2"
+            >
+              <BiArrowBack className="text-lg" /> Back
+            </Link>
           </Paragraph>
-          <button className="rounded-full p-2 hover:bg-gray-100">
-            <GrClose className="h-5 w-5 text-gray-500" />
-          </button>
+          <Paragraph className="text-sm text-gray-600">Steps 2/3</Paragraph>
         </div>
 
         <Heading level={4}>Informazioni aziendali</Heading>
@@ -139,4 +141,4 @@ const CompanyInformation = () => {
   );
 };
 
-export default CompanyInformation;
+export default CompanyInfoForm;

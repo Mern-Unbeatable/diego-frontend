@@ -1,6 +1,17 @@
 import React from 'react';
 
-const Heading = ({ level = 1, children, className = '', h1, h2, h3, h4, h5, h6, ...props }) => {
+const Heading = ({
+  level = 1,
+  children,
+  className = '',
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  ...props
+}) => {
   // Determine level from props
   let finalLevel = level;
   if (h1) finalLevel = 1;
@@ -16,7 +27,7 @@ const Heading = ({ level = 1, children, className = '', h1, h2, h3, h4, h5, h6, 
     1: 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl',
     2: 'text-3xl sm:text-4xl md:text-5xl',
     3: 'text-2xl sm:text-3xl md:text-4xl',
-    4: 'text-lg sm:text-xl md:text-2xl',
+    4: 'text-lg sm:text-xl md:text-2xl font-bold',
     5: 'text-base sm:text-lg md:text-xl',
     6: 'text-sm sm:text-base md:text-lg',
   };

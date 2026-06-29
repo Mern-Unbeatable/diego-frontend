@@ -1,13 +1,13 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import SetupInfo from './SetupInfo';
-import CompanyInformation from '../../../../../components/auth/CompanyInformationForm';
-import FreelancerInformationForm from '../../../../../components/auth/FreelancerInformationForm';
+import StandardInfoForm from './components/StanderInfoForm';
+import CompanyInfoForm from './components/CompanyInfoForm';
+import LicenseInfoForm from './components/LicenseInfoForm';
 
 /**
  * InformationRouter - Renders different information forms based on selected role
  * Expects role to be passed via navigation state from SetupRole component
  */
-const InformationRouter = () => {
+const InfoSetupView = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const InformationRouter = () => {
         <h2 className="mb-4 text-2xl font-bold">Role Selection Required</h2>
         <p className="mb-4 text-gray-600">Please select a role first.</p>
         <button
-          onClick={() => navigate('/auth/register/setup-profile/role')}
+          onClick={() => navigate('/auth/register/setup-role')}
           className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
         >
           Go Back to Role Selection
@@ -33,15 +33,13 @@ const InformationRouter = () => {
   // Render appropriate form based on role
   switch (role) {
     case 'business':
-      return <CompanyInformation />;
-
+      return <CompanyInfoForm />;
     case 'licensed':
-      return <FreelancerInformationForm />;
-
+      return <LicenseInfoForm />;
     case 'standard':
     default:
-      return <SetupInfo />;
+      return <StandardInfoForm />;
   }
 };
 
-export default InformationRouter;
+export default InfoSetupView;

@@ -1,7 +1,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Heading, InputField, Label } from '../../components/ui';
+import { useNavigate, Link } from 'react-router-dom';
+import { Heading, InputField, Label, Paragraph } from '../../components/ui';
 import { IoIosArrowBack } from 'react-icons/io';
+import { BiArrowBack } from 'react-icons/bi';
+import { GrClose } from 'react-icons/gr';
 
 // Constants
 const OTP_LENGTH = 6;
@@ -68,10 +70,6 @@ const EmailStep = ({ email, onEmailChange, onSubmit }) => (
 // OTP Step Component
 const OtpStep = ({ email, otp, inputRefs, onOtpChange, onBack, onSubmit }) => (
   <form onSubmit={onSubmit}>
-    <p className="mb-6 text-center text-gray-600">
-      OTP sent to <strong>{email}</strong>
-    </p>
-
     <div className="flex justify-center gap-3">
       {otp.map((digit, index) => (
         <input
@@ -88,7 +86,7 @@ const OtpStep = ({ email, otp, inputRefs, onOtpChange, onBack, onSubmit }) => (
       ))}
     </div>
 
-    <div className="mt-8 flex justify-end gap-3">
+    <div className="mt-8 flex justify-center gap-3">
       <BackButton onClick={onBack} />
       <SubmitButton type="submit">Verify OTP</SubmitButton>
     </div>
@@ -98,7 +96,7 @@ const OtpStep = ({ email, otp, inputRefs, onOtpChange, onBack, onSubmit }) => (
 // Reusable Button Components
 const SubmitButton = ({ children, ...props }) => (
   <button
-    className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white transition-colors duration-200 hover:bg-white hover:text-[#73BFA1]"
+    className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-5 py-2 text-white transition-colors duration-200 hover:bg-white hover:text-[#73BFA1]"
     {...props}
   >
     {children}
@@ -112,7 +110,7 @@ const BackButton = ({ onClick }) => (
     onClick={onClick}
     className="flex items-center gap-1 rounded-full border border-gray-200 bg-white px-5 py-3 text-gray-600 transition-colors duration-200 hover:bg-gray-50"
   >
-    <IoIosArrowBack />
+    <IoIosArrowBack className="text-lg" />
     Back
   </button>
 );
@@ -191,50 +189,70 @@ const RegisterView = () => {
     step === STEPS.OTP ? '/image/icon/otp.png' : '/image/icon/password.jpg';
 
   return (
-    <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
-      <div className="grid min-h-[650px] grid-cols-1 md:grid-cols-2">
-        {/* Left Section - Logo & Illustration */}
-        <div className="flex flex-col items-center justify-center bg-white p-10">
-          <Logo />
-          <div className="mt-10 max-w-md">
-            <img
-              className="w-full object-contain"
-              src={illustration}
-              alt={step === STEPS.OTP ? 'OTP Verification' : 'Email Sign Up'}
-              loading="lazy"
-            />
-          </div>
-        </div>
-
-        {/* Right Section - Form */}
-        <div className="flex items-center bg-[#F1F9F6] px-8 py-12 lg:px-20">
-          <div className="w-full">
-            {/* Title */}
-            <div className="mb-8">
-              <Heading level={3} className="text-center">
-                {step === STEPS.OTP
-                  ? 'Enter the OTP sent to your email'
-                  : 'Enter your email'}
-              </Heading>
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Left Section - Logo & Illustration */}
+          <div className="flex flex-col items-center justify-center bg-white p-10">
+            <Logo />
+            <div className="mt-10 max-w-md">
+              <img
+                className="w-full object-contain"
+                src={illustration}
+                alt={step === STEPS.OTP ? 'OTP Verification' : 'Email Sign Up'}
+                loading="lazy"
+              />
             </div>
+          </div>
 
-            {/* Step Renderer */}
-            {step === STEPS.EMAIL ? (
-              <EmailStep
-                email={email}
-                onEmailChange={setEmail}
-                onSubmit={handleEmailSubmit}
-              />
-            ) : (
-              <OtpStep
-                email={email}
-                otp={otp}
-                inputRefs={inputRefs}
-                onOtpChange={handleOtpChange}
-                onBack={goToPreviousStep}
-                onSubmit={handleOtpSubmit}
-              />
-            )}
+          {/* Right Section - Form */}
+          <div className="relative flex items-center justify-center bg-[#F1F9F6] px-6 py-8 lg:px-12">
+            {/* Close Icon - Top Right */}
+            <button
+              onClick={() => navigate('/')} // or wherever you want to navigate
+              className="absolute top-4 right-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+              aria-label="Close"
+            >
+              <GrClose className="text-xl" />
+            </button>
+
+            <div className="w-full max-w-md">
+              {/* Title */}
+              <div className="mb-8">
+                <Heading
+                  level={4}
+                  className="text-center text-2xl text-gray-900"
+                >
+                  {step === STEPS.OTP
+                    ? 'Enter the OTP sent to your email'
+                    : 'Enter your email'}
+                </Heading>
+                {step === STEPS.OTP && email && (
+                  <p className="mt-2 text-center text-sm text-gray-600">
+                    OTP sent to{' '}
+                    <strong className="text-gray-900">{email}</strong>
+                  </p>
+                )}
+              </div>
+
+              {/* Step Renderer */}
+              {step === STEPS.EMAIL ? (
+                <EmailStep
+                  email={email}
+                  onEmailChange={setEmail}
+                  onSubmit={handleEmailSubmit}
+                />
+              ) : (
+                <OtpStep
+                  email={email}
+                  otp={otp}
+                  inputRefs={inputRefs}
+                  onOtpChange={handleOtpChange}
+                  onBack={goToPreviousStep}
+                  onSubmit={handleOtpSubmit}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

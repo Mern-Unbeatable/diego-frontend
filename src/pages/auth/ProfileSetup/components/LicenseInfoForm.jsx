@@ -1,12 +1,19 @@
 import { useState } from 'react';
-import { GrClose } from 'react-icons/gr';
-import { Heading, InputField, Label, Paragraph } from '../../components/ui';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
 import { FiHelpCircle } from 'react-icons/fi';
-import SubdomainModal from './SubdomainModal';
+import { GrClose } from 'react-icons/gr';
 
-const FreelancerInformationForm = () => {
+import {
+  Heading,
+  InputField,
+  Label,
+  Paragraph,
+} from '../../../../components/ui';
+
+import SubdomainModal from '../../../../components/auth/SubdomainModal';
+
+const LicenseInfoForm = () => {
   const [selected, setSelected] = useState('');
   const [openModal, setOpenModal] = useState(false);
 
@@ -29,12 +36,14 @@ const FreelancerInformationForm = () => {
         {/* HEADER */}
         <div className="mb-6 flex items-center justify-between">
           <Paragraph className="flex items-center gap-x-2 text-sm text-gray-600">
-            <BiArrowBack /> Steps 2/3
+            <Link
+              to={`/auth/register/setup-role`}
+              className="flex items-center gap-x-2"
+            >
+              <BiArrowBack className="text-lg" /> Back
+            </Link>
           </Paragraph>
-
-          <button className="rounded-full p-2 hover:bg-gray-100">
-            <GrClose className="h-5 w-5 text-gray-500" />
-          </button>
+          <Paragraph className="text-sm text-gray-600">Steps 2/3</Paragraph>
         </div>
 
         <Heading level={4}>Informazioni aziendali</Heading>
@@ -151,4 +160,4 @@ const FreelancerInformationForm = () => {
   );
 };
 
-export default FreelancerInformationForm;
+export default LicenseInfoForm;

@@ -60,7 +60,7 @@ const CompanyPrivacyPolicyView = lazy(
 );
 
 //==========================================================================
-// COMPANY_EMPLOYEE
+// LICENSE_USER
 //==========================================================================
 const LicenseHomeView = lazy(
   () => import('../pages/dash/license/01-Home/LicenseHomeView.jsx'),
