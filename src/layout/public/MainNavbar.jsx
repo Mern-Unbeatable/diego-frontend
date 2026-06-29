@@ -1,14 +1,21 @@
 import { useState } from 'react';
-import { FaChevronDown } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { GrClose } from 'react-icons/gr';
 import { IoMenu } from 'react-icons/io5';
+import { FaChevronDown } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import LanguageSwitcher from '../../components/common/LanguageSwitcher';
 import { Container } from '../../components/ui';
+import { BookOpen, LayoutGrid } from 'lucide-react';
+import { getDashboardPath } from '../../utils/authUtils';
 
 const MainNavbar = () => {
   const { t } = useTranslation();
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  const dashboardPath = getDashboardPath(user);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const location = useLocation();
@@ -266,12 +273,21 @@ const MainNavbar = () => {
           {/* --- Language + E-Learning Buttons (Desktop) --- */}
           <div className="hidden shrink-0 xl:flex xl:items-center xl:gap-3">
             <LanguageSwitcher />
-            <Link
-              to="/auth/register/choose-language"
-              className="inline-block rounded-full bg-[#73BFA1] px-5 py-2.5 text-sm font-semibold whitespace-nowrap text-white xl:px-8 xl:py-3 xl:text-base"
-            >
-              {t('navbar.eLearning')}
-            </Link>
+            {isAuthenticated ? (
+              <Link
+                to={dashboardPath || '/dashboard'}
+                className="inline-flex items-center justify-center rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-5 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white hover:text-[#73BFA1] xl:px-6 xl:py-2 xl:text-base"
+              >
+                <LayoutGrid className="mr-2 h-4 w-4" /> {t('navbar.dashboard')}
+              </Link>
+            ) : (
+              <Link
+                to="/auth/register/choose-language"
+                className="inline-flex items-center justify-center rounded-full bg-[#3FC89E] px-5 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#2ca883] xl:px-6 xl:py-2 xl:text-base"
+              >
+                <BookOpen className="mr-2 h-4 w-4" /> {t('navbar.eLearning')}
+              </Link>
+            )}
           </div>
         </div>
 

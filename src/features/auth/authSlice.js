@@ -8,8 +8,8 @@ import { loginAPI } from './authAPI';
 //  LICENSE_USER
 //  PRIVATE_USER
 
-const storedUser = ''; // Hardcoded for testing purposes
-const storedToken = ''; // Hardcoded for testing purposes
+const storedUser = 'PLATFORM_ADMIN'; // Hardcoded for testing purposes
+const storedToken = 'sample-token'; // Hardcoded for testing purposes
 
 const initialState = {
   user: storedUser || null,
