@@ -61,11 +61,11 @@
     "section2": {
       "title": "Condividi la tua recensione con noi",
       "description": "Compila il modulo per condividere la tua esperienza. La tua recensione sarà visibile dopo l'approvazione.",
-      "namePlaceholder": "Name *",
+      "namePlaceholder": "Name",
       "feedbackTitle": "Feedback sulla sessione",
       "leaveComment": "Lascia un commento",
       "rateExperience": "Valuta la tua esperienza qui sotto",
-      "ratingText": "⭐⭐⭐⭐⭐ 4/5 stars",
+      "ratingText": "4/5 stars",
       "textAreaPlaceholder": "Scrivi qualcosa sulla tua esperienza...",
       "submitButton": "Invia"
     },

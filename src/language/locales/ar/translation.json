@@ -61,11 +61,11 @@
     "section2": {
       "title": "شاركنا مراجعتك",
       "description": "املأ النموذج لمشاركة تجربتك. ستظهر مراجعتك بعد الموافقة.",
-      "namePlaceholder": "الاسم *",
+      "namePlaceholder": "الاسم",
       "feedbackTitle": "ملاحظات الجلسة",
       "leaveComment": "اترك تعليقًا",
       "rateExperience": "قيّم تجربتك أدناه",
-      "ratingText": "⭐⭐⭐⭐⭐ 4/5 نجوم",
+      "ratingText": "4/5 نجوم",
       "textAreaPlaceholder": "اكتب شيئًا عن تجربتك...",
       "submitButton": "إرسال"
     },

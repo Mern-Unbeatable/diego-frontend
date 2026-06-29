@@ -61,11 +61,11 @@
     "section2": {
       "title": "Share your review with us",
       "description": "Fill out the form to share your experience. Your review will be visible after approval.",
-      "namePlaceholder": "Name *",
+      "namePlaceholder": "Name",
       "feedbackTitle": "Session feedback",
       "leaveComment": "Leave a comment",
       "rateExperience": "Rate your experience below",
-      "ratingText": "⭐⭐⭐⭐⭐ 4/5 stars",
+      "ratingText": "4/5 stars",
       "textAreaPlaceholder": "Write something about your experience...",
       "submitButton": "Submit"
     },

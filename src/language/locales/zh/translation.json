@@ -61,11 +61,11 @@
     "section2": {
       "title": "与我们分享你的评价",
       "description": "填写表单分享你的体验。你的评价将在审核后显示。",
-      "namePlaceholder": "姓名 *",
+      "namePlaceholder": "姓名",
       "feedbackTitle": "课程反馈",
       "leaveComment": "留下评论",
       "rateExperience": "请在下方为你的体验评分",
-      "ratingText": "⭐⭐⭐⭐⭐ 4/5 星",
+      "ratingText": "4/5 星",
       "textAreaPlaceholder": "写下你对本次体验的感受...",
       "submitButton": "提交"
     },
