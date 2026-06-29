@@ -45,6 +45,12 @@
     }
   },
   "homeView": {
+    "testCase": {
+      "label": "基础测试用例",
+      "title": "语言切换测试区块",
+      "description": "当你从导航栏按钮切换语言时，这个小区域会立即更新。",
+      "action": "立即试用切换器"
+    },
     "section1": {
       "title": "一种安全",
       "subtitle": "每一项新技能，都是迈向成功的一步。",

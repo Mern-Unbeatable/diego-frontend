@@ -45,6 +45,12 @@
     }
   },
   "homeView": {
+    "testCase": {
+      "label": "Basic test use case",
+      "title": "Language switch test block",
+      "description": "This small panel updates instantly when you change the language from the navbar button.",
+      "action": "Try the switcher now"
+    },
     "section1": {
       "title": "One Security",
       "subtitle": "Every new skill is a step forward toward success.",

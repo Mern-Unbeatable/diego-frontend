@@ -13,6 +13,7 @@ const LANGUAGES = [
 const ChooseLanguageView = () => {
   const { i18n } = useTranslation();
   const navigate = useNavigate();
+
   const [selected, setSelected] = useState(i18n.language || 'it');
 
   useEffect(() => {

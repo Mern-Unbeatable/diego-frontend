@@ -45,6 +45,12 @@
     }
   },
   "homeView": {
+    "testCase": {
+      "label": "Caso d'uso base per test",
+      "title": "Blocco di test per il cambio lingua",
+      "description": "Questo piccolo pannello si aggiorna subito quando cambi lingua dal pulsante nella navbar.",
+      "action": "Prova il cambio lingua ora"
+    },
     "section1": {
       "title": "UnoSicurezza",
       "subtitle": "Ogni nuova competenza è un passo avanti verso il successo.",
