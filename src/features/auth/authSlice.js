@@ -1,6 +1,8 @@
+// authSlice.js
+
 import { createSlice } from '@reduxjs/toolkit';
 import { STORAGE } from '../../utils/storage/authStorage';
-import { loginAPI } from './authAPI';
+import { loginAPI, otpVerifyAPI } from './authAPI';
 
 //  PLATFORM_ADMIN
 //  COMPANY_ADMIN
@@ -8,13 +10,13 @@ import { loginAPI } from './authAPI';
 //  LICENSE_USER
 //  PRIVATE_USER
 
-const storedUser = 'COMPANY_ADMIN'; // Hardcoded for testing purposes
+const storedUser = ''; // Hardcoded for testing purposes
 const storedToken = 'sample_token'; // Hardcoded for testing purposes
 
 const initialState = {
-  user: storedUser || null,
-  token: storedToken || null,
-  isAuthenticated: !!storedToken && !!storedUser,
+  user: null,
+  token: null,
+  isAuthenticated: false,
   loading: false,
   error: null,
 };
@@ -43,6 +45,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginAPI.fulfilled, (state, action) => {
+        console.log('Login successful:', action.payload);
         state.loading = false;
         state.user = action.payload.user || null;
         state.token = action.payload.token || null;
@@ -51,10 +54,29 @@ const authSlice = createSlice({
       .addCase(loginAPI.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      //===================================
+      //✅ VERIFY OTP CASE
+      //===================================
+      .addCase(otpVerifyAPI.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(otpVerifyAPI.fulfilled, (state, action) => {
+        console.log('OTP verification successful:', action.payload);
+        state.loading = false;
+        state.user = action.payload.user || null;
+        state.token = action.payload.token || null;
+        state.isAuthenticated = !!action.payload.user && !!action.payload.token;
+      })
+      .addCase(otpVerifyAPI.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
 
     //===================================
-    // REGISTER CASE
+    //✅ REGISTER CASE
     //===================================
   },
 });

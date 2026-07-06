@@ -1,26 +1,34 @@
-import { useState, useRef } from 'react';
-import { Heading, InputField, Label } from '../../components/ui';
-import { IoIosArrowBack } from 'react-icons/io';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
+import { Heading, InputField, Label } from '../../components/ui';
 
-const RegisterView = () => {
+import { useAuth } from '../../features/auth/authHooks';
+
+const LoginView = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(new Array(6).fill(''));
   const [step, setStep] = useState(1);
-  const navigate = useNavigate();
   const otpRefs = useRef([]);
 
+  const { login, loading, error, isAuthenticated, verifyOtp } = useAuth(); // ← DESTRUCTURE MORE
+
+  const navigate = useNavigate();
+
   // STEP 1 → STEP 2 (EMAIL)
-  const handleNextFromEmail = (e) => {
+  const handleNextFromEmail = async (e) => {
     e.preventDefault();
 
-    if (!email.trim()) {
-      alert('Enter email first');
-      return;
+    try {
+      await login({
+        email: email,
+      });
+      // Will auto-redirect via useEffect
+      setStep(2);
+    } catch (error) {
+      console.error('Login error:', error);
     }
-
-    setStep(2);
   };
 
   // OTP change
@@ -43,9 +51,19 @@ const RegisterView = () => {
   };
 
   // OTP VERIFY (STATIC ONLY)
-  const handleVerifyOtp = (e) => {
-    console.log('OTP:', otp.join(''));
-    navigate('/dashboard/super-admin');
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+
+    try {
+      await verifyOtp({
+        email: email,
+        otp: otp.join(''),
+      }); // Call the OTP verification API
+      console.log('OTP:', otp.join(''));
+      navigate('/dashboard/super-admin');
+    } catch (error) {
+      console.error('OTP verification error:', error);
+    }
   };
 
   return (
@@ -121,7 +139,7 @@ const RegisterView = () => {
                       type="submit"
                       className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
                     >
-                      Go ahead
+                      {loading ? 'Loading...' : 'Go ahead'}
                     </button>
                   </div>
                 </form>
@@ -176,4 +194,4 @@ const RegisterView = () => {
   );
 };
 
-export default RegisterView;
+export default LoginView;

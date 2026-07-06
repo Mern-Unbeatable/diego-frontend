@@ -19,6 +19,8 @@
  * ============================================================================
  */
 
+// client.js
+
 import axios from 'axios';
 import { ENV_CONFIG } from '../env.config.js';
 import { endpoints } from './httpEndpoint';
@@ -205,9 +207,9 @@ axiosInstance.interceptors.response.use(
 
       // Skip token refresh for authentication endpoints
       const isAuthEndpoint =
-        requestUrl.includes('/auth/login') ||
+        requestUrl.includes(endpoints.auth.LOGIN) ||
+        requestUrl.includes(endpoints.auth.REFRESH) ||
         requestUrl.includes('/auth/register') ||
-        requestUrl.includes('/auth/refresh') ||
         requestUrl.includes('/auth/forgot-password') ||
         requestUrl.includes('/auth/reset-password');
 
