@@ -6,12 +6,12 @@ const TrainingView = () => {
       <Container className="max-w-7xl">
         <div className="grid items-center gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14">
           <div className="max-w-2xl">
-            <h1 className="max-w-xl text-3xl leading-tight font-semibold text-[#555b5d] sm:text-4xl lg:text-[54px]">
+            <h1 className="max-w-xl text-3xl leading-tight font-semibold text-[#555b5d] sm:text-4xl l">
               UnoSicurezza: la formazione obbligatoria, semplice e
               professionale
             </h1>
 
-            <p className="mt-5 max-w-xl text-[15px] leading-7 text-[#7a7f80] sm:text-base">
+            <p className="mt-5 max-w-xl text-[15px] leading-7 text-[#7a7f80] sm:text-base text-justify">
               UnoSicurezza è la piattaforma dedicata alla formazione in materia
               di salute e sicurezza sul lavoro e-learning, pensata per tutte le
               aziende che vogliono adempiere agli obblighi normativi in modo
@@ -23,7 +23,7 @@ const TrainingView = () => {
               Perché scegliere UnoSicurezza
             </h2>
 
-            <p className="mt-4 max-w-xl text-[15px] leading-7 text-[#7a7f80] sm:text-base">
+            <p className="mt-4 max-w-xl text-[15px] leading-7 text-[#7a7f80] sm:text-base text-justify">
               Ridurre i rischi e promuovere una cultura aziendale attenta alla
               sicurezza è oggi più che mai fondamentale. UnoSicurezza rende la
               formazione obbligatoria un processo chiaro, ed orientato alla
