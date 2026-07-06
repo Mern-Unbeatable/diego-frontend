@@ -1,9 +1,11 @@
+import { ROUTES } from '../../config/routes.js';
+
 export const dashboardPath = {
-  PLATFORM_ADMIN: '/dashboard/super-admin',
-  COMPANY_ADMIN: '/dashboard/company-admin',
-  COMPANY_EMPLOYEE: '/dashboard/company-admin',
-  LICENSE_USER: '/dashboard/license-user',
-  PRIVATE_USER: '/dashboard/private-user',
+  PLATFORM_ADMIN: ROUTES.PLATFORM_ADMIN.DASHBOARD,
+  COMPANY_ADMIN: ROUTES.COMPANY_ADMIN.DASHBOARD,
+  COMPANY_EMPLOYEE: ROUTES.COMPANY_EMPLOYEE.DASHBOARD,
+  LICENSE_USER: ROUTES.LICENSE_USER.DASHBOARD,
+  PRIVATE_USER: ROUTES.PRIVATE_USER.DASHBOARD,
 };
 
 export const getUserRole = (user) => {

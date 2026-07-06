@@ -1,6 +1,7 @@
 export const endpoints = {
   auth: {
     LOGIN: '/auth/login',
+    REFRESH: '/auth/refresh',
   },
   admin: {
     GET_USER_QR_CODE: '/qr-cards/by-email',

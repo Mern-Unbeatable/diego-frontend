@@ -20,7 +20,7 @@
  */
 
 import axios from 'axios';
-import APP_CONFIG from '../app.config.js';
+import { ENV_CONFIG } from '../env.config.js';
 import { endpoints } from './httpEndpoint';
 import { STORAGE } from '../../utils/storage/storageKeys.js';
 
@@ -29,7 +29,7 @@ import { STORAGE } from '../../utils/storage/storageKeys.js';
 // ============================================================================
 
 export const axiosInstance = axios.create({
-  baseURL: APP_CONFIG.apiBaseUrl,
+  baseURL: ENV_CONFIG.API_BASE_URL,
   timeout: 30000,
   headers: { 'Content-Type': 'application/json' },
   // Don't throw on any status code - we handle errors in interceptor
@@ -122,7 +122,7 @@ const refreshAccessToken = async () => {
   try {
     // Use vanilla axios to avoid interceptor recursion
     const response = await axios.post(
-      `${APP_CONFIG.apiBaseUrl}${endpoints.auth.REFRESH}`,
+      `${ENV_CONFIG.API_BASE_URL}${endpoints.auth.REFRESH}`,
       { refreshToken },
       {
         headers: { 'Content-Type': 'application/json' },
