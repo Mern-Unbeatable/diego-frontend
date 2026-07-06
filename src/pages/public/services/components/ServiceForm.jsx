@@ -266,8 +266,8 @@ export default function ServiceForm({ title }) {
                 <div className=" items-start">
                     <b className='text-[#C43216] '>Informativa Privacy</b>
 
-                    <div className=" bg-[#F1F9F6] rounded-3xl p-5 mt-5">
-                        <label className="text-sm text-gray-600">
+                    <div className=" bg-[#F1F9F6] rounded-3xl p-5 mt-5 text-justify">
+                        <label className="text-sm text-gray-600 ">
                             Il sottoscritto autorizza il trattamento dei dati personali nel rispetto della
                             vigente normativa sulla protezione dei dati personali ed, in particolare, il
                             Regolamento Europeo per la protezione dei dati personali 2016/679, il D.lgs.
