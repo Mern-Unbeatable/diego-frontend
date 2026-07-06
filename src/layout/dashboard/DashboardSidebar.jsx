@@ -20,7 +20,7 @@ import {
 import { ROLES } from '../../config/roles';
 
 import { useUIStore } from '../../features/zustand';
-import { getUserRole } from '../../utils/authUtils';
+import { getUserRole } from '../../utils/auth/authUtils';
 
 const linksByRole = {
   [ROLES.PLATFORM_ADMIN]: [
@@ -218,7 +218,10 @@ const DashboardSidebar = () => {
             onClick={() => setActiveLink(path)}
             end={
               path === '/dashboard/company-admin' ||
-              path === '/dashboard/super-admin'
+              path === '/dashboard/super-admin' ||
+              path === '/dashboard/company-employee' ||
+              path === '/dashboard/license-user' ||
+              path === '/dashboard/private-user'
             }
             className={({ isActive }) =>
               `flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm font-medium ${
