@@ -11,12 +11,12 @@ const ReviewSection = () => {
   const { t } = useTranslation();
 
   return (
-    <Container className="my-20 items-center justify-center overflow-hidden md:flex md:gap-8">
+    <Container className="mb-20 items-center justify-center overflow-hidden md:flex md:gap-8">
       {/* Left side - Form */}
       <div className="w-full md:w-1/2">
         <div className="space-y-6">
           {/* Title - matches "Condividi la tua recensione con noi" */}
-          <Heading level={2} className="text-4xl font-bold tracking-tight">
+          <Heading level={2} className="text-2xl font-bold text-[#1a1a1a] sm:text-3xl lg:text-4xl">
             {t('homeView.section2.title')}
           </Heading>
 
@@ -91,14 +91,14 @@ const ReviewSection = () => {
       <div className="w-full md:mt-0 md:w-1/2">
         <div className="relative flex justify-end">
           {/* Green background shape */}
-          <div className="h-[420px] w-[75%] max-w-[529px] bg-[#73BFA1] sm:h-[540px] md:h-[650px] lg:h-[600px] xl:h-[700px]" />
+          <div className="h-[420px] w-[70%] max-w-[450px] bg-[#73BFA1] sm:h-[40px] md:h-[450px] lg:h-[450] rounded-2xl " />
 
           {/* Image overlay */}
-          <div className="absolute top-6 left-0 sm:top-8 md:top-10 md:left-4 lg:top-12 lg:left-16">
+          <div className="absolute top-6 left-0 sm:top-8 md:top-10 md:left-4 lg:-top-22 lg:left-16">
             <img
-              src="./images/Componen.jpg"
+              src="./images/Rectangle.png"
               alt="Review illustration"
-              className="h-auto w-[80vw] max-w-[500px] object-cover sm:w-[70vw] md:w-[420px] lg:w-[500px]"
+              className="h-auto w-[80vw] max-w-[450px] object-cover sm:h-[40px] md:h-[450px] lg:h-[450] rounded-2xl"
             />
           </div>
         </div>
