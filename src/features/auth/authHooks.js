@@ -20,9 +20,6 @@ export const useAuth = () => {
   // VARIFY OTP CALLBACK
   const verifyOtp = useCallback(
     async (otp) => {
-      // Implement OTP verification logic here
-      console.log('Verifying OTP:', otp);
-
       const result = await dispatch(otpVerifyAPI(otp)).unwrap();
       // For now, just return a resolved promise
       return result;
