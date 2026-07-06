@@ -8,10 +8,12 @@ const Loading = ({ size = 'md', className = '' }) => {
   };
 
   return (
-    <div className={`flex items-center justify-center ${className}`}>
+    <div
+      className={`flex min-h-screen items-center justify-center ${className}`}
+    >
       <div
         className={`${sizes[size]} animate-spin rounded-full border-4 border-gray-200 border-t-blue-600`}
-      ></div>
+      />
     </div>
   );
 };
