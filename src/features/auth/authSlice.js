@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { STORAGE } from '../../utils/storage/storageKeys';
+import { STORAGE } from '../../utils/storage/authStorage';
 import { loginAPI } from './authAPI';
 
 //  PLATFORM_ADMIN
@@ -8,7 +8,7 @@ import { loginAPI } from './authAPI';
 //  LICENSE_USER
 //  PRIVATE_USER
 
-const storedUser = 'COMPANY_ADMIN'; // Hardcoded for testing purposes
+const storedUser = 'PLATFORM_ADMIN'; // Hardcoded for testing purposes
 const storedToken = 'sample_token'; // Hardcoded for testing purposes
 
 const initialState = {

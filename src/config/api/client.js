@@ -22,7 +22,7 @@
 import axios from 'axios';
 import { ENV_CONFIG } from '../env.config.js';
 import { endpoints } from './httpEndpoint';
-import { STORAGE } from '../../utils/storage/storageKeys.js';
+import { STORAGE } from '../../utils/storage/authStorage.js';
 
 // ============================================================================
 // AXIOS INSTANCE CONFIGURATION
