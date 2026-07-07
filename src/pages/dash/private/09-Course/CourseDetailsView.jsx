@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa';
-import CourseMain from '../components/course/CourseMain';
-import CourseProgram from '../components/course/CourseProgram';
+import CourseMain from '../10-profile/components/course/CourseMain';
+import CourseProgram from '../10-profile/components/course/CourseProgram';
 
 const quizQuestions = [
   {

@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from '../../../../../components/ui/layouts/Card';
-import { Heading, Paragraph } from '../../../../../components/ui';
+import Card from '../../../../../../components/ui/layouts/Card';
+import { Heading, Paragraph } from '../../../../../../components/ui';
 import { Play, Volume2, Settings, ExternalLink, Maximize2 } from 'lucide-react';
 
 const CourseMain = ({ course }) => {

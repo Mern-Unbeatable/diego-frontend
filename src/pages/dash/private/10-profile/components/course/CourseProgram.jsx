@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaCheckCircle, FaPlayCircle, FaRegCircle } from 'react-icons/fa';
-import { Heading } from '../../../../../components/ui';
+import { Heading } from '../../../../../../components/ui';
 
 const CourseProgram = ({ modules = [], progress = 0, onStartQuiz }) => {
   return (
