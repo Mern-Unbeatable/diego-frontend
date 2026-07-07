@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 const Toast = ({ type = 'info', message, onClose, duration = 5000 }) => {
   useEffect(() => {
@@ -15,9 +16,9 @@ const Toast = ({ type = 'info', message, onClose, duration = 5000 }) => {
     error: 'bg-red-500',
   };
 
-  return (
+  const toastContent = (
     <div
-      className={`fixed top-4 right-4 rounded-lg p-4 text-white shadow-lg ${types[type]} min-w-64`}
+      className={`fixed top-4 right-4 z-[9999] rounded-lg p-4 text-white shadow-lg ${types[type]} min-w-64 max-w-sm`}
     >
       <div className="flex items-center justify-between">
         <span>{message}</span>
@@ -30,6 +31,8 @@ const Toast = ({ type = 'info', message, onClose, duration = 5000 }) => {
       </div>
     </div>
   );
+
+  return createPortal(toastContent, document.body);
 };
 
 export default Toast;

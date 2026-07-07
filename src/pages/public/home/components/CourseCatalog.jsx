@@ -1,11 +1,10 @@
 import { useRef } from 'react';
-import CourseCard from './CourseCard';
 import { useTranslation } from 'react-i18next';
+import CourseCard from './CourseCard';
 
-import { useCarousel } from '../../../../config/hooks/useCarousel';
+import { useCarousel } from '../../../../hooks/useCarousel';
 import { Heading, Container, Button } from '../../../../components/ui';
-import { COURSE_DATA } from '../../../../config/courses';
-
+import { COURSE_DATA } from '../../../../data/courses';
 
 const CourseCatalog = () => {
   const { t } = useTranslation();
@@ -20,9 +19,7 @@ const CourseCatalog = () => {
     handleDragEnd,
   } = useCarousel(COURSE_DATA.length);
 
-  const handleButtonClick = (action, course) => {
-
-  };
+  const handleButtonClick = (action, course) => {};
 
   const renderPagination = () => {
     if (!showPagination) return null;
@@ -33,10 +30,11 @@ const CourseCatalog = () => {
           <button
             key={index}
             onClick={() => goToPage(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${index === state.currentPage
-              ? 'w-8 bg-[#3FC89E]'
-              : 'w-2 bg-[#76c0a2]'
-              }`}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === state.currentPage
+                ? 'w-8 bg-[#3FC89E]'
+                : 'w-2 bg-[#76c0a2]'
+            }`}
             aria-label={`Go to page ${index + 1}`}
           />
         ))}
@@ -62,10 +60,11 @@ const CourseCatalog = () => {
       >
         <div
           ref={carouselRef}
-          className={`flex ${state.isMoved ? 'cursor-grabbing' : 'cursor-grab'} ${!state.isMoved || state.startX === 0
-            ? 'transition-transform duration-500 ease-out'
-            : ''
-            }`}
+          className={`flex ${state.isMoved ? 'cursor-grabbing' : 'cursor-grab'} ${
+            !state.isMoved || state.startX === 0
+              ? 'transition-transform duration-500 ease-out'
+              : ''
+          }`}
           style={{
             transform: `translateX(${finalTranslateValue}%)`,
             WebkitUserSelect: 'none',
@@ -96,7 +95,10 @@ const CourseCatalog = () => {
 
   return (
     <Container size="full" className="py-12 sm:py-16 lg:py-20">
-      <Heading level={2} className="mb-10 sm:mb-14 lg:mb-20">
+      <Heading
+        level={2}
+        className="mb-8 text-2xl font-bold text-[#1a1a1a] sm:mb-12 sm:text-3xl lg:text-4xl"
+      >
         {t('homeView.section3.exploreCatalog')}
       </Heading>
 

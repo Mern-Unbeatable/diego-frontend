@@ -1,22 +1,20 @@
 import Banner from '../../../components/common/Banner';
-import banner from '../../../../src/assets/images/course/course2.png';
-import { Container } from '../../../components/ui';
 import CourseOverview from '../../../components/training/CourseOverview';
-import { useTranslation } from 'react-i18next';
+import { Container } from '../../../components/ui';
+import trainingCourses from '../../../data/trainingCourses.json';
 
 const TrainingOurPlatformView = () => {
-  const { t } = useTranslation();
+  const bannerData = trainingCourses.sevesoPage?.banner ?? {};
 
   return (
     <Container className=" ">
       <Banner
-
-        image={banner}
-        title={t('trainingPages.section2.bannerTitle')}
+        image={bannerData.image ?? '/images/course/course3.png'}
+        title={bannerData.title ?? 'Scopri i nostri corsi SEVESO'}
       />
       <CourseOverview />
     </Container>
   );
 };
 
-export default TrainingOurPlatformView; 
+export default TrainingOurPlatformView;

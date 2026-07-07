@@ -1,10 +1,10 @@
 import React from 'react';
 import FigurePrevisteDashboard from './components/FigurePrevisteDashboard';
-import TrainingProjectManagerSection from '../components/TrainingProjectManagerSection';
+import TrainingProjectManagerSection from './components/TrainingProjectManagerSection';
 
 export default function FiguresView() {
   return (
-    <div className="m-8 space-y-6 rounded-3xl p-3">
+    <div className="space-y-6 rounded-3xl">
       <FigurePrevisteDashboard />
 
       <TrainingProjectManagerSection

@@ -1,15 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginUser } from './authAPI';
 import { STORAGE } from '../../config/storage/storageKeys';
-import { ROLES } from '../../config/roles';
+import { loginAPI } from './authAPI';
+
+//  PLATFORM_ADMIN
+//  COMPANY_ADMIN
+//  COMPANY_EMPLOYEE
+//  LICENSE_USER
+//  PRIVATE_USER
+
+const storedUser = ''; // Hardcoded for testing purposes
+const storedToken = ''; // Hardcoded for testing purposes
 
 const initialState = {
-  user: STORAGE.getUser() || null,
-  token: STORAGE.getToken() || null,
-  isAuthenticated: !!STORAGE.getToken(),
+  user: storedUser || null,
+  token: storedToken || null,
+  isAuthenticated: !!storedToken && !!storedUser,
   loading: false,
   error: null,
-  tempRole: null,
 };
 
 const authSlice = createSlice({
@@ -20,22 +27,10 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      state.tempRole = null;
-      STORAGE.clearToken();
+      STORAGE.clearAll();
     },
     resetAuthError: (state) => {
       state.error = null;
-    },
-    forceRole: (state, action) => {
-      const allowedRoles = Object.values(ROLES);
-      if (!allowedRoles.includes(action.payload)) {
-        console.warn('Invalid role ignored:', action.payload);
-        return;
-      }
-      state.tempRole = action.payload;
-    },
-    clearForcedRole: (state) => {
-      state.tempRole = null;
     },
   },
   extraReducers: (builder) => {
@@ -43,18 +38,17 @@ const authSlice = createSlice({
       //===================================
       // ✅ LOGIN CASE
       //===================================
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginAPI.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(loginAPI.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.isAuthenticated = true;
-        state.tempRole = null;
+        state.user = action.payload.user || null;
+        state.token = action.payload.token || null;
+        state.isAuthenticated = !!action.payload.user && !!action.payload.token;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(loginAPI.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
@@ -65,6 +59,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, resetAuthError, forceRole, clearForcedRole } =
-  authSlice.actions;
+export const { logout, resetAuthError } = authSlice.actions;
 export default authSlice.reducer;

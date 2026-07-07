@@ -1,79 +1,123 @@
 'use client';
-import { howWorksData } from '../../../data/howWorksData';
+import { Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { howWorksData } from '../../../data/howWorksData';
+
+const accentStyles = {
+  1: {
+    badge: 'border-[#8FC3E8]/30 bg-[#8FC3E8]/10 text-[#5D93B8]',
+  },
+  2: {
+    badge: 'border-[#6FCB43]/30 bg-[#6FCB43]/10 text-[#5A9E31]',
+  },
+  3: {
+    badge: 'border-[#FF8A00]/30 bg-[#FF8A00]/10 text-[#CC6B00]',
+  },
+};
 
 const HowWorks = () => {
-    const { t } = useTranslation();
-    const sections = t('trainingPages.section10.sections', { returnObjects: true });
+  const { t } = useTranslation();
+  const sections =
+    t('trainingPages.section10.sections', { returnObjects: true }) || [];
 
-    return (
-        <div className="min-h-screen bg-white p-4 sm:p-8 md:p-12">
-            {/* Header Section */}
-            <div className="mx-auto mb-16 max-w-6xl">
-                <h1 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
-                    {t('trainingPages.section10.headerTitle')}
-                </h1>
-                <p className="mb-6 text-sm leading-relaxed text-gray-600 md:text-base">
-                    {t('trainingPages.section10.headerDescription')}
-                </p>
-                <span className="text-[#73BFA1]">"{t('trainingPages.section10.headerCta')}"</span>
-            </div>
+  return (
+    <div className="min-h-screen bg-white px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+      <div className="mx-auto max-w-6xl">
+        <section className="container mb-6 lg:mb-10">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            {t('trainingPages.section10.headerTitle')}
+          </h1>
 
-            {howWorksData.map((section, index) => {
-                const isReverse = section.reverse;
-                const sectionSpacingClass = index === 0 ? 'mb-16' : index === 1 ? 'mb-16 mt-12' : 'mt-12';
-                const sectionContent = sections[index];
+          <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
+            {t('trainingPages.section10.headerDescription')}
+          </p>
 
-                const textBlock = (
-                    <div className={`flex-1 ${isReverse ? 'order-2 md:order-1' : ''}`}>
-                        <h2 className="mb-4 text-2xl font-bold text-gray-900">{sectionContent.title}</h2>
+          <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#5F9F86]">
+            <Search size={16} />
+            {t('trainingPages.section10.headerCta')}
+          </div>
+        </section>
 
-                        {sectionContent.contents.map((content, contentIndex) => (
+        {/* Sections */}
+        <div className="space-y-14 lg:space-y-10">
+          {howWorksData.map((section, index) => {
+            const isReverse = section.reverse;
+            const styles = accentStyles[section.id];
+            const sectionText = sections[index] || {};
+
+            const textBlock = (
+              <div className={`flex-1 ${isReverse ? 'lg:order-2' : ''}`}>
+                <div className="max-w-xl">
+                  <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
+                    {sectionText.title || section.title}
+                  </h2>
+
+                  <div className="mt-5 space-y-4 text-slate-600">
+                    {(sectionText.contents || section.contents || []).map(
+                      (content, contentIndex) => {
+                        const isSubheading =
+                          content === 'How it works' ||
+                          content === 'Come funziona';
+
+                        if (isSubheading) {
+                          return (
                             <p
-                                key={`${section.id}-${contentIndex}`}
-                                className={`text-sm leading-relaxed text-gray-600 md:text-base ${contentIndex !== sectionContent.contents.length - 1 || sectionContent.badge ? 'mb-4' : ''
-                                    }`}
+                              key={`${section.id}-${contentIndex}`}
+                              className="text-justify text-sm font-semibold text-slate-500 sm:text-base"
                             >
-                                {content}
+                              {content}
                             </p>
-                        ))}
+                          );
+                        }
 
-                        {sectionContent.badge && (
-                            <div className="flex items-center gap-2 text-sm text-green-600">
-                                <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                                {sectionContent.badge}
-                            </div>
-                        )}
-                    </div>
-                );
+                        return (
+                          <p
+                            key={`${section.id}-${contentIndex}`}
+                            className="text-justify text-sm text-slate-600 sm:text-base"
+                          >
+                            {content}
+                          </p>
+                        );
+                      },
+                    )}
+                  </div>
 
-                const imageBlock = (
-                    <div className={`relative flex-1 ${isReverse ? 'order-1 md:order-2' : ''}`}>
-                        <img src={section.image} alt="" className="h-auto w-full" />
+                  {section.badge && (
+                    <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#73BFA1]/25 bg-[#73BFA1]/10 px-4 py-2 text-sm font-medium text-[#5F9F86]">
+                      <span className="h-2 w-2 rounded-full bg-[#73BFA1]" />
+                      {section.badge}
                     </div>
-                );
+                  )}
+                </div>
+              </div>
+            );
 
-                return (
-                    <div
-                        key={section.id}
-                        className={`mx-auto max-w-6xl flex flex-col items-center gap-8 md:flex-row md:gap-12 ${sectionSpacingClass}`}
-                    >
-                        {isReverse ? (
-                            <>
-                                {textBlock}
-                                {imageBlock}
-                            </>
-                        ) : (
-                            <>
-                                {imageBlock}
-                                {textBlock}
-                            </>
-                        )}
-                    </div>
-                );
-            })}
+            const imageBlock = (
+              <div className={`flex-1 ${isReverse ? 'lg:order-1' : ''}`}>
+                <div className="mx-auto max-w-sm">
+                  <img
+                    src={section.image}
+                    alt={sectionText.title || section.title}
+                    className="h-auto w-full object-contain"
+                  />
+                </div>
+              </div>
+            );
+
+            return (
+              <section
+                key={section.id}
+                className="grid items-center gap-6 lg:grid-cols-2 lg:gap-10"
+              >
+                {textBlock}
+                {imageBlock}
+              </section>
+            );
+          })}
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default HowWorks;

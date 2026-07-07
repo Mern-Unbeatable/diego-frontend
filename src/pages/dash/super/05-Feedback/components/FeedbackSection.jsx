@@ -26,7 +26,7 @@ function Rating({ value = 0 }) {
           <Star key={i} className="h-4 w-4" />
         ),
       )}
-      <span className="ml-2 text-xs font-medium text-gray-600">
+      <span className="ml-2 text-sm font-medium text-gray-600">
         {value.toFixed(1)}/5
       </span>
     </div>
@@ -102,7 +102,7 @@ export default function FeedbackSection({
   };
 
   return (
-    <div className="m-4 space-y-6 md:m-8">
+    <div className="space-y-6">
       <h1 className="text-2xl font-semibold text-gray-900">
         Feedback del cliente
       </h1>
