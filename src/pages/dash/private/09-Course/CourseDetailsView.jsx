@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FaChevronLeft } from 'react-icons/fa';
+import { ArrowLeft } from 'lucide-react';
 import CourseMain from '../10-profile/components/course/CourseMain';
 import CourseProgram from '../10-profile/components/course/CourseProgram';
 
@@ -85,13 +85,58 @@ const CourseContentView = () => {
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
 
+  // Modules stored in React State to make them interactive
+  const [modules, setModules] = useState([
+    { id: 1, title: 'Class-1', time: '3 minuti', status: 'done' },
+    { id: 2, title: 'Class-2', time: '10 minuti', status: 'done' },
+    { id: 3, title: 'Class-3', time: '20 minuti', status: 'current' },
+    { id: 4, title: 'Class-4', time: '30 minuti', status: 'upcoming' },
+    { id: 5, title: 'Class-5', time: '30 minuti', status: 'upcoming' },
+    {
+      id: 6,
+      title: 'Quiz-1',
+      time: 'Start',
+      status: 'upcoming',
+      type: 'quiz',
+    },
+    { id: 7, title: 'Class-7', time: '31 minuti', status: 'upcoming' },
+    { id: 8, title: 'Class-8', time: '28:59 minuti', status: 'upcoming' },
+  ]);
+
+  // Handle selection of a class module
+  const selectModule = (moduleId) => {
+    setModules((prevModules) => {
+      const targetIndex = prevModules.findIndex((m) => m.id === moduleId);
+      if (targetIndex === -1) return prevModules;
+
+      return prevModules.map((m, idx) => {
+        if (m.type === 'quiz') return m;
+        
+        if (idx < targetIndex) {
+          return { ...m, status: 'done' };
+        } else if (idx === targetIndex) {
+          return { ...m, status: 'current' };
+        } else {
+          return { ...m, status: 'upcoming' };
+        }
+      });
+    });
+  };
+
+  // Dynamically calculate progress based on completed classes
+  const progress = useMemo(() => {
+    const nonQuizModules = modules.filter((m) => m.type !== 'quiz');
+    const doneCount = nonQuizModules.filter((m) => m.status === 'done').length;
+    return Math.round((doneCount / nonQuizModules.length) * 100);
+  }, [modules]);
+
   // TODO: fetch course details by id (use API or redux)
   const course = {
     id,
     title: 'Formazione SEVESO',
     video: '/image/mandatory_courses/image1.jpg',
     description:
-      "Il D. lgs. 105/2015 art. 14 all'Appendice I dell'Allegato B, precisa al gestore come ottemperare in maniera organica e programmata agli obblighi di informazione, formazione, addestramento ed equipaggiamento ai fini della sicurezza...",
+      "Il D. lgs. 105/2015 art. 14 all'Appendice I dell'Allegato B, precisa al gestore come ottemperare in maniera organica e programmata agli obblighi di informazione, formazione, addestramento ed equipaggiamento ai fini della sicurezza, degli addetti e di coloro che accedono agli stabilimenti, tenendo conto delle dispositions dettate in materia per la tutela della salute e della sicurezza dei lavoratori sul luogo di lavoro.",
   };
 
   const totalQuestions = quizQuestions.length;
@@ -141,34 +186,23 @@ const CourseContentView = () => {
 
   return (
     <div className="">
+      {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
-        className="mb-6 inline-flex h-8 w-8 items-center justify-center"
+        className="mb-8 inline-flex items-center text-gray-800 hover:text-black transition-colors cursor-pointer"
         aria-label="Back"
       >
-        <FaChevronLeft />
+        <ArrowLeft size={24} strokeWidth={2.5} />
       </button>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <CourseMain course={course} />
 
         <CourseProgram
-          modules={[
-            { id: 1, title: 'Class-1', time: '3 minuti', status: 'done' },
-            { id: 2, title: 'Class-2', time: '10 minuti', status: 'done' },
-            { id: 3, title: 'Class-3', time: '20 minuti', status: 'current' },
-            { id: 4, title: 'Class-4', time: '30 minuti', status: 'upcoming' },
-            { id: 5, title: 'Class-5', time: '30 minuti', status: 'upcoming' },
-            {
-              id: 6,
-              title: 'Quiz-1',
-              time: 'Start',
-              status: 'upcoming',
-              type: 'quiz',
-            },
-          ]}
-          progress={28}
+          modules={modules}
+          progress={progress}
           onStartQuiz={openQuiz}
+          onSelectModule={selectModule}
         />
       </div>
 

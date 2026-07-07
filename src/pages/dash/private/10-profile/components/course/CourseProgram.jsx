@@ -1,71 +1,76 @@
 import React from 'react';
-import { FaCheckCircle, FaPlayCircle, FaRegCircle } from 'react-icons/fa';
-import { Heading } from '../../../../../../components/ui';
+import { Check, Play } from 'lucide-react';
 
-const CourseProgram = ({ modules = [], progress = 0, onStartQuiz }) => {
+const CourseProgram = ({ modules = [], progress = 0, onStartQuiz, onSelectModule }) => {
   return (
-    <aside>
-      <div className="p-0">
-        <div className="overflow-hidden rounded-t-xl">
-          <div className="bg-[#F1FBF7] p-4">
-            <Heading level={5} className="text-base">
-              Corso
-            </Heading>
-          </div>
-          <div className="flex items-center justify-between bg-[#17342e] px-4 py-3 text-white">
-            <div className="font-medium">Programma del corso</div>
-            <div className="text-sm">{progress}% avanzamento</div>
-          </div>
+    <aside className="w-full">
+      <div className="overflow-hidden rounded-2xl bg-[#f2faf7] shadow-sm">
+        {/* Header: Corso */}
+        <div className="px-6 py-5">
+          <h3 className="text-xl font-bold text-[#1d1d1d]">Corso</h3>
         </div>
 
-        <div className="bg-green-50 p-4">
-          <ul className="space-y-3">
-            {modules.map((item) => (
-              <li
+        {/* Subheader: Programma del corso */}
+        <div className="flex items-center justify-between bg-[#22423b] px-6 py-4 text-white">
+          <span className="text-[17px] font-semibold">Programma del corso</span>
+          <span className="text-sm font-medium text-white/90">{progress}% avanzamento</span>
+        </div>
+
+        {/* Modules List */}
+        <div className="divide-y divide-[#e2ede8]">
+          {modules.map((item) => {
+            const isDone = item.status === 'done';
+            const isCurrent = item.status === 'current';
+            const isQuiz = item.type === 'quiz';
+
+            const handleClick = () => {
+              if (isQuiz) {
+                if (onStartQuiz) onStartQuiz();
+              } else {
+                if (onSelectModule) onSelectModule(item.id);
+              }
+            };
+
+            return (
+              <div
                 key={item.id}
-                className={`flex items-center justify-between rounded-md p-4 ${item.status === 'current'
-                    ? 'border-l-4 border-l-[#73BFA1] bg-[#eef9f4]'
-                    : ''
-                  }`}
+                onClick={handleClick}
+                className={`flex items-center justify-between px-6 py-[18px] transition-all cursor-pointer ${
+                  isCurrent
+                    ? 'border-l-[4px] border-l-[#55B18D] bg-[#e6f5ef] pl-[20px]'
+                    : 'hover:bg-[#e5f3ed]'
+                }`}
               >
+                {/* Left Side: Icon & Title */}
                 <div className="flex items-center gap-4">
-                  <div>
-                    {item.status === 'done' && (
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F8F3] text-[#0b6c50]">
-                        <FaCheckCircle />
-                      </div>
-                    )}
+                  {/* Icon */}
+                  {isDone ? (
+                    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#55B18D] text-white">
+                      <Check size={12} strokeWidth={3.5} />
+                    </div>
+                  ) : isCurrent ? (
+                    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[2px] border-[#55B18D] text-[#55B18D]">
+                      <Play size={10} className="fill-[#55B18D] ml-[1px]" />
+                    </div>
+                  ) : (
+                    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[2px] border-[#5a5a5a] text-[#5a5a5a]">
+                      <Play size={10} className="fill-[#5a5a5a] ml-[1px]" />
+                    </div>
+                  )}
 
-                    {item.status === 'current' && (
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full border border-[#DFF5EA] bg-white text-[#73BFA1]">
-                        <FaPlayCircle />
-                      </div>
-                    )}
-
-                    {item.status === 'upcoming' && (
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 text-gray-400">
-                        <FaRegCircle />
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="text-sm text-[#252525]">{item.title}</div>
+                  {/* Title */}
+                  <span className="text-base font-semibold text-[#1d1d1d]">
+                    {item.title}
+                  </span>
                 </div>
 
-                {item.type === 'quiz' ? (
-                  <button
-                    type="button"
-                    onClick={() => onStartQuiz && onStartQuiz(item)}
-                    className="rounded-full bg-[#73BFA1] px-3 py-1 text-xs font-semibold text-white hover:bg-[#5fa488]"
-                  >
-                    Start
-                  </button>
-                ) : (
-                  <div className="text-sm text-gray-500">{item.time}</div>
-                )}
-              </li>
-            ))}
-          </ul>
+                {/* Right Side: Duration / Action */}
+                <div className="text-sm font-medium text-[#5a5a5a]">
+                  <span>{item.time}</span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </aside>

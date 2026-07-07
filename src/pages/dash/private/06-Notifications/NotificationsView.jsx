@@ -1,7 +1,6 @@
 import React from 'react';
-import Card from '../../../../components/ui/layouts/Card';
-import { Heading, Paragraph } from '../../../../components/ui';
-import { Bell } from 'lucide-react';
+
+import { Bell, Check, Trash2 } from 'lucide-react';
 import { FaChevronLeft } from 'react-icons/fa';
 
 const sampleNotifications = [
@@ -29,7 +28,7 @@ const sampleNotifications = [
 ];
 
 const NotificationItem = ({ item }) => (
-  <div className="flex items-center justify-between rounded-xl bg-white p-4 shadow-xl">
+  <div className="group relative flex items-center justify-between rounded-xl bg-white p-4 shadow-sm transition-all hover:bg-gray-50/50">
     <div className="flex items-center gap-4">
       <div
         className={`flex h-14 w-14 items-center justify-center rounded-full ${item.unread ? 'bg-[#F1F9F6]' : 'bg-white'}`}
@@ -37,43 +36,62 @@ const NotificationItem = ({ item }) => (
         <Bell className="text-[#73BFA1]" size={20} />
       </div>
 
-      <div className="space-y-2">
-        <Heading level={2} className="text-xl font-semibold text-[#252525]">
-          {item.title}
-        </Heading>
-        <Paragraph className="text-gray-400">{item.message}</Paragraph>
+      <div className="space-y-1">
+       <h2 className="text-lg text-[#252525]">{item.title}</h2>
+        <p className="text-base text-gray-400">{item.message}</p>
       </div>
     </div>
 
-    <div className="ml-4 flex flex-col items-end">
-      <span className="text-xs text-gray-400">{item.time}</span>
-      {item.unread && (
-        <span className="mt-2 h-2.5 w-2.5 rounded-full bg-[#73BFA1]" />
-      )}
+    <div className="ml-4 flex items-center min-w-[70px] justify-end">
+      {/* Time and Unread dot (hidden on hover) */}
+      <div className="flex flex-col items-end group-hover:hidden transition-all duration-200">
+        <span className="text-xs text-gray-400 whitespace-nowrap">{item.time}</span>
+        {item.unread && (
+          <span className="mt-2 h-2 w-2 rounded-full bg-[#73BFA1]" />
+        )}
+      </div>
+
+      {/* Action buttons (shown on hover) */}
+      <div className="hidden group-hover:flex items-center gap-2 transition-all duration-200">
+        {item.unread && (
+          <button
+            type="button"
+            title="Segna come letto"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F1F9F6] text-[#73BFA1] hover:bg-[#73BFA1] hover:text-white transition-all shadow-sm"
+          >
+            <Check size={15} />
+          </button>
+        )}
+        <button
+          type="button"
+          title="Elimina"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
+        >
+          <Trash2 size={15} />
+        </button>
+      </div>
     </div>
   </div>
 );
 
 const NotificationsView = () => {
   return (
-    <div className="p-6 md:p-10">
-      <div className="relative mx-auto max-w-5xl">
-        {/* top row: small back button left, action right */}
-        <div className="mb-6 flex items-center justify-between">
-          <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F1F9F6] shadow-sm">
-            <FaChevronLeft className="text-gray-600" />
-          </button>
+    <div className="">
+      {/* top row: small back button left, action right */}
+      <div className="mb-6 flex items-center justify-between">
+        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F1F9F6] shadow-sm">
+          <FaChevronLeft className="text-gray-600" />
+        </button>
 
-          <button className="text-xl font-semibold text-[#73BFA1]">
-            Segna tutti come già letti
-          </button>
-        </div>
+        <button className="text-xl font-semibold text-[#73BFA1]">
+          Segna tutti come già letti
+        </button>
+      </div>
 
-        <div className="space-y-4">
-          {sampleNotifications.map((n) => (
-            <NotificationItem key={n.id} item={n} />
-          ))}
-        </div>
+      <div className="space-y-4">
+        {sampleNotifications.map((n) => (
+          <NotificationItem key={n.id} item={n} />
+        ))}
       </div>
     </div>
   );

@@ -14,9 +14,8 @@ import {
 import { IoIosLogOut } from 'react-icons/io';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { LuArrowLeftToLine } from 'react-icons/lu';
-import { FiEdit } from 'react-icons/fi';
 import StudentInfoModal from './components/modal/StudentInfoModal';
-import rightDownSideBg from '/image/student/ciao.png';
+import ProfileBanner from './components/ProfileBanner';
 
 const StudentProfileView = () => {
   const menu = [
@@ -56,52 +55,7 @@ const StudentProfileView = () => {
         </button>
       </div>
       {/* Banner */}
-      <div className="relative mb-10 h-44 w-full overflow-hidden rounded-2xl bg-[#73BFA1] text-white md:h-48">
-        {/* Content layer - tightened spacing to match design */}
-        <div className="flex h-full items-center gap-6 px-6 md:px-10">
-          <div className="flex items-center gap-6">
-            <div className="relative flex h-28 w-28 items-center justify-center rounded-full border border-white/30 bg-[#73BFA1] md:h-36 md:w-36">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full md:h-24 md:w-24">
-                <span className="sr-only">User avatar</span>
-                <FaUser
-                  className="h-12 w-12 text-[#17342e] md:h-16 md:w-16"
-                  aria-hidden="true"
-                />
-              </div>
-
-              {/* small notification badge overlapping bottom-right - scaled for tighter layout */}
-              <div className="absolute right-3 bottom-8">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#73BFA1] md:h-10 md:w-10">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#17342e] text-xs font-semibold text-white md:h-9 md:w-9 md:text-xl">
-                    1
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="ml-4">
-              <h2 className="mb-0 text-2xl font-semibold text-white md:text-4xl">
-                Starriz.Clo
-              </h2>
-              <p className="text-sm text-white md:text-xl">starriz.clo</p>
-            </div>
-          </div>
-        </div>
-        {/* Edit icon (top-right) - green outlined square matching design; opens StudentInfoModal */}
-        <button
-          onClick={() => setShowInfoModal(true)}
-          aria-label="Edit profile"
-          title="Edit profile"
-          className="absolute top-4 right-8 z-10 flex h-8 w-8 items-center justify-center md:top-6 md:right-38 md:h-9 md:w-9"
-        >
-          <FiEdit className="text-3xl text-white" />
-        </button>
-
-        {/* Background layer */}
-        <div className="absolute top-9 -right-20 z-0">
-          <img src={rightDownSideBg} alt="circleBg" />
-        </div>
-      </div>
+      <ProfileBanner onEditClick={() => setShowInfoModal(true)} />
 
       {/* Options list card */}
       <div className="rounded-xl border border-[#E6E6E6] bg-white p-4 shadow md:p-6">
@@ -164,10 +118,10 @@ const StudentProfileView = () => {
               aria-label={item.label}
             >
               <div className="flex items-center gap-3 text-gray-700">
-                <div className="flex h-8 w-8 items-center justify-center text-lg text-gray-600">
+                <div className="flex h-6 w-6 items-center justify-center text-lg text-gray-600">
                   {item.icon}
                 </div>
-                <span className="text-base font-medium text-[#252525] md:text-lg">
+                <span className="text-base font-medium text-[#252525] ">
                   {item.label}
                 </span>
               </div>
