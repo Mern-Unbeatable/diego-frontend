@@ -10,12 +10,10 @@ import { loginAPI, otpVerifyAPI } from './authAPI';
 //  COMPANY_EMPLOYEE
 //  LICENSE_USER
 //  PRIVATE_USER
-
-const storedUser = COOKIE_STORAGE.getUser();
+const userRoles = COOKIE_STORAGE.getUser();
 const storedToken = COOKIE_STORAGE.getToken();
 
-console.log('storedUser', storedUser);
-console.log('storedToken', storedToken);
+const storedUser = userRoles.level;
 
 const initialState = {
   user: storedUser || null,

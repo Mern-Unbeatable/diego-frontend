@@ -63,6 +63,8 @@ const LoginView = () => {
 
       COOKIE_STORAGE.setUser(response.data.user); // Store user data in cookies
       COOKIE_STORAGE.setToken(response.data.accessToken); // Store token in cookies
+
+      navigate('/dashboard'); // Navigate to the dashboard after successful OTP verification
     } catch (error) {
       console.error('OTP verification error:', error);
     }
