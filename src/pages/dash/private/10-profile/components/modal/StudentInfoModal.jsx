@@ -48,7 +48,7 @@ const StudentInfoModal = ({ onClose }) => {
         className="relative flex flex-col max-h-[80vh] w-full max-w-2xl rounded-xl border border-[#d7ebe4] bg-white shadow-[0_18px_40px_rgba(0,0,0,0.12)] outline-none overflow-hidden"
       >
         {/* Sticky Header */}
-        <div className="flex items-center gap-4 border-b border-[#edf2ef] p-4 md:p-6 bg-white z-10">
+        <div className="flex items-center gap-4 border-b border-[#edf2ef] p-2 bg-white z-10">
           <button
             onClick={() => onClose && onClose()}
             aria-label="Indietro"
@@ -57,7 +57,7 @@ const StudentInfoModal = ({ onClose }) => {
             <ArrowLeft className="h-6 w-6" />
           </button>
 
-          <h3 className="text-[20px] font-semibold text-[#171717] md:text-[24px]">
+          <h3 className="text-xl font-semibold text-[#171717] md:text-[24px]">
             Informazioni personali
           </h3>
         </div>
@@ -211,11 +211,11 @@ const StudentInfoModal = ({ onClose }) => {
           </div>
 
           {/* Sticky Footer */}
-          <div className="border-t border-[#edf2ef] bg-white p-4 md:p-6 flex justify-end z-10">
+          <div className="border-t border-[#edf2ef] bg-white p-2 flex justify-end z-10">
             <div className="mx-auto w-full max-w-[800px] flex justify-end">
               <button
                 type="submit"
-                className="rounded-full bg-[#73BFA1] px-6 py-2.5 text-[13px] font-semibold text-white shadow-md hover:opacity-95 md:px-8 md:py-3 md:text-[16px]"
+                className="rounded-full bg-[#73BFA1] px-6 py-2.5 text-[13px] font-semibold text-white shadow-md hover:opacity-95 md:px-8 md:py-3 md:text-sm"
               >
                 Salva
               </button>
