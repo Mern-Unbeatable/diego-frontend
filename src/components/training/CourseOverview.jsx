@@ -3,6 +3,7 @@
 import { CheckCircle2 } from 'lucide-react';
 import WorkflowSection from './WorkflowSection';
 import { courses, howitWorks } from '../../data/courseData';
+
 export default function CourseOverview() {
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-6 md:p-8">
@@ -57,15 +58,17 @@ export default function CourseOverview() {
       </div>
 
       {/* Come funziona Section */}
-      <div className="mb-12 grid grid-cols-1 items-start gap-6 lg:grid-cols-2 lg:gap-8">
-        {/* Left - Image Card */}
-        <div className="flex h-64 items-center justify-center overflow-hidden rounded-3xl bg-teal-100 sm:h-72 md:h-80">
-          <div className="relative h-full w-full">
-            <img
-              src="images/course/catalog4.png"
-              alt="Team working together"
-              className="h-full w-full object-contain"
-            />
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2 lg:gap-8">
+        {/* Left - Image Card (stays in view while the right column scrolls, then scrolls away with the page) */}
+        <div className="lg:sticky lg:top-27 lg:self-start">
+          <div className="flex h-64 overflow-hidden rounded-3xl sm:h-72 md:h-80">
+            <div className="relative h-full w-full">
+              <img
+                src="/image/formazione/wrpgj.jpg"
+                alt="Team working together"
+                className="h-full w-full object-contain"
+              />
+            </div>
           </div>
         </div>
 
@@ -93,11 +96,11 @@ export default function CourseOverview() {
               </li>
             ))}
           </ol>
+
+          {/* Process Flow Section */}
           <WorkflowSection />
         </div>
       </div>
-
-      {/* Process Flow Section */}
     </div>
   );
 }

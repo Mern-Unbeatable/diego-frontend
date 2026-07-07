@@ -6,6 +6,7 @@ import {
     ClipboardList,
     MonitorPlay,
     BookOpen,
+    Award,
     ArrowDown,
 } from "lucide-react";
 
@@ -42,6 +43,11 @@ const steps = [
         desc: "in e-learning ai lavoratori da PC, tablet e smartphone",
         bottomAvatar: true,
     },
+    {
+        icon: Award,
+        title: "Rilascio attestato",
+        desc: "Si dichiara il rilascio dell'attestato all'interessato, conforme alle attività svolta.",
+    },
 ];
 
 export default function WorkflowSection() {
@@ -53,7 +59,7 @@ export default function WorkflowSection() {
                 return (
                     <div key={index}>
                         <div className="relative">
-                            <div className="border border-[#73BFA1] rounded-md bg-[#f5f5f5] px-4 py-3 flex gap-3">
+                            <div className="border border-[#73BFA1] rounded-md hover:bg-[#f5f5f5] px-4 py-3 flex gap-3">
                                 {/* icon */}
                                 <div className="h-9 w-9 rounded bg-[#73BFA1] flex items-center justify-center shrink-0">
                                     <Icon size={18} className="text-white" />
