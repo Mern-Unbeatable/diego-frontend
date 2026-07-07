@@ -9,7 +9,6 @@ const SafetyServiceView = () => {
   const { t } = useTranslation();
   const includeItems =
     t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
-
   return (
     <Container className=" ">
       <Banner
