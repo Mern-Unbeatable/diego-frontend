@@ -18,7 +18,7 @@ const HeroSection = () => {
     >
       <div className="flex justify-center md:justify-start">
         <Image
-          src="/public/images/icons/HomeIcon.png"
+          src="/images/icons/HomeIcon.png"
           className="w-full max-w-[280px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[550px]"
           hoverZoom={false}
           objectFit="contain"
