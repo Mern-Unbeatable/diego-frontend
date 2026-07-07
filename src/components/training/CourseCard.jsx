@@ -1,18 +1,33 @@
 import trainingCourses from '../../data/trainingCourses.json';
+import { useTranslation } from 'react-i18next';
 
 export const courses = trainingCourses.courses ?? [];
 export const pageContent = trainingCourses.sevesoPage ?? {};
 
 export default function CoursesSection() {
+  const { t } = useTranslation();
+
+  const localizedCourses = courses.map((course, index) => ({
+    ...course,
+    title: t(`trainingPages.section7.courses.${index}.title`, {
+      defaultValue: course.title,
+    }),
+    description: t(`trainingPages.section7.courses.${index}.description`, {
+      defaultValue: course.description,
+    }),
+  }));
+
   return (
     <section className="bg-[#f6f6f6] py-10">
       <div className="mx-auto max-w-6xl px-4">
         <h2 className="mb-8 text-[30px] font-semibold text-[#333]">
-          {pageContent.courseCardsTitle ?? 'Corsi obbligatori'}
+          {t('trainingPages.section7.title', {
+            defaultValue: pageContent.courseCardsTitle ?? 'Corsi obbligatori',
+          })}
         </h2>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {courses.map((course) => (
+          {localizedCourses.map((course) => (
             <div
               key={course.id}
               className="overflow-hidden rounded-xl border border-[#d8e7e2] bg-white transition-all duration-300 hover:shadow-lg"

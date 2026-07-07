@@ -1,22 +1,48 @@
 'use client';
 
 import { CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import WorkflowSection from './WorkflowSection';
 import trainingCourses from '../../data/trainingCourses.json';
 
-const courses = trainingCourses.courses ?? [];
 const pageContent = trainingCourses.sevesoPage?.overview ?? {};
 
 export default function CourseOverview() {
-  const tableHeaders = pageContent.tableHeaders ?? {};
-  const howItWorks = pageContent.howItWorks ?? [];
-  const workflowSteps = pageContent.workflowSteps ?? [];
+  const { t } = useTranslation();
+  const tableHeaders = {
+    course: t('trainingPages.section8.headers.course', {
+      defaultValue: pageContent.tableHeaders?.course ?? 'Corso',
+    }),
+    description: t('trainingPages.section8.headers.description', {
+      defaultValue: pageContent.tableHeaders?.description ?? 'Descrizione',
+    }),
+    duration: t('trainingPages.section8.headers.duration', {
+      defaultValue: pageContent.tableHeaders?.duration ?? 'Durata',
+    }),
+    type: t('trainingPages.section8.headers.type', {
+      defaultValue: pageContent.tableHeaders?.type ?? 'Tipo',
+    }),
+  };
+  const tableRows = t('trainingPages.section8.tableRows', {
+    returnObjects: true,
+    defaultValue: [],
+  });
+  const howItWorks = t('trainingPages.section8.howItWorksSteps', {
+    returnObjects: true,
+    defaultValue: pageContent.howItWorks ?? [],
+  });
+  const workflowSteps = t('trainingPages.section9.steps', {
+    returnObjects: true,
+    defaultValue: pageContent.workflowSteps ?? [],
+  });
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-6 md:p-8">
       {/* Header */}
       <h1 className="mb-8 text-2xl font-bold text-gray-800 sm:text-3xl">
-        {pageContent.title ?? 'Panoramica dei corsi'}
+        {t('trainingPages.section8.title', {
+          defaultValue: pageContent.title ?? 'Panoramica dei corsi',
+        })}
       </h1>
 
       {/* Table Section */}
@@ -26,21 +52,21 @@ export default function CourseOverview() {
             <thead>
               <tr className="border-b border-gray-200">
                 <th className="px-4 py-4 text-left text-sm font-semibold text-gray-700">
-                  {tableHeaders.course ?? 'Corso'}
+                  {tableHeaders.course}
                 </th>
                 <th className="px-4 py-4 text-left text-sm font-semibold text-gray-700">
-                  {tableHeaders.description ?? 'Descrizione'}
+                  {tableHeaders.description}
                 </th>
                 <th className="px-4 py-4 text-left text-sm font-semibold text-gray-700">
-                  {tableHeaders.duration ?? 'Durata'}
+                  {tableHeaders.duration}
                 </th>
                 <th className="px-4 py-4 text-left text-sm font-semibold text-gray-700">
-                  {tableHeaders.type ?? 'Tipo'}
+                  {tableHeaders.type}
                 </th>
               </tr>
             </thead>
             <tbody>
-              {courses.map((course, index) => (
+              {tableRows.map((course, index) => (
                 <tr
                   key={index}
                   className="border-b border-gray-100 hover:bg-gray-50"
@@ -86,7 +112,9 @@ export default function CourseOverview() {
               <CheckCircle2 size={24} />
             </div>
             <h2 className="text-xl font-bold text-gray-800 sm:text-2xl">
-              {pageContent.howItWorksTitle ?? 'Come funziona'}
+              {t('trainingPages.section8.howItWorksTitle', {
+                defaultValue: pageContent.howItWorksTitle ?? 'Come funziona',
+              })}
             </h2>
           </div>
 
