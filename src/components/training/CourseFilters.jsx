@@ -15,6 +15,7 @@ export default function CourseFilters({
   onDurationChange,
   onReset,
 }) {
+  const { t } = useTranslation();
   return (
     <Container>
       <div className="my-10 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">

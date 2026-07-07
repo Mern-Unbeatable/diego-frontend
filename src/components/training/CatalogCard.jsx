@@ -2,6 +2,18 @@ import { Heading } from '../ui';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+const courseImages = [
+  '/images/course/course1.png',
+  '/images/course/course2.png',
+];
+
+const formatEuro = (value) => {
+  return new Intl.NumberFormat('it-IT', {
+    style: 'currency',
+    currency: 'EUR',
+  }).format(value);
+};
+
 export default function CatalogCard({ courses = [] }) {
   const { t, i18n } = useTranslation();
 

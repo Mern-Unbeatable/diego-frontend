@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Toast, useToast } from '../../../../components/ui';
+import { useTranslation } from 'react-i18next';
 
 const initialFormData = {
   nome: '',
@@ -14,6 +15,7 @@ const initialFormData = {
 };
 
 export default function ServiceForm({ title }) {
+  const { t } = useTranslation();
   const { toasts, addToast, removeToast } = useToast();
   const [formData, setFormData] = useState(initialFormData);
 

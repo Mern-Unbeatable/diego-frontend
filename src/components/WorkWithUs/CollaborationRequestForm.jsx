@@ -20,6 +20,12 @@ const CollaborationRequestForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here you can handle the form submission, e.g., send data to an API
+    console.log('Form submitted:', formData);
+  };
+
   return (
     <div className="bg-cyan-10 px-4 py-16">
       <div className="bg-cyan-10 px-4 py-16">
