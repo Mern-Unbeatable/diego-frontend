@@ -45,7 +45,7 @@ const CourseDetails = () => {
             </div>
 
             {/* Category Badge */}
-            <p className="mb-2 inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-[#73BFA1]">
+            <p className="mb-2 inline-block rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-[#73BFA1]">
               {selectedCourse?.category}
             </p>
 
@@ -105,7 +105,7 @@ const CourseDetails = () => {
               <span className="text-xl font-bold text-[#73BFA1]">
                 {selectedCourse?.price}
               </span>
-              <span className="text-xs text-gray-600">Prezzo speciale</span>
+              <span className="text-sm text-gray-600">Prezzo speciale</span>
             </div>
 
             <div className="mb-6 space-y-2 text-sm text-gray-700">

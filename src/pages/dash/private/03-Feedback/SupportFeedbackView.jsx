@@ -85,7 +85,7 @@ const SupportFeedbackView = () => {
               <div className="space-y-4">
                 {ticket.conversation.map((msg) => (
                   <div key={msg.id} className="flex gap-3">
-                    <div className="mt-1 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#b9c6cf] text-xs font-semibold text-white">
+                    <div className="mt-1 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#b9c6cf] text-sm font-semibold text-white">
                       {msg.author
                         .split(' ')
                         .map((n) => n[0])

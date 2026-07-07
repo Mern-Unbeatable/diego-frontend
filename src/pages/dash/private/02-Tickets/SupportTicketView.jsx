@@ -95,7 +95,7 @@ const SupportTicketView = () => {
               rows={5}
               className="w-full resize-none rounded-lg border border-[#E5F5ED] bg-[#F6FBF9] px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-transparent focus:ring-2 focus:ring-[#73BFA1] focus:outline-none"
             />
-            <div className="mt-1 text-right text-xs text-gray-500">
+            <div className="mt-1 text-right text-sm text-gray-500">
               {description.length}/{maxChars}
             </div>
           </div>
@@ -120,7 +120,7 @@ const SupportTicketView = () => {
                   <p className="mb-1 text-sm font-medium text-gray-900">
                     Allega dei file
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-sm text-gray-500">
                     Trascina e rilascia oppure{' '}
                     <span className="text-[#73BFA1] underline">clicca qui</span>{' '}
                     per caricare i file
@@ -134,7 +134,7 @@ const SupportTicketView = () => {
                 </div>
               )}
             </div>
-            <p className="mt-2 text-xs text-gray-500">
+            <p className="mt-2 text-sm text-gray-500">
               Dimensioni massima permessa: massimo 20 MB per allegato
             </p>
           </div>

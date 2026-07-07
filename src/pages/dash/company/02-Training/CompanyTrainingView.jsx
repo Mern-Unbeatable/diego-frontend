@@ -130,7 +130,7 @@ const CompanyTrainingView = () => {
                 </div>
               </div>
               <span
-                className={`rounded-full px-3 py-1 text-xs font-semibold ${employee.status === 'Attivo' ? 'bg-[#edf7f2] text-[#6eb295]' : 'bg-[#fbe9e7] text-[#dd6b5f]'}`}
+                className={`rounded-full px-3 py-1 text-sm font-semibold ${employee.status === 'Attivo' ? 'bg-[#edf7f2] text-[#6eb295]' : 'bg-[#fbe9e7] text-[#dd6b5f]'}`}
               >
                 {employee.status}
               </span>
@@ -177,7 +177,7 @@ const CompanyTrainingView = () => {
           <button type="button">Precedente</button>
           <button
             type="button"
-            className="h-6 w-6 rounded bg-[#73bfa1] text-xs font-semibold text-white"
+            className="h-6 w-6 rounded bg-[#73bfa1] text-sm font-semibold text-white"
           >
             1
           </button>

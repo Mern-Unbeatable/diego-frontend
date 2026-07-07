@@ -52,7 +52,7 @@ const WorkWithUsView = () => {
 
         <div className="max-w-4xl mx-auto px-4 py-12 text-center">
 
-          <span className='bg-[#E4F0E8] text-xs p-3 rounded-full  text-[#5C9981]'> Partnership</span>
+          <span className='bg-[#E4F0E8] text-sm p-3 rounded-full  text-[#5C9981]'> Partnership</span>
           <h1 className=" mt-5 text-2xl font-bold text-gray-900 mb-4">Unisciti alla rete di UnoSicurezza</h1>
           <p className="text-gray-600 text-sm leading-relaxed max-w-2xl mx-auto">
             La piattaforma è disponibile in modalità cloud secondo gli standard di sicurezza, affidabilità e protezione dei dati. Scopri come collaborare con noi per formazione, sicurezza e professionisti.

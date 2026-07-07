@@ -18,7 +18,7 @@ const ChiSiamo = () => {
             <div className="flex-1">
               <div className="mb-6 flex items-start gap-3">
                 <div className="mt-1 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-md bg-[#73bfa1]">
-                  {/* <span className="text-xs font-bold text-white">S</span> */}
+                  {/* <span className="text-sm font-bold text-white">S</span> */}
                   <img src="/images/Vector.png" alt="logo" className="w-8 h-8" />
                 </div>
                 <p className="text-sm leading-relaxed text-gray-700 text-justify">

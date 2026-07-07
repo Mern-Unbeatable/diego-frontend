@@ -10,7 +10,7 @@ const StatusPill = ({ status }) => {
   const s = map[status] ?? map.Attivo;
   return (
     <span
-      className={`inline-flex items-center rounded-full px-3 py-1 text-xs ${s.cls}`}
+      className={`inline-flex items-center rounded-full px-3 py-1 text-sm ${s.cls}`}
     >
       {s.label}
     </span>

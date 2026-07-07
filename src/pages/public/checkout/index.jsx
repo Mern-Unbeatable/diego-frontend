@@ -86,7 +86,7 @@ const Checkout = () => {
                 <img src="/images/payment/payment.png" alt="VISA" />
                 <img src="/images/payment/payment3.png" alt="RuPay" />
 
-                <button className="text-xs font-semibold text-green-600 hover:text-green-700">
+                <button className="text-sm font-semibold text-green-600 hover:text-green-700">
                   See all
                 </button>
               </div>

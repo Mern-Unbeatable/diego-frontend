@@ -189,7 +189,7 @@ const CourseContentView = () => {
                   <h3 className="text-sm text-gray-500 md:text-base">
                     Question {currentQuestion + 1} of {totalQuestions}
                   </h3>
-                  <span className="rounded-full bg-[#edf6f1] px-3 py-1 text-xs text-[#2f2f2f]">
+                  <span className="rounded-full bg-[#edf6f1] px-3 py-1 text-sm text-[#2f2f2f]">
                     Single choice
                   </span>
                 </div>

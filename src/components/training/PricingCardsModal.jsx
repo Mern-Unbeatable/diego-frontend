@@ -65,7 +65,7 @@ const PricingCardsModal = ({ isOpen, onClose, courseId }) => {
                                 Soluzione per supportare le aziende nel monitoraggio delle scadenze normative, garantendo assistenza puntuale e conformità
                             </p>
 
-                            <p className="mb-6 text-xs font-semibold text-gray-700">Formazione: la taglia perfetta per te</p>
+                            <p className="mb-6 text-sm font-semibold text-gray-700">Formazione: la taglia perfetta per te</p>
 
                             <div className="mb-8 space-y-3">
                                 <div className="flex items-center gap-3">

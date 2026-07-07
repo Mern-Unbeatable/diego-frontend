@@ -9,7 +9,7 @@ const Paragraph = ({
   const variants = {
     body: 'text-base ',
     small: 'text-sm text-gray-600',
-    caption: 'text-xs text-gray-500',
+    caption: 'text-sm text-gray-500',
     error: 'text-sm text-red-600',
   };
 

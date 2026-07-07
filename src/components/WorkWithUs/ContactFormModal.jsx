@@ -72,7 +72,7 @@ export default function ContactFormModal({ isOpen, onClose }) {
                         {/* First Row - Nome and Cognome */}
                         <div className="grid grid-cols-2 gap-3">
                             <div>
-                                <label className="block text-xs font-semibold text-gray-700 mb-3">
+                                <label className="block text-sm font-semibold text-gray-700 mb-3">
                                     Nome*
                                 </label>
                                 <input
@@ -81,11 +81,11 @@ export default function ContactFormModal({ isOpen, onClose }) {
                                     value={formData.nome}
                                     onChange={handleChange}
                                     placeholder="Il tuo nome"
-                                    className="w-full text-xs px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
+                                    className="w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-semibold text-gray-700 mb-3">
+                                <label className="block text-sm font-semibold text-gray-700 mb-3">
                                     Cognome*
                                 </label>
                                 <input
@@ -94,7 +94,7 @@ export default function ContactFormModal({ isOpen, onClose }) {
                                     value={formData.cognome}
                                     onChange={handleChange}
                                     placeholder="Il tuo cognome"
-                                    className="w-full px-2 py-2 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
+                                    className="w-full px-2 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
                         </div>
@@ -102,7 +102,7 @@ export default function ContactFormModal({ isOpen, onClose }) {
                         {/* Second Row - Azienda and P.IVA */}
                         <div className="grid grid-cols-2 gap-3">
                             <div>
-                                <label className="block text-xs font-semibold text-gray-700 mb-3">
+                                <label className="block text-sm font-semibold text-gray-700 mb-3">
                                     Azienda*
                                 </label>
                                 <input
@@ -111,11 +111,11 @@ export default function ContactFormModal({ isOpen, onClose }) {
                                     value={formData.azienda}
                                     onChange={handleChange}
                                     placeholder="Nome della tua azienda"
-                                    className="w-full px-2 py-2 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
+                                    className="w-full px-2 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-semibold text-gray-700 mb-3">
+                                <label className="block text-sm font-semibold text-gray-700 mb-3">
                                     P.IVA*
                                 </label>
                                 <input
@@ -124,7 +124,7 @@ export default function ContactFormModal({ isOpen, onClose }) {
                                     value={formData.piva}
                                     onChange={handleChange}
                                     placeholder="Partita IVA"
-                                    className="w-full px-2 py-2 tex-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
+                                    className="w-full px-2 py-2 tex-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
                         </div>
@@ -141,7 +141,7 @@ export default function ContactFormModal({ isOpen, onClose }) {
                                     value={formData.telefono}
                                     onChange={handleChange}
                                     placeholder="+39 123 456 7890"
-                                    className="w-full text-xs px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
+                                    className="w-full text-sm px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
                             <div>
@@ -154,14 +154,14 @@ export default function ContactFormModal({ isOpen, onClose }) {
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder="tua.email@esempio.com"
-                                    className="w-full px-2 py-2 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
+                                    className="w-full px-2 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50"
                                 />
                             </div>
                         </div>
 
                         {/* Message Textarea */}
                         <div>
-                            <label className="block text-xs font-semibold text-gray-700 mb-3">
+                            <label className="block text-sm font-semibold text-gray-700 mb-3">
                                 Messaggio
                             </label>
                             <textarea
@@ -170,7 +170,7 @@ export default function ContactFormModal({ isOpen, onClose }) {
                                 onChange={handleChange}
                                 placeholder="Lascia un messaggio"
                                 rows="6"
-                                className="w-full px-2 py-2 text-xs border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50 resize-none"
+                                className="w-full px-2 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#73BFA1] bg-gray-50 resize-none"
                             ></textarea>
                         </div>
 

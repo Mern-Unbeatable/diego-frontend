@@ -38,7 +38,7 @@ export default function CollaborationBenefits() {
     ];
 
     return (
-        <div className="  bg-[#FAFAFA] to-blue-50 py-16 px-4 sm:px-6 lg:px-8">
+        <div className="  bg-gradient-to-r from-[#FAFAFA] to-blue-50 py-16 px-4 sm:px-6 lg:px-8 w-full">
             <div className="max-w-7xl mx-auto">
                 {/* Main Container with 2 columns */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -99,7 +99,7 @@ export default function CollaborationBenefits() {
 
                             {/* Footer Text */}
                             <div className="border-t border-teal-200 pt-6">
-                                <p className="text-xs text-gray-600 text-center font-medium">
+                                <p className="text-sm text-gray-600 text-center font-medium">
                                     Conformità garantita D.Lgs. 81/08
                                 </p>
                             </div>

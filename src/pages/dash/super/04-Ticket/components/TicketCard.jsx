@@ -5,25 +5,25 @@ export default function TicketCard({ ticket, onUpdate, onDelete }) {
     switch (ticket.status) {
       case 'aperto':
         return (
-          <button className="rounded-full bg-red-500 px-3 py-1 text-xs font-medium text-white hover:bg-red-600">
+          <button className="rounded-full bg-red-500 px-3 py-1 text-sm font-medium text-white hover:bg-red-600">
             Aperto
           </button>
         );
       case 'in_attesa':
         return (
-          <button className="rounded-full bg-orange-500 px-3 py-1 text-xs font-medium text-white hover:bg-orange-600">
+          <button className="rounded-full bg-orange-500 px-3 py-1 text-sm font-medium text-white hover:bg-orange-600">
             Attesa
           </button>
         );
       case 'chiuso':
         return (
-          <button className="rounded-full bg-gray-500 px-3 py-1 text-xs font-medium text-white hover:bg-gray-600">
+          <button className="rounded-full bg-gray-500 px-3 py-1 text-sm font-medium text-white hover:bg-gray-600">
             Chiuso
           </button>
         );
       case 'approvato':
         return (
-          <button className="rounded-full bg-green-500 px-3 py-1 text-xs font-medium text-white hover:bg-green-600">
+          <button className="rounded-full bg-green-500 px-3 py-1 text-sm font-medium text-white hover:bg-green-600">
             Approvato
           </button>
         );

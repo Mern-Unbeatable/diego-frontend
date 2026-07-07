@@ -27,7 +27,7 @@ export default function ServiceForm({ title }) {
             'application/msword': ['.doc', '.docx'],
             'application/vnd.ms-excel': ['.xls', '.xlsx']
         },
-        maxSize: 25 * 1024 * 1024 // 25MB
+        masmize: 25 * 1024 * 1024 // 25MB
     });
 
     const removeFile = (indexToRemove) => {
@@ -229,7 +229,7 @@ export default function ServiceForm({ title }) {
                                 </>
                             )}
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-sm text-gray-500 mt-1">
                             Massimo 25MB per file
                         </p>
                     </div>
@@ -244,7 +244,7 @@ export default function ServiceForm({ title }) {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                         </svg>
                                         <span className="text-sm text-gray-600 truncate max-w-[200px]">{file.name}</span>
-                                        <span className="text-xs text-gray-400">({formatFileSize(file.size)})</span>
+                                        <span className="text-sm text-gray-400">({formatFileSize(file.size)})</span>
                                     </div>
                                     <button
                                         type="button"
