@@ -18,6 +18,16 @@ const CourseMain = ({ course }) => {
 
   const containerRef = useRef(null);
 
+  const [videoProgress, setVideoProgress] = useState(28);
+  const totalDuration = 1200; // 20 minutes in seconds
+
+  const currentSeconds = Math.round((videoProgress / 100) * totalDuration);
+  const formatTime = (secs) => {
+    const m = Math.floor(secs / 60).toString().padStart(2, '0');
+    const s = (secs % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  };
+
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
@@ -99,13 +109,19 @@ const CourseMain = ({ course }) => {
 
         {/* Video controls container */}
         <div className="absolute right-6 bottom-4 left-6 flex flex-col gap-3 z-10">
-          {/* Progress Bar */}
-          <div className="relative flex items-center">
-            <div className="h-[3px] w-full rounded-full bg-white/30">
-              <div className="relative h-full w-[28%] rounded-full bg-[#55B18D]">
-                <div className="absolute -right-1.5 -top-[4px] h-3.5 w-3.5 rounded-full bg-white shadow-md cursor-pointer" />
-              </div>
-            </div>
+          {/* Interactive Progress Bar */}
+          <div className="relative flex items-center w-full">
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={videoProgress}
+              onChange={(e) => setVideoProgress(Number(e.target.value))}
+              className="h-[3px] w-full cursor-pointer appearance-none rounded-full bg-white/30 accent-[#55B18D] focus:outline-none"
+              style={{
+                background: `linear-gradient(to right, #55B18D 0%, #55B18D ${videoProgress}%, rgba(255, 255, 255, 0.3) ${videoProgress}%, rgba(255, 255, 255, 0.3) 100%)`,
+              }}
+            />
           </div>
 
           {/* Controls Row */}
@@ -124,7 +140,7 @@ const CourseMain = ({ course }) => {
                 )}
               </button>
               <span className="text-xs font-medium tracking-wider select-none">
-                00:01 <span className="ml-2 text-white/60">({playbackSpeed})</span>
+                {formatTime(currentSeconds)} <span className="ml-2 text-white/60">({playbackSpeed})</span>
               </span>
             </div>
 
@@ -247,7 +263,10 @@ const CourseMain = ({ course }) => {
                 </button>
               </div>
               <div className="h-1 w-full rounded-full bg-white/20">
-                <div className="h-full w-[28%] rounded-full bg-[#55B18D]" />
+                <div 
+                  className="h-full rounded-full bg-[#55B18D]" 
+                  style={{ width: `${videoProgress}%` }}
+                />
               </div>
             </div>
           </div>
