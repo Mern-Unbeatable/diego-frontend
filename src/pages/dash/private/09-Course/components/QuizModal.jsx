@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import QuizResult from './QuizResult';
 
 const QuizModal = ({ isOpen, onClose, quizQuestions = [] }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -140,75 +141,7 @@ const QuizModal = ({ isOpen, onClose, quizQuestions = [] }) => {
           </div>
         </div>
       ) : (
-        <div className="w-full max-w-2xl rounded-2xl bg-[#eff8f4] p-6 md:p-10 shadow-2xl">
-          <h2 className="text-center text-xl font-semibold text-[#70be9f] md:text-2xl">
-            Risultati del quiz
-          </h2>
-          {result.passed ? (
-            <p className="mt-3 text-center text-[28px] text-[#70be9f] md:text-xl">
-              Congratulazioni. Hai superato il test!
-            </p>
-          ) : (
-            <p className="mx-auto mt-3 max-w-[580px] text-center text-[24px] leading-snug text-[#ff5b5b] md:text-xl">
-              Il tuo punteggio attuale e inferiore al 70%. Ti invitiamo a
-              ripetere il test per migliorare il risultato e consolidare le
-              competenze acquisite.
-            </p>
-          )}
-
-          <div className="relative mx-auto mt-6 max-w-[460px] rounded-xl bg-white/70 p-5 md:p-7">
-            <div className="absolute -top-3 -right-3 h-12 w-12 rounded-tr-xl rounded-bl-3xl bg-[#e7f2ec]" />
-            <h3 className="mb-4 text-xl font-semibold text-[#303030] md:text-[42px]">
-              Punteggi
-            </h3>
-            <div className="space-y-2 text-sm md:text-[24px]">
-              <div className="flex items-center justify-between">
-                <span className="text-[#444]">Punteggio ottenuto</span>
-                <span
-                  className={`font-semibold ${result.passed ? 'text-[#303030]' : 'text-[#ff5b5b]'}`}
-                >
-                  {result.score}%
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[#444]">
-                  Totale risposte corrette
-                </span>
-                <span className="font-semibold text-[#303030]">
-                  {result.correct}/{result.total}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[#444]">
-                  Tempo totale impiegato nel test
-                </span>
-                <span className="font-semibold text-[#303030]">
-                  {result.time}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 flex items-center justify-center gap-3">
-            {!result.passed && (
-              <button
-                type="button"
-                onClick={retryQuiz}
-                className="rounded-full bg-[#55B18D] px-10 py-3 text-sm font-semibold text-white md:px-16 md:text-base hover:bg-[#439678] transition-colors cursor-pointer"
-              >
-                Riprova
-              </button>
-            )}
-
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-full border border-gray-200 bg-white px-8 py-3 text-sm font-semibold text-gray-500 hover:bg-gray-50 transition-colors cursor-pointer md:text-base"
-            >
-              Chiudi
-            </button>
-          </div>
-        </div>
+        <QuizResult result={result} onRetry={retryQuiz} onClose={onClose} />
       )}
     </div>
   );
