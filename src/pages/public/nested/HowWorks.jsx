@@ -1,5 +1,6 @@
 'use client';
 import { Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { howWorksData } from '../../../data/howWorksData';
 
 const accentStyles = {
@@ -15,53 +16,50 @@ const accentStyles = {
 };
 
 const HowWorks = () => {
+  const { t } = useTranslation();
+  const sections = t('trainingPages.section10.sections', { returnObjects: true }) || [];
+
   return (
     <div className="min-h-screen bg-white px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-6xl">
-        {/* Hero */}
         <section className="mb-6 container lg:mb-10">
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Trova la soluzione su misura per te
+            {t('trainingPages.section10.headerTitle')}
           </h1>
 
           <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
-            La tua formazione, senza confini. Accedi ai nostri corsi di
-            sicurezza sul lavoro, privacy e igiene alimentare. Corsi sempre
-            aggiornati e progettati per le tue esigenze. Ovunque e in
-            qualsiasi momento: la nostra piattaforma eLearning ti offre una
-            formazione smart, efficace e completamente conforme alle
-            richieste delle autorità. Investi nella tua crescita. Scegli la
-            qualità, scegli il futuro.
+            {t('trainingPages.section10.headerDescription')}
           </p>
 
           <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#5F9F86]">
             <Search size={16} />
-            Esplora tutti i nostri corsi
+            {t('trainingPages.section10.headerCta')}
           </div>
         </section>
 
         {/* Sections */}
         <div className="space-y-14 lg:space-y-10">
-          {howWorksData.map((section) => {
+          {howWorksData.map((section, index) => {
             const isReverse = section.reverse;
             const styles = accentStyles[section.id];
+            const sectionText = sections[index] || {};
 
             const textBlock = (
               <div className={`flex-1 ${isReverse ? 'lg:order-2' : ''}`}>
                 <div className="max-w-xl">
                   <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
-                    {section.title}
+                    {sectionText.title || section.title}
                   </h2>
 
                   <div className="mt-5 space-y-4 text-slate-600">
-                    {section.contents.map((content, contentIndex) => {
-                      const isSubheading = content === 'Come funziona';
+                    {(sectionText.contents || section.contents || []).map((content, contentIndex) => {
+                      const isSubheading = content === 'How it works' || content === 'Come funziona';
 
                       if (isSubheading) {
                         return (
                           <p
                             key={`${section.id}-${contentIndex}`}
-                            className=" text-sm sm:text-base text-justify font-semibold text-slate-500"
+                            className="text-sm sm:text-base text-justify font-semibold text-slate-500"
                           >
                             {content}
                           </p>
@@ -71,7 +69,7 @@ const HowWorks = () => {
                       return (
                         <p
                           key={`${section.id}-${contentIndex}`}
-                          className="text-sm  text-slate-600 sm:text-base text-justify"
+                          className="text-sm text-slate-600 sm:text-base text-justify"
                         >
                           {content}
                         </p>
@@ -94,7 +92,7 @@ const HowWorks = () => {
                 <div className="mx-auto max-w-sm">
                   <img
                     src={section.image}
-                    alt={section.title}
+                    alt={sectionText.title || section.title}
                     className="h-auto w-full object-contain"
                   />
                 </div>
