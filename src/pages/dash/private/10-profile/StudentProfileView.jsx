@@ -15,7 +15,7 @@ import { IoIosLogOut } from 'react-icons/io';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { LuArrowLeftToLine } from 'react-icons/lu';
 import { FiEdit } from 'react-icons/fi';
-import StudentInfoModal from './modal/StudentInfoModal';
+import StudentInfoModal from './components/modal/StudentInfoModal';
 import rightDownSideBg from '/image/student/ciao.png';
 
 const StudentProfileView = () => {

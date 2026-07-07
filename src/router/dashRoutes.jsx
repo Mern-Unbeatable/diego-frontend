@@ -91,7 +91,7 @@ const StudentHomeView = lazy(
   () => import('../pages/dash/private/01-Home/StudentHomeView.jsx'),
 );
 const StudentProfileView = lazy(
-  () => import('../pages/dash/private/components/StudentProfileView.jsx'),
+  () => import('../pages/dash/private/10-profile/StudentProfileView.jsx'),
 );
 const CertificatesView = lazy(
   () => import('../pages/dash/private/07-MyCertificates/CertificatesView.jsx'),
