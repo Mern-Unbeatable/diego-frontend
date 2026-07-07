@@ -3,19 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
 import { Heading, InputField, Label } from '../../components/ui';
-
 import { useAuth } from '../../features/auth/authHooks';
+import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
 
 const LoginView = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(new Array(6).fill(''));
   const [step, setStep] = useState(1);
+
   const otpRefs = useRef([]);
 
   const { login, loading, error, isAuthenticated, verifyOtp } = useAuth(); // ← DESTRUCTURE MORE
 
   const navigate = useNavigate();
-
   // STEP 1 → STEP 2 (EMAIL)
   const handleNextFromEmail = async (e) => {
     e.preventDefault();
@@ -24,6 +24,7 @@ const LoginView = () => {
       await login({
         email: email,
       });
+      console.log('Login email:', email);
       // Will auto-redirect via useEffect
       setStep(2);
     } catch (error) {
@@ -55,12 +56,13 @@ const LoginView = () => {
     e.preventDefault();
 
     try {
-      await verifyOtp({
+      const response = await verifyOtp({
         email: email,
         otp: otp.join(''),
       }); // Call the OTP verification API
-      console.log('OTP:', otp.join(''));
-      navigate('/dashboard/super-admin');
+
+      COOKIE_STORAGE.setUser(response.data.user); // Store user data in cookies
+      COOKIE_STORAGE.setToken(response.data.accessToken); // Store token in cookies
     } catch (error) {
       console.error('OTP verification error:', error);
     }
@@ -141,6 +143,13 @@ const LoginView = () => {
                     >
                       {loading ? 'Loading...' : 'Go ahead'}
                     </button>
+
+                    {/* <button
+                      onClick={debugCookies}
+                      className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
+                    >
+                      {loading ? 'Loading...' : 'Debug Cookies'}
+                    </button> */}
                   </div>
                 </form>
               )}

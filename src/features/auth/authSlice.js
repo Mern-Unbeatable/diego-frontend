@@ -1,7 +1,8 @@
 // authSlice.js
 
 import { createSlice } from '@reduxjs/toolkit';
-import { STORAGE } from '../../utils/storage/authStorage';
+// import { STORAGE } from '../../utils/storage/authStorage';
+import { COOKIE_STORAGE } from '../../utils/cookies/cookieStorage';
 import { loginAPI, otpVerifyAPI } from './authAPI';
 
 //  PLATFORM_ADMIN
@@ -10,13 +11,16 @@ import { loginAPI, otpVerifyAPI } from './authAPI';
 //  LICENSE_USER
 //  PRIVATE_USER
 
-const storedUser = ''; // Hardcoded for testing purposes
-const storedToken = 'sample_token'; // Hardcoded for testing purposes
+const storedUser = COOKIE_STORAGE.getUser();
+const storedToken = COOKIE_STORAGE.getToken();
+
+console.log('storedUser', storedUser);
+console.log('storedToken', storedToken);
 
 const initialState = {
-  user: null,
-  token: null,
-  isAuthenticated: false,
+  user: storedUser || null,
+  token: storedToken || null,
+  isAuthenticated: !!storedUser && !!storedToken,
   loading: false,
   error: null,
 };
@@ -47,9 +51,6 @@ const authSlice = createSlice({
       .addCase(loginAPI.fulfilled, (state, action) => {
         console.log('Login successful:', action.payload);
         state.loading = false;
-        state.user = action.payload.user || null;
-        state.token = action.payload.token || null;
-        state.isAuthenticated = !!action.payload.user && !!action.payload.token;
       })
       .addCase(loginAPI.rejected, (state, action) => {
         state.loading = false;
@@ -65,10 +66,14 @@ const authSlice = createSlice({
       })
       .addCase(otpVerifyAPI.fulfilled, (state, action) => {
         console.log('OTP verification successful:', action.payload);
+
+        const payloadData = action.payload || {};
+
         state.loading = false;
-        state.user = action.payload.user || null;
-        state.token = action.payload.token || null;
-        state.isAuthenticated = !!action.payload.user && !!action.payload.token;
+        state.user = payloadData.data.user || null;
+        state.token = payloadData.data.accessToken || null;
+        state.isAuthenticated =
+          !!payloadData.data.user && !!payloadData.data.accessToken;
       })
       .addCase(otpVerifyAPI.rejected, (state, action) => {
         state.loading = false;
