@@ -4,7 +4,9 @@ import { Bell, Plus, Search, UserRound } from 'lucide-react';
 
 const DashboardNavbar = () => {
   const location = useLocation();
-  const isCompanyArea = location.pathname.startsWith('/dashboard/company-admin');
+  const isCompanyArea = location.pathname.startsWith(
+    '/dashboard/company-admin',
+  );
 
   return (
     <header className="sticky top-0 z-20 border-b border-[#ececec] bg-[#f7f7f7]/95 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
@@ -13,7 +15,10 @@ const DashboardNavbar = () => {
           <span className="text-sm font-medium text-[#2a2a2a]">
             Stai cercando nuovi corsi?{' '}
           </span>
-          <Link to="/" className="text-sm font-medium text-[#73bfa1] hover:underline">
+          <Link
+            to="/"
+            className="text-sm font-medium text-[#73bfa1] hover:underline"
+          >
             Esplora ora
           </Link>
         </div>

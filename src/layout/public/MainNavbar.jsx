@@ -8,7 +8,7 @@ import { Link, useLocation } from 'react-router-dom';
 import LanguageSwitcher from '../../components/common/LanguageSwitcher';
 import { Container } from '../../components/ui';
 import { BookOpen, LayoutGrid } from 'lucide-react';
-import { getDashboardPath } from '../../utils/authUtils';
+import { getDashboardPath } from '../../utils/auth/authUtils';
 
 const MainNavbar = () => {
   const { t } = useTranslation();

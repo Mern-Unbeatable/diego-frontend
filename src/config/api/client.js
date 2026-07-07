@@ -19,17 +19,20 @@
  * ============================================================================
  */
 
+// client.js
+
 import axios from 'axios';
-import APP_CONFIG from '../app.config.js';
+import { ENV_CONFIG } from '../env.config.js';
 import { endpoints } from './httpEndpoint';
-import { STORAGE } from '../storage/storageKeys';
+import { STORAGE } from '../../utils/storage/authStorage.js';
+import { COOKIE_STORAGE } from '../../utils/cookies/cookieStorage';
 
 // ============================================================================
 // AXIOS INSTANCE CONFIGURATION
 // ============================================================================
 
 export const axiosInstance = axios.create({
-  baseURL: APP_CONFIG.apiBaseUrl,
+  baseURL: ENV_CONFIG.API_BASE_URL,
   timeout: 30000,
   headers: { 'Content-Type': 'application/json' },
   // Don't throw on any status code - we handle errors in interceptor
@@ -122,7 +125,7 @@ const refreshAccessToken = async () => {
   try {
     // Use vanilla axios to avoid interceptor recursion
     const response = await axios.post(
-      `${APP_CONFIG.apiBaseUrl}${endpoints.auth.REFRESH}`,
+      `${ENV_CONFIG.API_BASE_URL}${endpoints.auth.REFRESH}`,
       { refreshToken },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -163,7 +166,7 @@ const refreshAccessToken = async () => {
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = STORAGE.getToken();
+    const token = COOKIE_STORAGE.getToken();
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -205,9 +208,9 @@ axiosInstance.interceptors.response.use(
 
       // Skip token refresh for authentication endpoints
       const isAuthEndpoint =
-        requestUrl.includes('/auth/login') ||
+        requestUrl.includes(endpoints.auth.LOGIN) ||
+        requestUrl.includes(endpoints.auth.REFRESH) ||
         requestUrl.includes('/auth/register') ||
-        requestUrl.includes('/auth/refresh') ||
         requestUrl.includes('/auth/forgot-password') ||
         requestUrl.includes('/auth/reset-password');
 

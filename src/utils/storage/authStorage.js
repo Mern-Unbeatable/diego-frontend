@@ -1,4 +1,4 @@
-import { storageKeys } from './authStorage';
+import { storageKeys } from './storageKeys.js';
 
 // ========== Helper Functions ==========
 const getItem = (key) => localStorage.getItem(key);
