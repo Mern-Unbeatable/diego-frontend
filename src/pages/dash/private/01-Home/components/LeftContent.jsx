@@ -169,7 +169,7 @@ const LeftContent = () => {
 
               <div className="p-4">
                 <p
-                  className={`mb-2 inline-block rounded-full px-3 py-1 text-xs tracking-wide uppercase ${getCategoryClasses(course.category)}`}
+                  className={`mb-2 inline-block rounded-full px-3 py-1 text-sm tracking-wide uppercase ${getCategoryClasses(course.category)}`}
                 >
                   {course.category}
                 </p>

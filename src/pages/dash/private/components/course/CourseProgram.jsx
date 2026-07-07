@@ -56,7 +56,7 @@ const CourseProgram = ({ modules = [], progress = 0, onStartQuiz }) => {
                   <button
                     type="button"
                     onClick={() => onStartQuiz && onStartQuiz(item)}
-                    className="rounded-full bg-[#73BFA1] px-3 py-1 text-xs font-semibold text-white hover:bg-[#5fa488]"
+                    className="rounded-full bg-[#73BFA1] px-3 py-1 text-sm font-semibold text-white hover:bg-[#5fa488]"
                   >
                     Start
                   </button>

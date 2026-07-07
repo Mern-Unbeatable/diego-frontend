@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaCloudUploadAlt } from 'react-icons/fa';
-import { Button } from '../../../../components/ui';
+import { Button, Toast, useToast } from '../../../../components/ui';
 
 const SupportTicketView = () => {
+  const { toasts, addToast, removeToast } = useToast();
   const navigate = useNavigate();
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
@@ -15,7 +16,7 @@ const SupportTicketView = () => {
     if (selectedFile && selectedFile.size <= 20 * 1024 * 1024) {
       setFile(selectedFile);
     } else {
-      alert('Il file deve essere massimo 20 MB');
+      addToast('Il file deve essere massimo 20 MB', 'error');
     }
   };
 
@@ -29,18 +30,18 @@ const SupportTicketView = () => {
     if (droppedFile && droppedFile.size <= 20 * 1024 * 1024) {
       setFile(droppedFile);
     } else {
-      alert('Il file deve essere massimo 20 MB');
+      addToast('Il file deve essere massimo 20 MB', 'error');
     }
   };
 
   const handleSubmit = () => {
     if (!subject.trim() || !description.trim()) {
-      alert('Compilare tutti i campi obbligatori');
+      addToast('Compilare tutti i campi obbligatori', 'error');
       return;
     }
 
     console.log({ subject, description, file });
-    alert('Ticket inviato con successo!');
+    addToast('Ticket inviato con successo!', 'success');
     navigate(-1);
   };
 
@@ -50,6 +51,15 @@ const SupportTicketView = () => {
 
   return (
     <div className="">
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       <div className="mx-auto max-w-3xl">
         <div className="rounded-2xl bg-white p-8 shadow-sm md:p-12">
           {/* Header with back button */}
@@ -95,7 +105,7 @@ const SupportTicketView = () => {
               rows={5}
               className="w-full resize-none rounded-lg border border-[#E5F5ED] bg-[#F6FBF9] px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-transparent focus:ring-2 focus:ring-[#73BFA1] focus:outline-none"
             />
-            <div className="mt-1 text-right text-xs text-gray-500">
+            <div className="mt-1 text-right text-sm text-gray-500">
               {description.length}/{maxChars}
             </div>
           </div>
@@ -120,7 +130,7 @@ const SupportTicketView = () => {
                   <p className="mb-1 text-sm font-medium text-gray-900">
                     Allega dei file
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-sm text-gray-500">
                     Trascina e rilascia oppure{' '}
                     <span className="text-[#73BFA1] underline">clicca qui</span>{' '}
                     per caricare i file
@@ -134,7 +144,7 @@ const SupportTicketView = () => {
                 </div>
               )}
             </div>
-            <p className="mt-2 text-xs text-gray-500">
+            <p className="mt-2 text-sm text-gray-500">
               Dimensioni massima permessa: massimo 20 MB per allegato
             </p>
           </div>

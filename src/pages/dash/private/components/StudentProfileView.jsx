@@ -72,7 +72,7 @@ const StudentProfileView = () => {
               {/* small notification badge overlapping bottom-right - scaled for tighter layout */}
               <div className="absolute right-3 bottom-8">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#73BFA1] md:h-10 md:w-10">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#17342e] text-xs font-semibold text-white md:h-9 md:w-9 md:text-xl">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#17342e] text-sm font-semibold text-white md:h-9 md:w-9 md:text-xl">
                     1
                   </div>
                 </div>

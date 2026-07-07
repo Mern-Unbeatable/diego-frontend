@@ -1,4 +1,9 @@
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
 const MainFooter = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-[#000000] px-6 py-12 text-white">
       <div className="mx-auto max-w-7xl px-[32px]">
@@ -12,53 +17,53 @@ const MainFooter = () => {
             />
           </div>
 
-          {/* Main Links Grid Fixed */}
+          {/* Main Links Grid */}
           <div className="col-span-4 grid grid-cols-2 gap-10 md:grid-cols-4">
             {/* Prodotto Column */}
             <div className="col-span-1 gap-[32px] text-white">
               <h3 className="mb-4 text-base font-semibold text-white">
-                Prodotto
+                {t('footer.product', { defaultValue: 'Prodotto' })}
               </h3>
               <ul className="space-y-2 text-base font-bold text-[#EAECF0]">
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/services"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Panoramica
-                  </a>
+                    {t('footer.overview', { defaultValue: 'Panoramica' })}
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/services"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Caratteristiche
-                  </a>
+                    {t('footer.features', { defaultValue: 'Caratteristiche' })}
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/services"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Soluzioni
-                  </a>
+                    {t('footer.solutions', { defaultValue: 'Soluzioni' })}
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/training/courses/how-it-works"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Esercitazione
-                  </a>
+                    {t('footer.tutorial', { defaultValue: 'Esercitazione' })}
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/training/courses/catalog"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Prezzi
-                  </a>
+                    {t('footer.pricing', { defaultValue: 'Prezzi' })}
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -66,32 +71,32 @@ const MainFooter = () => {
             {/* Azienda Column */}
             <div>
               <h3 className="mb-4 text-base font-semibold text-white">
-                Azienda
+                {t('footer.company', { defaultValue: 'Azienda' })}
               </h3>
               <ul className="space-y-2 text-base font-bold text-[#EAECF0]">
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/who_we_are"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Chi siamo
-                  </a>
+                    {t('footer.whoWeAre', { defaultValue: 'Chi siamo' })}
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/training"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Corso
-                  </a>
+                    {t('footer.course', { defaultValue: 'Corso' })}
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/services"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Notizia
-                  </a>
+                    {t('footer.news', { defaultValue: 'Notizia' })}
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -99,12 +104,14 @@ const MainFooter = () => {
             {/* Sociale Column */}
             <div>
               <h3 className="mb-4 text-base font-semibold text-white">
-                Sociale
+                {t('footer.social', { defaultValue: 'Sociale' })}
               </h3>
               <ul className="space-y-2 text-base font-bold text-[#EAECF0]">
                 <li>
                   <a
-                    href=""
+                    href="https://x.com"
+                    target="_blank"
+                    rel="noreferrer"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
                     Twitter
@@ -112,7 +119,9 @@ const MainFooter = () => {
                 </li>
                 <li>
                   <a
-                    href=""
+                    href="https://www.linkedin.com"
+                    target="_blank"
+                    rel="noreferrer"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
                     LinkedIn
@@ -120,7 +129,9 @@ const MainFooter = () => {
                 </li>
                 <li>
                   <a
-                    href=""
+                    href="https://www.facebook.com"
+                    target="_blank"
+                    rel="noreferrer"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
                     Facebook
@@ -128,7 +139,9 @@ const MainFooter = () => {
                 </li>
                 <li>
                   <a
-                    href=""
+                    href="https://www.instagram.com"
+                    target="_blank"
+                    rel="noreferrer"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
                     Instagram
@@ -140,40 +153,40 @@ const MainFooter = () => {
             {/* Legale Column */}
             <div>
               <h3 className="mb-4 text-base font-semibold text-white">
-                Legale
+                {t('footer.legal', { defaultValue: 'Legale' })}
               </h3>
               <ul className="space-y-2 text-base font-bold text-[#EAECF0]">
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/contact_us"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Termini
-                  </a>
+                    {t('footer.terms', { defaultValue: 'Termini' })}
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/contact_us"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Privacy
-                  </a>
+                    {t('footer.privacy', { defaultValue: 'Privacy' })}
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/contact_us"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Biscotti
-                  </a>
+                    {t('footer.cookies', { defaultValue: 'Biscotti' })}
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href=""
+                  <Link
+                    to="/contact_us"
                     className="border-b border-transparent pb-[2px] transition-all duration-200 hover:border-[#4ba581] hover:text-[#4ba581]"
                   >
-                    Contatto
-                  </a>
+                    {t('footer.contact', { defaultValue: 'Contatto' })}
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -184,21 +197,33 @@ const MainFooter = () => {
         <div className="mt-5 items-center justify-between px-6 md:flex md:pt-8">
           {/* Copyright */}
           <p className="mb-2 text-sm text-gray-400">
-            © 2022 UnoSicurezza. All rights reserved.
+            {t('footer.copyright', {
+              defaultValue: '© 2022 UnoSicurezza. All rights reserved.',
+            })}
           </p>
           <div className="">
             <h3 className="mb-4 text-base font-semibold text-white">
-              Download App
+              {t('footer.downloadApp', { defaultValue: 'Download App' })}
             </h3>
             <div className="mr-24 mb-8 flex gap-4">
-              <a href="" className="transition-opacity hover:opacity-80">
+              <a
+                href="https://play.google.com/store"
+                target="_blank"
+                rel="noreferrer"
+                className="transition-opacity hover:opacity-80"
+              >
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
                   alt="Get it on Google Play"
                   className="h-12"
                 />
               </a>
-              <a href="" className="transition-opacity hover:opacity-80">
+              <a
+                href="https://www.apple.com/app-store/"
+                target="_blank"
+                rel="noreferrer"
+                className="transition-opacity hover:opacity-80"
+              >
                 <img
                   src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
                   alt="Download on the App Store"

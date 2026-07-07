@@ -46,7 +46,7 @@ const NotificationItem = ({ item }) => (
     </div>
 
     <div className="ml-4 flex flex-col items-end">
-      <span className="text-xs text-gray-400">{item.time}</span>
+      <span className="text-sm text-gray-400">{item.time}</span>
       {item.unread && (
         <span className="mt-2 h-2.5 w-2.5 rounded-full bg-[#73BFA1]" />
       )}

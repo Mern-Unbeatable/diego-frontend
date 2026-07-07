@@ -51,7 +51,7 @@ const CompanyTicketListView = () => {
             <section className="rounded-xl border border-[#e8e8e8] bg-white p-5">
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1.2fr_1fr_1fr_auto] lg:items-end">
                     <label className="block">
-                        <span className="mb-1 block text-xs font-medium text-[#868686]">Cerca ticket</span>
+                        <span className="mb-1 block text-sm font-medium text-[#868686]">Cerca ticket</span>
                         <div className="flex h-10 items-center rounded-full border border-[#e5e5e5] bg-white px-4">
                             <Search size={16} className="text-[#9ca3af]" />
                             <input
@@ -62,7 +62,7 @@ const CompanyTicketListView = () => {
                     </label>
 
                     <label className="block">
-                        <span className="mb-1 block text-xs font-medium text-[#868686]">Stato</span>
+                        <span className="mb-1 block text-sm font-medium text-[#868686]">Stato</span>
                         <select className="h-10 w-full rounded-full border border-[#e5e5e5] px-4 text-sm text-[#555555] outline-none">
                             <option>Tutti</option>
                             <option>Aperto</option>
@@ -72,7 +72,7 @@ const CompanyTicketListView = () => {
                     </label>
 
                     <label className="block">
-                        <span className="mb-1 block text-xs font-medium text-[#868686]">Priorità</span>
+                        <span className="mb-1 block text-sm font-medium text-[#868686]">Priorità</span>
                         <select className="h-10 w-full rounded-full border border-[#e5e5e5] px-4 text-sm text-[#555555] outline-none">
                             <option>Tutte</option>
                             <option>Critical</option>
@@ -105,7 +105,7 @@ const CompanyTicketListView = () => {
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <span className={`rounded-full px-3 py-1 text-xs font-semibold ${ticket.badgeTone}`}>{ticket.status}</span>
+                                <span className={`rounded-full px-3 py-1 text-sm font-semibold ${ticket.badgeTone}`}>{ticket.status}</span>
                                 <ChevronRight size={20} className="text-[#b5b5b5]" />
                             </div>
                         </div>

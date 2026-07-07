@@ -366,6 +366,68 @@
         }
       ]
     },
+    "courseMeta": [
+      {
+        "category": "SEVESO",
+        "duration": "Annuale",
+        "objectives": [
+          "Comprendere la normativa SEVESO III",
+          "Identificare i rischi di incidente rilevante",
+          "Sviluppare piani di emergenza efficaci",
+          "Gestire la comunicazione in caso di emergenza"
+        ]
+      },
+      {
+        "category": "Sicurezza",
+        "duration": "16 ore",
+        "objectives": [
+          "Conoscere gli obblighi del datore di lavoro",
+          "Applicare le misure di prevenzione in azienda",
+          "Gestire la valutazione dei rischi",
+          "Migliorare la sicurezza operativa quotidiana"
+        ]
+      },
+      {
+        "category": "Generale",
+        "duration": "4 ore",
+        "objectives": [
+          "Conoscere i concetti base della sicurezza",
+          "Riconoscere i principali rischi sul lavoro",
+          "Adottare comportamenti sicuri",
+          "Comprendere diritti e doveri dei lavoratori"
+        ]
+      },
+      {
+        "category": "Sicurezza",
+        "duration": "4 ore",
+        "objectives": [
+          "Individuare i rischi specifici a basso impatto",
+          "Applicare procedure di prevenzione efficaci",
+          "Gestire correttamente i DPI",
+          "Ridurre incidenti e near miss"
+        ]
+      },
+      {
+        "category": "Dirigenti",
+        "duration": "12 ore",
+        "objectives": [
+          "Rafforzare la leadership in ambito safety",
+          "Pianificare azioni preventive con il team",
+          "Monitorare conformita e miglioramento continuo",
+          "Gestire responsabilita e deleghe operative"
+        ]
+      },
+      {
+        "category": "Dirigenti",
+        "duration": "6 ore",
+        "objectives": [
+          "Aggiornare competenze normative recenti",
+          "Ottimizzare la gestione dei rischi aziendali",
+          "Coordinare interventi correttivi tempestivi",
+          "Migliorare cultura della sicurezza in azienda"
+        ]
+      }
+    ],
     "section8": {
       "title": "Panoramica dei corsi",
       "headers": {
@@ -502,6 +564,14 @@
         "item3": "51-200 utenti - €1000/utente",
         "item4": "Include pannello di amministrazione"
       }
+    },
+    "section13": {
+      "title": "UnoSicurezza: la formazione obbligatoria, semplice e professionale",
+      "description": "UnoSicurezza è la piattaforma dedicata alla formazione in materia di salute e sicurezza sul lavoro e-learning, pensata per tutte le aziende che vogliono adempiere agli obblighi normativi in modo efficace e senza complicazioni. I nostri percorsi formativi sono completi, aggiornati e conformi al D.Lgs. 81/08.",
+      "whyTitle": "Perché scegliere UnoSicurezza",
+      "whyDescription": "Ridurre i rischi e promuovere una cultura aziendale attenta alla sicurezza è oggi più che mai fondamentale. UnoSicurezza rende la formazione obbligatoria un processo chiaro, orientato alla tutela delle persone e alla conformità delle aziende. Grazie alla flessibilità della formazione e-learning, accompagniamo ogni impresa nel costruire ambienti di lavoro più sicuri.",
+      "goToCatalog": "Vai al catalogo",
+      "platformDetails": "Dettagli piattaforma"
     }
   },
   "paymentPages": {

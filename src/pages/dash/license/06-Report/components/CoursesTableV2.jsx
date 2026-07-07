@@ -87,7 +87,7 @@ const CoursesTableV2 = ({ courses = [], loading = false }) => {
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${getStatusColor(course.status)}`}
+                    className={`inline-flex rounded-full px-3 py-1 text-sm font-medium ${getStatusColor(course.status)}`}
                   >
                     {course.status}
                   </span>

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Banner from '../../components/common/Banner';
 import Container from '../../components/ui/layouts/Container';
 import banner from '../../../src/assets/images/banner/whoweare/banner.png';
@@ -6,68 +6,65 @@ import PillarsCards from '../../components/WhoWeAre/PillarsCards';
 import MissionCards from '../../components/WhoWeAre/MissionCards';
 
 const ChiSiamo = () => {
+  const { t } = useTranslation();
+
   return (
     <Container size="full">
       <div className="w-full bg-white">
-        <Banner image={banner} title={'Chi siamo'} />
+        <Banner image={banner} title={t('chiSiamo.section1.bannerTitle')} />
 
         {/* Header Section */}
-        <div className="mx-auto max-w-6xl px-4 py-16">
+        <div className="mx-auto max-w-7xl px-4 py-16">
           <div className="flex items-center gap-12">
             {/* Left Content */}
             <div className="flex-1">
               <div className="mb-6 flex items-start gap-3">
-                <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
-                  <span className="text-xs font-bold text-white">S</span>
+                <div className="mt-1 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-md bg-[#73bfa1]">
+                  {/* <span className="text-sm font-bold text-white">S</span> */}
+                  <img
+                    src="/images/Vector.png"
+                    alt="logo"
+                    className="h-8 w-8"
+                  />
                 </div>
-                <p className="text-sm leading-relaxed text-gray-700">
-                  Siamo un gruppo di professionisti che si occupa di
-                  amministrazione stabili, formazione, sicurezza e salute per
-                  aziende e condomini.
+                <p className="text-justify text-sm leading-relaxed text-gray-700">
+                  {t('chiSiamo.section1.intro')}
                 </p>
               </div>
 
-              <div className="space-y-4 text-sm leading-relaxed text-gray-700">
+              <div className="space-y-4 text-justify text-sm leading-relaxed text-gray-700">
                 <div>
                   <p className="mb-2 font-semibold">
-                    Il nostro obiettivo è rendere più facile il rispetto della
-                    normativa e aiutare i nostri clienti a lavorare e vivere in
-                    ambienti più sicuri e organizzati. Cosa facciamo:
+                    {t('chiSiamo.section1.objectiveLabel')}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="mb-2 font-semibold">Cosa facciamo:</h3>
+                  <h3 className="mb-2 font-semibold">
+                    {t('chiSiamo.section1.whatWeDoLabel')}
+                  </h3>
                   <p>
-                    <strong>Formazione:</strong> offriamo corsi chiari e
-                    pratici, anche online, grazie ad una piattaforma semplice da
-                    usare, pensata per lavoratori, responsabili e enti di
-                    formazione.
+                    <strong>{t('chiSiamo.section1.formazione')}</strong>{' '}
+                    {t('chiSiamo.section1.formazioneDesc')}
                   </p>
                 </div>
 
                 <div>
                   <p>
-                    <strong>Sicurezza:</strong> supportiamo aziende e condomini
-                    con adempimenti documentali, corsi obbligatori, piani di
-                    emergenza e controlli per garantire ambienti di lavoro
-                    sempre più sicuri ed in conformità alla normativa.
+                    <strong>{t('chiSiamo.section1.sicurezza')}</strong>{' '}
+                    {t('chiSiamo.section1.sicurezzaDesc')}
                   </p>
                 </div>
 
                 <div>
                   <p>
-                    <strong>Salute:</strong> realizziamo analisi di laboratorio
-                    per prevenire rischi, forniamo ausilio nella medicina del
-                    lavoro e proteggiamo la salute delle persone.
+                    <strong>{t('chiSiamo.section1.salute')}</strong>{' '}
+                    {t('chiSiamo.section1.saluteDesc')}
                   </p>
                 </div>
 
                 <div>
-                  <p className="italic">
-                    Formazione e sicurezza, il motore per un futuro più sereno e
-                    di successo.
-                  </p>
+                  <p className="italic">{t('chiSiamo.section1.tagline')}</p>
                 </div>
               </div>
             </div>
@@ -86,25 +83,21 @@ const ChiSiamo = () => {
         </div>
 
         {/* Mission Section */}
-        <div className="mx-auto max-w-6xl px-4 py-16 text-center">
+        <div className="container mx-auto px-4 text-center">
           <h2 className="mb-6 text-3xl font-bold text-gray-900">
-            La Nostra Missione
+            {t('chiSiamo.section1.missionTitle')}
           </h2>
           <p className="mx-auto mb-12 max-w-3xl text-sm leading-relaxed text-gray-600">
-            La nostra missione è supportare le micro, piccole, medie e grandi
-            imprese attraverso percorsi di formazione mirati, servizi di
-            consulenza strategica e gestione efficiente degli adempimenti
-            documentali. Crediamo nella crescita continua, nella semplificazione
-            dei processi e nella valorizzazione delle competenze.
+            {t('chiSiamo.section1.missionDesc')}
           </p>
 
           <MissionCards />
         </div>
 
         {/* Pillars Section */}
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">
-            I nostri pilastri
+        <div className="container mx-auto px-4 py-16">
+          <h2 className="mb-10 text-center text-3xl font-bold text-gray-900">
+            {t('chiSiamo.section1.pillarsTitle')}
           </h2>
           <PillarsCards />
         </div>

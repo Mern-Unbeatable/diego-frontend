@@ -17,13 +17,13 @@ const CompanyCertificatesView = () => {
       <section className="rounded-xl border border-[#e8e8e8] bg-white p-5">
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
           <div>
-            <p className="mb-1 text-xs font-medium text-[#868686]">Corso</p>
+            <p className="mb-1 text-sm font-medium text-[#868686]">Corso</p>
             <select className="h-10 w-full rounded-full border border-[#e5e5e5] px-4 text-sm text-[#555555] outline-none">
               <option>Tutti i corsi</option>
             </select>
           </div>
           <div>
-            <p className="mb-1 text-xs font-medium text-[#868686]">
+            <p className="mb-1 text-sm font-medium text-[#868686]">
               Cerca partecipante
             </p>
             <select className="h-10 w-full rounded-full border border-[#e5e5e5] px-4 text-sm text-[#555555] outline-none">
@@ -95,7 +95,7 @@ const CompanyCertificatesView = () => {
           <button type="button">Precedente</button>
           <button
             type="button"
-            className="h-6 w-6 rounded bg-[#73bfa1] text-xs font-semibold text-white"
+            className="h-6 w-6 rounded bg-[#73bfa1] text-sm font-semibold text-white"
           >
             1
           </button>

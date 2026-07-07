@@ -366,6 +366,68 @@
         }
       ]
     },
+    "courseMeta": [
+      {
+        "category": "SEVESO",
+        "duration": "Annual",
+        "objectives": [
+          "Understand SEVESO III regulations",
+          "Identify major accident risks",
+          "Develop effective emergency plans",
+          "Manage communication during emergencies"
+        ]
+      },
+      {
+        "category": "Safety",
+        "duration": "16 hours",
+        "objectives": [
+          "Know employer obligations",
+          "Apply preventive measures in the company",
+          "Manage risk assessment",
+          "Improve day-to-day operational safety"
+        ]
+      },
+      {
+        "category": "General",
+        "duration": "4 hours",
+        "objectives": [
+          "Know the basic concepts of safety",
+          "Recognize the main workplace risks",
+          "Adopt safe behaviors",
+          "Understand workers rights and duties"
+        ]
+      },
+      {
+        "category": "Safety",
+        "duration": "4 hours",
+        "objectives": [
+          "Identify low-impact specific risks",
+          "Apply effective prevention procedures",
+          "Use PPE correctly",
+          "Reduce accidents and near misses"
+        ]
+      },
+      {
+        "category": "Managers",
+        "duration": "12 hours",
+        "objectives": [
+          "Strengthen safety leadership",
+          "Plan preventive actions with the team",
+          "Monitor compliance and continuous improvement",
+          "Manage responsibilities and operational delegation"
+        ]
+      },
+      {
+        "category": "Managers",
+        "duration": "6 hours",
+        "objectives": [
+          "Update recent regulatory competencies",
+          "Optimize management of company risks",
+          "Coordinate timely corrective interventions",
+          "Improve the safety culture in the company"
+        ]
+      }
+    ],
     "section8": {
       "title": "Course overview",
       "headers": {
@@ -502,6 +564,14 @@
         "item3": "51-200 users - €1000/user",
         "item4": "Includes administration panel"
       }
+    },
+    "section13": {
+      "title": "UnoSicurezza: mandatory training, simple and professional",
+      "description": "UnoSicurezza is the platform dedicated to workplace health and safety e-learning, designed for companies that want to meet regulatory requirements effectively and without complications. Our training paths are complete, up to date and compliant with Legislative Decree 81/08.",
+      "whyTitle": "Why choose UnoSicurezza",
+      "whyDescription": "Reducing risks and promoting a strong safety culture is more essential than ever. UnoSicurezza turns mandatory training into a clear process focused on people protection and company compliance. Thanks to flexible e-learning, we support every business in building safer work environments.",
+      "goToCatalog": "Go to catalog",
+      "platformDetails": "Platform details"
     }
   },
   "paymentPages": {

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Heading, InputField, Label } from '../../../../components/ui';
+import { Heading, InputField, Label, Toast, useToast } from '../../../../components/ui';
 import { useNavigate } from 'react-router-dom';
 
 const ChangePassword = () => {
+  const { toasts, addToast, removeToast } = useToast();
   const [form, setForm] = useState({
     password: '',
     confirmPassword: '',
@@ -21,17 +22,17 @@ const ChangePassword = () => {
     e.preventDefault();
 
     if (!form.password || !form.confirmPassword) {
-      alert('Fill all fields');
+      addToast('Fill all fields', 'error');
       return;
     }
 
     if (form.password.length < 6) {
-      alert('Password too short');
+      addToast('Password too short', 'error');
       return;
     }
 
     if (form.password !== form.confirmPassword) {
-      alert('Passwords do not match');
+      addToast('Passwords do not match', 'error');
       return;
     }
 
@@ -43,6 +44,15 @@ const ChangePassword = () => {
 
   return (
     <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       <div className="grid min-h-[650px] grid-cols-1 md:grid-cols-2">
         {/* LEFT */}
         <div className="flex flex-col items-center justify-center bg-white p-10">

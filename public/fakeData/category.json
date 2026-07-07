@@ -2,81 +2,97 @@
   {
     "id": 1,
     "image": "/image/servizi/servizicategory/1.jpg",
-    "title": "Corsi SEVESO"
+    "title": "Corsi SEVESO",
+    "path": "/services/sev/sev-courses"
   },
   {
     "id": 2,
     "image": "/image/servizi/servizicategory/2.jpg",
-    "title": "Corsi obbligatori"
+    "title": "Corsi obbligatori",
+    "path": "/training/courses/mandatory-courses"
   },
   {
     "id": 3,
     "image": "/image/servizi/servizicategory/3.jpg",
-    "title": "Servizio ASPP e RSPP"
+    "title": "Servizio ASPP e RSPP",
+    "path": "/services/security/asp-service"
   },
   {
     "id": 4,
     "image": "/image/servizi/servizicategory/4.jpg",
-    "title": "DVR"
+    "title": "DVR",
+    "path": "/services/security/dvr-editorial"
   },
   {
     "id": 5,
     "image": "/image/servizi/servizicategory/5.jpg",
-    "title": "Piani di emergenza"
+    "title": "Piani di emergenza",
+    "path": "/services/security/emergency-plans"
   },
   {
     "id": 6,
     "image": "/image/servizi/servizicategory/6.jpg",
-    "title": "Fulminazione"
+    "title": "Fulminazione",
+    "path": "/services/security/lightning"
   },
   {
     "id": 7,
     "image": "/image/servizi/servizicategory/7.jpg",
-    "title": "Legionella"
+    "title": "Legionella",
+    "path": "/services/security/legion"
   },
   {
     "id": 8,
     "image": "/image/servizi/servizicategory/8.jpg",
-    "title": "Potabilità dell’acqua"
+    "title": "Potabilità dell’acqua",
+    "path": "/services/safety/drinking-water"
   },
   {
     "id": 9,
     "image": "/image/servizi/servizicategory/9.jpg",
-    "title": "Radon"
+    "title": "Radon",
+    "path": "/services/security/radon"
   },
   {
     "id": 10,
     "image": "/image/servizi/servizicategory/10.jpg",
-    "title": "Analisi di laboratorio"
+    "title": "Analisi di laboratorio",
+    "path": "/services/security/laboratory-analysis"
   },
   {
     "id": 11,
     "image": "/image/servizi/servizicategory/11.jpg",
-    "title": "Building management"
+    "title": "Building management",
+    "path": "/services/security/building-management"
   },
   {
     "id": 12,
     "image": "/image/servizi/servizicategory/12.jpg",
-    "title": "RENTRI"
+    "title": "RENTRI",
+    "path": "/services/environment/rent"
   },
   {
     "id": 13,
     "image": "/image/servizi/servizicategory/12.jpg",
-    "title": "Video sorveglianza"
+    "title": "Video sorveglianza",
+    "path": "/services/video/authorization"
   },
   {
     "id": 14,
     "image": "/image/servizi/servizicategory/14.jpg",
-    "title": "Incarico medico competente"
+    "title": "Incarico medico competente",
+    "path": "/services/medicine/assignments"
   },
   {
     "id": 15,
     "image": "/image/servizi/servizicategory/15.jpg",
-    "title": "Gestione visite mediche"
+    "title": "Gestione visite mediche",
+    "path": "/services/medicine-del/assignments"
   },
   {
     "id": 16,
     "image": "/image/servizi/servizicategory/16.jpg",
-    "title": "Analisi di laboratorio"
+    "title": "Analisi di laboratorio",
+    "path": "/services/medicine-del/analysis"
   }
 ]

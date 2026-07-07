@@ -1,72 +1,107 @@
-import { Heading } from "../ui";
-import { courses } from "./CourseCard";
+import { Heading } from '../ui';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-export default function CatalogCard() {
-    return (
-        <section className=" py-14">
+const courseImages = [
+  '/images/course/course1.png',
+  '/images/course/course2.png',
+];
 
-            <h3 className='text-center text-xl md:text-3xl'>La piattaforma di formazione online per la tua azienda</h3>
-            <div className="max-w-6xl mx-auto px-4 mt-14">
+const formatEuro = (value) => {
+  return new Intl.NumberFormat('it-IT', {
+    style: 'currency',
+    currency: 'EUR',
+  }).format(value);
+};
 
-                <Heading level={5}>  Corsi obbligatori</Heading>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-3 ">
-                    {courses.map((course) => (
-                        <div
-                            key={course.id}
-                            className="bg-white border border-[#d8e7e2] rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg"
-                        >
-                            <div className="p-3 pb-0">
-                                <img
-                                    src={course.image}
-                                    alt=""
-                                    className="h-[250px] w-full object-cover rounded-lg"
-                                />
-                            </div>
+export default function CatalogCard({ courses = [] }) {
+  const { t, i18n } = useTranslation();
 
-                            <div className="px-4 py-2">
-                                <h3 className="text-[15px] font-semibold text-[#3a3a3a] leading-5 mb-2">
-                                    {course.title}
-                                </h3>
+  return (
+    <section className="py-14">
+      <h3 className="text-center text-xl md:text-3xl">
+        {t('trainingPages.section5.platformTitle')}
+      </h3>
+      <div className="mx-auto mt-14 max-w-6xl px-4">
+        <Heading level={5}> {t('trainingPages.section7.title')}</Heading>
+        <div className="mt-3 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {courses.map((course, index) => (
+            <div
+              key={`${course.title}-${index}`}
+              className="overflow-hidden rounded-xl border border-[#d8e7e2] bg-white transition-all duration-300 hover:shadow-lg"
+            >
+              <div className="p-3 pb-0">
+                <img
+                  src={courseImages[index] || courseImages[0]}
+                  alt=""
+                  className="h-[250px] w-full rounded-lg object-cover"
+                />
+              </div>
 
-                                <p className="text-[12px] leading-5 text-[#8b8b8b] line-clamp-4">
-                                    {course.description}
-                                </p>
+              <div className="px-4 py-2">
+                <h3 className="mb-2 text-[15px] leading-5 font-semibold text-[#3a3a3a]">
+                  {course.title}
+                </h3>
 
-                                {/* price + rating */}
-                                <div className="flex flex-wrap items-center justify-between mt-2">
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-[12px] text-gray-400 line-through">
-                                            {course.oldPrice}
-                                        </span>
-
-                                        <span className="text-[20px] font-bold text-[#34b86a]">
-                                            {course.price}
-                                        </span>
-                                    </div>
-
-                                    {/* 5 star review */}
-                                    <div className="flex  text-[14px] space-x-2">
-                                        <span className="txt-[#3FC89E]">4.5</span>
-                                        <span className="text-yellow-400">   ★★★★★</span>
-                                        <span className="text-[#969696]">(44,566)</span>
-                                    </div>
-                                </div>
-
-                                {/* buttons */}
-                                <div className="flex gap-2 mt-3">
-                                    <button className="flex-1 bg-[#73BFA1] text-white text-[12px] py-2 rounded-md hover:bg-[#2fa15d] transition">
-                                        Sign up
-                                    </button>
-
-                                    <a className="flex-1 border text-center border-[#73BFA1] text-[#34b86a] text-[12px] py-2 rounded-md hover:bg-[#73BFA1] hover:text-white transition" href="/training/course/details">
-                                        Details
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                <div className="mb-2 flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] text-[#73BFA1] uppercase">
+                  <span>{course.category}</span>
+                  <span className="h-1 w-1 rounded-full bg-[#d3e7df]" />
+                  <span>{course.duration}</span>
                 </div>
+
+                <p className="line-clamp-4 text-[12px] leading-5 text-[#8b8b8b]">
+                  {course.description}
+                </p>
+
+                {/* price + rating */}
+                <div className="mt-2 flex flex-wrap items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[12px] text-gray-400 line-through">
+                      {formatEuro(course.oldPrice)}
+                    </span>
+
+                    <span className="text-[20px] font-bold text-[#34b86a]">
+                      {formatEuro(course.price)}
+                    </span>
+                  </div>
+
+                  {/* 5 star review */}
+                  <div className="flex space-x-2 text-[14px]">
+                    <span className="text-[#3FC89E]">
+                      {course.rating ?? 4.5}
+                    </span>
+                    <span className="text-yellow-400">★★★★★</span>
+                    <span className="text-[#969696]">
+                      (
+                      {new Intl.NumberFormat(i18n.language || 'en').format(
+                        course.reviews ?? 44566,
+                      )}
+                      )
+                    </span>
+                  </div>
+                </div>
+
+                {/* buttons */}
+                <div className="mt-3 flex gap-2">
+                  <Link
+                    to={`/training/course/checkout?id=${course.id}`}
+                    className="flex-1 rounded-md bg-[#73BFA1] py-2 text-center text-[12px] text-white transition hover:bg-[#2fa15d]"
+                  >
+                    {t('trainingPages.section5.signUp')}
+                  </Link>
+
+                  <Link
+                    className="flex-1 rounded-md border border-[#73BFA1] py-2 text-center text-[12px] text-[#34b86a] transition hover:bg-[#73BFA1] hover:text-white"
+                    to={`/training/course/details?id=${course.id}`}
+                  >
+                    {t('trainingPages.section5.details')}
+                  </Link>
+                </div>
+              </div>
             </div>
-        </section>
-    );
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
