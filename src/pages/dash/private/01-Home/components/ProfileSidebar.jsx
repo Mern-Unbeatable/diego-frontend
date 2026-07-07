@@ -17,9 +17,6 @@ const ProfileSidebar = () => {
           <h3 className="text-base font-medium text-gray-700">
             Il tuo profilo
           </h3>
-          <button type="button" className="rounded p-1 hover:bg-gray-100">
-            <FaEdit className="text-sm text-gray-700" />
-          </button>
         </div>
 
         <div className="flex flex-col items-center">
