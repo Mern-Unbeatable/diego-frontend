@@ -12,6 +12,7 @@ import EditLicenseModal from './components/EditLicenseModal';
 import AddLicenseModal from './components/AddLicenseModal';
 import LicenseDetailsModal from './components/LicenseDetailsModal';
 import PersonalDetailsModal from '../07-Report/components/PersonalDetailsModal';
+import { Toast, useToast } from '../../../../components/ui';
 
 const euro = new Intl.NumberFormat('it-IT', {
   style: 'currency',
@@ -91,9 +92,10 @@ export default function LicenseManagementView({
     },
   ],
   pageSize = 5,
-  onExport = () => alert('Esporta rapporto'),
-  onDelete = (row) => alert('Elimina: ' + row.azienda),
+  onExport,
+  onDelete,
 }) {
+  const { toasts, addToast, removeToast } = useToast();
   const [q, setQ] = useState('');
   const [page, setPage] = useState(1);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -126,8 +128,27 @@ export default function LicenseManagementView({
   const start = (clampedPage - 1) * pageSize;
   const rows = filtered.slice(start, start + pageSize);
 
+  const handleExport = () => {
+    if (onExport) return onExport();
+    addToast('Esporta rapporto', 'info');
+  };
+
+  const handleDelete = (row) => {
+    if (onDelete) return onDelete(row);
+    addToast(`Elimina: ${row.azienda}`, 'warning');
+  };
+
   return (
     <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-black/5">
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3 px-2 md:gap-4">
         <h2 className="flex-1 text-[26px] font-semibold text-gray-900 md:text-[28px]">
@@ -151,7 +172,7 @@ export default function LicenseManagementView({
 
         {/* Export */}
         <button
-          onClick={onExport}
+          onClick={handleExport}
           className="inline-flex items-center gap-2 rounded-full border border-emerald-400 px-5 py-3 text-sm font-medium text-emerald-700 hover:bg-emerald-50"
         >
           <Download className="h-5 w-5" />
@@ -221,7 +242,7 @@ export default function LicenseManagementView({
                       <Pencil className="h-5 w-5" />
                     </button>
                     <button
-                      onClick={() => onDelete(r)}
+                      onClick={() => handleDelete(r)}
                       className="text-red-600 hover:text-red-700"
                       title="Elimina"
                     >

@@ -2,11 +2,13 @@ import { IoIosStar } from 'react-icons/io';
 import { IoStopwatchOutline } from 'react-icons/io5';
 import { Button, Heading, Paragraph } from '../../../../components/ui';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const handleButtonAction = (e, action) => {
-    navigate('/training/course/details');
+    navigate(`/training/course/details?id=${course.id}`);
 
   };
 
@@ -93,13 +95,13 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
         {/* Actions */}
         <div className="mt-4 flex flex-wrap justify-between gap-3">
           <Button
-            label="Iscriviti ora"
+            label={t('homeView.section4.enrollNow')}
             onClick={(e) => handleButtonAction(e, 'Iscriviti ora')}
             className="w-full rounded-full font-semibold"
             style={{ backgroundColor: '#3FC89E', color: '#fff' }}
           />
           <Button
-            label="Dettagli"
+            label={t('homeView.section4.details')}
             variant="outline"
             onClick={(e) => handleButtonAction(e, 'Dettagli')}
             className="w-full rounded-full border-gray-300 font-semibold text-gray-700 hover:border-gray-400"

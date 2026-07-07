@@ -490,6 +490,14 @@
         "item3": "51-200用户 - €1000/用户",
         "item4": "包含管理面板"
       }
+    },
+    "section13": {
+      "title": "UnoSicurezza：简单且专业的必修培训",
+      "description": "UnoSicurezza 是专注于职业健康与安全在线培训的平台，面向希望高效、无负担完成法规义务的企业。我们的培训路径完整、及时更新，并符合第 81/08 号法令要求。",
+      "whyTitle": "为什么选择 UnoSicurezza",
+      "whyDescription": "降低风险并建立重视安全的企业文化比以往任何时候都更重要。UnoSicurezza 将必修培训变成清晰流程，聚焦人员保护与企业合规。凭借灵活的在线学习模式，我们帮助每一家企业打造更安全的工作环境。",
+      "goToCatalog": "前往课程目录",
+      "platformDetails": "平台详情"
     }
   },
   "paymentPages": {

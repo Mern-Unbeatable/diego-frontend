@@ -1,14 +1,17 @@
 import { Heading } from "../ui";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function CatalogCard({ courses = [] }) {
+    const { t, i18n } = useTranslation();
+
     return (
         <section className=" py-14">
 
-            <h3 className='text-center text-xl md:text-3xl'>La piattaforma di formazione online per la tua azienda</h3>
+            <h3 className='text-center text-xl md:text-3xl'>{t('trainingPages.section5.platformTitle')}</h3>
             <div className="max-w-6xl mx-auto px-4 mt-14">
 
-                <Heading level={5}>  Corsi obbligatori</Heading>
+                <Heading level={5}>  {t('trainingPages.section7.title')}</Heading>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-3 ">
                     {courses.map((course) => (
                         <div
@@ -55,7 +58,7 @@ export default function CatalogCard({ courses = [] }) {
                                         <span className="text-[#3FC89E]">{course.rating ?? 4.5}</span>
                                         <span className="text-yellow-400">★★★★★</span>
                                         <span className="text-[#969696]">
-                                            ({new Intl.NumberFormat("en-US").format(course.reviews ?? 44566)})
+                                            ({new Intl.NumberFormat(i18n.language || "en").format(course.reviews ?? 44566)})
                                         </span>
                                     </div>
                                 </div>
@@ -66,14 +69,14 @@ export default function CatalogCard({ courses = [] }) {
                                         to={`/training/course/checkout?id=${course.id}`}
                                         className="flex-1 bg-[#73BFA1] text-center text-white text-[12px] py-2 rounded-md hover:bg-[#2fa15d] transition"
                                     >
-                                        Sign up
+                                        {t('trainingPages.section5.signUp')}
                                     </Link>
 
                                     <Link
                                         className="flex-1 border text-center border-[#73BFA1] text-[#34b86a] text-[12px] py-2 rounded-md hover:bg-[#73BFA1] hover:text-white transition"
                                         to={`/training/course/details?id=${course.id}`}
                                     >
-                                        Details
+                                        {t('trainingPages.section5.details')}
                                     </Link>
                                 </div>
                             </div>

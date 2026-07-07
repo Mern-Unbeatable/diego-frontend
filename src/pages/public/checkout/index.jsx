@@ -1,9 +1,11 @@
 import { ChevronLeft, Trash2 } from 'lucide-react';
 import { useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import courses from '../../../data/trainingCourses.json';
 
 const Checkout = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const selectedCourseId = Number(searchParams.get('id')) || courses[0]?.id;
@@ -29,16 +31,16 @@ const Checkout = () => {
             >
               <ChevronLeft className="h-5 w-5 text-green-600" />
               <h2 className="text-lg font-semibold text-gray-800">
-                Continua gli acquisti
+                {t('paymentPages.section1.continueShopping')}
               </h2>
             </button>
 
             <div className="rounded-lg bg-white p-6 shadow">
               <h3 className="mb-4 text-lg font-semibold text-gray-800">
-                Carrello
+                {t('paymentPages.section1.title')}
               </h3>
               <p className="mb-6 text-sm text-gray-600">
-                Il carrello contiene:
+                {t('paymentPages.section1.contains')}
               </p>
 
               {/* Cart Item */}
@@ -73,13 +75,13 @@ const Checkout = () => {
           {/* Payment Details Section */}
           <div className="rounded-lg bg-[#D4EBE2] p-6">
             <h3 className="mb-6 text-lg font-semibold text-gray-800">
-              Dettagli carta
+              {t('paymentPages.section2.title')}
             </h3>
 
             {/* Payment Methods */}
             <div className="mb-6">
               <p className="mb-3 text-sm font-semibold text-gray-700">
-                Circuito carta
+                {t('paymentPages.section2.network')}
               </p>
               <div className="flex w-full items-center justify-center gap-x-3">
                 <img src="/images/payment/payment2.png" alt="Stripe" />
@@ -87,7 +89,7 @@ const Checkout = () => {
                 <img src="/images/payment/payment3.png" alt="RuPay" />
 
                 <button className="text-sm font-semibold text-green-600 hover:text-green-700">
-                  See all
+                  {t('paymentPages.section2.seeAll')}
                 </button>
               </div>
             </div>
@@ -96,7 +98,7 @@ const Checkout = () => {
             <div className="space-y-4">
               <div>
                 <label className="mb-2 block text-sm font-semibold text-gray-700">
-                  Nome sulla carta
+                  {t('paymentPages.section2.nameOnCard')}
                 </label>
                 <input
                   type="text"
@@ -107,7 +109,7 @@ const Checkout = () => {
 
               <div>
                 <label className="mb-2 block text-sm font-semibold text-gray-700">
-                  Numero
+                  {t('paymentPages.section2.cardNumber')}
                 </label>
                 <input
                   type="text"
@@ -119,7 +121,7 @@ const Checkout = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-gray-700">
-                    Data di scadenza
+                    {t('paymentPages.section2.expiryDate')}
                   </label>
                   <input
                     type="text"
@@ -129,7 +131,7 @@ const Checkout = () => {
                 </div>
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-gray-700">
-                    CVV
+                    {t('paymentPages.section2.cvv')}
                   </label>
                   <input
                     type="text"
@@ -143,11 +145,11 @@ const Checkout = () => {
             {/* Totals */}
             <div className="my-6 space-y-2 border-t border-[#73BFA1] pt-6">
               <div className="flex justify-between text-gray-700">
-                <span>Subtotale</span>
+                <span>{t('paymentPages.section2.subtotal')}</span>
                 <span>{selectedCourse?.price}</span>
               </div>
               <div className="flex justify-between text-lg font-bold text-gray-800">
-                <span>Totale</span>
+                <span>{t('paymentPages.section2.total')}</span>
                 <span>{selectedCourse?.price}</span>
               </div>
             </div>
@@ -155,7 +157,7 @@ const Checkout = () => {
             {/* Pay Button */}
             <button className="flex w-full items-center justify-center gap-2 rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition hover:bg-[#73BFA1]">
               <span>{selectedCourse?.price}</span>
-              <span>Paga ora</span>
+              <span>{t('paymentPages.section2.payNow')}</span>
               <span>→</span>
             </button>
           </div>

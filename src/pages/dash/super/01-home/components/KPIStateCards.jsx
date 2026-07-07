@@ -8,6 +8,7 @@ import {
   ArrowUpRight,
   PlusCircle,
 } from 'lucide-react';
+import { Toast, useToast } from '../../../../../components/ui';
 
 // ONE-FUNCTION VERSION — no extra components
 export default function KPIStateCards({
@@ -19,8 +20,18 @@ export default function KPIStateCards({
   health = 99.97,
   uptime = 0.02,
   totalCourses = 10,
-  onAddCourse = () => alert('Azione: aggiungi nuovo corso'),
+  onAddCourse,
 }) {
+  const { toasts, addToast, removeToast } = useToast();
+
+  const handleAddCourse = () => {
+    if (onAddCourse) {
+      onAddCourse();
+      return;
+    }
+    addToast('Azione: aggiungi nuovo corso', 'info');
+  };
+
   const euro = new Intl.NumberFormat('it-IT', {
     style: 'currency',
     currency: 'EUR',
@@ -30,6 +41,15 @@ export default function KPIStateCards({
 
   return (
     <div className="w-full">
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       <h1 className="mb-6 text-2xl font-semibold tracking-tight text-gray-900 md:text-3xl">
         Dashboard
       </h1>
@@ -136,7 +156,7 @@ export default function KPIStateCards({
           </div>
           <div className="mt-5">
             <button
-              onClick={onAddCourse}
+              onClick={handleAddCourse}
               className="w-full rounded-full bg-emerald-500 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-emerald-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
             >
               <PlusCircle className="mr-2 inline h-5 w-5" />

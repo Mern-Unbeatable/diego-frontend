@@ -1,40 +1,42 @@
-import React, { useState } from 'react';
 import { CheckCircle, Zap, Settings, BookOpen, Shield } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function CollaborationBenefits() {
+    const { t } = useTranslation();
+
     const benefits = [
         {
             id: 1,
             icon: Zap,
-            title: 'Piattaforma pronta all\'uso',
-            description: 'Accesso immediato alla nostra piattaforma LMS avanzata senza costi di sviluppo.'
+            title: t('workWithUs.section3.benefit1Title'),
+            description: t('workWithUs.section3.benefit1Desc')
         },
         {
             id: 2,
             icon: Settings,
-            title: 'Gestione autonoma',
-            description: 'Gestione totale e centralizzata di ogni aspetto: corsi, report e area personale in un\'unica interfaccia.'
+            title: t('workWithUs.section3.benefit2Title'),
+            description: t('workWithUs.section3.benefit2Desc')
         },
         {
             id: 3,
             icon: BookOpen,
-            title: 'Creazione corsi',
-            description: 'Possibilità di caricare i tuoi contenuti formativi in formato SCORM e tanti altri formati.'
+            title: t('workWithUs.section3.benefit3Title'),
+            description: t('workWithUs.section3.benefit3Desc')
         },
         {
             id: 4,
             icon: Shield,
-            title: 'Certificazioni conformi',
-            description: 'Rilascio di certificazioni conformi alle normative italiane.'
+            title: t('workWithUs.section3.benefit4Title'),
+            description: t('workWithUs.section3.benefit4Desc')
         }
     ];
 
     const licenseFeatures = [
-        'Piattaforma LMS completa',
-        'Gestione autonoma dei corsisti',
-        'Caricamento corsi (SCORM, PPT, ecc.)',
-        'Download report e attestati di formazione a portata di un clic',
-        'Supporto tecnico personalizzato via ticket'
+        t('workWithUs.section3.feature1'),
+        t('workWithUs.section3.feature2'),
+        t('workWithUs.section3.feature3'),
+        t('workWithUs.section3.feature4'),
+        t('workWithUs.section3.feature5')
     ];
 
     return (
@@ -46,11 +48,11 @@ export default function CollaborationBenefits() {
                     {/* Left Column - Benefits */}
                     <div className="lg:col-span-2">
                         <h1 className="text-4xl font-bold text-gray-900 mb-6">
-                            Vantaggi della collaborazione
+                            {t('workWithUs.section3.title')}
                         </h1>
 
                         <p className="text-gray-600 mb-12 leading-relaxed">
-                            La   nostra   piattaforma   ti   permette   di   concentrarti   sui   contenuti   formativi mentre noi ci occupiamo della tecnologia e della conformità normativa.
+                            {t('workWithUs.section3.description')}
                         </p>
 
                         {/* Benefits Grid */}
@@ -82,7 +84,7 @@ export default function CollaborationBenefits() {
                     <div className="lg:col-span-1">
                         <div className="bg-white rounded-lg border border-teal-200 p-8 sticky top-20">
                             <h2 className="text-xl font-bold text-gray-900 mb-6">
-                                Modello utente licenza
+                                {t('workWithUs.section3.licenseTitle')}
                             </h2>
 
                             {/* Features List */}
@@ -100,7 +102,7 @@ export default function CollaborationBenefits() {
                             {/* Footer Text */}
                             <div className="border-t border-teal-200 pt-6">
                                 <p className="text-sm text-gray-600 text-center font-medium">
-                                    Conformità garantita D.Lgs. 81/08
+                                    {t('workWithUs.section3.compliance')}
                                 </p>
                             </div>
                         </div>

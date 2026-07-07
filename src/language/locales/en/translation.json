@@ -502,6 +502,14 @@
         "item3": "51-200 users - €1000/user",
         "item4": "Includes administration panel"
       }
+    },
+    "section13": {
+      "title": "UnoSicurezza: mandatory training, simple and professional",
+      "description": "UnoSicurezza is the platform dedicated to workplace health and safety e-learning, designed for companies that want to meet regulatory requirements effectively and without complications. Our training paths are complete, up to date and compliant with Legislative Decree 81/08.",
+      "whyTitle": "Why choose UnoSicurezza",
+      "whyDescription": "Reducing risks and promoting a strong safety culture is more essential than ever. UnoSicurezza turns mandatory training into a clear process focused on people protection and company compliance. Thanks to flexible e-learning, we support every business in building safer work environments.",
+      "goToCatalog": "Go to catalog",
+      "platformDetails": "Platform details"
     }
   },
   "paymentPages": {

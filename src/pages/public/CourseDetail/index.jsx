@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ChevronLeft, CheckCircle, Star } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PricingCardsModal from '../../../components/training/PricingCardsModal';
 import courses from '../../../data/trainingCourses.json';
 
 const CourseDetails = () => {
+  const { t, i18n } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -28,7 +30,7 @@ const CourseDetails = () => {
             className="flex items-center gap-2 font-semibold text-green-600 hover:text-green-700"
           >
             <ChevronLeft className="h-5 w-5 text-green-600" />
-            Torna al catalogo
+            {t('trainingPages.section11.backToCatalog')}
           </button>
         </div>
 
@@ -64,8 +66,8 @@ const CourseDetails = () => {
                 ))}
               </div>
               <span className="text-sm text-gray-600">
-                {selectedCourse?.rating}/5 Stelle (
-                {new Intl.NumberFormat('en-US').format(
+                {selectedCourse?.rating}/5 (
+                {new Intl.NumberFormat(i18n.language || 'en').format(
                   selectedCourse?.reviews ?? 0
                 )}
                 )
@@ -83,7 +85,7 @@ const CourseDetails = () => {
             {/* Objectives Section */}
             <div>
               <h2 className="mb-4 text-xl font-bold text-gray-900">
-                Obiettivi
+                {t('trainingPages.section11.objectivesTitle')}
               </h2>
               <div className="space-y-3">
                 {(selectedCourse?.objectives ?? []).map((objective) => (
@@ -105,17 +107,21 @@ const CourseDetails = () => {
               <span className="text-xl font-bold text-[#73BFA1]">
                 {selectedCourse?.price}
               </span>
-              <span className="text-sm text-gray-600">Prezzo speciale</span>
+              <span className="text-sm text-gray-600">
+                {t('trainingPages.section11.specialPrice')}
+              </span>
             </div>
 
             <div className="mb-6 space-y-2 text-sm text-gray-700">
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-[#73BFA1]" />
-                <span>Durata {selectedCourse?.duration}</span>
+                <span>
+                  {t('trainingPages.section8.headers.duration')}: {selectedCourse?.duration}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-[#73BFA1]" />
-                <span>Codice: {selectedCourse?.code}</span>
+                <span>{t('trainingPages.section11.code')} {selectedCourse?.code}</span>
               </div>
             </div>
 
@@ -123,7 +129,7 @@ const CourseDetails = () => {
               onClick={() => setIsModalOpen(true)}
               className="mb-6 w-full rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition hover:bg-[#73BFA1]"
             >
-              Iscriviti ora
+              {t('trainingPages.section11.enrollNow')}
             </button>
           </div>
         </div>

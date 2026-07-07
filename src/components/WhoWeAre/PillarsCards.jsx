@@ -1,19 +1,21 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const PillarsCards = () => {
+  const { t } = useTranslation();
+
   const pillarsData = [
     {
-      title: "Applicazione concreta della normativa",
-      description: "Ci dedichiamo con costanza all'aggiornamento continuo in conformità con la normativa vigente."
+      title: t('chiSiamo.section3.card1Title'),
+      description: t('chiSiamo.section3.card1Desc'),
     },
     {
-      title: "Infrastruttura tecnologica innovativa",
-      description: "Piattaforma LMS pensata per offrire percorsi formativi semplici, efficaci e sempre aggiornati rispetto alla normativa vigente"
+      title: t('chiSiamo.section3.card2Title'),
+      description: t('chiSiamo.section3.card2Desc'),
     },
     {
-      title: "Formazione Multi-Settoriale",
-      description: "Un'unica piattaforma che racchiude corsi diversificati e percorsi formativi personalizzati, pensati per ogni esigenza."
-    }
+      title: t('chiSiamo.section3.card3Title'),
+      description: t('chiSiamo.section3.card3Desc'),
+    },
   ];
 
   return (

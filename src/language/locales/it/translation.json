@@ -502,6 +502,14 @@
         "item3": "51-200 utenti - €1000/utente",
         "item4": "Include pannello di amministrazione"
       }
+    },
+    "section13": {
+      "title": "UnoSicurezza: la formazione obbligatoria, semplice e professionale",
+      "description": "UnoSicurezza è la piattaforma dedicata alla formazione in materia di salute e sicurezza sul lavoro e-learning, pensata per tutte le aziende che vogliono adempiere agli obblighi normativi in modo efficace e senza complicazioni. I nostri percorsi formativi sono completi, aggiornati e conformi al D.Lgs. 81/08.",
+      "whyTitle": "Perché scegliere UnoSicurezza",
+      "whyDescription": "Ridurre i rischi e promuovere una cultura aziendale attenta alla sicurezza è oggi più che mai fondamentale. UnoSicurezza rende la formazione obbligatoria un processo chiaro, orientato alla tutela delle persone e alla conformità delle aziende. Grazie alla flessibilità della formazione e-learning, accompagniamo ogni impresa nel costruire ambienti di lavoro più sicuri.",
+      "goToCatalog": "Vai al catalogo",
+      "platformDetails": "Dettagli piattaforma"
     }
   },
   "paymentPages": {

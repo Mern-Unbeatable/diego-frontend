@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
 import { useDropzone } from 'react-dropzone';
+import { Toast, useToast } from '../../../../components/ui';
+
+const initialFormData = {
+    nome: '',
+    cognome: '',
+    azienda: '',
+    piva: '',
+    telefono: '',
+    email: '',
+    messaggio: '',
+    privacy: false
+};
 
 export default function ServiceForm({ title }) {
-    const [formData, setFormData] = useState({
-        nome: '',
-        cognome: '',
-        azienda: '',
-        piva: '',
-        telefono: '',
-        email: '',
-        messaggio: '',
-        privacy: false
-    });
+    const { toasts, addToast, removeToast } = useToast();
+    const [formData, setFormData] = useState(initialFormData);
 
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -27,7 +31,7 @@ export default function ServiceForm({ title }) {
             'application/msword': ['.doc', '.docx'],
             'application/vnd.ms-excel': ['.xls', '.xlsx']
         },
-        masmize: 25 * 1024 * 1024 // 25MB
+        maxSize: 25 * 1024 * 1024 // 25MB
     });
 
     const removeFile = (indexToRemove) => {
@@ -64,24 +68,36 @@ export default function ServiceForm({ title }) {
         });
 
         try {
+            // Dummy submit flow: simulate request latency
+            await new Promise((resolve) => setTimeout(resolve, 900));
+
             // Replace with your API endpoint
             // const response = await axios.post('/api/service-request', submitData);
             console.log('Form submitted:', formData);
             console.log('Files:', files);
 
-            // Reset form after successful submission
-            // setFormData(initialState);
-            // setFiles([]);
-            alert('Richiesta inviata con successo!');
+            // Reset form after successful dummy submission
+            setFormData(initialFormData);
+            setFiles([]);
+            addToast('Richiesta inviata con successo!', 'success');
         } catch (error) {
             console.error('Error submitting form:', error);
-            alert('Errore durante l\'invio della richiesta');
+            addToast("Errore durante l'invio della richiesta", 'error');
         } finally {
             setLoading(false);
         }
     };
     return (
-        <div className="bg-[#FFF5E6] rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
+        <div className="relative bg-[#FFF5E6] rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8">
+            {toasts.map((toast) => (
+                <Toast
+                    key={toast.id}
+                    type={toast.type}
+                    message={toast.message}
+                    duration={toast.duration}
+                    onClose={() => removeToast(toast.id)}
+                />
+            ))}
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
                 Richiedi informazioni
             </h2>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
-import { Button } from '../../../../components/ui';
+import { Button, Toast, useToast } from '../../../../components/ui';
 
 const SupportFeedbackView = () => {
+  const { toasts, addToast, removeToast } = useToast();
   const navigate = useNavigate();
   const [reply, setReply] = useState('');
 
@@ -39,16 +40,25 @@ const SupportFeedbackView = () => {
 
   const handleSendReply = () => {
     if (!reply.trim()) {
-      alert('Inserisci una risposta');
+      addToast('Inserisci una risposta', 'error');
       return;
     }
     console.log('Reply sent:', reply);
     setReply('');
-    alert('Risposta inviata!');
+    addToast('Risposta inviata!', 'success');
   };
 
   return (
     <div className="">
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       <div className="">
         <div className="relative mb-8 flex items-center justify-center">
           <button

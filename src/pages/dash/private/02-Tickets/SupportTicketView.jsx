@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaCloudUploadAlt } from 'react-icons/fa';
-import { Button } from '../../../../components/ui';
+import { Button, Toast, useToast } from '../../../../components/ui';
 
 const SupportTicketView = () => {
+  const { toasts, addToast, removeToast } = useToast();
   const navigate = useNavigate();
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
@@ -15,7 +16,7 @@ const SupportTicketView = () => {
     if (selectedFile && selectedFile.size <= 20 * 1024 * 1024) {
       setFile(selectedFile);
     } else {
-      alert('Il file deve essere massimo 20 MB');
+      addToast('Il file deve essere massimo 20 MB', 'error');
     }
   };
 
@@ -29,18 +30,18 @@ const SupportTicketView = () => {
     if (droppedFile && droppedFile.size <= 20 * 1024 * 1024) {
       setFile(droppedFile);
     } else {
-      alert('Il file deve essere massimo 20 MB');
+      addToast('Il file deve essere massimo 20 MB', 'error');
     }
   };
 
   const handleSubmit = () => {
     if (!subject.trim() || !description.trim()) {
-      alert('Compilare tutti i campi obbligatori');
+      addToast('Compilare tutti i campi obbligatori', 'error');
       return;
     }
 
     console.log({ subject, description, file });
-    alert('Ticket inviato con successo!');
+    addToast('Ticket inviato con successo!', 'success');
     navigate(-1);
   };
 
@@ -50,6 +51,15 @@ const SupportTicketView = () => {
 
   return (
     <div className="">
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       <div className="mx-auto max-w-3xl">
         <div className="rounded-2xl bg-white p-8 shadow-sm md:p-12">
           {/* Header with back button */}

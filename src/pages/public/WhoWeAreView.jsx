@@ -1,4 +1,4 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Banner from '../../components/common/Banner';
 import Container from '../../components/ui/layouts/Container';
 import banner from '../../../src/assets/images/banner/whoweare/banner.png';
@@ -6,10 +6,12 @@ import PillarsCards from '../../components/WhoWeAre/PillarsCards';
 import MissionCards from '../../components/WhoWeAre/MissionCards';
 
 const ChiSiamo = () => {
+  const { t } = useTranslation();
+
   return (
     <Container size="full">
       <div className="w-full bg-white">
-        <Banner image={banner} title={'Chi siamo'} />
+        <Banner image={banner} title={t('chiSiamo.section1.bannerTitle')} />
 
         {/* Header Section */}
         <div className="mx-auto max-w-7xl px-4 py-16">
@@ -22,53 +24,43 @@ const ChiSiamo = () => {
                   <img src="/images/Vector.png" alt="logo" className="w-8 h-8" />
                 </div>
                 <p className="text-sm leading-relaxed text-gray-700 text-justify">
-                  Siamo un gruppo di professionisti che si occupa di
-                  amministrazione stabili, formazione, sicurezza e salute per
-                  aziende e condomini.
+                  {t('chiSiamo.section1.intro')}
                 </p>
               </div>
 
               <div className="space-y-4 text-sm leading-relaxed text-gray-700 text-justify">
                 <div>
                   <p className="mb-2 font-semibold">
-                    Il nostro obiettivo è rendere più facile il rispetto della
-                    normativa e aiutare i nostri clienti a lavorare e vivere in
-                    ambienti più sicuri e organizzati. Cosa facciamo:
+                    {t('chiSiamo.section1.objectiveLabel')}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="mb-2 font-semibold">Cosa facciamo:</h3>
+                  <h3 className="mb-2 font-semibold">
+                    {t('chiSiamo.section1.whatWeDoLabel')}
+                  </h3>
                   <p>
-                    <strong>Formazione:</strong> offriamo corsi chiari e
-                    pratici, anche online, grazie ad una piattaforma semplice da
-                    usare, pensata per lavoratori, responsabili e enti di
-                    formazione.
+                    <strong>{t('chiSiamo.section1.formazione')}</strong>{' '}
+                    {t('chiSiamo.section1.formazioneDesc')}
                   </p>
                 </div>
 
                 <div>
                   <p>
-                    <strong>Sicurezza:</strong> supportiamo aziende e condomini
-                    con adempimenti documentali, corsi obbligatori, piani di
-                    emergenza e controlli per garantire ambienti di lavoro
-                    sempre più sicuri ed in conformità alla normativa.
+                    <strong>{t('chiSiamo.section1.sicurezza')}</strong>{' '}
+                    {t('chiSiamo.section1.sicurezzaDesc')}
                   </p>
                 </div>
 
                 <div>
                   <p>
-                    <strong>Salute:</strong> realizziamo analisi di laboratorio
-                    per prevenire rischi, forniamo ausilio nella medicina del
-                    lavoro e proteggiamo la salute delle persone.
+                    <strong>{t('chiSiamo.section1.salute')}</strong>{' '}
+                    {t('chiSiamo.section1.saluteDesc')}
                   </p>
                 </div>
 
                 <div>
-                  <p className="italic">
-                    Formazione e sicurezza, il motore per un futuro più sereno e
-                    di successo.
-                  </p>
+                  <p className="italic">{t('chiSiamo.section1.tagline')}</p>
                 </div>
               </div>
             </div>
@@ -89,14 +81,10 @@ const ChiSiamo = () => {
         {/* Mission Section */}
         <div className="mx-auto container px-4  text-center">
           <h2 className="mb-6 text-3xl font-bold text-gray-900">
-            La Nostra Missione
+            {t('chiSiamo.section1.missionTitle')}
           </h2>
           <p className="mx-auto mb-12 max-w-3xl text-sm leading-relaxed text-gray-600 ">
-            La nostra missione è supportare le micro, piccole, medie e grandi
-            imprese attraverso percorsi di formazione mirati, servizi di
-            consulenza strategica e gestione efficiente degli adempimenti
-            documentali. Crediamo nella crescita continua, nella semplificazione
-            dei processi e nella valorizzazione delle competenze.
+            {t('chiSiamo.section1.missionDesc')}
           </p>
 
           <MissionCards />
@@ -105,7 +93,7 @@ const ChiSiamo = () => {
         {/* Pillars Section */}
         <div className="mx-auto container px-4 py-16">
           <h2 className="mb-10 text-center text-3xl font-bold text-gray-900">
-            I nostri pilastri
+            {t('chiSiamo.section1.pillarsTitle')}
           </h2>
           <PillarsCards />
         </div>

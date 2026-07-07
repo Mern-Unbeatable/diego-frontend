@@ -1,10 +1,11 @@
 import { useState, useRef } from 'react';
-import { Heading, InputField, Label } from '../../components/ui';
+import { Heading, InputField, Label, Toast, useToast } from '../../components/ui';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import { GrClose } from 'react-icons/gr';
 
 const RegisterView = () => {
+  const { toasts, addToast, removeToast } = useToast();
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(new Array(6).fill(''));
   const [step, setStep] = useState(1);
@@ -16,7 +17,7 @@ const RegisterView = () => {
     e.preventDefault();
 
     if (!email.trim()) {
-      alert('Enter email first');
+      addToast('Enter email first', 'error');
       return;
     }
 
@@ -50,6 +51,15 @@ const RegisterView = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
         <div className="grid min-h-[650px] grid-cols-1 md:grid-cols-2">
           {/* LEFT */}

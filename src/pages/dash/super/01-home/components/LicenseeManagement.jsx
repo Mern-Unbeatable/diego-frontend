@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, Download, Pencil, Trash2, Edit } from 'lucide-react';
+import { Toast, useToast } from '../../../../../components/ui';
 
 const StatusPill = ({ status }) => {
   const map = {
@@ -72,19 +73,46 @@ export default function LicenseeManagement({
       stato: 'Inattivo',
     },
   ],
-  onExport = () => alert('Esporta rapporto'),
-  onEditGlobal = () => alert('Modifica licenziatario'),
-  onEditRow = (row) => alert('Modifica: ' + row.azienda),
-  onDeleteRow = (row) => alert('Elimina: ' + row.azienda),
+  onExport,
+  onEditGlobal,
+  onEditRow,
+  onDeleteRow,
 }) {
+  const { toasts, addToast, removeToast } = useToast();
   const euro = new Intl.NumberFormat('it-IT', {
     style: 'currency',
     currency: 'EUR',
     maximumFractionDigits: 0,
   });
 
+  const handleExport = () => {
+    if (onExport) return onExport();
+    addToast('Esporta rapporto', 'info');
+  };
+  const handleEditGlobal = () => {
+    if (onEditGlobal) return onEditGlobal();
+    addToast('Modifica licenziatario', 'info');
+  };
+  const handleEditRow = (row) => {
+    if (onEditRow) return onEditRow(row);
+    addToast(`Modifica: ${row.azienda}`, 'info');
+  };
+  const handleDeleteRow = (row) => {
+    if (onDeleteRow) return onDeleteRow(row);
+    addToast(`Elimina: ${row.azienda}`, 'warning');
+  };
+
   return (
     <div className="rounded-3xl p-4 shadow-sm ring-1 ring-black/5 md:p-6">
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3 px-2 md:gap-4">
         <h2 className="flex-1 text-2xl font-semibold text-gray-900 md:text-[28px]">
@@ -102,7 +130,7 @@ export default function LicenseeManagement({
         </div>
 
         <button
-          onClick={onExport}
+          onClick={handleExport}
           className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-medium text-white hover:bg-emerald-600"
         >
           <Download className="h-5 w-5" />
@@ -110,7 +138,7 @@ export default function LicenseeManagement({
         </button>
 
         <button
-          onClick={onEditGlobal}
+          onClick={handleEditGlobal}
           className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-medium text-white hover:bg-emerald-600"
         >
           <Edit className="h-5 w-5" />
@@ -158,14 +186,14 @@ export default function LicenseeManagement({
                 <td className="px-4 py-5">
                   <div className="flex items-center gap-4">
                     <button
-                      onClick={() => onEditRow(r)}
+                      onClick={() => handleEditRow(r)}
                       className="text-gray-700 hover:text-gray-900"
                       title="Modifica"
                     >
                       <Pencil className="h-5 w-5" />
                     </button>
                     <button
-                      onClick={() => onDeleteRow(r)}
+                      onClick={() => handleDeleteRow(r)}
                       className="text-red-600 hover:text-red-700"
                       title="Elimina"
                     >

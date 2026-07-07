@@ -1,7 +1,9 @@
 import { X, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const PricingCardsModal = ({ isOpen, onClose, courseId }) => {
+    const { t } = useTranslation();
     if (!isOpen) return null;
 
     return (
@@ -23,14 +25,18 @@ const PricingCardsModal = ({ isOpen, onClose, courseId }) => {
                 </button>
 
                 <div className="w-full max-w-4xl mx-auto">
-                    <p className="mb-8 text-gray-700">Frame 1281154065</p>
+                    <p className="mb-8 text-gray-700">
+                        {t('trainingPages.section12.frameLabel')}
+                    </p>
 
                     <div className="grid gap-6 md:grid-cols-2">
                         {/* Single Course Card */}
                         <div className="rounded-lg bg-white p-8 shadow-lg border border-gray-200">
-                            <h3 className="mb-3 text-xl font-bold text-gray-800">Corso singolo</h3>
+                            <h3 className="mb-3 text-xl font-bold text-gray-800">
+                                {t('trainingPages.section12.singleCourse.title')}
+                            </h3>
                             <p className="mb-8 text-sm text-gray-600">
-                                Ottimo per chi vuole accedere e frequentare individualmente
+                                {t('trainingPages.section12.singleCourse.description')}
                             </p>
 
                             <div className="mb-6 text-3xl font-bold text-gray-800">€20</div>
@@ -38,15 +44,21 @@ const PricingCardsModal = ({ isOpen, onClose, courseId }) => {
                             <div className="mb-8 space-y-3">
                                 <div className="flex items-center gap-3">
                                     <CheckCircle className="h-5 w-5 text-green-500" />
-                                    <span className="text-sm text-gray-700">1 utente</span>
+                                    <span className="text-sm text-gray-700">
+                                        {t('trainingPages.section12.singleCourse.item1')}
+                                    </span>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <CheckCircle className="h-5 w-5 text-green-500" />
-                                    <span className="text-sm text-gray-700">Accesso completo al corso</span>
+                                    <span className="text-sm text-gray-700">
+                                        {t('trainingPages.section12.singleCourse.item2')}
+                                    </span>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <CheckCircle className="h-5 w-5 text-green-500" />
-                                    <span className="text-sm text-gray-700">Possibilità di scaricare l'attestato</span>
+                                    <span className="text-sm text-gray-700">
+                                        {t('trainingPages.section12.singleCourse.item3')}
+                                    </span>
                                 </div>
                             </div>
 
@@ -54,35 +66,47 @@ const PricingCardsModal = ({ isOpen, onClose, courseId }) => {
                                 to={`/training/course/checkout?id=${courseId ?? 1}`}
                                 className="block w-full rounded-full bg-[#73BFA1] py-3 text-center font-semibold text-white transition"
                             >
-                                Seleziona
+                                {t('trainingPages.section12.select')}
                             </Link>
                         </div>
 
                         {/* Company Package Card */}
                         <div className="rounded-lg bg-white p-8 shadow-lg border border-gray-200">
-                            <h3 className="mb-2 text-xl font-bold text-gray-800">Pacchetto Aziendale</h3>
+                            <h3 className="mb-2 text-xl font-bold text-gray-800">
+                                {t('trainingPages.section12.companyPackage.title')}
+                            </h3>
                             <p className="mb-2 text-sm text-gray-600">
-                                Soluzione per supportare le aziende nel monitoraggio delle scadenze normative, garantendo assistenza puntuale e conformità
+                                {t('trainingPages.section12.companyPackage.description')}
                             </p>
 
-                            <p className="mb-6 text-sm font-semibold text-gray-700">Formazione: la taglia perfetta per te</p>
+                            <p className="mb-6 text-sm font-semibold text-gray-700">
+                                {t('trainingPages.section12.companyPackage.subtitle')}
+                            </p>
 
                             <div className="mb-8 space-y-3">
                                 <div className="flex items-center gap-3">
                                     <CheckCircle className="h-5 w-5 text-[#73BFA1]" />
-                                    <span className="text-sm text-gray-700">1-20 utenti - €150/utente</span>
+                                    <span className="text-sm text-gray-700">
+                                        {t('trainingPages.section12.companyPackage.item1')}
+                                    </span>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <CheckCircle className="h-5 w-5 text-[#73BFA1]" />
-                                    <span className="text-sm text-gray-700">21-50 utenti - €420/utente</span>
+                                    <span className="text-sm text-gray-700">
+                                        {t('trainingPages.section12.companyPackage.item2')}
+                                    </span>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <CheckCircle className="h-5 w-5 text-[#73BFA1]" />
-                                    <span className="text-sm text-gray-700">51-200 utenti - €1000/utente</span>
+                                    <span className="text-sm text-gray-700">
+                                        {t('trainingPages.section12.companyPackage.item3')}
+                                    </span>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <CheckCircle className="h-5 w-5 text-[#73BFA1]" />
-                                    <span className="text-sm text-gray-700">Include pannello di amministrazione</span>
+                                    <span className="text-sm text-gray-700">
+                                        {t('trainingPages.section12.companyPackage.item4')}
+                                    </span>
                                 </div>
                             </div>
 
@@ -90,7 +114,7 @@ const PricingCardsModal = ({ isOpen, onClose, courseId }) => {
                                 to={`/training/course/checkout?id=${courseId ?? 1}`}
                                 className="block w-full rounded-full bg-[#73BFA1] py-3 text-center font-semibold text-white transition"
                             >
-                                Seleziona
+                                {t('trainingPages.section12.select')}
                             </Link>
                         </div>
                     </div>

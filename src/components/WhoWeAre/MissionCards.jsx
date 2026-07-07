@@ -1,28 +1,30 @@
-import React from 'react';
 import { Shield, Zap, Target, Award } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const MissionCards = () => {
+  const { t } = useTranslation();
+
   const missionData = [
     {
       icon: Shield,
-      title: "Sicurezza Prima di Tutto",
-      description: "La sicurezza sul lavoro è al centro di tutto ciò che facciamo, con l'obiettivo di creare ambienti di lavoro più sicuri."
+      title: t('chiSiamo.section2.card1Title'),
+      description: t('chiSiamo.section2.card1Desc'),
     },
     {
       icon: Zap,
-      title: "Innovazione Tecnologica",
-      description: "Utilizziamo sistemi affidabili e collaudati per offrire percorsi formativi di qualità, accessibili e funzionali."
+      title: t('chiSiamo.section2.card2Title'),
+      description: t('chiSiamo.section2.card2Desc'),
     },
     {
       icon: Target,
-      title: "Orientamento al Cliente",
-      description: "Ogni soluzione è progettata sulle specifiche esigenze del cliente, garantendo risultati concreti."
+      title: t('chiSiamo.section2.card3Title'),
+      description: t('chiSiamo.section2.card3Desc'),
     },
     {
       icon: Award,
-      title: "Eccellenza Formativa",
-      description: "Standard di qualità in ogni corso, con metodologie didattiche all'avanguardia."
-    }
+      title: t('chiSiamo.section2.card4Title'),
+      description: t('chiSiamo.section2.card4Desc'),
+    },
   ];
 
   return (

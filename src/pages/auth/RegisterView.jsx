@@ -1,6 +1,13 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Heading, InputField, Label, Paragraph } from '../../components/ui';
+import {
+  Heading,
+  InputField,
+  Label,
+  Paragraph,
+  Toast,
+  useToast,
+} from '../../components/ui';
 import { IoIosArrowBack } from 'react-icons/io';
 import { BiArrowBack } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
@@ -130,6 +137,7 @@ const Logo = () => (
 
 // Main Component
 const RegisterView = () => {
+  const { toasts, addToast, removeToast } = useToast();
   const [email, setEmail] = useState('');
   const [step, setStep] = useState(STEPS.EMAIL);
   const navigate = useNavigate();
@@ -156,7 +164,7 @@ const RegisterView = () => {
       e.preventDefault();
 
       if (!email.trim()) {
-        alert('Please enter your email address');
+        addToast('Please enter your email address', 'error');
         return;
       }
 
@@ -190,6 +198,15 @@ const RegisterView = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left Section - Logo & Illustration */}
