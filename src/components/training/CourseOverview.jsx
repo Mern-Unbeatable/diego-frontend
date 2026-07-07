@@ -2,14 +2,21 @@
 
 import { CheckCircle2 } from 'lucide-react';
 import WorkflowSection from './WorkflowSection';
-import { courses, howitWorks } from '../../data/courseData';
+import trainingCourses from '../../data/trainingCourses.json';
+
+const courses = trainingCourses.courses ?? [];
+const pageContent = trainingCourses.sevesoPage?.overview ?? {};
 
 export default function CourseOverview() {
+  const tableHeaders = pageContent.tableHeaders ?? {};
+  const howItWorks = pageContent.howItWorks ?? [];
+  const workflowSteps = pageContent.workflowSteps ?? [];
+
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-6 md:p-8">
       {/* Header */}
       <h1 className="mb-8 text-2xl font-bold text-gray-800 sm:text-3xl">
-        Panoramica dei corsi
+        {pageContent.title ?? 'Panoramica dei corsi'}
       </h1>
 
       {/* Table Section */}
@@ -19,16 +26,16 @@ export default function CourseOverview() {
             <thead>
               <tr className="border-b border-gray-200">
                 <th className="px-4 py-4 text-left text-sm font-semibold text-gray-700">
-                  Corso
+                  {tableHeaders.course ?? 'Corso'}
                 </th>
                 <th className="px-4 py-4 text-left text-sm font-semibold text-gray-700">
-                  Descrizione
+                  {tableHeaders.description ?? 'Descrizione'}
                 </th>
                 <th className="px-4 py-4 text-left text-sm font-semibold text-gray-700">
-                  Durata
+                  {tableHeaders.duration ?? 'Durata'}
                 </th>
                 <th className="px-4 py-4 text-left text-sm font-semibold text-gray-700">
-                  Tipo
+                  {tableHeaders.type ?? 'Tipo'}
                 </th>
               </tr>
             </thead>
@@ -79,12 +86,12 @@ export default function CourseOverview() {
               <CheckCircle2 size={24} />
             </div>
             <h2 className="text-xl font-bold text-gray-800 sm:text-2xl">
-              Come funziona
+              {pageContent.howItWorksTitle ?? 'Come funziona'}
             </h2>
           </div>
 
           <ol className="space-y-3">
-            {howitWorks.map((step, index) => (
+            {howItWorks.map((step, index) => (
               <li
                 key={index}
                 className="flex gap-3 text-sm leading-relaxed text-gray-700"
@@ -98,7 +105,7 @@ export default function CourseOverview() {
           </ol>
 
           {/* Process Flow Section */}
-          <WorkflowSection />
+          <WorkflowSection steps={workflowSteps} />
         </div>
       </div>
     </div>

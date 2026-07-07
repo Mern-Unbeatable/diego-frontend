@@ -3,7 +3,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ChevronLeft, CheckCircle, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PricingCardsModal from '../../../components/training/PricingCardsModal';
-import courses from '../../../data/trainingCourses.json';
+import trainingCourses from '../../../data/trainingCourses.json';
+
+const courses = trainingCourses.courses ?? [];
 
 const CourseDetails = () => {
   const { t, i18n } = useTranslation();

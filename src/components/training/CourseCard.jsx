@@ -1,13 +1,14 @@
 import trainingCourses from '../../data/trainingCourses.json';
 
-export const courses = trainingCourses;
+export const courses = trainingCourses.courses ?? [];
+export const pageContent = trainingCourses.sevesoPage ?? {};
 
 export default function CoursesSection() {
   return (
     <section className="bg-[#f6f6f6] py-10">
       <div className="mx-auto max-w-6xl px-4">
         <h2 className="mb-8 text-[30px] font-semibold text-[#333]">
-          Corsi obbligatori
+          {pageContent.courseCardsTitle ?? 'Corsi obbligatori'}
         </h2>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">

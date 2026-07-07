@@ -1,116 +1,175 @@
-[
-  {
-    "id": 1,
-    "image": "/image/course/catalog.png",
-    "title": "Formazione SEVESO - pacchetto annuale",
-    "category": "SEVESO",
-    "duration": "Annuale",
-    "description": "Il corso 'Seveso III' si riferisce alla direttiva UE 2012/18/UE sulla prevenzione degli incidenti rilevanti che comportano sostanze pericolose.",
-    "oldPrice": "60,00€",
-    "price": "50,00 €",
-    "rating": 4.5,
-    "reviews": 44566,
-    "code": "SEV-001",
-    "objectives": [
-      "Comprendere la normativa SEVESO III",
-      "Identificare i rischi di incidente rilevante",
-      "Sviluppare piani di emergenza efficaci",
-      "Gestire la comunicazione in caso di emergenza"
-    ]
-  },
-  {
-    "id": 2,
-    "image": "/image/course/catalog2.png",
-    "title": "Datore di lavoro (Nuovo) 16 ore",
-    "category": "Sicurezza",
-    "duration": "16 ore",
-    "description": "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome.",
-    "oldPrice": "180,00€",
-    "price": "110,00 €",
-    "rating": 4.4,
-    "reviews": 16325,
-    "code": "SIC-016",
-    "objectives": [
-      "Conoscere gli obblighi del datore di lavoro",
-      "Applicare le misure di prevenzione in azienda",
-      "Gestire la valutazione dei rischi",
-      "Migliorare la sicurezza operativa quotidiana"
-    ]
-  },
-  {
-    "id": 3,
-    "image": "/image/course/catalog3.png",
-    "title": "Generale 4 ore",
-    "category": "Generale",
-    "duration": "4 ore",
-    "description": "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome.",
-    "oldPrice": "50,00€",
-    "price": "40,00 €",
-    "rating": 4.3,
-    "reviews": 12890,
-    "code": "GEN-004",
-    "objectives": [
-      "Conoscere i concetti base della sicurezza",
-      "Riconoscere i principali rischi sul lavoro",
-      "Adottare comportamenti sicuri",
-      "Comprendere diritti e doveri dei lavoratori"
-    ]
-  },
-  {
-    "id": 4,
-    "image": "/image/course/catalog4.png",
-    "title": "Specifico basso rischio 4 ore (Nuovo)",
-    "category": "Sicurezza",
-    "duration": "4 ore",
-    "description": "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome.",
-    "oldPrice": "50,00€",
-    "price": "40,00 €",
-    "rating": 4.4,
-    "reviews": 10440,
-    "code": "SIC-004",
-    "objectives": [
-      "Individuare i rischi specifici a basso impatto",
-      "Applicare procedure di prevenzione efficaci",
-      "Gestire correttamente i DPI",
-      "Ridurre incidenti e near miss"
-    ]
-  },
-  {
-    "id": 5,
-    "image": "/image/course/catalog5.png",
-    "title": "Dirigenti 12 ore",
-    "category": "Dirigenti",
-    "duration": "12 ore",
-    "description": "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome.",
-    "oldPrice": "160,00€",
-    "price": "120,00 €",
-    "rating": 4.6,
-    "reviews": 9720,
-    "code": "DIR-012",
-    "objectives": [
-      "Rafforzare la leadership in ambito safety",
-      "Pianificare azioni preventive con il team",
-      "Monitorare conformita e miglioramento continuo",
-      "Gestire responsabilita e deleghe operative"
-    ]
-  },
-  {
-    "id": 6,
-    "image": "/image/course/catalog6.png",
-    "title": "Aggiornamento Dirigenti 6 ore",
-    "category": "Dirigenti",
-    "duration": "6 ore",
-    "description": "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome.",
-    "oldPrice": "50,00€",
-    "price": "40,00 €",
-    "rating": 4.5,
-    "reviews": 8890,
-    "code": "DIR-006",
-    "objectives": [
-      "Aggiornare competenze normative recenti",
-      "Ottimizzare la gestione dei rischi aziendali",
-      "Coordinare interventi correttivi tempestivi",
-      "Migliorare cultura della sicurezza in azienda"
-    ]
+{
+  "courses": [
+    {
+      "id": 1,
+      "image": "/image/course/catalog.png",
+      "title": "Formazione SEVESO - pacchetto annuale",
+      "category": "SEVESO",
+      "duration": "Annuale",
+      "description": "Il corso 'Seveso III' si riferisce alla direttiva UE 2012/18/UE sulla prevenzione degli incidenti rilevanti che comportano sostanze pericolose.",
+      "oldPrice": "60,00€",
+      "price": "50,00 €",
+      "rating": 4.5,
+      "reviews": 44566,
+      "code": "SEV-001",
+      "objectives": [
+        "Comprendere la normativa SEVESO III",
+        "Identificare i rischi di incidente rilevante",
+        "Sviluppare piani di emergenza efficaci",
+        "Gestire la comunicazione in caso di emergenza"
+      ]
+    },
+    {
+      "id": 2,
+      "image": "/image/course/catalog2.png",
+      "title": "Datore di lavoro (Nuovo) 16 ore",
+      "category": "Sicurezza",
+      "duration": "16 ore",
+      "description": "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome.",
+      "oldPrice": "180,00€",
+      "price": "110,00 €",
+      "rating": 4.4,
+      "reviews": 16325,
+      "code": "SIC-016",
+      "objectives": [
+        "Conoscere gli obblighi del datore di lavoro",
+        "Applicare le misure di prevenzione in azienda",
+        "Gestire la valutazione dei rischi",
+        "Migliorare la sicurezza operativa quotidiana"
+      ]
+    },
+    {
+      "id": 3,
+      "image": "/image/course/catalog3.png",
+      "title": "Generale 4 ore",
+      "category": "Generale",
+      "duration": "4 ore",
+      "description": "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome.",
+      "oldPrice": "50,00€",
+      "price": "40,00 €",
+      "rating": 4.3,
+      "reviews": 12890,
+      "code": "GEN-004",
+      "objectives": [
+        "Conoscere i concetti base della sicurezza",
+        "Riconoscere i principali rischi sul lavoro",
+        "Adottare comportamenti sicuri",
+        "Comprendere diritti e doveri dei lavoratori"
+      ]
+    },
+    {
+      "id": 4,
+      "image": "/image/course/catalog4.png",
+      "title": "Specifico basso rischio 4 ore (Nuovo)",
+      "category": "Sicurezza",
+      "duration": "4 ore",
+      "description": "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome.",
+      "oldPrice": "50,00€",
+      "price": "40,00 €",
+      "rating": 4.4,
+      "reviews": 10440,
+      "code": "SIC-004",
+      "objectives": [
+        "Individuare i rischi specifici a basso impatto",
+        "Applicare procedure di prevenzione efficaci",
+        "Gestire correttamente i DPI",
+        "Ridurre incidenti e near miss"
+      ]
+    },
+    {
+      "id": 5,
+      "image": "/image/course/catalog5.png",
+      "title": "Dirigenti 12 ore",
+      "category": "Dirigenti",
+      "duration": "12 ore",
+      "description": "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome.",
+      "oldPrice": "160,00€",
+      "price": "120,00 €",
+      "rating": 4.6,
+      "reviews": 9720,
+      "code": "DIR-012",
+      "objectives": [
+        "Rafforzare la leadership in ambito safety",
+        "Pianificare azioni preventive con il team",
+        "Monitorare conformita e miglioramento continuo",
+        "Gestire responsabilita e deleghe operative"
+      ]
+    },
+    {
+      "id": 6,
+      "image": "/image/course/catalog6.png",
+      "title": "Aggiornamento Dirigenti 6 ore",
+      "category": "Dirigenti",
+      "duration": "6 ore",
+      "description": "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome.",
+      "oldPrice": "50,00€",
+      "price": "40,00 €",
+      "rating": 4.5,
+      "reviews": 8890,
+      "code": "DIR-006",
+      "objectives": [
+        "Aggiornare competenze normative recenti",
+        "Ottimizzare la gestione dei rischi aziendali",
+        "Coordinare interventi correttivi tempestivi",
+        "Migliorare cultura della sicurezza in azienda"
+      ]
+    }
+  ],
+  "sevesoPage": {
+    "banner": {
+      "image": "/images/course/course3.png",
+      "title": "Scopri i nostri corsi SEVESO"
+    },
+    "courseCardsTitle": "Corsi obbligatori",
+    "overview": {
+      "title": "Panoramica dei corsi",
+      "tableHeaders": {
+        "course": "Corso",
+        "description": "Descrizione",
+        "duration": "Durata",
+        "type": "Tipo"
+      },
+      "howItWorksTitle": "Come funziona",
+      "howItWorks": [
+        "Contatto con i team di UnoDisicurezza",
+        "Scelta del prodotto che ha per lo scopo singolo o pacchetto per formazione mensuale",
+        "Raccolta esigenze tramite form, oppure sopralluogo dei nostri tecnici",
+        "Realizzazione del corso con personalizazi con logo e riferimenti aziendali, foto video procedura",
+        "Caricamento sulla piattaforma LMS con automazione erogazione e monitoraggio attività formativa",
+        "Erogazione e il learning in asincrono, anche da cellulare e tablet",
+        "Test finale",
+        "Rilascio attestato a termine del corso"
+      ],
+      "workflowSteps": [
+        {
+          "title": "Contatto",
+          "desc": "con il team UnoSicurezza"
+        },
+        {
+          "title": "Scelta del prodotto",
+          "desc": "corso singolo o pacchetto trimestrale"
+        },
+        {
+          "title": "Raccolta delle esigenze",
+          "desc": "tramite form online, o sopralluogo tecnico"
+        },
+        {
+          "title": "Realizzazione del corso personalizzato",
+          "desc": "con logo, riferimenti, foto, video, procedure operative, manuali interni"
+        },
+        {
+          "title": "Caricamento sulla piattaforma LMS",
+          "desc": "automazione erogazione e monitoraggio attività formativa"
+        },
+        {
+          "title": "Erogazione corso",
+          "desc": "in e-learning ai lavoratori da PC, tablet e smartphone"
+        },
+        {
+          "title": "Rilascio attestato",
+          "desc": "Si dichiara il rilascio dell'attestato all'interessato, conforme alle attività svolta."
+        }
+      ]
+    }
   }
-]
+}

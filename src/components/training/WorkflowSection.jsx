@@ -10,51 +10,44 @@ import {
     ArrowDown,
 } from "lucide-react";
 
-const steps = [
+const defaultSteps = [
     {
-        icon: Users,
         title: "Contatto",
         desc: "con il team UnoSicurezza",
-        avatar: true,
     },
     {
-        icon: FileText,
         title: "Scelta del prodotto",
         desc: "corso singolo o pacchetto trimestrale",
     },
     {
-        icon: ClipboardList,
         title: "Raccolta delle esigenze",
         desc: "tramite form online, o sopralluogo tecnico",
     },
     {
-        icon: BookOpen,
         title: "Realizzazione del corso personalizzato",
         desc: "con logo, riferimenti, foto, video, procedure operative, manuali interni",
     },
     {
-        icon: MonitorPlay,
         title: "Caricamento sulla piattaforma LMS",
         desc: "automazione erogazione e monitoraggio attività formativa",
     },
     {
-        icon: Users,
         title: "Erogazione corso",
         desc: "in e-learning ai lavoratori da PC, tablet e smartphone",
-        bottomAvatar: true,
     },
     {
-        icon: Award,
         title: "Rilascio attestato",
         desc: "Si dichiara il rilascio dell'attestato all'interessato, conforme alle attività svolta.",
     },
 ];
 
-export default function WorkflowSection() {
+const icons = [Users, FileText, ClipboardList, BookOpen, MonitorPlay, Users, Award];
+
+export default function WorkflowSection({ steps = defaultSteps }) {
     return (
         <div className="max-w-sm py-5">
             {steps.map((step, index) => {
-                const Icon = step.icon;
+                const Icon = icons[index] ?? Users;
 
                 return (
                     <div key={index}>

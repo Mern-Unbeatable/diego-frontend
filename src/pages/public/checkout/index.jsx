@@ -2,7 +2,9 @@ import { ChevronLeft, Trash2 } from 'lucide-react';
 import { useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import courses from '../../../data/trainingCourses.json';
+import trainingCourses from '../../../data/trainingCourses.json';
+
+const courses = trainingCourses.courses ?? [];
 
 const Checkout = () => {
   const { t } = useTranslation();
