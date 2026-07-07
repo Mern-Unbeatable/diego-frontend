@@ -1,8 +1,10 @@
 export const courses = [
   {
     id: 1,
-    image: 'images/course/catalog1.png',
+    image: '/image/course/catalog.png',
     title: 'Formazione SEVESO - pacchetto annuale',
+    category: 'SEVESO',
+    duration: 'Annuale',
     description:
       "Il corso 'Seveso III' si riferisce alla direttiva UE 2012/18/UE sulla prevenzione degli incidenti rilevanti che comportano sostanze pericolose...",
     oldPrice: '60,00€',
@@ -10,8 +12,10 @@ export const courses = [
   },
   {
     id: 2,
-    image: 'images/course/catalog2.png',
+    image: '/image/course/catalog2.png',
     title: 'Datore di lavoro (Nuovo) 16 ore',
+    category: 'Sicurezza',
+    duration: '16 ore',
     description:
       "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome...",
     oldPrice: '180,00€',
@@ -19,8 +23,10 @@ export const courses = [
   },
   {
     id: 3,
-    image: 'images/course/catalog3.png',
+    image: '/image/course/catalog3.png',
     title: 'Generale 4 ore',
+    category: 'Generale',
+    duration: '4 ore',
     description:
       "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome...",
     oldPrice: '50,00€',
@@ -28,8 +34,10 @@ export const courses = [
   },
   {
     id: 4,
-    image: 'images/course/catalog4.png',
+    image: '/image/course/catalog4.png',
     title: 'Specifico basso rischio 4 ore (Nuovo)',
+    category: 'Sicurezza',
+    duration: '4 ore',
     description:
       "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome...",
     oldPrice: '50,00€',
@@ -37,8 +45,10 @@ export const courses = [
   },
   {
     id: 5,
-    image: 'images/course/catalog5.png',
+    image: '/image/course/catalog5.png',
     title: 'Dirigenti 12 ore',
+    category: 'Dirigenti',
+    duration: '12 ore',
     description:
       "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome...",
     oldPrice: '160,00€',
@@ -46,8 +56,10 @@ export const courses = [
   },
   {
     id: 6,
-    image: 'images/course/catalog6.png',
+    image: '/image/course/catalog6.png',
     title: 'Aggiornamento Dirigenti 6 ore',
+    category: 'Dirigenti',
+    duration: '6 ore',
     description:
       "Accordo, ai sensi dell'articolo 37, comma 2, del decreto legislativo 9 aprile 2008, n. 81, tra il Governo, le regioni e le Province autonome...",
     oldPrice: '50,00€',
@@ -72,7 +84,7 @@ export default function CoursesSection() {
               <div className="p-3 pb-0">
                 <img
                   src={course.image}
-                  alt=""
+                  alt={course.title}
                   className="h-[250px] w-full rounded-lg object-cover"
                 />
               </div>

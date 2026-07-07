@@ -1,7 +1,6 @@
 import { Heading } from "../ui";
-import { courses } from "./CourseCard";
 
-export default function CatalogCard() {
+export default function CatalogCard({ courses = [] }) {
     return (
         <section className=" py-14">
 
@@ -28,6 +27,12 @@ export default function CatalogCard() {
                                     {course.title}
                                 </h3>
 
+                                <div className="mb-2 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-[#73BFA1]">
+                                    <span>{course.category}</span>
+                                    <span className="h-1 w-1 rounded-full bg-[#d3e7df]" />
+                                    <span>{course.duration}</span>
+                                </div>
+
                                 <p className="text-[12px] leading-5 text-[#8b8b8b] line-clamp-4">
                                     {course.description}
                                 </p>
@@ -46,7 +51,7 @@ export default function CatalogCard() {
 
                                     {/* 5 star review */}
                                     <div className="flex  text-[14px] space-x-2">
-                                        <span className="txt-[#3FC89E]">4.5</span>
+                                        <span className="text-[#3FC89E]">4.5</span>
                                         <span className="text-yellow-400">   ★★★★★</span>
                                         <span className="text-[#969696]">(44,566)</span>
                                     </div>

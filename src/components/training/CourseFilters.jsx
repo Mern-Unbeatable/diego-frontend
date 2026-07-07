@@ -3,7 +3,17 @@
 import { Search } from "lucide-react";
 import { Container } from "../ui";
 
-export default function CourseFilters() {
+export default function CourseFilters({
+  searchTerm,
+  category,
+  duration,
+  categories = [],
+  durations = [],
+  onSearchTermChange,
+  onCategoryChange,
+  onDurationChange,
+  onReset,
+}) {
   return (
     <Container>
       <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm my-10">
@@ -19,30 +29,46 @@ export default function CourseFilters() {
               type="text"
               placeholder="Cerca corsi..."
               className="w-full h-12 rounded-xl border border-gray-200 bg-gray-50 pl-11 pr-4 outline-none focus:border-[#78c8a7]"
+              value={searchTerm}
+              onChange={(event) => onSearchTermChange(event.target.value)}
             />
           </div>
 
           {/* Category */}
-          <select className="h-12 rounded-xl border border-gray-200 bg-gray-50 px-4 outline-none focus:border-[#78c8a7]">
-            <option>Tutte le Categorie</option>
-            <option>Sicurezza</option>
-            <option>Dirigenti</option>
-            <option>Generale</option>
-            <option>SEVESO</option>
+          <select
+            className="h-12 rounded-xl border border-gray-200 bg-gray-50 px-4 outline-none focus:border-[#78c8a7]"
+            value={category}
+            onChange={(event) => onCategoryChange(event.target.value)}
+          >
+            <option value="">Tutte le Categorie</option>
+            {categories.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
           </select>
 
           {/* Duration */}
-          <select className="h-12 rounded-xl border border-gray-200 bg-gray-50 px-4 outline-none focus:border-[#78c8a7]">
-            <option>All Durations</option>
-            <option>4 Ore</option>
-            <option>6 Ore</option>
-            <option>12 Ore</option>
-            <option>16 Ore</option>
+          <select
+            className="h-12 rounded-xl border border-gray-200 bg-gray-50 px-4 outline-none focus:border-[#78c8a7]"
+            value={duration}
+            onChange={(event) => onDurationChange(event.target.value)}
+          >
+            <option value="">All Durations</option>
+            {durations.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
           </select>
 
           {/* Button */}
-          <button className="h-12 px-8 rounded-xl bg-[#74c6a4] text-white font-medium hover:bg-[#65ba97] transition">
-            Cerca
+          <button
+            type="button"
+            onClick={onReset}
+            className="h-12 px-8 rounded-xl bg-[#74c6a4] text-white font-medium hover:bg-[#65ba97] transition"
+          >
+            Pulisci
           </button>
         </div>
       </div>
