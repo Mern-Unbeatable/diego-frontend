@@ -1,9 +1,9 @@
 import Banner from '../../../components/common/Banner';
 import banner from '../../../../src/assets/images/banner/safety/banner4.png';
+import { useTranslation } from 'react-i18next';
 import { Container, Heading } from '../../../components/ui';
 import ServiceForm from '../services/components/ServiceForm';
 import { ArrowRight } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 const SafetyServiceView = () => {
   const { t } = useTranslation();

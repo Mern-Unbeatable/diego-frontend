@@ -12,12 +12,37 @@ const CourseDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const selectedCourseId = Number(searchParams.get('id')) || courses[0]?.id;
+  const localizedCourses = useMemo(
+    () =>
+      courses.map((course, index) => ({
+        ...course,
+        title: t(`trainingPages.section7.courses.${index}.title`, {
+          defaultValue: course.title,
+        }),
+        description: t(`trainingPages.section7.courses.${index}.description`, {
+          defaultValue: course.description,
+        }),
+        category: t(`trainingPages.courseMeta.${index}.category`, {
+          defaultValue: course.category,
+        }),
+        duration: t(`trainingPages.courseMeta.${index}.duration`, {
+          defaultValue: course.duration,
+        }),
+        objectives: t(`trainingPages.courseMeta.${index}.objectives`, {
+          returnObjects: true,
+          defaultValue: course.objectives ?? [],
+        }),
+      })),
+    [t],
+  );
+  const selectedCourseId =
+    Number(searchParams.get('id')) || localizedCourses[0]?.id;
 
   const selectedCourse = useMemo(
     () =>
-      courses.find((course) => course.id === selectedCourseId) ?? courses[0],
-    [selectedCourseId],
+      localizedCourses.find((course) => course.id === selectedCourseId) ??
+      localizedCourses[0],
+    [localizedCourses, selectedCourseId],
   );
 
   const filledStars = Math.round(selectedCourse?.rating ?? 0);
