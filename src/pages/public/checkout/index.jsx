@@ -1,18 +1,37 @@
 import { ChevronLeft, Trash2 } from 'lucide-react';
+import { useMemo } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import courses from '../../../data/trainingCourses.json';
 
 const Checkout = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const selectedCourseId = Number(searchParams.get('id')) || courses[0]?.id;
+
+  const selectedCourse = useMemo(
+    () =>
+      courses.find((course) => course.id === selectedCourseId) ?? courses[0],
+    [selectedCourseId]
+  );
+
   return (
     <div className="min-h-screen p-8">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 rounded-md bg-[#F1F9F6] p-5 md:grid-cols-3">
           {/* Cart Section */}
           <div className="md:col-span-2">
-            <div className="mb-8 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() =>
+                navigate(`/training/course/details?id=${selectedCourse?.id}`)
+              }
+              className="mb-8 flex items-center gap-2 text-left"
+            >
               <ChevronLeft className="h-5 w-5 text-green-600" />
               <h2 className="text-lg font-semibold text-gray-800">
                 Continua gli acquisti
               </h2>
-            </div>
+            </button>
 
             <div className="rounded-lg bg-white p-6 shadow">
               <h3 className="mb-4 text-lg font-semibold text-gray-800">
@@ -26,19 +45,23 @@ const Checkout = () => {
               <div className="flex items-center gap-4 rounded-lg bg-gray-50 p-4">
                 <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded bg-gray-300">
                   <img
-                    src={course}
-                    alt="Course"
+                    src={selectedCourse?.image}
+                    alt={selectedCourse?.title}
                     className="h-full w-full object-cover"
                   />
                 </div>
                 <div className="flex-1">
                   <h4 className="font-semibold text-gray-800">
-                    Course Description
+                    {selectedCourse?.title}
                   </h4>
-                  <p className="text-sm text-gray-600">Afrobeat</p>
+                  <p className="text-sm text-gray-600">
+                    {selectedCourse?.category}
+                  </p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="font-semibold text-gray-800">€30.00</span>
+                  <span className="font-semibold text-gray-800">
+                    {selectedCourse?.price}
+                  </span>
                   <button className="text-red-500 hover:text-red-700">
                     <Trash2 className="h-5 w-5" />
                   </button>
@@ -121,17 +144,17 @@ const Checkout = () => {
             <div className="my-6 space-y-2 border-t border-[#73BFA1] pt-6">
               <div className="flex justify-between text-gray-700">
                 <span>Subtotale</span>
-                <span>€80.00</span>
+                <span>{selectedCourse?.price}</span>
               </div>
               <div className="flex justify-between text-lg font-bold text-gray-800">
                 <span>Totale</span>
-                <span>€88.00</span>
+                <span>{selectedCourse?.price}</span>
               </div>
             </div>
 
             {/* Pay Button */}
             <button className="flex w-full items-center justify-center gap-2 rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition hover:bg-[#73BFA1]">
-              <span>€ 86.00 €</span>
+              <span>{selectedCourse?.price}</span>
               <span>Paga ora</span>
               <span>→</span>
             </button>

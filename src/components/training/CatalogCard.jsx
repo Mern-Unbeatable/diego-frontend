@@ -1,4 +1,5 @@
 import { Heading } from "../ui";
+import { Link } from "react-router-dom";
 
 export default function CatalogCard({ courses = [] }) {
     return (
@@ -51,21 +52,29 @@ export default function CatalogCard({ courses = [] }) {
 
                                     {/* 5 star review */}
                                     <div className="flex  text-[14px] space-x-2">
-                                        <span className="text-[#3FC89E]">4.5</span>
-                                        <span className="text-yellow-400">   ★★★★★</span>
-                                        <span className="text-[#969696]">(44,566)</span>
+                                        <span className="text-[#3FC89E]">{course.rating ?? 4.5}</span>
+                                        <span className="text-yellow-400">★★★★★</span>
+                                        <span className="text-[#969696]">
+                                            ({new Intl.NumberFormat("en-US").format(course.reviews ?? 44566)})
+                                        </span>
                                     </div>
                                 </div>
 
                                 {/* buttons */}
                                 <div className="flex gap-2 mt-3">
-                                    <button className="flex-1 bg-[#73BFA1] text-white text-[12px] py-2 rounded-md hover:bg-[#2fa15d] transition">
+                                    <Link
+                                        to={`/training/course/checkout?id=${course.id}`}
+                                        className="flex-1 bg-[#73BFA1] text-center text-white text-[12px] py-2 rounded-md hover:bg-[#2fa15d] transition"
+                                    >
                                         Sign up
-                                    </button>
+                                    </Link>
 
-                                    <a className="flex-1 border text-center border-[#73BFA1] text-[#34b86a] text-[12px] py-2 rounded-md hover:bg-[#73BFA1] hover:text-white transition" href="/training/course/details">
+                                    <Link
+                                        className="flex-1 border text-center border-[#73BFA1] text-[#34b86a] text-[12px] py-2 rounded-md hover:bg-[#73BFA1] hover:text-white transition"
+                                        to={`/training/course/details?id=${course.id}`}
+                                    >
                                         Details
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

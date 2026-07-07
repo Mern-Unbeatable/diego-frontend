@@ -1,6 +1,7 @@
 import { X, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const PricingCardsModal = ({ isOpen, onClose }) => {
+const PricingCardsModal = ({ isOpen, onClose, courseId }) => {
     if (!isOpen) return null;
 
     return (
@@ -49,11 +50,12 @@ const PricingCardsModal = ({ isOpen, onClose }) => {
                                 </div>
                             </div>
 
-                            <a href="/training/course/checkout">
-                                <button className="w-full rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition">
-                                    Seleziona
-                                </button>
-                            </a>
+                            <Link
+                                to={`/training/course/checkout?id=${courseId ?? 1}`}
+                                className="block w-full rounded-full bg-[#73BFA1] py-3 text-center font-semibold text-white transition"
+                            >
+                                Seleziona
+                            </Link>
                         </div>
 
                         {/* Company Package Card */}
@@ -84,11 +86,12 @@ const PricingCardsModal = ({ isOpen, onClose }) => {
                                 </div>
                             </div>
 
-                            <a href="/training/course/checkout">
-                                <button className="w-full rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition">
-                                    Seleziona
-                                </button>
-                            </a>
+                            <Link
+                                to={`/training/course/checkout?id=${courseId ?? 1}`}
+                                className="block w-full rounded-full bg-[#73BFA1] py-3 text-center font-semibold text-white transition"
+                            >
+                                Seleziona
+                            </Link>
                         </div>
                     </div>
                 </div>
