@@ -38,6 +38,9 @@ const LanguageView = () => {
           <div className="grid min-h-[700px] grid-cols-1 md:grid-cols-2">
             {/* Left Section */}
 
+
+            
+
             {/* Close Icon - Top Right of Entire Card */}
             <button
               onClick={() => navigate('/')}

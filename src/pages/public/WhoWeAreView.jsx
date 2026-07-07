@@ -12,22 +12,23 @@ const ChiSiamo = () => {
         <Banner image={banner} title={'Chi siamo'} />
 
         {/* Header Section */}
-        <div className="mx-auto max-w-6xl px-4 py-16">
+        <div className="mx-auto max-w-7xl px-4 py-16">
           <div className="flex items-center gap-12">
             {/* Left Content */}
             <div className="flex-1">
               <div className="mb-6 flex items-start gap-3">
-                <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500">
-                  <span className="text-xs font-bold text-white">S</span>
+                <div className="mt-1 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-md bg-[#73bfa1]">
+                  {/* <span className="text-xs font-bold text-white">S</span> */}
+                  <img src="/images/Vector.png" alt="logo" className="w-8 h-8" />
                 </div>
-                <p className="text-sm leading-relaxed text-gray-700">
+                <p className="text-sm leading-relaxed text-gray-700 text-justify">
                   Siamo un gruppo di professionisti che si occupa di
                   amministrazione stabili, formazione, sicurezza e salute per
                   aziende e condomini.
                 </p>
               </div>
 
-              <div className="space-y-4 text-sm leading-relaxed text-gray-700">
+              <div className="space-y-4 text-sm leading-relaxed text-gray-700 text-justify">
                 <div>
                   <p className="mb-2 font-semibold">
                     Il nostro obiettivo è rendere più facile il rispetto della
@@ -86,11 +87,11 @@ const ChiSiamo = () => {
         </div>
 
         {/* Mission Section */}
-        <div className="mx-auto max-w-6xl px-4 py-16 text-center">
+        <div className="mx-auto container px-4  text-center">
           <h2 className="mb-6 text-3xl font-bold text-gray-900">
             La Nostra Missione
           </h2>
-          <p className="mx-auto mb-12 max-w-3xl text-sm leading-relaxed text-gray-600">
+          <p className="mx-auto mb-12 max-w-3xl text-sm leading-relaxed text-gray-600 ">
             La nostra missione è supportare le micro, piccole, medie e grandi
             imprese attraverso percorsi di formazione mirati, servizi di
             consulenza strategica e gestione efficiente degli adempimenti
@@ -102,8 +103,8 @@ const ChiSiamo = () => {
         </div>
 
         {/* Pillars Section */}
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">
+        <div className="mx-auto container px-4 py-16">
+          <h2 className="mb-10 text-center text-3xl font-bold text-gray-900">
             I nostri pilastri
           </h2>
           <PillarsCards />

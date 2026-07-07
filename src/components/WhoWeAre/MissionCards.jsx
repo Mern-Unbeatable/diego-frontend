@@ -33,7 +33,7 @@ const MissionCards = () => {
             <item.icon className="text-white" size={24} />
           </div>
           <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
-          <p className="text-gray-600 text-xs leading-relaxed">{item.description}</p>
+          <p className="text-gray-600 text-sm leading-relaxed text-justify">{item.description}</p>
         </div>
       ))}
     </div>
