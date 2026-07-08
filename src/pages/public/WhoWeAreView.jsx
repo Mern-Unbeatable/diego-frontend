@@ -14,76 +14,69 @@ const ChiSiamo = () => {
         <Banner image={banner} title={t('chiSiamo.section1.bannerTitle')} />
 
         {/* Header Section */}
-        <div className="mx-auto max-w-7xl px-4 py-16">
-          <div className="flex items-center gap-12">
-            {/* Left Content */}
-            <div className="flex-1">
-              <div className="mb-6 flex items-start gap-3">
-                <div className="mt-1 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-md bg-[#73bfa1]">
-                  {/* <span className="text-sm font-bold text-white">S</span> */}
-                  <img src="/images/Vector.png" alt="logo" className="w-8 h-8" />
-                </div>
-                <p className="text-sm leading-relaxed text-gray-700 text-justify">
-                  {t('chiSiamo.section1.intro')}
-                </p>
-              </div>
+        <div className="mx-auto max-w-7xl  py-12 md:py-16">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12">
+  {/* Left Content */}
+  <div className="flex-1 order-2 md:order-1">
+    <div className="mb-5 flex flex-col sm:flex-row items-start gap-3">
+      <div className="mt-1 flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center rounded-md bg-[#73bfa1]">
+        <img src="/images/Vector.png" alt="" className="w-6 h-6 md:w-8 md:h-8" />
+      </div>
+      <p className="text-sm md:text-base leading-relaxed text-gray-700 text-justify">
+        {t('chiSiamo.section1.intro')}
+      </p>
+    </div>
 
-              <div className="space-y-4 text-sm leading-relaxed text-gray-700 text-justify">
-                <div>
-                  <p className="mb-2 font-semibold">
-                    {t('chiSiamo.section1.objectiveLabel')}
-                  </p>
-                </div>
+    <div className="space-y-4 text-sm md:text-base leading-relaxed text-gray-700 text-justify">
+      <p className="font-semibold text-gray-900">
+        {t('chiSiamo.section1.objectiveLabel')}
+      </p>
 
-                <div>
-                  <h3 className="mb-2 font-semibold">
-                    {t('chiSiamo.section1.whatWeDoLabel')}
-                  </h3>
-                  <p>
-                    <strong>{t('chiSiamo.section1.formazione')}</strong>{' '}
-                    {t('chiSiamo.section1.formazioneDesc')}
-                  </p>
-                </div>
+      <div>
+        <h3 className="mb-2 font-semibold text-gray-900">
+          {t('chiSiamo.section1.whatWeDoLabel')}
+        </h3>
+        <p>
+          <strong>{t('chiSiamo.section1.formazione')}</strong>{' '}
+          {t('chiSiamo.section1.formazioneDesc')}
+        </p>
+      </div>
 
-                <div>
-                  <p>
-                    <strong>{t('chiSiamo.section1.sicurezza')}</strong>{' '}
-                    {t('chiSiamo.section1.sicurezzaDesc')}
-                  </p>
-                </div>
+      <p>
+        <strong>{t('chiSiamo.section1.sicurezza')}</strong>{' '}
+        {t('chiSiamo.section1.sicurezzaDesc')}
+      </p>
 
-                <div>
-                  <p>
-                    <strong>{t('chiSiamo.section1.salute')}</strong>{' '}
-                    {t('chiSiamo.section1.saluteDesc')}
-                  </p>
-                </div>
+      <p>
+        <strong>{t('chiSiamo.section1.salute')}</strong>{' '}
+        {t('chiSiamo.section1.saluteDesc')}
+      </p>
 
-                <div>
-                  <p className="italic">{t('chiSiamo.section1.tagline')}</p>
-                </div>
-              </div>
-            </div>
+      <p className="italic text-gray-600">
+        {t('chiSiamo.section1.tagline')}
+      </p>
+    </div>
+  </div>
 
-            {/* Right Image */}
-            <div className="flex-1">
-              <div className="h-80 overflow-hidden rounded-lg bg-gradient-to-br from-green-100 to-green-50">
-                <img
-                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop"
-                  alt="Team collaboration"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
+  {/* Right Image */}
+  <div className="flex-1 order-1 md:order-2 w-full">
+    <div className="h-56 sm:h-72 md:h-80 overflow-hidden rounded-lg bg-gradient-to-br from-green-100 to-green-50">
+      <img
+        src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop"
+        alt="Team collaboration"
+        className="h-full w-full object-cover border-4 border-[#D4EBE2]"
+      />
+    </div>
+  </div>
+</div>
         </div>
 
         {/* Mission Section */}
         <div className="mx-auto container px-4  text-center">
-          <h2 className="mb-6 text-3xl font-bold text-gray-900">
+          <h2 className="mb-4 text-2xl md:text-3xl font-bold text-gray-900">
             {t('chiSiamo.section1.missionTitle')}
           </h2>
-          <p className="mx-auto mb-12 max-w-3xl text-sm leading-relaxed text-gray-600 ">
+          <p className="mx-auto mb-10 max-w-3xl text-sm md:text-base leading-relaxed text-gray-600">
             {t('chiSiamo.section1.missionDesc')}
           </p>
 
@@ -91,8 +84,8 @@ const ChiSiamo = () => {
         </div>
 
         {/* Pillars Section */}
-        <div className="mx-auto container px-4 py-16">
-          <h2 className="mb-10 text-center text-3xl font-bold text-gray-900">
+        <div className="mx-auto container px-4 py-12 md:py-16">
+          <h2 className="mb-8 md:mb-10 text-center text-2xl md:text-3xl font-bold text-gray-900">
             {t('chiSiamo.section1.pillarsTitle')}
           </h2>
           <PillarsCards />

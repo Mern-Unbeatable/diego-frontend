@@ -25,8 +25,8 @@ const SafetyServiceView = () => {
                 {t('servicesPages.section5.description')}
               </p>
 
-              <Heading level={3}>{t('servicesPages.section1.serviceIncludesTitle')}</Heading>
-
+              <Heading level={3}></Heading>
+<h2 className=' text-lg md:text-2xl'>{t('servicesPages.section1.serviceIncludesTitle')}</h2>
               <div className="bg-[#F1F9F6] p-5 rounded-2xl mt-3 ">
                 <ul className="list-none pl-0 space-y-3 text-gray-600">
                   {includeItems.map((item) => (

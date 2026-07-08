@@ -91,7 +91,7 @@ const ReviewSection = () => {
       <div className="w-full md:mt-0 md:w-1/2">
         <div className="relative flex justify-end">
           {/* Green background shape */}
-          <div className="h-[420px] w-[70%] max-w-[450px] bg-[#73BFA1] sm:h-[40px] md:h-[450px] lg:h-[450] rounded-2xl " />
+          <div className="h-[420px] w-[70%] max-w-[450px] bg-[#73BFA1] sm:h-[40px] md:h-[450px] lg:h-[450] rounded-sm " />
 
           {/* Image overlay */}
           <div className="absolute top-6 left-0 sm:top-8 md:top-10 md:left-4 lg:-top-22 lg:left-16">

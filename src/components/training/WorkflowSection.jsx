@@ -64,7 +64,7 @@ export default function WorkflowSection({ steps = defaultSteps }) {
                                         {step.title}
                                     </h3>
 
-                                    <p className="text-[13px] text-[#606060] mt-1 leading-4">
+                                    <p className="text-sm md:text-base text-[#606060] mt-1 leading-4">
                                         {step.desc}
                                     </p>
                                 </div>

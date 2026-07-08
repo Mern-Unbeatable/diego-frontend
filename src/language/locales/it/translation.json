@@ -71,7 +71,7 @@
       "submitButton": "Invia"
     },
     "section3": {
-      "exploreCatalog": "Esplora il nostro catalogo servizi",
+      "exploreCatalog": "Esplora il nostro catalogo corsi",
       "exploreAllCourses": "Esplora tutti i nostri corsi"
     },
     "section4": {
@@ -505,13 +505,13 @@
         {
           "title": "Azienda - Livello 2",
           "contents": [
-            "Il Livello 2 è pensato per aziende che acquistano pacchetti multipli per i dipendenti.",
-            "Come funziona",
-            "Invio credenziali admin e utenti",
-            "Primo accesso con profilazione dipendente",
-            "Assegnazione corsi e monitoraggio avanzamento",
-            "Archivio cloud con report e attestati",
-            "Sistema ordinato e accessibile nel tempo."
+            "Il Livello 2 è pensato per le aziende che acquistano pacchetti formativi multipli per i propri dipendenti, con gestione semplice e centralizzata.",
+            "Come funziona: ",
+            "Invio credenziali: L’azienda riceve le credenziali admin per gestire il pacchetto e inviare ai dipendenti username e password univoci per ciascun corso.",
+            "Primo accesso dei dipendenti: Ogni dipendente completa una profilazione con dati personali necessari per validare il percorso e generare l’attestato finale.",
+            "Funzionalità admin: L’admin può assegnare corsi, monitorare l’avanzamento, consultare report dettagliati e scaricare gli attestati finali.",
+            "Archiviazione cloud: Attestati e report sono conservati in cloud in modo sicuro e organizzato, con ricerca, esportazione, notifiche e backup automatici.",
+            "Il sistema garantisce ordine e accessibilità nel tempo."
           ]
         },
         {

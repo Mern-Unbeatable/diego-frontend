@@ -9,22 +9,22 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
   const navigate = useNavigate();
   const handleButtonAction = (e, action) => {
     navigate(`/training/course/details?id=${course.id}`);
-
   };
 
   const renderStars = (rating) => {
     return [...Array(5)].map((_, index) => (
       <IoIosStar
         key={index}
-        className={`h-4 w-4 ${index < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'
-          }`}
+        className={`h-4 w-4 ${
+          index < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'
+        }`}
       />
     ));
   };
 
   const renderPrice = () => {
     return (
-      <div className="grid grid-flow-col auto-cols-max items-center gap-2 sm:justify-self-end">
+      <div className="grid auto-cols-max grid-flow-col items-center gap-2 sm:justify-self-end">
         {course.oldPrice && (
           <span className="text-sm text-gray-400 line-through">
             €{course.oldPrice.toFixed(2)}
@@ -43,7 +43,9 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
         <span className="text-lg font-bold text-gray-800">
           {course.rating.toFixed(1)}
         </span>
-        <div className="grid grid-flow-col auto-cols-max">{renderStars(course.rating)}</div>
+        <div className="grid auto-cols-max grid-flow-col">
+          {renderStars(course.rating)}
+        </div>
         <span className="text-sm text-gray-500">
           ({course.reviews.toLocaleString()})
         </span>
@@ -53,8 +55,9 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
 
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-lg bg-white shadow-md transition-transform duration-200 hover:shadow-lg ${isDragging ? 'opacity-70' : ''
-        }`}
+      className={`flex flex-col overflow-hidden rounded-lg bg-white shadow-md transition-transform duration-200 hover:shadow-lg ${
+        isDragging ? 'opacity-70' : ''
+      }`}
     >
       {/* Image Section */}
       <div className="relative">
@@ -74,7 +77,7 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-col p-5">
+      <div className="flex flex-col p-4 md:p-5">
         <Heading
           level={5}
           className="mb-2 line-clamp-1 text-lg font-semibold text-gray-800"
@@ -87,24 +90,23 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
         </Paragraph>
 
         {/* Rating + Price */}
-        <div className="mt-auto grid grid-cols-1 gap-3 sm:grid-cols-2 sm:items-center">
-          {renderRating()}
+        <div className="mt-2 text-start">
           {renderPrice()}
+          {/* {renderRating()} */}
         </div>
 
         {/* Actions */}
-        <div className="mt-4 flex flex-wrap justify-between gap-3">
+        <div className="mt-4 flex flex-row items-center justify-between gap-3">
           <Button
             label={t('homeView.section4.enrollNow')}
             onClick={(e) => handleButtonAction(e, 'Iscriviti ora')}
-            className="w-full rounded-full font-semibold"
-            style={{ backgroundColor: '#3FC89E', color: '#fff' }}
+            className="flex-1 rounded-full bg-[#3FC89E] font-semibold text-white"
           />
           <Button
             label={t('homeView.section4.details')}
             variant="outline"
             onClick={(e) => handleButtonAction(e, 'Dettagli')}
-            className="w-full rounded-full border-gray-300 font-semibold text-gray-700 hover:border-gray-400"
+            className="flex-1 rounded-full border-gray-300 font-semibold text-gray-700 hover:border-gray-400"
           />
         </div>
       </div>
