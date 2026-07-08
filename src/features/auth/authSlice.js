@@ -12,7 +12,6 @@ import { loginAPI, otpVerifyAPI } from './authAPI';
 //  PRIVATE_USER
 const userRoles = COOKIE_STORAGE.getUser();
 const storedToken = COOKIE_STORAGE.getToken();
-console.log('userRoles:', userRoles);
 const storedUser = userRoles || null;
 
 const initialState = {
