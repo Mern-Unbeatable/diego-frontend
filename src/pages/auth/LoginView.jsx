@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
-import { Heading, InputField, Label } from '../../components/ui';
+import { Heading, InputField, Label, Toast } from '../../components/ui';
 import { useAuth } from '../../features/auth/authHooks';
 import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
 

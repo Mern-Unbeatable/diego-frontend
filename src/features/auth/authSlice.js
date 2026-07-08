@@ -13,11 +13,10 @@ import { loginAPI, otpVerifyAPI } from './authAPI';
 const userRoles = COOKIE_STORAGE.getUser();
 const storedToken = COOKIE_STORAGE.getToken();
 
-const storedUser = ''; // Hardcoded for testing purposes
-const storedToken = ''; // Hardcoded for testing purposes
+const storedUser = userRoles || null;
 
 const initialState = {
-  user: storedUser || null,
+  user: storedUser,
   token: storedToken || null,
   isAuthenticated: !!storedUser && !!storedToken,
   loading: false,
