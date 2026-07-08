@@ -37,27 +37,29 @@ const NotificationItem = ({ item }) => (
       </div>
 
       <div className="space-y-1">
-       <h2 className="text-lg text-[#252525]">{item.title}</h2>
+        <h2 className="text-lg text-[#252525]">{item.title}</h2>
         <p className="text-base text-gray-400">{item.message}</p>
       </div>
     </div>
 
-    <div className="ml-4 flex items-center min-w-[70px] justify-end">
+    <div className="ml-4 flex min-w-[70px] items-center justify-end">
       {/* Time and Unread dot (hidden on hover) */}
-      <div className="flex flex-col items-end group-hover:hidden transition-all duration-200">
-        <span className="text-xs text-gray-400 whitespace-nowrap">{item.time}</span>
+      <div className="flex flex-col items-end transition-all duration-200 group-hover:hidden">
+        <span className="text-xs whitespace-nowrap text-gray-400">
+          {item.time}
+        </span>
         {item.unread && (
           <span className="mt-2 h-2 w-2 rounded-full bg-[#73BFA1]" />
         )}
       </div>
 
       {/* Action buttons (shown on hover) */}
-      <div className="hidden group-hover:flex items-center gap-2 transition-all duration-200">
+      <div className="hidden items-center gap-2 transition-all duration-200 group-hover:flex">
         {item.unread && (
           <button
             type="button"
             title="Segna come letto"
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F1F9F6] text-[#73BFA1] hover:bg-[#73BFA1] hover:text-white transition-all shadow-sm"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F1F9F6] text-[#73BFA1] shadow-sm transition-all hover:bg-[#73BFA1] hover:text-white"
           >
             <Check size={15} />
           </button>
@@ -65,7 +67,7 @@ const NotificationItem = ({ item }) => (
         <button
           type="button"
           title="Elimina"
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-red-50 text-red-500 shadow-sm transition-all hover:bg-red-500 hover:text-white"
         >
           <Trash2 size={15} />
         </button>

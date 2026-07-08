@@ -40,7 +40,7 @@ const QuizesView = () => {
                         <div className="border bg-white border-[#DFF5E9] rounded-md p-6 relative">
                             <h4 className="text-base text-gray-500 mb-3">Question {current + 1} of {questions.length}</h4>
                             <div className="absolute right-6 top-6">
-                                <span className="inline-block bg-[#F6FBF9] text-[#2f7f66] text-xs py-1 px-3 rounded-full">Single choice</span>
+                                <span className="inline-block bg-[#F6FBF9] text-[#2f7f66] text-sm py-1 px-3 rounded-full">Single choice</span>
                             </div>
 
                             <div className="mb-6  text-lg text-gray-800">{sampleQuestion.text}</div>

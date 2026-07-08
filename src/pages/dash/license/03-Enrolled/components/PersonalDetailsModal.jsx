@@ -62,7 +62,7 @@ const PersonalDetailsModal = ({ open, onClose, student, onOpenTraining }) => {
                             <p className="flex items-center gap-2 text-sm md:text-base text-[#555555]"><Phone size={16} /> +39 123 456 7890</p>
                             <p className="flex items-center gap-2 text-sm md:text-base text-[#555555]"><Calendar size={16} /> Assunzione: 15/03/2022</p>
                         </div>
-                        <span className="rounded-full bg-[#73bfa1] px-3 py-1 text-xs font-semibold text-white">Attivo</span>
+                        <span className="rounded-full bg-[#73bfa1] px-3 py-1 text-sm font-semibold text-white">Attivo</span>
                     </div>
 
                     <div className="flex gap-3">

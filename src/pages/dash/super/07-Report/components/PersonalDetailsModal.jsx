@@ -131,7 +131,7 @@ export default function PersonalDetailsModal({
                 </div>
               </div>
 
-              <span className="rounded-full bg-[#71c2a3] px-3 py-1 text-xs font-medium text-white">
+              <span className="rounded-full bg-[#71c2a3] px-3 py-1 text-sm font-medium text-white">
                 {profile.status}
               </span>
             </div>

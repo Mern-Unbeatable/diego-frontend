@@ -119,7 +119,7 @@ const LicenseTicketView = () => {
                   </td>
                   <td className="px-4 py-4">
                     <span
-                      className={`rounded-full px-3 py-1 text-xs font-semibold ${ticket.status === 'Aperto' ? 'bg-[#fce8e6] text-[#d9534f]' : ticket.status === 'In lavorazione' ? 'bg-[#fdf2df] text-[#e59a2b]' : 'bg-[#e6f6ef] text-[#57a080]'}`}
+                      className={`rounded-full px-3 py-1 text-sm font-semibold ${ticket.status === 'Aperto' ? 'bg-[#fce8e6] text-[#d9534f]' : ticket.status === 'In lavorazione' ? 'bg-[#fdf2df] text-[#e59a2b]' : 'bg-[#e6f6ef] text-[#57a080]'}`}
                     >
                       {ticket.status}
                     </span>

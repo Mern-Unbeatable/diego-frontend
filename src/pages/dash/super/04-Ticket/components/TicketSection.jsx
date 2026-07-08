@@ -170,7 +170,7 @@ export default function TicketSection({ activeTab = 'panoramica' }) {
                   Tickets con priorità alta
                 </span>
               </div>
-              <button className="rounded-full bg-red-500 px-3 py-1 text-xs font-medium text-white hover:bg-red-600">
+              <button className="rounded-full bg-red-500 px-3 py-1 text-sm font-medium text-white hover:bg-red-600">
                 Aperto
               </button>
             </div>
@@ -192,7 +192,7 @@ export default function TicketSection({ activeTab = 'panoramica' }) {
                   Corsi richiesti di approvazione
                 </span>
               </div>
-              <button className="rounded-full bg-orange-500 px-3 py-1 text-xs font-medium text-white hover:bg-orange-600">
+              <button className="rounded-full bg-orange-500 px-3 py-1 text-sm font-medium text-white hover:bg-orange-600">
                 Attesa
               </button>
             </div>
@@ -318,25 +318,25 @@ export default function TicketSection({ activeTab = 'panoramica' }) {
     switch (status) {
       case 'aperto':
         return (
-          <span className="inline-flex rounded bg-teal-100 px-2 py-1 text-xs font-medium text-teal-800">
+          <span className="inline-flex rounded bg-teal-100 px-2 py-1 text-sm font-medium text-teal-800">
             Attallone
           </span>
         );
       case 'in_attesa':
         return (
-          <span className="inline-flex rounded bg-teal-100 px-2 py-1 text-xs font-medium text-teal-800">
+          <span className="inline-flex rounded bg-teal-100 px-2 py-1 text-sm font-medium text-teal-800">
             Attallone
           </span>
         );
       case 'chiuso':
         return (
-          <span className="inline-flex rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
+          <span className="inline-flex rounded bg-gray-100 px-2 py-1 text-sm font-medium text-gray-800">
             Chiuso
           </span>
         );
       case 'approvato':
         return (
-          <span className="inline-flex rounded bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
+          <span className="inline-flex rounded bg-green-100 px-2 py-1 text-sm font-medium text-green-800">
             Approvato
           </span>
         );
@@ -414,19 +414,19 @@ export default function TicketSection({ activeTab = 'panoramica' }) {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                <th className="px-6 py-3 text-left text-sm font-medium tracking-wider text-gray-500 uppercase">
                   ID
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                <th className="px-6 py-3 text-left text-sm font-medium tracking-wider text-gray-500 uppercase">
                   Utente
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                <th className="px-6 py-3 text-left text-sm font-medium tracking-wider text-gray-500 uppercase">
                   Stato
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                <th className="px-6 py-3 text-left text-sm font-medium tracking-wider text-gray-500 uppercase">
                   Priorità
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                <th className="px-6 py-3 text-left text-sm font-medium tracking-wider text-gray-500 uppercase">
                   Azione
                 </th>
               </tr>

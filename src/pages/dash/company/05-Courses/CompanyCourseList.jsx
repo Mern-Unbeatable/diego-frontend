@@ -102,7 +102,7 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
             </h2>
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-5 py-2 text-xs font-semibold text-white"
+              className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white"
             >
               <Download size={13} /> Download
             </button>
@@ -151,14 +151,14 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
                       {row.action === 'download' ? (
                         <button
                           type="button"
-                          className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-4 py-1.5 text-xs font-semibold text-white"
+                          className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-4 py-1.5 text-sm font-semibold text-white"
                         >
                           <Download size={13} /> Download
                         </button>
                       ) : (
                         <button
                           type="button"
-                          className="inline-flex items-center gap-2 rounded-full bg-[#e6f6ef] px-4 py-1.5 text-xs font-semibold text-[#57a080]"
+                          className="inline-flex items-center gap-2 rounded-full bg-[#e6f6ef] px-4 py-1.5 text-sm font-semibold text-[#57a080]"
                         >
                           <Send size={13} /> Invia un promemoria
                         </button>
@@ -176,7 +176,7 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
               <button type="button">Precedente</button>
               <button
                 type="button"
-                className="h-6 w-6 rounded bg-[#73bfa1] text-xs font-semibold text-white"
+                className="h-6 w-6 rounded bg-[#73bfa1] text-sm font-semibold text-white"
               >
                 1
               </button>

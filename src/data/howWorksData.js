@@ -2,7 +2,7 @@ export const howWorksData = [
   {
     id: 1,
     title: 'Utente singolo - Livello 1',
-    image: 'images/course/course.png',
+    image: '/images/Utente_singolo.png',
     reverse: true,
     badge: 'Gestione team intuitiva e veloce',
     contents: [
@@ -12,7 +12,7 @@ export const howWorksData = [
   {
     id: 2,
     title: 'Azienda - Livello 2',
-    image: 'images/course/level2.png',
+    image: '/image/course/level2.png',
     reverse: false,
     contents: [
       'Il Livello 2 è pensato per le aziende che acquistano pacchetti formativi multipli per i propri dipendenti, con gestione semplice e centralizzata.',
@@ -27,7 +27,7 @@ export const howWorksData = [
   {
     id: 3,
     title: 'Ente di formazione - Livello 3',
-    image: 'images/course/level3.png',
+    image: '/image/course/level3.png',
     reverse: true,
     contents: [
       'Il Livello 3 è pensato per enti di formazione accreditati che acquistano una licenza della piattaforma, con accesso multi-tenant, per gestire corsi e corsisti in totale autonomia.',

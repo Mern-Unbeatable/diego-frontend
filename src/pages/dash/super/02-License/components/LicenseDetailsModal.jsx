@@ -129,7 +129,7 @@ export default function LicenseDetailsModal({
                     style={{ width: `${Math.min(usagePercentage, 100)}%` }}
                   ></div>
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-sm text-gray-500">
                   {usagePercentage}% utilizzato
                 </div>
               </div>

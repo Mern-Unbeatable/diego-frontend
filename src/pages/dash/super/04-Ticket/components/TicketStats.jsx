@@ -134,7 +134,7 @@ export default function TicketStats({ tickets = [] }) {
                   </span>
                   <span className="text-sm text-gray-500">vs mese scorso</span>
                 </div>
-                <p className="mt-1 text-xs text-gray-500">{stat.description}</p>
+                <p className="mt-1 text-sm text-gray-500">{stat.description}</p>
               </div>
             </div>
           </div>

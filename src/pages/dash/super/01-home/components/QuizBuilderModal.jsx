@@ -265,10 +265,10 @@ export default function QuizBuilderModal({ isOpen, onClose, onSave, onBack }) {
                       <span className="text-sm font-medium text-emerald-800">
                         1. Nuova domanda
                       </span>
-                      <p className="text-xs text-emerald-600">
+                      <p className="text-sm text-emerald-600">
                         Tipo: Scelta singola
                       </p>
-                      <p className="text-xs text-emerald-600">Opzioni: 4</p>
+                      <p className="text-sm text-emerald-600">Opzioni: 4</p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between rounded-lg border border-emerald-200 bg-emerald-50 p-3">
@@ -276,10 +276,10 @@ export default function QuizBuilderModal({ isOpen, onClose, onSave, onBack }) {
                       <span className="text-sm font-medium text-emerald-800">
                         2. Nuova domanda
                       </span>
-                      <p className="text-xs text-emerald-600">
+                      <p className="text-sm text-emerald-600">
                         Tipo: Scelta singola
                       </p>
-                      <p className="text-xs text-emerald-600">Opzioni: 4</p>
+                      <p className="text-sm text-emerald-600">Opzioni: 4</p>
                     </div>
                   </div>
                 </div>

@@ -18,13 +18,17 @@ const InfoSetupView = () => {
   if (!role) {
     return (
       <div className="p-8">
-        <h2 className="mb-4 text-2xl font-bold">Role Selection Required</h2>
-        <p className="mb-4 text-gray-600">Please select a role first.</p>
+        <h2 className="mb-4 text-2xl font-bold">
+          {t('auth.setup.infoRouter.roleRequiredTitle')}
+        </h2>
+        <p className="mb-4 text-gray-600">
+          {t('auth.setup.infoRouter.roleRequiredDescription')}
+        </p>
         <button
           onClick={() => navigate('/auth/register/setup-role')}
           className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
         >
-          Go Back to Role Selection
+          {t('auth.setup.infoRouter.backToRoleSelection')}
         </button>
       </div>
     );
