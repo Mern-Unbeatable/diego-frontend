@@ -12,7 +12,7 @@ import { loginAPI, otpVerifyAPI } from './authAPI';
 //  PRIVATE_USER
 const userRoles = COOKIE_STORAGE.getUser();
 const storedToken = COOKIE_STORAGE.getToken();
-
+console.log('userRoles:', userRoles);
 const storedUser = userRoles || null;
 
 const initialState = {
@@ -68,7 +68,7 @@ const authSlice = createSlice({
         const payloadData = action.payload || {};
 
         state.loading = false;
-        state.user = payloadData.data.user || null;
+        state.user = payloadData.data.user.level || null;
         state.token = payloadData.data.accessToken || null;
         state.isAuthenticated =
           !!payloadData.data.user && !!payloadData.data.accessToken;
