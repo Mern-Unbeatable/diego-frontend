@@ -130,7 +130,7 @@ export default function PrivacyPolicyView() {
             {/* 1. Titolare */}
             <section id="titolare" className="scroll-mt-6 border-b border-gray-100 pb-6">
               <h3 className="mb-3 text-lg font-bold text-gray-900">Titolare del trattamento</h3>
-              <div className="space-y-1 text-sm text-gray-600 font-medium">
+              <div className="space-y-1 text-base text-gray-600 font-medium">
                 <p>UNOSICUREZZA SRL Via di Dio Fratelli, 5</p>
                 <p>28887 Omegna (VB)</p>
                 <p className="text-[#73bfa1] hover:underline cursor-pointer">E-mail: info@unosicurezza.com</p>
@@ -156,7 +156,7 @@ export default function PrivacyPolicyView() {
                   <h4 className="text-base font-semibold text-gray-800 mb-1">
                     Dati identificativi e anagrafici
                   </h4>
-                  <ul className="list-disc pl-5 text-sm text-gray-600 font-medium space-y-0.5">
+                  <ul className="list-disc pl-5 text-base text-gray-600 font-medium space-y-0.5">
                     <li>Nome e cognome</li>
                     <li>Data e luogo di nascita</li>
                     <li>Codice fiscale</li>
@@ -166,10 +166,10 @@ export default function PrivacyPolicyView() {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-800 mb-1">
+                  <h4 className="text-base font-semibold text-gray-800 mb-1">
                     Dati professionali
                   </h4>
-                  <ul className="list-disc pl-5 text-sm text-gray-600 font-medium space-y-0.5">
+                  <ul className="list-disc pl-5 text-base text-gray-600 font-medium space-y-0.5">
                     <li>Azienda di appartenenza</li>
                     <li>Sede legale</li>
                     <li>Codice fiscale e Partita IVA aziendale</li>
@@ -178,10 +178,10 @@ export default function PrivacyPolicyView() {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-800 mb-1">
+                  <h4 className="text-base font-semibold text-gray-800 mb-1">
                     Dati relativi alla formazione
                   </h4>
-                  <ul className="list-disc pl-5 text-sm text-gray-600 font-medium space-y-0.5">
+                  <ul className="list-disc pl-5 text-base text-gray-600 font-medium space-y-0.5">
                     <li>Accessi alla piattaforma</li>
                     <li>Stato di avanzamento del corso</li>
                     <li>Tempi di fruizione</li>
@@ -203,10 +203,10 @@ export default function PrivacyPolicyView() {
               
               <div className="space-y-3">
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-800 mb-1">
+                  <h4 className="text-base font-semibold text-gray-800 mb-1">
                     Finalità connesse alla formazione obbligatoria
                   </h4>
-                  <ul className="list-disc pl-5 text-sm text-gray-600 font-medium space-y-0.5">
+                  <ul className="list-disc pl-5 text-base text-gray-600 font-medium space-y-0.5">
                     <li>Erogazione dei corsi di formazione in materia di sicurezza sul lavoro</li>
                     <li>Verifica dell'apprendimento e tracciamento delle attività formative</li>
                     <li>Rilascio e conservazione degli attestati</li>
@@ -215,20 +215,20 @@ export default function PrivacyPolicyView() {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-800 mb-1">
+                  <h4 className="text-base font-semibold text-gray-800 mb-1">
                     Base giuridica:
                   </h4>
-                  <ul className="list-disc pl-5 text-sm text-gray-600 font-medium space-y-0.5">
+                  <ul className="list-disc pl-5 text-base text-gray-600 font-medium space-y-0.5">
                     <li>Adempimento di obblighi di legge (art. 6, par. 1, lett. c GDPR)</li>
                     <li>Esecuzione del contratto o di misure precontrattuali (art. 6, par. 1, lett. b GDPR)</li>
                   </ul>
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-800 mb-1">
+                  <h4 className="text-base font-semibold text-gray-800 mb-1">
                     Finalità amministrative
                   </h4>
-                  <ul className="list-disc pl-5 text-sm text-gray-600 font-medium space-y-0.5">
+                  <ul className="list-disc pl-5 text-base text-gray-600 font-medium space-y-0.5">
                     <li>Gestione contabile e fiscale</li>
                     <li>Gestione dei rapporti contrattuali con aziende e corsisti</li>
                   </ul>
@@ -239,7 +239,7 @@ export default function PrivacyPolicyView() {
             {/* 5. Natura */}
             <section id="natura" className="scroll-mt-6 border-b border-gray-100 pb-6">
               <h3 className="mb-3 text-lg font-bold text-gray-900">Natura obbligatoria del conferimento</h3>
-              <p className="text-sm leading-relaxed text-gray-600 font-medium">
+              <p className="text-base leading-relaxed text-gray-600 font-medium">
                 Il conferimento dei dati è obbligatorio per adempiere agli obblighi formativi
                 previsti dalla normativa sulla sicurezza. La mancata comunicazione dei dati
                 impedisce la partecipazione ai corsi e il rilascio degli attestati.
@@ -249,8 +249,8 @@ export default function PrivacyPolicyView() {
             {/* 6. Destinatari */}
             <section id="destinatari" className="scroll-mt-6 border-b border-gray-100 pb-6 space-y-3">
               <h3 className="text-lg font-bold text-gray-900">Destinatari dei dati</h3>
-              <p className="text-sm text-gray-600 font-medium">I dati possono essere comunicati a:</p>
-              <ul className="list-disc pl-5 text-sm text-gray-600 font-medium space-y-0.5">
+              <p className="text-base text-gray-600 font-medium">I dati possono essere comunicati a:</p>
+              <ul className="list-disc pl-5 text-base text-gray-600 font-medium space-y-0.5">
                 <li>Datori di lavoro o aziende di appartenenza del corsista</li>
                 <li>Organi di vigilanza e autorità competenti (ASL, Ispettorato del Lavoro)</li>
                 <li>Fornitori di servizi informatici e hosting della piattaforma e-learning</li>
@@ -265,7 +265,7 @@ export default function PrivacyPolicyView() {
             {/* 7. Extra-UE */}
             <section id="extra-ue" className="scroll-mt-6 border-b border-gray-100 pb-6">
               <h3 className="mb-3 text-lg font-bold text-gray-900">Trasferimenti extra-UE</h3>
-              <p className="text-sm leading-relaxed text-gray-600 font-medium">
+              <p className="text-base leading-relaxed text-gray-600 font-medium">
                 I dati non vengono trasferiti al di fuori dell'Unione Europea.
                 Eventuali trasferimenti futuri avverranno solo nel rispetto degli artt. 44-49 GDPR.
               </p>
@@ -274,7 +274,7 @@ export default function PrivacyPolicyView() {
             {/* 8. Conservazione */}
             <section id="conservazione" className="scroll-mt-6 border-b border-gray-100 pb-6">
               <h3 className="mb-3 text-lg font-bold text-gray-900">Conservazione dei dati</h3>
-              <ul className="list-disc pl-5 text-sm text-gray-600 font-medium space-y-1.5">
+              <ul className="list-disc pl-5 text-base text-gray-600 font-medium space-y-1.5">
                 <li>
                   I dati relativi alla formazione obbligatoria e agli attestati sono conservati
                   per il tempo necessario a dimostrare l'adempimento degli obblighi formativi,
@@ -289,7 +289,7 @@ export default function PrivacyPolicyView() {
             {/* 9. Modifica */}
             <section id="modifica" className="scroll-mt-6 border-b border-gray-100 pb-6">
               <h3 className="mb-3 text-lg font-bold text-gray-900">Modifica dei dati</h3>
-              <p className="text-sm leading-relaxed text-gray-600 font-medium">
+              <p className="text-base leading-relaxed text-gray-600 font-medium">
                 Eventuali modifiche ai dati personali possono essere richieste tramite comunicazione
                 al Titolare, che provvederà tramite personale autorizzato.
               </p>
@@ -298,10 +298,10 @@ export default function PrivacyPolicyView() {
             {/* 10. Diritti */}
             <section id="diritti" className="scroll-mt-6 border-b border-gray-100 pb-6 space-y-3">
               <h3 className="text-lg font-bold text-gray-900">Diritti dell'interessato</h3>
-              <p className="text-sm text-gray-600 font-medium">
+              <p className="text-base text-gray-600 font-medium">
                 L'interessato può esercitare i diritti previsti dagli artt. 15-22 GDPR:
               </p>
-              <ul className="list-disc pl-5 text-sm text-gray-600 font-medium space-y-0.5">
+              <ul className="list-disc pl-5 text-base text-gray-600 font-medium space-y-0.5">
                 <li>accesso</li>
                 <li>rettifica</li>
                 <li>cancellazione (nei limiti compatibili con gli obblighi di legge)</li>
@@ -309,7 +309,7 @@ export default function PrivacyPolicyView() {
                 <li>opposizione</li>
                 <li>portabilità</li>
               </ul>
-              <div className="space-y-1.5 text-sm text-gray-600 font-medium">
+              <div className="space-y-1.5 text-base text-gray-600 font-medium">
                 <p>Le richieste vanno inviate a: <span className="text-[#73bfa1] hover:underline cursor-pointer">info@unosicurezza.com</span></p>
                 <p>L'interessato può inoltre proporre reclamo al Garante per la Protezione dei Dati Personali.</p>
               </div>
@@ -318,10 +318,10 @@ export default function PrivacyPolicyView() {
             {/* 11. Sicurezza */}
             <section id="sicurezza" className="scroll-mt-6 pb-2">
               <h3 className="mb-3 text-lg font-bold text-gray-900">Misure di sicurezza</h3>
-              <p className="text-sm leading-relaxed text-gray-600 font-medium mb-3">
+              <p className="text-base leading-relaxed text-gray-600 font-medium mb-3">
                 Il Titolare adotta misure tecniche e organizzative adeguate a garantire la protezione dei dati, tra cui:
               </p>
-              <ul className="list-disc pl-5 text-sm text-gray-600 font-medium space-y-0.5">
+              <ul className="list-disc pl-5 text-base text-gray-600 font-medium space-y-0.5">
                 <li>autenticazione sicura</li>
                 <li>backup periodici</li>
                 <li>procedure di gestione degli accessi</li>
