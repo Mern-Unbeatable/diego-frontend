@@ -56,9 +56,9 @@ const TicketDetail = () => {
             className="absolute left-0 text-[#2f2f2f] transition hover:text-black"
             aria-label="Torna indietro"
           >
-            <FaArrowLeft size={18} />
+            <FaArrowLeft size={16} />
           </button>
-          <h1 className="text-[26px] font-semibold text-[#202020] md:text-[34px]">
+          <h1 className="text-2xl font-semibold text-[#202020] ">
             Area ticket
           </h1>
         </div>
@@ -66,19 +66,19 @@ const TicketDetail = () => {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.6fr_0.8fr]">
           <div className="space-y-5">
             <section className="rounded-md border border-[#e4e4e4] bg-white p-5 md:p-6">
-              <h2 className="mb-4 text-[20px] font-semibold text-[#262626] md:text-[30px]">
+              <h2 className="mb-4 text-lg font-semibold text-[#262626] md:text-xl">
                 Descrizione ticket
               </h2>
-              <p className="text-[12px] leading-relaxed whitespace-pre-line text-[#333] md:text-[16px]">
+              <p className="leading-relaxed whitespace-pre-line text-[#333] md:text-base">
                 {ticket.description}
               </p>
             </section>
 
             <section className="rounded-md border border-[#e4e4e4] bg-white p-5 md:p-6">
-              <h2 className="mb-2 text-[20px] font-semibold text-[#262626] md:text-[30px]">
+              <h2 className="mb-2 text-lg font-semibold text-[#262626] md:text-xl">
                 Conversazione
               </h2>
-              <div className="mb-3 border-t border-[#ececec] pt-3 text-[11px] text-[#5a5a5a] md:text-[14px]">
+              <div className="mb-3 border-t border-[#ececec] pt-3 text-[11px] text-[#5a5a5a] md:text-sm">
                 Update GG/MM/AAAA 13:32:49
               </div>
 
@@ -110,7 +110,7 @@ const TicketDetail = () => {
             </section>
 
             <section>
-              <h2 className="mb-3 text-[24px] font-semibold text-[#262626] md:text-[32px]">
+              <h2 className="mb-3 text-lg font-semibold text-[#262626] md:text-xl">
                 Rispondi
               </h2>
               <textarea
@@ -132,10 +132,10 @@ const TicketDetail = () => {
 
           <aside>
             <div className="rounded-md border border-[#e4e4e4] bg-white p-5 md:p-6">
-              <h2 className="mb-4 text-[20px] font-semibold text-[#262626] md:text-[30px]">
+              <h2 className="mb-4 text-lg font-semibold text-[#262626] md:text-xl">
                 Dettagli ticket
               </h2>
-              <div className="space-y-2 text-[12px] leading-relaxed text-[#2f2f2f] md:text-[16px]">
+              <div className="space-y-2 leading-relaxed text-[#2f2f2f] md:text-base">
                 <p>
                   <span className="font-semibold">ID:</span> {ticket.id}
                 </p>
