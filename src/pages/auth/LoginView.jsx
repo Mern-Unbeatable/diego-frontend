@@ -6,6 +6,7 @@ import { Heading, InputField, Label, Toast } from '../../components/ui';
 import { useAuth } from '../../features/auth/authHooks';
 import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
 import { getDashboardPath } from '../../utils/auth/authUtils';
+import toast from 'react-hot-toast';
 
 const LoginView = () => {
   const [email, setEmail] = useState('');
@@ -25,10 +26,11 @@ const LoginView = () => {
       await login({
         email: email,
       });
-      console.log('Login email:', email);
+      toast.success('OTP sent to your email');
       // Will auto-redirect via useEffect
       setStep(2);
     } catch (error) {
+      toast.error('Please check your email and try again.');
       console.error('Login error:', error);
     }
   };
@@ -70,10 +72,11 @@ const LoginView = () => {
 
       // 2. Get the corresponding path using your utility function
       const targetPath = getDashboardPath(userRole) || '/login';
-
       // 3. Navigate to the dynamic path instead of the hardcoded '/dashboard'
       navigate(targetPath);
+      toast.success('Successfully verified!');
     } catch (error) {
+      toast.error('Verification failed. Please try again.');
       console.error('OTP verification error:', error);
     }
   };
@@ -200,7 +203,7 @@ const LoginView = () => {
                       type="submit"
                       className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
                     >
-                      Verify OTP
+                      {loading ? 'Verifying...' : 'Verify OTP'}
                     </button>
                   </div>
                 </form>

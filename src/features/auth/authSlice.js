@@ -62,10 +62,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(otpVerifyAPI.fulfilled, (state, action) => {
-        console.log('OTP verification successful:', action.payload);
-
         const payloadData = action.payload || {};
-
         state.loading = false;
         state.user = payloadData.data.user.level || null;
         state.token = payloadData.data.accessToken || null;

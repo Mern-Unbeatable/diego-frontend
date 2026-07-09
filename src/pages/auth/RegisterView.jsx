@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Heading,
   InputField,
@@ -56,25 +57,33 @@ const useOtp = (length = OTP_LENGTH) => {
 };
 
 // Step Components
-const EmailStep = ({ email, onEmailChange, onSubmit, t }) => (
-  <form onSubmit={onSubmit}>
-    <Label className="mb-2 block text-lg font-medium">
-      {t('auth.common.emailLabel')}
-    </Label>
-    <InputField
-      type="email"
-      value={email}
-      placeholder={t('auth.common.emailPlaceholder')}
-      className="rounded-2xl border border-green-100 bg-white px-4 py-3"
-      onChange={(e) => onEmailChange(e.target.value)}
-      autoFocus
-      required
-    />
-    <div className="mt-8 flex justify-end">
-      <SubmitButton type="submit">{t('auth.common.goAhead')}</SubmitButton>
-    </div>
-  </form>
-);
+const EmailStep = ({ email, onEmailChange, onSubmit, t }) => {
+  return (
+    <form onSubmit={onSubmit}>
+      <Label className="mb-2 block text-lg font-medium">
+        {t('auth.common.emailLabel')}
+      </Label>
+      <InputField
+        type="email"
+        value={email}
+        placeholder={t('auth.common.emailPlaceholder')}
+        className="rounded-2xl border border-green-100 bg-white px-4 py-3"
+        onChange={(e) => onEmailChange(e.target.value)}
+        autoFocus
+        required
+      />
+      <div className="mt-4 flex items-center justify-end gap-4">
+        <div className="">
+          <Link to="/auth/login">{t('auth.common.loginInstead')}</Link>
+        </div>
+
+        <div className="">
+          <SubmitButton type="submit">{t('auth.common.goAhead')}</SubmitButton>
+        </div>
+      </div>
+    </form>
+  );
+};
 
 // OTP Step Component
 const OtpStep = ({
@@ -147,6 +156,7 @@ const Logo = ({ t }) => (
 
 // Main Component
 const RegisterView = () => {
+  const { t } = useTranslation();
   const { toasts, addToast, removeToast } = useToast();
   const [email, setEmail] = useState('');
   const [step, setStep] = useState(STEPS.EMAIL);
@@ -221,7 +231,7 @@ const RegisterView = () => {
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left Section - Logo & Illustration */}
           <div className="flex flex-col items-center justify-center bg-white p-10">
-            <Logo />
+            <Logo t={t} />
             <div className="mt-10 max-w-md">
               <img
                 className="w-full object-contain"
@@ -265,12 +275,14 @@ const RegisterView = () => {
               {/* Step Renderer */}
               {step === STEPS.EMAIL ? (
                 <EmailStep
+                  t={t}
                   email={email}
                   onEmailChange={setEmail}
                   onSubmit={handleEmailSubmit}
                 />
               ) : (
                 <OtpStep
+                  t={t}
                   email={email}
                   otp={otp}
                   inputRefs={inputRefs}

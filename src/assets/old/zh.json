@@ -110,11 +110,7 @@
       "bannerTitle": "应急预案",
       "descriptionLead": "根据第18条第1款t项，雇主必须：",
       "descriptionBody": "采取必要措施用于消防预防、工作场所疏散以及重大紧急危险情况处理（依据第43条）。这些措施应当符合：",
-      "obligations": [
-        "活动性质",
-        "企业或生产单元规模",
-        "现场人数"
-      ],
+      "obligations": ["活动性质", "企业或生产单元规模", "现场人数"],
       "descriptionCta": "UnoSicurezza 可以为您提供帮助！"
     },
     "section7": {
@@ -140,11 +136,7 @@
       "bannerTitle": "氡气",
       "bannerDescription": "工作场所氡气测量与评估",
       "description": "地下或半地下工作场所位于重点区域？根据101/2020号法令，工作场所氡风险评估是雇主的法定义务。风险通过测量空气中氡浓度（Bq/m3）进行评估。UnoSicurezza团队提供：",
-      "riskItems": [
-        "浓度测量",
-        "风险评估",
-        "指定专业专家"
-      ]
+      "riskItems": ["浓度测量", "风险评估", "指定专业专家"]
     },
     "section10": {
       "bannerTitle": "饮用水安全",
@@ -211,11 +203,7 @@
       "bannerTitle": "建筑管理",
       "bannerDescription": "工作场所氡气测量与评估",
       "description": "UnoSicurezza团队提供建筑与公寓管理服务，帮助业主/管理方优化以下流程：",
-      "processItems": [
-        "维护与维修",
-        "能源与效率管理",
-        "安全与法规合规"
-      ],
+      "processItems": ["维护与维修", "能源与效率管理", "安全与法规合规"],
       "cta": "信任我们，立即联系我们！"
     },
     "section13": {
@@ -670,6 +658,7 @@
       "emailLabel": "电子邮箱",
       "emailPlaceholder": "请输入邮箱",
       "goAhead": "继续",
+      "loginInstead": "已有账号？登录",
       "back": "返回",
       "verifyOtp": "验证 OTP",
       "confirm": "确认",
