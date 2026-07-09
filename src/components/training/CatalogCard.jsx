@@ -63,7 +63,7 @@ export default function CatalogCard({ courses = [] }) {
 
                                 </div>
 
-                                {/* buttons */}
+                                
                                 <div className="flex gap-2 mt-3 mt-auto pt-3">
                                     <Link
                                         to={`/training/course/checkout?id=${course.id}`}
