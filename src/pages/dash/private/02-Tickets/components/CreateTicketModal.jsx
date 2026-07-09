@@ -21,8 +21,8 @@ const CreateTicketModal = ({
   const maxChars = 2000;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#111111]/35 p-4 sm:p-8 backdrop-blur-sm">
-      <div className="relative w-full max-w-3xl rounded-2xl bg-white p-6 shadow-xl sm:p-10 my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#111111]/35 p-6  backdrop-blur-sm">
+      <div className="relative w-full max-w-2xl rounded-xl bg-white p-6">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition"
