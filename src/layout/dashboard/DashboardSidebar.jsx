@@ -157,11 +157,11 @@ const linksByRole = {
       label: 'Support Tickets',
       icon: <IoTicketOutline className="text-[19px]" />,
     },
-    {
-      path: '/dashboard/private-user/feedback',
-      label: 'Feedback',
-      icon: <IoChatbubbleOutline className="text-[19px]" />,
-    },
+    // {
+    //   path: '/dashboard/private-user/feedback',
+    //   label: 'Feedback',
+    //   icon: <IoChatbubbleOutline className="text-[19px]" />,
+    // },
     {
       path: '/dashboard/private-user/profile',
       label: 'Profile',
