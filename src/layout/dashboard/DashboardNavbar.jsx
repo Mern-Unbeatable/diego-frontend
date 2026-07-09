@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import {
@@ -12,6 +12,7 @@ import {
   User,
   ChevronDown,
 } from 'lucide-react';
+import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
 
 const DashboardNavbar = () => {
   const location = useLocation();
@@ -22,25 +23,8 @@ const DashboardNavbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleLogout = () => {
-    // Add your logout logic here
-    // e.g., clear tokens, logout user
-    console.log('Logging out...');
-    navigate('/login');
-  };
-
-  const handleProfile = () => {
-    navigate('/dashboard/profile');
-    setIsDropdownOpen(false);
-  };
-
-  const handleSettings = () => {
-    navigate('/dashboard/settings');
-    setIsDropdownOpen(false);
-  };
-
-  const handleHelp = () => {
-    navigate('/dashboard/help');
-    setIsDropdownOpen(false);
+    COOKIE_STORAGE.clearAll();
+    window.location.reload(); // Reload the page to reset the state
   };
 
   return (
@@ -110,7 +94,10 @@ const DashboardNavbar = () => {
                   />
 
                   {/* Dropdown */}
-                  <div className="ring-opacity-5 absolute right-0 z-100 mt-2 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-gray-300">
+                  <div
+                    className="absolute right-0 z-[100] mt-2 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-gray-300"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <div className="py-1">
                       {/* User Info */}
                       <div className="border-b border-gray-100 px-4 py-3">
@@ -122,26 +109,26 @@ const DashboardNavbar = () => {
                         </p>
                       </div>
 
-                      {/* Menu Items */}
+                      {/* Menu Items - Static buttons */}
                       <button
-                        onClick={handleProfile}
                         className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#2a2a2a] transition-colors hover:bg-[#f7f7f7]"
+                        onClick={() => setIsDropdownOpen(false)}
                       >
                         <User size={18} />
                         Profile
                       </button>
 
                       <button
-                        onClick={handleSettings}
                         className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#2a2a2a] transition-colors hover:bg-[#f7f7f7]"
+                        onClick={() => setIsDropdownOpen(false)}
                       >
                         <Settings size={18} />
                         Settings
                       </button>
 
                       <button
-                        onClick={handleHelp}
                         className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#2a2a2a] transition-colors hover:bg-[#f7f7f7]"
+                        onClick={() => setIsDropdownOpen(false)}
                       >
                         <HelpCircle size={18} />
                         Help & Support
@@ -149,8 +136,8 @@ const DashboardNavbar = () => {
 
                       <div className="border-t border-gray-100">
                         <button
-                          onClick={handleLogout}
                           className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-600 transition-colors hover:bg-red-50"
+                          onClick={handleLogout}
                         >
                           <LogOut size={18} />
                           Logout
