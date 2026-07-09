@@ -51,7 +51,7 @@ const ContactFormDesign = ({ title }) => {
                         {/* Row 1: Nome and Cognome */}
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">
                                     {t('contactUs.section1.nome')}
                                 </label>
                                 <input
@@ -60,11 +60,11 @@ const ContactFormDesign = ({ title }) => {
                                     value={formData.nome}
                                     onChange={handleChange}
                                     placeholder={t('contactUs.section1.nomePlaceholder')}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-sm"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm md:text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-sm"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">
                                     {t('contactUs.section1.cognome')}
                                 </label>
                                 <input
@@ -73,7 +73,7 @@ const ContactFormDesign = ({ title }) => {
                                     value={formData.cognome}
                                     onChange={handleChange}
                                     placeholder={t('contactUs.section1.cognomePlaceholder')}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-sm"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm md:text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-sm"
                                 />
                             </div>
                         </div>
@@ -81,7 +81,7 @@ const ContactFormDesign = ({ title }) => {
                         {/* Row 2: Azienda and P.IVA */}
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">
                                     {t('contactUs.section1.azienda')}
                                 </label>
                                 <input
@@ -90,11 +90,11 @@ const ContactFormDesign = ({ title }) => {
                                     value={formData.azienda}
                                     onChange={handleChange}
                                     placeholder={t('contactUs.section1.aziendaPlaceholder')}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-sm"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg  placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#73BFA1] focus:border-transparent text-sm md:text-base"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">
                                     {t('contactUs.section1.piva')}
                                 </label>
                                 <input
@@ -111,7 +111,7 @@ const ContactFormDesign = ({ title }) => {
                         {/* Row 3: Telefono and Email */}
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">
                                     {t('contactUs.section1.telefono')}
                                 </label>
                                 <input
@@ -124,7 +124,7 @@ const ContactFormDesign = ({ title }) => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">
                                     {t('contactUs.section1.email')}
                                 </label>
                                 <input

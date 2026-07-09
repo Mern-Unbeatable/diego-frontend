@@ -70,7 +70,7 @@ export default function CollaborationBenefits() {
                                             <h3 className="text-lg font-semibold text-gray-900 mb-2">
                                                 {benefit.title}
                                             </h3>
-                                            <p className="text-gray-600 text-sm leading-relaxed">
+                                            <p className="text-gray-600 text-sm md:text-base leading-relaxed">
                                                 {benefit.description}
                                             </p>
                                         </div>

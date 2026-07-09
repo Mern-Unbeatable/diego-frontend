@@ -54,7 +54,7 @@ const WorkWithUsView = () => {
         />
 
 
-        <div className="max-w-4xl mx-auto px-4 py-12 text-center">
+        <div className="max-w-6xl mx-auto px-4 py-12 text-center">
 
           <span className='bg-[#E4F0E8] text-sm p-3 rounded-full  text-[#5C9981]'>
             {t('workWithUs.section5.badge')}
@@ -62,7 +62,7 @@ const WorkWithUsView = () => {
           <h1 className=" mt-5 text-2xl font-bold text-gray-900 mb-4">
             {t('workWithUs.section5.heroTitle')}
           </h1>
-          <p className="text-gray-600 text-sm leading-relaxed max-w-2xl mx-auto">
+          <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
             {t('workWithUs.section5.heroDescription')}
           </p>
         </div>

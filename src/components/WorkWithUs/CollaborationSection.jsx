@@ -13,19 +13,19 @@ const CollaborationSection = ({ title, subText, description, bottomText, bulletP
                     {/* Left Content */}
                     <div>
                         <h2 className="text-xl font-bold text-gray-900 mb-6">{title}</h2>
-                        <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                        <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">
                             {description}
                         </p>
-                        <p className="text-gray-600 text-sm leading-relaxed mb-6">{subText}</p>
+                        <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">{subText}</p>
                         <ul className="space-y-3 mb-8">
                             {bulletPoints.map((point, index) => (
                                 <li key={index} className="flex items-start gap-3">
                                     <span className="text-[#73BFA1] mt-1">•</span>
-                                    <span className="text-gray-700 text-sm">{point}</span>
+                                    <span className="text-gray-700 text-sm md:text-base">{point}</span>
                                 </li>
                             ))}
                         </ul>
-                        <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                        <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">
                             {bottomText}
                         </p>
                         <button

@@ -35,7 +35,7 @@ const OccupationalMedicalView = () => {
               <div className="bg-[#F1F9F6] p-5 rounded-2xl">
                 <ul className="list-none pl-0 space-y-3 text-gray-600">
                   {includeItems.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm">
+                    <li key={item} className="flex items-start gap-3 text-sm md:text-base">
                       <ArrowRight className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>

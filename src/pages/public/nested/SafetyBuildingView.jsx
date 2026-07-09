@@ -16,6 +16,7 @@ const SafetyBuildingView = () => {
         description={t('servicesPages.section12.bannerDescription')}
         image={banner}
         title={t('servicesPages.section12.bannerTitle')}
+        subtitle="AMMINISTRAZIONE CONDOMINI"
       />
       <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -44,7 +45,7 @@ const SafetyBuildingView = () => {
               <div className="bg-[#F1F9F6] p-5 rounded-2xl">
                 <ul className="list-none pl-0 space-y-3 text-gray-600">
                   {includeItems.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm">
+                    <li key={item} className="flex items-start gap-3 text-sm md:text-base">
                       <ArrowRight className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>

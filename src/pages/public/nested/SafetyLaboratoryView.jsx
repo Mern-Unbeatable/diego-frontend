@@ -35,9 +35,9 @@ const SafetyLaboratoryView = () => {
                   <div key={section.title}>
                     <h2 className="font-bold text-gray-900 text-lg mb-3">{section.title}</h2>
                     {section.description ? (
-                      <p className="text-gray-700 text-sm mb-3 pl-1">{section.description}</p>
+                      <p className="text-gray-700 text-sm md:text-base mb-3 pl-1">{section.description}</p>
                     ) : null}
-                    <ul className="space-y-3 pl-1 text-gray-700 text-sm">
+                    <ul className="space-y-3 pl-1 text-gray-700 text-sm md:text-base">
                       {(section.items || []).map((item) => (
                         <li key={item} className="flex items-start gap-2">
                           <ChevronRight className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
@@ -53,7 +53,7 @@ const SafetyLaboratoryView = () => {
                 <h2 className="font-bold text-gray-900 mb-4 text-lg">{t('servicesPages.section1.serviceIncludesTitle')}</h2>
                 <ul className="space-y-3">
                   {includeItems.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-gray-700 text-sm">
+                    <li key={item} className="flex items-start gap-3 text-gray-700 text-sm md:text-base">
                       <ArrowRight className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
