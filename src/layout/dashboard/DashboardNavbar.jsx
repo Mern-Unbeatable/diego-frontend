@@ -1,12 +1,47 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { Bell, Plus, Search, UserRound } from 'lucide-react';
+import {
+  Bell,
+  Plus,
+  Search,
+  UserRound,
+  LogOut,
+  Settings,
+  HelpCircle,
+  User,
+  ChevronDown,
+} from 'lucide-react';
 
 const DashboardNavbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isCompanyArea = location.pathname.startsWith(
     '/dashboard/company-admin',
   );
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleLogout = () => {
+    // Add your logout logic here
+    // e.g., clear tokens, logout user
+    console.log('Logging out...');
+    navigate('/login');
+  };
+
+  const handleProfile = () => {
+    navigate('/dashboard/profile');
+    setIsDropdownOpen(false);
+  };
+
+  const handleSettings = () => {
+    navigate('/dashboard/settings');
+    setIsDropdownOpen(false);
+  };
+
+  const handleHelp = () => {
+    navigate('/dashboard/help');
+    setIsDropdownOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-20 border-b border-[#ececec] bg-[#f7f7f7]/95 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
@@ -47,13 +82,85 @@ const DashboardNavbar = () => {
             >
               <Bell size={18} />
             </button>
-            <button
-              type="button"
-              className="rounded-full bg-white p-2 text-[#414141] shadow-sm hover:bg-[#f0f0f0]"
-              aria-label="Profile"
-            >
-              <UserRound size={18} />
-            </button>
+
+            {/* Profile Dropdown */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="flex items-center gap-1 rounded-full bg-white px-3 py-2 text-[#414141] shadow-sm transition-colors hover:bg-[#f0f0f0]"
+                aria-label="Profile menu"
+              >
+                <UserRound size={18} />
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${
+                    isDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {/* Dropdown Menu */}
+              {isDropdownOpen && (
+                <>
+                  {/* Backdrop */}
+                  <div
+                    className="fixed inset-0 z-10"
+                    onClick={() => setIsDropdownOpen(false)}
+                  />
+
+                  {/* Dropdown */}
+                  <div className="ring-opacity-5 absolute right-0 z-100 mt-2 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-gray-300">
+                    <div className="py-1">
+                      {/* User Info */}
+                      <div className="border-b border-gray-100 px-4 py-3">
+                        <p className="text-sm font-medium text-[#2a2a2a]">
+                          John Doe
+                        </p>
+                        <p className="truncate text-xs text-gray-500">
+                          john.doe@email.com
+                        </p>
+                      </div>
+
+                      {/* Menu Items */}
+                      <button
+                        onClick={handleProfile}
+                        className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#2a2a2a] transition-colors hover:bg-[#f7f7f7]"
+                      >
+                        <User size={18} />
+                        Profile
+                      </button>
+
+                      <button
+                        onClick={handleSettings}
+                        className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#2a2a2a] transition-colors hover:bg-[#f7f7f7]"
+                      >
+                        <Settings size={18} />
+                        Settings
+                      </button>
+
+                      <button
+                        onClick={handleHelp}
+                        className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#2a2a2a] transition-colors hover:bg-[#f7f7f7]"
+                      >
+                        <HelpCircle size={18} />
+                        Help & Support
+                      </button>
+
+                      <div className="border-t border-gray-100">
+                        <button
+                          onClick={handleLogout}
+                          className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-600 transition-colors hover:bg-red-50"
+                        >
+                          <LogOut size={18} />
+                          Logout
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         )}
       </div>
