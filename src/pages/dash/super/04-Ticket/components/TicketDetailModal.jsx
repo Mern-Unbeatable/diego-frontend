@@ -39,7 +39,7 @@ export default function TicketDetailModal({
               </h2>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800">
+              <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
                 Ticket ID: TK{String(ticket.id).padStart(3, '0')}
               </span>
               <span className="text-sm text-gray-500">
@@ -76,7 +76,7 @@ export default function TicketDetailModal({
                   'Non riesco ad accedere al corso JavaScript avanzato. Ricevo un errore quando clicco sul link.'}
               </p>
               <div className="mt-4 flex justify-end">
-                <span className="inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-xs font-medium text-gray-600">
+                <span className="inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-600">
                   {ticket.data || '12/07/2000'}
                 </span>
               </div>
@@ -101,12 +101,12 @@ export default function TicketDetailModal({
                 rows={4}
                 className="w-full resize-none rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm placeholder-gray-400 transition-colors duration-200 focus:border-emerald-500 focus:bg-emerald-50/30 focus:ring-0 focus:outline-none"
               />
-              <div className="absolute right-3 bottom-3 text-xs text-gray-400">
+              <div className="absolute right-3 bottom-3 text-sm text-gray-400">
                 {response.length}/500
               </div>
             </div>
             <div className="flex items-center justify-between rounded-xl bg-gray-50 p-4">
-              <div className="flex items-center space-x-2 text-xs text-gray-500">
+              <div className="flex items-center space-x-2 text-sm text-gray-500">
                 <div className="h-2 w-2 rounded-full bg-gray-400"></div>
                 <span>
                   {response.length > 0
@@ -149,13 +149,13 @@ export default function TicketDetailModal({
                   <div className="absolute top-0 bottom-0 left-0 w-1 rounded-full bg-gradient-to-b from-blue-400 to-blue-600"></div>
                   <div className="ml-6 rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-emerald-100 p-4">
                     <div className="mb-2 flex items-center space-x-2">
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-xs font-semibold text-white">
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-sm font-semibold text-white">
                         A
                       </div>
                       <span className="text-sm font-medium text-emerald-800">
                         Admin
                       </span>
-                      <span className="text-xs text-emerald-600">
+                      <span className="text-sm text-emerald-600">
                         #{index + 1}
                       </span>
                     </div>
@@ -163,7 +163,7 @@ export default function TicketDetailModal({
                       {risposta.testo}
                     </p>
                     <div className="mt-3 flex justify-end">
-                      <span className="inline-flex items-center rounded-md border border-emerald-300 bg-white px-2 py-1 text-xs font-medium text-emerald-700">
+                      <span className="inline-flex items-center rounded-md border border-emerald-300 bg-white px-2 py-1 text-sm font-medium text-emerald-700">
                         {risposta.data}
                       </span>
                     </div>

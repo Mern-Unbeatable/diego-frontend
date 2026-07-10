@@ -46,7 +46,7 @@ const CompanyInfoForm = () => {
           <Paragraph className="text-sm text-gray-600">Steps 2/3</Paragraph>
         </div>
 
-        <Heading level={4}>Informazioni aziendali</Heading>
+        <Heading level={4}>{t('auth.setup.companyInfo.title')}</Heading>
 
         <form onSubmit={handleFormSubmit}>
           <div className="mb-6">
@@ -55,12 +55,12 @@ const CompanyInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Ragione sociale*
+              {t('auth.setup.companyInfo.companyNameLabel')}
             </Label>
             <InputField
               type="text"
               name="companyName"
-              placeholder="Inserisci il nome completa dell'azienda"
+              placeholder={t('auth.setup.companyInfo.companyNamePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -71,12 +71,12 @@ const CompanyInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Indirizzo sede legale*
+              {t('auth.setup.companyInfo.officeLabel')}
             </Label>
             <InputField
               type="text"
               name="office"
-              placeholder="Inserisci l'indirizzo della sede legale dell'azienda"
+              placeholder={t('auth.setup.companyInfo.officePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -87,12 +87,12 @@ const CompanyInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              VAT Number
+              {t('auth.setup.companyInfo.vatLabel')}
             </Label>
             <InputField
               type="number"
               name="vatNumber"
-              placeholder="Inserisci la Partita IVA"
+              placeholder={t('auth.setup.companyInfo.vatPlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -103,7 +103,7 @@ const CompanyInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Codice fiscale (se diverso dalla P. IVA)*
+              {t('auth.setup.companyInfo.taxCodeLabel')}
             </Label>
             <InputField
               type="number"
@@ -119,7 +119,7 @@ const CompanyInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              E-mail di contatto*
+              {t('auth.setup.companyInfo.emailLabel')}
             </Label>
             <InputField
               name="email"
@@ -132,7 +132,7 @@ const CompanyInfoForm = () => {
               type="submit"
               className="w-[100px] rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] py-2 font-medium text-[#ffffff] transition-colors hover:bg-[#ffffff] hover:text-[#73BFA1]"
             >
-              Procedi
+              {t('auth.common.proceed')}
             </button>
           </div>
         </form>

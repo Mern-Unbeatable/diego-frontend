@@ -207,7 +207,7 @@ const CourseHomeView = () => {
                       ? 'Completed'
                       : 'Not Started'}
                 <span
-                  className={`ml-2 rounded-full px-2 py-0.5 text-xs ${
+                  className={`ml-2 rounded-full px-2 py-0.5 text-sm ${
                     activeTab === tab
                       ? 'bg-white/20 text-white'
                       : 'bg-gray-100 text-gray-600'
@@ -259,7 +259,7 @@ const CourseHomeView = () => {
                     alt={course.title}
                     className="h-full w-full object-cover mix-blend-overlay"
                   />
-                  <div className="absolute top-4 right-4 rounded-full bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                  <div className="absolute top-4 right-4 rounded-full bg-black/50 px-3 py-1 text-sm font-medium text-white backdrop-blur-sm">
                     {course.level}
                   </div>
                   <div className="absolute right-0 bottom-0 left-0 h-24 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -301,7 +301,7 @@ const CourseHomeView = () => {
 
                   {/* Progress Bar */}
                   <div className="mb-4">
-                    <div className="mb-1 flex items-center justify-between text-xs font-medium">
+                    <div className="mb-1 flex items-center justify-between text-sm font-medium">
                       <span className="text-gray-600">Progress</span>
                       <span className="text-gray-800">{course.progress}%</span>
                     </div>

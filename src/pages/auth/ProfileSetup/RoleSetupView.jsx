@@ -3,21 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
 
 const roles = [
-  {
-    id: 'standard',
-    label: 'Utente standard - Liv. 1',
-    image: '/image/register/icon.png',
-  },
-  {
-    id: 'business',
-    label: 'Azienda - Liv. 2',
-    image: '/image/register/icon2.png',
-  },
-  {
-    id: 'licensed',
-    label: 'Utente licenza - Liv. 3',
-    image: '/image/register/icon3.png',
-  },
+  { id: 'standard', image: '/image/register/icon.png' },
+  { id: 'business', image: '/image/register/icon2.png' },
+  { id: 'licensed', image: '/image/register/icon3.png' },
 ];
 
 const RoleCard = ({ label, image, isSelected, onClick }) => {
@@ -54,6 +42,11 @@ const RoleCard = ({ label, image, isSelected, onClick }) => {
 const RoleSetupView = () => {
   const [selectedRole, setSelectedRole] = useState('standard');
   const navigate = useNavigate();
+  const roleLabels = {
+    standard: t('auth.setup.role.options.standard'),
+    business: t('auth.setup.role.options.business'),
+    licensed: t('auth.setup.role.options.licensed'),
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();

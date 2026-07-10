@@ -121,7 +121,7 @@ const StudentProfileView = () => {
                 <div className="flex h-6 w-6 items-center justify-center text-lg text-gray-600">
                   {item.icon}
                 </div>
-                <span className="text-base font-medium text-[#252525] ">
+                <span className="text-base font-medium text-[#252525]">
                   {item.label}
                 </span>
               </div>

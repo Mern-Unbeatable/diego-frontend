@@ -26,7 +26,7 @@ function Rating({ value = 0 }) {
           <Star key={i} className="h-4 w-4" />
         ),
       )}
-      <span className="ml-2 text-xs font-medium text-gray-600">
+      <span className="ml-2 text-sm font-medium text-gray-600">
         {value.toFixed(1)}/5
       </span>
     </div>

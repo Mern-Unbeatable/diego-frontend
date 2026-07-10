@@ -107,7 +107,7 @@ const EmptyCertificateState = () => {
           label="Catalogo corsi"
           variant="primary"
           size="sm"
-          className="text-xs"
+          className="text-sm"
         />
       </div>
     </div>

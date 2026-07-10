@@ -80,7 +80,7 @@ const CompanyTicketDetailView = () => {
               </span>
               Jane Cooper
             </p>
-            <p className="text-xs text-[#8f8f8f]">Aug 6, 2025</p>
+            <p className="text-sm text-[#8f8f8f]">Aug 6, 2025</p>
             <div className="max-w-[630px] rounded-md bg-[#edf5f2] p-3 text-sm text-[#4e4e4e]">
               Thanks for sharing. We have shared your full root access to the
               server. Hope your issue is resolved now.
@@ -94,7 +94,7 @@ const CompanyTicketDetailView = () => {
               </span>
               Jane Cooper
             </p>
-            <p className="text-xs text-[#8f8f8f]">GG/MM/AAAA</p>
+            <p className="text-sm text-[#8f8f8f]">GG/MM/AAAA</p>
             <div className="max-w-[630px] rounded-md bg-[#edf5f2] p-3 text-sm text-[#4e4e4e]">
               Please find the screenshot what i am facing when login Attachment
               1754493425.jpg

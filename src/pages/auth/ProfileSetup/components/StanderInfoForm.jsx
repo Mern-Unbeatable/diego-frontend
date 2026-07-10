@@ -45,7 +45,7 @@ const StandardInfoForm = () => {
           <Paragraph className="text-sm text-gray-600">Steps 2/3</Paragraph>
         </div>
 
-        <Heading level={4}>Informazioni</Heading>
+        <Heading level={4}>{t('auth.setup.info.title')}</Heading>
 
         <form onSubmit={handleFormSubmit}>
           {/* Name */}
@@ -56,12 +56,12 @@ const StandardInfoForm = () => {
                 required={true}
                 className="mb-2 block text-sm font-medium"
               >
-                First name
+                {t('auth.setup.info.firstNameLabel')}
               </Label>
               <InputField
                 type="text"
                 name="firstName"
-                placeholder="Type Your first Name"
+                placeholder={t('auth.setup.info.firstNamePlaceholder')}
                 className="rounded-2xl border border-green-100 bg-white px-4 py-3"
               />
             </div>
@@ -71,12 +71,12 @@ const StandardInfoForm = () => {
                 required={true}
                 className="mb-2 block text-sm font-medium"
               >
-                Last name
+                {t('auth.setup.info.lastNameLabel')}
               </Label>
               <InputField
                 type="text"
                 name="lastName"
-                placeholder="Type Your last Name"
+                placeholder={t('auth.setup.info.lastNamePlaceholder')}
                 className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
               />
             </div>
@@ -88,12 +88,12 @@ const StandardInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Last name
+              {t('auth.setup.info.birthDateLabel')}
             </Label>
             <InputField
               type="date"
               name="birthDate"
-              placeholder="Select Your birth date"
+              placeholder={t('auth.setup.info.birthDatePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -105,12 +105,12 @@ const StandardInfoForm = () => {
                 required={true}
                 className="mb-2 block text-sm font-medium"
               >
-                City
+                {t('auth.setup.info.cityLabel')}
               </Label>
               <InputField
                 type="text"
                 name="city"
-                placeholder="Inserisci il luogo di nascita"
+                placeholder={t('auth.setup.info.cityPlaceholder')}
                 className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
               />
             </div>
@@ -120,12 +120,12 @@ const StandardInfoForm = () => {
                 required={true}
                 className="mb-2 block text-sm font-medium"
               >
-                Country
+                {t('auth.setup.info.countryLabel')}
               </Label>
               <InputField
                 type="text"
                 name="country"
-                placeholder="Type Your country"
+                placeholder={t('auth.setup.info.countryPlaceholder')}
                 className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
               />
             </div>
@@ -137,12 +137,12 @@ const StandardInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Address
+              {t('auth.setup.info.addressLabel')}
             </Label>
             <InputField
               type="text"
               name="address"
-              placeholder="Via, numero civico, CAP, città, sigla provincia, paese"
+              placeholder={t('auth.setup.info.addressPlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -153,12 +153,12 @@ const StandardInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Company Name
+              {t('auth.setup.info.companyNameLabel')}
             </Label>
             <InputField
               type="text"
               name="companyName"
-              placeholder="Inserisci il nome dell'azienda"
+              placeholder={t('auth.setup.info.companyNamePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -169,12 +169,12 @@ const StandardInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Office
+              {t('auth.setup.info.officeLabel')}
             </Label>
             <InputField
               type="text"
               name="office"
-              placeholder="Inserisci sede legale (Via, numero civico, CAP, città, sigla provincia, paese)"
+              placeholder={t('auth.setup.info.officePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -185,12 +185,12 @@ const StandardInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              VAT Number
+              {t('auth.setup.info.vatNumberLabel')}
             </Label>
             <InputField
               type="number"
               name="vatNumber"
-              placeholder="Inserisci la Partita IVA"
+              placeholder={t('auth.setup.info.vatNumberPlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
@@ -201,17 +201,17 @@ const StandardInfoForm = () => {
               required={true}
               className="mb-2 block text-sm font-medium"
             >
-              Tax Code
+              {t('auth.setup.info.taxCodeLabel')}
             </Label>
             <InputField
               type="number"
               name="taxCode"
-              placeholder="Inserisci il codice fiscale"
+              placeholder={t('auth.setup.info.taxCodePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
           </div>
 
-          <Heading level={4}>Cittadinanza</Heading>
+          <Heading level={4}>{t('auth.setup.info.citizenshipTitle')}</Heading>
 
           <div className="my-5 flex items-center">
             <div className="flex items-center gap-8">
@@ -224,7 +224,9 @@ const StandardInfoForm = () => {
                   value="estera"
                   className="h-4 w-4 cursor-pointer rounded border border-gray-400 accent-gray-700"
                 />
-                <span className="text-sm text-gray-700">Estera</span>
+                <span className="text-sm text-gray-700">
+                  {t('auth.setup.info.citizenshipForeign')}
+                </span>
               </label>
 
               <label className="flex cursor-pointer items-center gap-2">
@@ -236,7 +238,9 @@ const StandardInfoForm = () => {
                   value="italiana"
                   className="h-4 w-4 cursor-pointer rounded border border-gray-400 accent-gray-700"
                 />
-                <span className="text-sm text-gray-700">Italiana</span>
+                <span className="text-sm text-gray-700">
+                  {t('auth.setup.info.citizenshipItalian')}
+                </span>
               </label>
             </div>
           </div>
@@ -246,7 +250,7 @@ const StandardInfoForm = () => {
               type="submit"
               className="w-[140px] rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 font-medium text-[#ffffff] transition-colors hover:bg-[#ffffff] hover:text-[#73BFA1]"
             >
-              Procedi
+              {t('auth.common.proceed')}
             </button>
           </div>
         </form>

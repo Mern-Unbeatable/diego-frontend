@@ -109,7 +109,7 @@ const CourseContentView = () => {
 
       return prevModules.map((m, idx) => {
         if (m.type === 'quiz') return m;
-        
+
         if (idx < targetIndex) {
           return { ...m, status: 'done' };
         } else if (idx === targetIndex) {
@@ -146,7 +146,7 @@ const CourseContentView = () => {
       {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
-        className="mb-8 inline-flex items-center text-gray-800 hover:text-black transition-colors cursor-pointer"
+        className="mb-8 inline-flex cursor-pointer items-center text-gray-800 transition-colors hover:text-black"
         aria-label="Back"
       >
         <ArrowLeft size={24} strokeWidth={2.5} />
@@ -163,10 +163,10 @@ const CourseContentView = () => {
         />
       </div>
 
-      <QuizModal 
-        isOpen={isQuizOpen} 
-        onClose={() => setIsQuizOpen(false)} 
-        quizQuestions={quizQuestions} 
+      <QuizModal
+        isOpen={isQuizOpen}
+        onClose={() => setIsQuizOpen(false)}
+        quizQuestions={quizQuestions}
       />
     </div>
   );

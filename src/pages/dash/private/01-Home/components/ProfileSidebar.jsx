@@ -50,7 +50,7 @@ const ProfileSidebar = () => {
               </div>
             </div>
 
-            <div className="absolute top-1/2 right-8 bottom-24 z-20 -translate-y-1/2 transform">
+            <div className="absolute top-1/2 right-8 bottom-24 z-10 -translate-y-1/2 transform">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#73BFA1] text-sm font-semibold text-white shadow-md ring-2 ring-white">
                 1
               </div>

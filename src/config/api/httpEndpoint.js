@@ -1,6 +1,7 @@
 export const endpoints = {
   auth: {
-    LOGIN: '/auth/login',
+    LOGIN: '/auth/signin',
+    OTP_VERIFY: '/auth/verify-login-otp',
     REFRESH: '/auth/refresh',
   },
   admin: {

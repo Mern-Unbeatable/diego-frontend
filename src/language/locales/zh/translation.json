@@ -354,6 +354,68 @@
         }
       ]
     },
+    "courseMeta": [
+      {
+        "category": "SEVESO",
+        "duration": "年度",
+        "objectives": [
+          "理解SEVESO III法规",
+          "识别重大事故风险",
+          "制定有效的应急预案",
+          "在紧急情况下进行沟通管理"
+        ]
+      },
+      {
+        "category": "安全",
+        "duration": "16小时",
+        "objectives": [
+          "了解雇主的法定义务",
+          "在企业中落实预防措施",
+          "开展风险评估管理",
+          "提升日常运营安全"
+        ]
+      },
+      {
+        "category": "通用",
+        "duration": "4小时",
+        "objectives": [
+          "掌握安全基础概念",
+          "识别工作场所主要风险",
+          "采取安全行为",
+          "理解员工的权利与义务"
+        ]
+      },
+      {
+        "category": "安全",
+        "duration": "4小时",
+        "objectives": [
+          "识别低影响的专项风险",
+          "应用有效的预防流程",
+          "正确使用个人防护装备",
+          "减少事故和未遂事件"
+        ]
+      },
+      {
+        "category": "管理层",
+        "duration": "12小时",
+        "objectives": [
+          "强化安全领导力",
+          "与团队规划预防行动",
+          "监控合规与持续改进",
+          "管理职责与运营授权"
+        ]
+      },
+      {
+        "category": "管理层",
+        "duration": "6小时",
+        "objectives": [
+          "更新最新法规能力",
+          "优化企业风险管理",
+          "协调及时的纠正措施",
+          "提升企业安全文化"
+        ]
+      }
+    ],
     "section8": {
       "title": "课程概览",
       "headers": {
@@ -490,6 +552,14 @@
         "item3": "51-200用户 - €1000/用户",
         "item4": "包含管理面板"
       }
+    },
+    "section13": {
+      "title": "UnoSicurezza：简单且专业的必修培训",
+      "description": "UnoSicurezza 是专注于职业健康与安全在线培训的平台，面向希望高效、无负担完成法规义务的企业。我们的培训路径完整、及时更新，并符合第 81/08 号法令要求。",
+      "whyTitle": "为什么选择 UnoSicurezza",
+      "whyDescription": "降低风险并建立重视安全的企业文化比以往任何时候都更重要。UnoSicurezza 将必修培训变成清晰流程，聚焦人员保护与企业合规。凭借灵活的在线学习模式，我们帮助每一家企业打造更安全的工作环境。",
+      "goToCatalog": "前往课程目录",
+      "platformDetails": "平台详情"
     }
   },
   "paymentPages": {
@@ -665,6 +735,7 @@
       "emailLabel": "电子邮箱",
       "emailPlaceholder": "请输入邮箱",
       "goAhead": "继续",
+      "loginInstead": "已有账号？登录",
       "back": "返回",
       "verifyOtp": "验证 OTP",
       "confirm": "确认",

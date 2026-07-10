@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Toast, useToast } from '../../../../components/ui';
 import TicketTable from './components/TicketTable';
 import CreateTicketModal from './components/CreateTicketModal';
 
@@ -28,6 +29,7 @@ const ticketsSeed = [
 ];
 
 const SupportTicketView = () => {
+  const { toasts, addToast, removeToast } = useToast();
   const navigate = useNavigate();
   const [tickets, setTickets] = useState(ticketsSeed);
   const [search, setSearch] = useState('');
@@ -43,7 +45,7 @@ const SupportTicketView = () => {
     if (selectedFile && selectedFile.size <= 20 * 1024 * 1024) {
       setFile(selectedFile);
     } else {
-      alert('Il file deve essere massimo 20 MB');
+      addToast('Il file deve essere massimo 20 MB', 'error');
     }
   };
 
@@ -57,14 +59,14 @@ const SupportTicketView = () => {
     if (droppedFile && droppedFile.size <= 20 * 1024 * 1024) {
       setFile(droppedFile);
     } else {
-      alert('Il file deve essere massimo 20 MB');
+      addToast('Il file deve essere massimo 20 MB', 'error');
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!subject.trim() || !description.trim()) {
-      alert('Compilare tutti i campi obbligatori');
+      addToast('Compilare tutti i campi obbligatori', 'error');
       return;
     }
 
@@ -105,6 +107,16 @@ const SupportTicketView = () => {
 
   return (
     <>
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
+
       <TicketTable
         filteredTickets={filteredTickets}
         search={search}

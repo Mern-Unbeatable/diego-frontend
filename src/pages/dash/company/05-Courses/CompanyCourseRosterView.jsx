@@ -67,14 +67,14 @@ const CompanyCourseRosterView = () => {
                                         {row.action === 'download' ? (
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-4 py-1.5 text-xs font-semibold text-white hover:bg-[#63a88c]"
+                                                className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-4 py-1.5 text-sm font-semibold text-white hover:bg-[#63a88c]"
                                             >
                                                 <Download size={13} /> Download
                                             </button>
                                         ) : (
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center gap-2 rounded-full bg-[#e6f6ef] px-4 py-1.5 text-xs font-semibold text-[#57a080] hover:bg-[#d9f1e7]"
+                                                className="inline-flex items-center gap-2 rounded-full bg-[#e6f6ef] px-4 py-1.5 text-sm font-semibold text-[#57a080] hover:bg-[#d9f1e7]"
                                             >
                                                 <Send size={13} /> Invia un promemoria
                                             </button>
@@ -90,7 +90,7 @@ const CompanyCourseRosterView = () => {
                     <p>Mostra 6 di 20 corsisti</p>
                     <div className="flex items-center gap-4">
                         <button type="button">Precedente</button>
-                        <button type="button" className="h-6 w-6 rounded bg-[#73bfa1] text-xs font-semibold text-white">
+                        <button type="button" className="h-6 w-6 rounded bg-[#73bfa1] text-sm font-semibold text-white">
                             1
                         </button>
                         <button type="button">2</button>

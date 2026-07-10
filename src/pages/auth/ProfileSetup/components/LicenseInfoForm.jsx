@@ -46,17 +46,17 @@ const LicenseInfoForm = () => {
           <Paragraph className="text-sm text-gray-600">Steps 2/3</Paragraph>
         </div>
 
-        <Heading level={4}>Informazioni aziendali</Heading>
+        <Heading level={4}>{t('auth.setup.companyInfo.title')}</Heading>
 
         <form onSubmit={handleFormSubmit} className="mt-6">
           {/* COMPANY */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              Ragione sociale*
+              {t('auth.setup.companyInfo.companyNameLabel')}
             </Label>
             <InputField
               name="companyName"
-              placeholder="Inserisci il nome completo dell'azienda"
+              placeholder={t('auth.setup.companyInfo.companyNamePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3"
             />
           </div>
@@ -64,11 +64,11 @@ const LicenseInfoForm = () => {
           {/* OFFICE */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              Indirizzo sede legale*
+              {t('auth.setup.companyInfo.officeLabel')}
             </Label>
             <InputField
               name="office"
-              placeholder="Inserisci indirizzo sede legale"
+              placeholder={t('auth.setup.companyInfo.officePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3"
             />
           </div>
@@ -76,7 +76,7 @@ const LicenseInfoForm = () => {
           {/* VAT */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              Partita IVA*
+              {t('auth.setup.companyInfo.vatLabel')}
             </Label>
             <InputField
               name="vatNumber"
@@ -88,7 +88,7 @@ const LicenseInfoForm = () => {
           {/* TAX */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              Codice fiscale*
+              {t('auth.setup.companyInfo.taxCodeLabel')}
             </Label>
             <InputField
               name="taxCode"
@@ -100,7 +100,7 @@ const LicenseInfoForm = () => {
           {/* EMAIL */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              E-mail di contatto*
+              {t('auth.setup.companyInfo.emailLabel')}
             </Label>
             <InputField
               name="contactEmail"
@@ -112,7 +112,9 @@ const LicenseInfoForm = () => {
           {/* SOTTODOMINIO WITH HELP ICON */}
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
-              <Label className="text-sm font-medium">Sottodominio*</Label>
+              <Label className="text-sm font-medium">
+                {t('auth.setup.freelancer.subdomainLabel')}
+              </Label>
 
               <button
                 type="button"
@@ -125,7 +127,7 @@ const LicenseInfoForm = () => {
 
             <InputField
               name="subdomain"
-              placeholder="freelanceradmin.com"
+              placeholder={t('auth.setup.freelancer.subdomainPlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3"
             />
           </div>
@@ -133,11 +135,11 @@ const LicenseInfoForm = () => {
           {/* SERVICE TYPE */}
           <div className="mb-6">
             <Label className="mb-2 block text-sm font-medium">
-              Tipo di servizio*
+              {t('auth.setup.freelancer.serviceTypeLabel')}
             </Label>
             <InputField
               name="serviceType"
-              placeholder="Licenza"
+              placeholder={t('auth.setup.freelancer.serviceTypePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3"
             />
           </div>
@@ -148,7 +150,7 @@ const LicenseInfoForm = () => {
               type="submit"
               className="w-[120px] rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] py-2 text-white hover:bg-white hover:text-[#73BFA1]"
             >
-              Procedi
+              {t('auth.common.proceed')}
             </button>
           </div>
         </form>

@@ -282,7 +282,7 @@ const MainNavbar = () => {
               </Link>
             ) : (
               <Link
-                to="/auth/register/choose-language"
+                to="/auth/login"
                 className="inline-flex items-center justify-center rounded-full bg-[#3FC89E] px-5 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#2ca883] xl:px-6 xl:py-2 xl:text-base"
               >
                 <BookOpen className="mr-2 h-4 w-4" /> {t('navbar.eLearning')}

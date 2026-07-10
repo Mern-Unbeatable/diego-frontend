@@ -1,26 +1,38 @@
-import { useState, useRef } from 'react';
-import { Heading, InputField, Label } from '../../components/ui';
-import { IoIosArrowBack } from 'react-icons/io';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
+import { Heading, InputField, Label, Toast } from '../../components/ui';
+import { useAuth } from '../../features/auth/authHooks';
+import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
+import { getDashboardPath } from '../../utils/auth/authUtils';
+import toast from 'react-hot-toast';
 
-const RegisterView = () => {
+const LoginView = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(new Array(6).fill(''));
   const [step, setStep] = useState(1);
-  const navigate = useNavigate();
+
   const otpRefs = useRef([]);
 
+  const { login, loading, error, isAuthenticated, verifyOtp } = useAuth(); // ← DESTRUCTURE MORE
+
+  const navigate = useNavigate();
   // STEP 1 → STEP 2 (EMAIL)
-  const handleNextFromEmail = (e) => {
+  const handleNextFromEmail = async (e) => {
     e.preventDefault();
 
-    if (!email.trim()) {
-      alert('Enter email first');
-      return;
+    try {
+      await login({
+        email: email,
+      });
+      toast.success('OTP sent to your email');
+      // Will auto-redirect via useEffect
+      setStep(2);
+    } catch (error) {
+      toast.error('Please check your email and try again.');
+      console.error('Login error:', error);
     }
-
-    setStep(2);
   };
 
   // OTP change
@@ -43,9 +55,30 @@ const RegisterView = () => {
   };
 
   // OTP VERIFY (STATIC ONLY)
-  const handleVerifyOtp = (e) => {
-    console.log('OTP:', otp.join(''));
-    navigate('/dashboard/super-admin');
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await verifyOtp({
+        email: email,
+        otp: otp.join(''),
+      }); // Call the OTP verification API
+
+      COOKIE_STORAGE.setUser(response.data.user.level); // Store user data in cookies
+      COOKIE_STORAGE.setToken(response.data.accessToken); // Store token in cookies
+
+      // 1. Get the dynamic role from the API response
+      const userRole = response.data.user.level;
+
+      // 2. Get the corresponding path using your utility function
+      const targetPath = getDashboardPath(userRole) || '/login';
+      // 3. Navigate to the dynamic path instead of the hardcoded '/dashboard'
+      navigate(targetPath);
+      toast.success('Successfully verified!');
+    } catch (error) {
+      toast.error('Verification failed. Please try again.');
+      console.error('OTP verification error:', error);
+    }
   };
 
   return (
@@ -121,8 +154,15 @@ const RegisterView = () => {
                       type="submit"
                       className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
                     >
-                      Go ahead
+                      {loading ? 'Loading...' : 'Go ahead'}
                     </button>
+
+                    {/* <button
+                      onClick={debugCookies}
+                      className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
+                    >
+                      {loading ? 'Loading...' : 'Debug Cookies'}
+                    </button> */}
                   </div>
                 </form>
               )}
@@ -163,7 +203,7 @@ const RegisterView = () => {
                       type="submit"
                       className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
                     >
-                      Verify OTP
+                      {loading ? 'Verifying...' : 'Verify OTP'}
                     </button>
                   </div>
                 </form>
@@ -176,4 +216,4 @@ const RegisterView = () => {
   );
 };
 
-export default RegisterView;
+export default LoginView;

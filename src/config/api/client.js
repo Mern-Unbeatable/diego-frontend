@@ -19,10 +19,13 @@
  * ============================================================================
  */
 
+// client.js
+
 import axios from 'axios';
 import { ENV_CONFIG } from '../env.config.js';
 import { endpoints } from './httpEndpoint';
 import { STORAGE } from '../../utils/storage/authStorage.js';
+import { COOKIE_STORAGE } from '../../utils/cookies/cookieStorage';
 
 // ============================================================================
 // AXIOS INSTANCE CONFIGURATION
@@ -163,7 +166,7 @@ const refreshAccessToken = async () => {
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = STORAGE.getToken();
+    const token = COOKIE_STORAGE.getToken();
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -205,9 +208,9 @@ axiosInstance.interceptors.response.use(
 
       // Skip token refresh for authentication endpoints
       const isAuthEndpoint =
-        requestUrl.includes('/auth/login') ||
+        requestUrl.includes(endpoints.auth.LOGIN) ||
+        requestUrl.includes(endpoints.auth.REFRESH) ||
         requestUrl.includes('/auth/register') ||
-        requestUrl.includes('/auth/refresh') ||
         requestUrl.includes('/auth/forgot-password') ||
         requestUrl.includes('/auth/reset-password');
 

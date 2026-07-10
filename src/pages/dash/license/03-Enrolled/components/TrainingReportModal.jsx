@@ -189,7 +189,7 @@ const TrainingReportModal = ({ open, onClose }) => {
                 <p className="text-lg font-semibold text-[#2d2d2d] md:text-xl">
                   Certificato
                 </p>
-                <p className="text-xs text-[#5f5f5f]">
+                <p className="text-sm text-[#5f5f5f]">
                   Scaricato il: 21/03/2024 11:24:58
                 </p>
               </div>
@@ -205,7 +205,7 @@ const TrainingReportModal = ({ open, onClose }) => {
                 <p className="text-lg font-semibold text-[#2d2d2d] md:text-xl">
                   Report del corso
                 </p>
-                <p className="text-xs text-[#5f5f5f]">
+                <p className="text-sm text-[#5f5f5f]">
                   Scaricato il: 21/03/2024 11:24:58
                 </p>
               </div>

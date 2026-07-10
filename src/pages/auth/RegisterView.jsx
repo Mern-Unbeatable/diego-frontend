@@ -1,6 +1,14 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Heading, InputField, Label, Paragraph } from '../../components/ui';
+import { useTranslation } from 'react-i18next';
+import {
+  Heading,
+  InputField,
+  Label,
+  Paragraph,
+  Toast,
+  useToast,
+} from '../../components/ui';
 import { IoIosArrowBack } from 'react-icons/io';
 import { BiArrowBack } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
@@ -49,26 +57,44 @@ const useOtp = (length = OTP_LENGTH) => {
 };
 
 // Step Components
-const EmailStep = ({ email, onEmailChange, onSubmit }) => (
-  <form onSubmit={onSubmit}>
-    <Label className="mb-2 block text-lg font-medium">E-mail</Label>
-    <InputField
-      type="email"
-      value={email}
-      placeholder="Type Your Email"
-      className="rounded-2xl border border-green-100 bg-white px-4 py-3"
-      onChange={(e) => onEmailChange(e.target.value)}
-      autoFocus
-      required
-    />
-    <div className="mt-8 flex justify-end">
-      <SubmitButton type="submit">Go ahead</SubmitButton>
-    </div>
-  </form>
-);
+const EmailStep = ({ email, onEmailChange, onSubmit, t }) => {
+  return (
+    <form onSubmit={onSubmit}>
+      <Label className="mb-2 block text-lg font-medium">
+        {t('auth.common.emailLabel')}
+      </Label>
+      <InputField
+        type="email"
+        value={email}
+        placeholder={t('auth.common.emailPlaceholder')}
+        className="rounded-2xl border border-green-100 bg-white px-4 py-3"
+        onChange={(e) => onEmailChange(e.target.value)}
+        autoFocus
+        required
+      />
+      <div className="mt-4 flex items-center justify-end gap-4">
+        <div className="">
+          <Link to="/auth/login">{t('auth.common.loginInstead')}</Link>
+        </div>
+
+        <div className="">
+          <SubmitButton type="submit">{t('auth.common.goAhead')}</SubmitButton>
+        </div>
+      </div>
+    </form>
+  );
+};
 
 // OTP Step Component
-const OtpStep = ({ email, otp, inputRefs, onOtpChange, onBack, onSubmit }) => (
+const OtpStep = ({
+  email,
+  otp,
+  inputRefs,
+  onOtpChange,
+  onBack,
+  onSubmit,
+  t,
+}) => (
   <form onSubmit={onSubmit}>
     <div className="flex justify-center gap-3">
       {otp.map((digit, index) => (
@@ -104,7 +130,7 @@ const SubmitButton = ({ children, ...props }) => (
 );
 
 // Back Button Component
-const BackButton = ({ onClick }) => (
+const BackButton = ({ onClick, t }) => (
   <button
     type="button"
     onClick={onClick}
@@ -116,12 +142,12 @@ const BackButton = ({ onClick }) => (
 );
 
 // Logo Component
-const Logo = () => (
+const Logo = ({ t }) => (
   <div className="flex items-center gap-2">
     <img
       className="h-10 w-10 object-contain"
       src="/images/icons/title.png"
-      alt="UnoSicurezza Logo"
+      alt={t('auth.common.logoAlt')}
       loading="lazy"
     />
     <h1 className="text-3xl font-bold text-gray-900">UnoSicurezza</h1>
@@ -130,6 +156,8 @@ const Logo = () => (
 
 // Main Component
 const RegisterView = () => {
+  const { t } = useTranslation();
+  const { toasts, addToast, removeToast } = useToast();
   const [email, setEmail] = useState('');
   const [step, setStep] = useState(STEPS.EMAIL);
   const navigate = useNavigate();
@@ -156,14 +184,14 @@ const RegisterView = () => {
       e.preventDefault();
 
       if (!email.trim()) {
-        alert('Please enter your email address');
+        addToast('Please enter your email address', 'error');
         return;
       }
 
       // Here you would typically send OTP to email
       goToNextStep();
     },
-    [email, goToNextStep],
+    [email, goToNextStep, t],
   );
 
   const handleOtpSubmit = useCallback(
@@ -190,11 +218,20 @@ const RegisterView = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left Section - Logo & Illustration */}
           <div className="flex flex-col items-center justify-center bg-white p-10">
-            <Logo />
+            <Logo t={t} />
             <div className="mt-10 max-w-md">
               <img
                 className="w-full object-contain"
@@ -238,12 +275,14 @@ const RegisterView = () => {
               {/* Step Renderer */}
               {step === STEPS.EMAIL ? (
                 <EmailStep
+                  t={t}
                   email={email}
                   onEmailChange={setEmail}
                   onSubmit={handleEmailSubmit}
                 />
               ) : (
                 <OtpStep
+                  t={t}
                   email={email}
                   otp={otp}
                   inputRefs={inputRefs}
