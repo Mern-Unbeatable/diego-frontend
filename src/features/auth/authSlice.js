@@ -124,6 +124,18 @@ const authSlice = createSlice({
       .addCase(registerCompleteAPI.fulfilled, (state, action) => {
         console.log('Register Complete successful:', action.payload);
         const payloadData = action.payload || {};
+        const data = payloadData.data || payloadData;
+
+        state.loading = false;
+        state.user =
+          data.user?.level ||
+          data.user?.role ||
+          (typeof data.user === 'string' ? data.user : null) ||
+          data.level ||
+          null;
+        state.token =
+          data.accessToken || data.tokens?.accessToken || data.token || null;
+        state.isAuthenticated = !!state.user && !!state.token;
       })
       .addCase(registerCompleteAPI.rejected, (state, action) => {
         state.loading = false;

@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { GrClose } from 'react-icons/gr';
 import { useNavigate, Link } from 'react-router-dom';
-import { BackpackIcon } from 'lucide-react';
 import { BiArrowBack } from 'react-icons/bi';
 import { useTranslation } from 'react-i18next';
 import {
@@ -12,26 +10,31 @@ import {
 } from '../../../../components/ui';
 import { STORAGE } from '../../../../utils/storage/authStorage';
 
+const inputClass =
+  'rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm';
+
+/**
+ * PRIVATE account fields for POST /auth/register/complete
+ * (password, confirmPassword, consent, preferredLanguage set at password step)
+ */
 const StandardInfoForm = () => {
   const { t } = useTranslation();
-  const [selected, setSelected] = useState('');
+  const draft = STORAGE.getUser() || {};
+  const [citizenship, setCitizenship] = useState(
+    () => draft.citizenship || 'ITALIAN',
+  );
   const navigate = useNavigate();
-
-  const handleChange = (value) => {
-    setSelected(selected === value ? '' : value);
-  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
-    console.log('Private formData:', data);
+    STORAGE.setUser({
+      ...data,
+      citizenship,
+    });
 
-    STORAGE.setUser({ ...data });
-
-    // 🔥 NEXT STEP CONTROL
     navigate('/auth/register/setup-password');
   };
 
@@ -41,7 +44,7 @@ const StandardInfoForm = () => {
         <div className="mb-6 flex items-center justify-between">
           <Paragraph className="flex items-center gap-x-2 text-sm text-gray-600">
             <Link
-              to={`/auth/register/setup-role`}
+              to="/auth/register/setup-role"
               className="flex items-center gap-x-2"
             >
               <BiArrowBack className="text-lg" /> Back
@@ -53,207 +56,157 @@ const StandardInfoForm = () => {
         <Heading level={4}>{t('auth.setup.info.title')}</Heading>
 
         <form onSubmit={handleFormSubmit}>
-          {/* Name */}
-          <div className="mb-3 flex w-full gap-5 transition-all duration-300">
+          <div className="mb-3 flex w-full gap-5">
             <div className="w-full">
-              <Label
-                htmlFor="firstName"
-                required={true}
-                className="mb-2 block text-sm font-medium"
-              >
+              <Label htmlFor="firstName" required className="mb-2 block text-sm font-medium">
                 {t('auth.setup.info.firstNameLabel')}
               </Label>
               <InputField
                 type="text"
+                id="firstName"
                 name="firstName"
+                defaultValue={draft.firstName || ''}
                 placeholder={t('auth.setup.info.firstNamePlaceholder')}
-                className="rounded-2xl border border-green-100 bg-white px-4 py-3"
+                className={inputClass}
+                required
               />
             </div>
             <div className="w-full">
-              <Label
-                htmlFor="lastName"
-                required={true}
-                className="mb-2 block text-sm font-medium"
-              >
+              <Label htmlFor="lastName" required className="mb-2 block text-sm font-medium">
                 {t('auth.setup.info.lastNameLabel')}
               </Label>
               <InputField
                 type="text"
+                id="lastName"
                 name="lastName"
+                defaultValue={draft.lastName || ''}
                 placeholder={t('auth.setup.info.lastNamePlaceholder')}
-                className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+                className={inputClass}
+                required
               />
             </div>
           </div>
 
           <div className="mb-6">
-            <Label
-              htmlFor="lastName"
-              required={true}
-              className="mb-2 block text-sm font-medium"
-            >
+            <Label htmlFor="birthDate" required className="mb-2 block text-sm font-medium">
               {t('auth.setup.info.birthDateLabel')}
             </Label>
             <InputField
               type="date"
+              id="birthDate"
               name="birthDate"
-              placeholder={t('auth.setup.info.birthDatePlaceholder')}
-              className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+              defaultValue={draft.birthDate || ''}
+              className={inputClass}
+              required
             />
           </div>
 
-          <div className="mb-6 flex w-full gap-5 transition-all duration-300">
+          <div className="mb-6 flex w-full gap-5">
             <div className="w-full">
-              <Label
-                htmlFor="city"
-                required={true}
-                className="mb-2 block text-sm font-medium"
-              >
+              <Label htmlFor="city" required className="mb-2 block text-sm font-medium">
                 {t('auth.setup.info.cityLabel')}
               </Label>
               <InputField
                 type="text"
+                id="city"
                 name="city"
+                defaultValue={draft.city || ''}
                 placeholder={t('auth.setup.info.cityPlaceholder')}
-                className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+                className={inputClass}
+                required
               />
             </div>
             <div className="w-full">
-              <Label
-                htmlFor="country"
-                required={true}
-                className="mb-2 block text-sm font-medium"
-              >
+              <Label htmlFor="country" required className="mb-2 block text-sm font-medium">
                 {t('auth.setup.info.countryLabel')}
               </Label>
               <InputField
                 type="text"
+                id="country"
                 name="country"
+                defaultValue={draft.country || ''}
                 placeholder={t('auth.setup.info.countryPlaceholder')}
-                className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+                className={inputClass}
+                required
               />
             </div>
           </div>
 
           <div className="mb-6">
             <Label
-              htmlFor="address"
-              required={true}
+              htmlFor="residenceAddress"
+              required
               className="mb-2 block text-sm font-medium"
             >
               {t('auth.setup.info.addressLabel')}
             </Label>
             <InputField
               type="text"
-              name="address"
+              id="residenceAddress"
+              name="residenceAddress"
+              defaultValue={draft.residenceAddress || ''}
               placeholder={t('auth.setup.info.addressPlaceholder')}
-              className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+              className={inputClass}
+              required
             />
           </div>
 
           <div className="mb-6">
             <Label
-              htmlFor="companyName"
-              required={true}
-              className="mb-2 block text-sm font-medium"
-            >
-              {t('auth.setup.info.companyNameLabel')}
-            </Label>
-            <InputField
-              type="text"
-              name="companyName"
-              placeholder={t('auth.setup.info.companyNamePlaceholder')}
-              className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
-            />
-          </div>
-
-          <div className="mb-6">
-            <Label
-              htmlFor="office"
-              required={true}
-              className="mb-2 block text-sm font-medium"
-            >
-              {t('auth.setup.info.officeLabel')}
-            </Label>
-            <InputField
-              type="text"
-              name="office"
-              placeholder={t('auth.setup.info.officePlaceholder')}
-              className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
-            />
-          </div>
-
-          <div className="mb-6">
-            <Label
-              htmlFor="vatNumber"
-              required={true}
-              className="mb-2 block text-sm font-medium"
-            >
-              {t('auth.setup.info.vatNumberLabel')}
-            </Label>
-            <InputField
-              type="number"
-              name="vatNumber"
-              placeholder={t('auth.setup.info.vatNumberPlaceholder')}
-              className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
-            />
-          </div>
-
-          <div className="mb-6">
-            <Label
-              htmlFor="taxCode"
-              required={true}
+              htmlFor="traineeTaxCode"
+              required
               className="mb-2 block text-sm font-medium"
             >
               {t('auth.setup.info.taxCodeLabel')}
             </Label>
             <InputField
-              type="number"
-              name="taxCode"
+              type="text"
+              id="traineeTaxCode"
+              name="traineeTaxCode"
+              defaultValue={draft.traineeTaxCode || ''}
               placeholder={t('auth.setup.info.taxCodePlaceholder')}
-              className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+              className={inputClass}
+              required
             />
           </div>
 
           <Heading level={4}>{t('auth.setup.info.citizenshipTitle')}</Heading>
 
-          <div className="my-5 flex items-center">
-            <div className="flex items-center gap-8">
-              <label className="flex cursor-pointer items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={selected === 'estera'}
-                  onChange={() => handleChange('estera')}
-                  name="citizenship"
-                  value="estera"
-                  className="h-4 w-4 cursor-pointer rounded border border-gray-400 accent-gray-700"
-                />
-                <span className="text-sm text-gray-700">
-                  {t('auth.setup.info.citizenshipForeign')}
-                </span>
-              </label>
+          <div className="my-5 flex items-center gap-8">
+            <label className="flex cursor-pointer items-center gap-2">
+              <input
+                type="radio"
+                name="citizenship"
+                value="ITALIAN"
+                checked={citizenship === 'ITALIAN'}
+                onChange={() => setCitizenship('ITALIAN')}
+                className="h-4 w-4 cursor-pointer accent-gray-700"
+              />
+              <span className="text-sm text-gray-700">
+                {t('auth.setup.info.citizenshipItalian')}
+              </span>
+            </label>
 
-              <label className="flex cursor-pointer items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={selected === 'italiana'}
-                  onChange={() => handleChange('italiana')}
-                  name="citizenship"
-                  value="italiana"
-                  className="h-4 w-4 cursor-pointer rounded border border-gray-400 accent-gray-700"
-                />
-                <span className="text-sm text-gray-700">
-                  {t('auth.setup.info.citizenshipItalian')}
-                </span>
-              </label>
-            </div>
+            <label className="flex cursor-pointer items-center gap-2">
+              <input
+                type="radio"
+                name="citizenship"
+                value="FOREIGN"
+                checked={citizenship === 'FOREIGN'}
+                onChange={() => setCitizenship('FOREIGN')}
+                className="h-4 w-4 cursor-pointer accent-gray-700"
+              />
+              <span className="text-sm text-gray-700">
+                {t('auth.setup.info.citizenshipForeign')}
+              </span>
+            </label>
           </div>
+
           <hr className="border-t border-gray-300" />
           <div className="mx-auto flex w-full justify-end py-5">
             <button
               type="submit"
-              className="w-[140px] rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 font-medium text-[#ffffff] transition-colors hover:bg-[#ffffff] hover:text-[#73BFA1]"
+              className="w-[140px] rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 font-medium text-white transition-colors hover:bg-white hover:text-[#73BFA1]"
             >
               {t('auth.common.proceed')}
             </button>
