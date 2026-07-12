@@ -15,7 +15,7 @@ const LoginView = () => {
 
   const otpRefs = useRef([]);
 
-  const { login, loading, error, isAuthenticated, verifyOtp } = useAuth(); // ← DESTRUCTURE MORE
+  const { login, loading, error, isAuthenticated, verifyLoginOtp } = useAuth(); // ← DESTRUCTURE MORE
 
   const navigate = useNavigate();
   // STEP 1 → STEP 2 (EMAIL)
@@ -59,7 +59,7 @@ const LoginView = () => {
     e.preventDefault();
 
     try {
-      const response = await verifyOtp({
+      const response = await verifyLoginOtp({
         email: email,
         otp: otp.join(''),
       }); // Call the OTP verification API
@@ -156,13 +156,6 @@ const LoginView = () => {
                     >
                       {loading ? 'Loading...' : 'Go ahead'}
                     </button>
-
-                    {/* <button
-                      onClick={debugCookies}
-                      className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
-                    >
-                      {loading ? 'Loading...' : 'Debug Cookies'}
-                    </button> */}
                   </div>
                 </form>
               )}

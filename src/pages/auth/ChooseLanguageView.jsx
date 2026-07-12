@@ -11,21 +11,25 @@ const LANGUAGES = [
 ];
 
 const ChooseLanguageView = () => {
-  const { i18n, t } = useTranslation();
-  const navigate = useNavigate();
-  const [selected, setSelected] = useState(i18n.language || 'it');
+  const { i18n } = useTranslation();
 
-  useEffect(() => {
-    setSelected(i18n.language);
-  }, [i18n.language]);
+  const currentLanguage = i18n.resolvedLanguage || 'en';
+  console.log(' Current Language:', currentLanguage);
 
-  const handleSelect = (code) => {
-    i18n.changeLanguage(code);
-    setSelected(code);
+  const handleSelect = async (code) => {
+    console.log('Clicked', code);
+
+    await i18n.changeLanguage(code);
+
+    console.log(i18n.language);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    STORAGE.setUser({
+      preferredLanguage: currentLanguage,
+    });
+
     navigate('/auth/register');
   };
 
@@ -73,7 +77,7 @@ const ChooseLanguageView = () => {
                     type="button"
                     onClick={() => handleSelect(lang.code)}
                     className={`relative h-40 rounded-2xl border-2 bg-white p-5 transition-all ${
-                      selected === lang.code
+                      currentLanguage === lang.code
                         ? 'border-emerald-400 shadow-md'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
@@ -82,12 +86,12 @@ const ChooseLanguageView = () => {
                     <div className="absolute top-3 right-3">
                       <div
                         className={`flex h-6 w-6 items-center justify-center rounded-full ${
-                          selected === lang.code
+                          currentLanguage === lang.code
                             ? 'bg-emerald-400'
                             : 'bg-gray-200'
                         }`}
                       >
-                        {selected === lang.code && (
+                        {currentLanguage === lang.code && (
                           <svg
                             className="h-4 w-4 text-white"
                             fill="none"

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { BiArrowBack } from 'react-icons/bi';
 import { FiHelpCircle } from 'react-icons/fi';
 import { GrClose } from 'react-icons/gr';
@@ -12,8 +13,10 @@ import {
 } from '../../../../components/ui';
 
 import SubdomainModal from '../../../../components/auth/SubdomainModal';
+import { STORAGE } from '../../../../utils/storage/authStorage';
 
 const LicenseInfoForm = () => {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState('');
   const [openModal, setOpenModal] = useState(false);
 
@@ -24,8 +27,8 @@ const LicenseInfoForm = () => {
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-
-    console.log(data);
+    STORAGE.setUser({ ...data });
+    console.log('License formData:', data);
 
     navigate('/auth/register/setup-password');
   };

@@ -3,14 +3,17 @@ import { GrClose } from 'react-icons/gr';
 import { useNavigate, Link } from 'react-router-dom';
 import { BackpackIcon } from 'lucide-react';
 import { BiArrowBack } from 'react-icons/bi';
+import { useTranslation } from 'react-i18next';
 import {
   Heading,
   InputField,
   Label,
   Paragraph,
 } from '../../../../components/ui';
+import { STORAGE } from '../../../../utils/storage/authStorage';
 
 const StandardInfoForm = () => {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState('');
   const navigate = useNavigate();
 
@@ -24,7 +27,9 @@ const StandardInfoForm = () => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
-    console.log(data);
+    console.log('Private formData:', data);
+
+    STORAGE.setUser({ ...data });
 
     // 🔥 NEXT STEP CONTROL
     navigate('/auth/register/setup-password');

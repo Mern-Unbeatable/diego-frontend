@@ -1,9 +1,13 @@
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import { GrClose } from 'react-icons/gr';
 import { BiArrowBack } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
 
 import { Heading, Paragraph, InputField, Label } from '../../../components/ui';
+import { STORAGE } from '../../../utils/storage/authStorage';
+import COOKIE_STORAGE from '../../../utils/cookies/cookieStorage';
+import { getDashboardPath } from '../../../utils/auth/authUtils';
 
 const PasswordSetupView = () => {
   const navigate = useNavigate();
@@ -14,7 +18,21 @@ const PasswordSetupView = () => {
     const data = Object.fromEntries(formData);
 
     console.log('Password data:', data);
-    navigate('/dashboard/super-admin');
+    STORAGE.setUser({ ...data });
+
+    const user = STORAGE.getUser();
+    console.log('localUser:', user);
+    // COOKIE_STORAGE.setUser(response.data.user.level); // Store user data in cookies
+    // COOKIE_STORAGE.setToken(response.data.accessToken); // Store token in cookies
+
+    // 1. Get the dynamic role from the API response
+    // const userRole = response.data.user.level;
+
+    // 2. Get the corresponding path using your utility function
+    const targetPath = getDashboardPath() || '/auth/login';
+    // 3. Navigate to the dynamic path instead of the hardcoded '/dashboard'
+    navigate(targetPath);
+    toast.success('Successfully verified!');
   };
 
   return (

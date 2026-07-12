@@ -1,295 +1,208 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import {
-  Heading,
-  InputField,
-  Label,
-  Paragraph,
-  Toast,
-  useToast,
-} from '../../components/ui';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
-import { BiArrowBack } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
+import { Heading, InputField, Label, Toast } from '../../components/ui';
+import { useAuth } from '../../features/auth/authHooks';
+import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
+import { getDashboardPath } from '../../utils/auth/authUtils';
+import toast from 'react-hot-toast';
 
-// Constants
-const OTP_LENGTH = 6;
-const STEPS = {
-  EMAIL: 1,
-  OTP: 2,
-};
-
-// Custom hook for OTP management
-const useOtp = (length = OTP_LENGTH) => {
-  const [otp, setOtp] = useState(Array(length).fill(''));
-  const inputRefs = useRef([]);
-
-  const handleChange = useCallback(
-    (value, index) => {
-      // Only allow digits
-      if (!/^\d*$/.test(value)) return;
-
-      setOtp((prev) => {
-        const newOtp = [...prev];
-        newOtp[index] = value;
-        return newOtp;
-      });
-
-      // Auto-focus next input
-      if (value && index < length - 1) {
-        inputRefs.current[index + 1]?.focus();
-      }
-    },
-    [length],
-  );
-
-  const resetOtp = useCallback(() => {
-    setOtp(Array(length).fill(''));
-    inputRefs.current[0]?.focus();
-  }, [length]);
-
-  const isComplete = useCallback(() => {
-    return otp.every((digit) => digit !== '');
-  }, [otp]);
-
-  return { otp, inputRefs, handleChange, resetOtp, isComplete };
-};
-
-// Step Components
-const EmailStep = ({ email, onEmailChange, onSubmit, t }) => {
-  return (
-    <form onSubmit={onSubmit}>
-      <Label className="mb-2 block text-lg font-medium">
-        {t('auth.common.emailLabel')}
-      </Label>
-      <InputField
-        type="email"
-        value={email}
-        placeholder={t('auth.common.emailPlaceholder')}
-        className="rounded-2xl border border-green-100 bg-white px-4 py-3"
-        onChange={(e) => onEmailChange(e.target.value)}
-        autoFocus
-        required
-      />
-      <div className="mt-4 flex items-center justify-end gap-4">
-        <div className="">
-          <Link to="/auth/login">{t('auth.common.loginInstead')}</Link>
-        </div>
-
-        <div className="">
-          <SubmitButton type="submit">{t('auth.common.goAhead')}</SubmitButton>
-        </div>
-      </div>
-    </form>
-  );
-};
-
-// OTP Step Component
-const OtpStep = ({
-  email,
-  otp,
-  inputRefs,
-  onOtpChange,
-  onBack,
-  onSubmit,
-  t,
-}) => (
-  <form onSubmit={onSubmit}>
-    <div className="flex justify-center gap-3">
-      {otp.map((digit, index) => (
-        <input
-          key={index}
-          ref={(el) => (inputRefs.current[index] = el)}
-          type="text"
-          maxLength={1}
-          value={digit}
-          onChange={(e) => onOtpChange(e.target.value, index)}
-          className="h-14 w-14 rounded-xl border border-green-100 bg-white text-center text-xl focus:border-[#73BFA1] focus:outline-none"
-          aria-label={`OTP digit ${index + 1}`}
-          autoFocus={index === 0}
-        />
-      ))}
-    </div>
-
-    <div className="mt-8 flex justify-center gap-3">
-      <BackButton onClick={onBack} />
-      <SubmitButton type="submit">Verify OTP</SubmitButton>
-    </div>
-  </form>
-);
-
-// Reusable Button Components
-const SubmitButton = ({ children, ...props }) => (
-  <button
-    className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-5 py-2 text-white transition-colors duration-200 hover:bg-white hover:text-[#73BFA1]"
-    {...props}
-  >
-    {children}
-  </button>
-);
-
-// Back Button Component
-const BackButton = ({ onClick, t }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    className="flex items-center gap-1 rounded-full border border-gray-200 bg-white px-5 py-3 text-gray-600 transition-colors duration-200 hover:bg-gray-50"
-  >
-    <IoIosArrowBack className="text-lg" />
-    Back
-  </button>
-);
-
-// Logo Component
-const Logo = ({ t }) => (
-  <div className="flex items-center gap-2">
-    <img
-      className="h-10 w-10 object-contain"
-      src="/images/icons/title.png"
-      alt={t('auth.common.logoAlt')}
-      loading="lazy"
-    />
-    <h1 className="text-3xl font-bold text-gray-900">UnoSicurezza</h1>
-  </div>
-);
-
-// Main Component
 const RegisterView = () => {
-  const { t } = useTranslation();
-  const { toasts, addToast, removeToast } = useToast();
   const [email, setEmail] = useState('');
-  const [step, setStep] = useState(STEPS.EMAIL);
+  const [otp, setOtp] = useState(new Array(6).fill(''));
+  const [step, setStep] = useState(1);
+
+  const otpRefs = useRef([]);
+
+  const { register, loading, error, isAuthenticated, verifyRegisterOtp } =
+    useAuth();
+
   const navigate = useNavigate();
 
-  const { otp, inputRefs, handleChange: handleOtpChange, resetOtp } = useOtp();
+  // STEP 1 → STEP 2 (EMAIL)
+  const handleNextFromEmail = async (e) => {
+    e.preventDefault();
 
-  // Navigation handlers
-  const goToNextStep = useCallback(() => {
-    setStep(STEPS.OTP);
-  }, []);
-
-  const goToPreviousStep = useCallback(() => {
-    setStep(STEPS.EMAIL);
-    resetOtp();
-  }, [resetOtp]);
-
-  const goToProfileSetup = useCallback(() => {
-    navigate('/auth/register/setup-role');
-  }, [navigate]);
-
-  // Step handlers
-  const handleEmailSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-
-      if (!email.trim()) {
-        addToast('Please enter your email address', 'error');
-        return;
-      }
-
-      // Here you would typically send OTP to email
-      goToNextStep();
-    },
-    [email, goToNextStep, t],
-  );
-
-  const handleOtpSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-
-      // Here you would verify OTP with backend
-      // For now, navigate directly
-      goToProfileSetup();
-    },
-    [goToProfileSetup],
-  );
-
-  // Auto-focus first input when OTP step loads
-  useEffect(() => {
-    if (step === STEPS.OTP && inputRefs.current[0]) {
-      inputRefs.current[0].focus();
+    try {
+      // Register the user with email - will send OTP
+      await register({
+        email: email,
+      });
+      toast.success('OTP sent to your email');
+      setStep(2);
+    } catch (error) {
+      toast.error('Please check your email and try again.');
+      console.error('Registration error:', error);
     }
-  }, [step, inputRefs]);
+  };
 
-  // Get illustration based on current step
-  const illustration =
-    step === STEPS.OTP ? '/image/icon/otp.png' : '/image/icon/password.jpg';
+  // OTP change
+  const handleOtpChange = (value, index) => {
+    if (!/^\d*$/.test(value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+
+    if (value && index < 5) {
+      otpRefs.current[index + 1]?.focus();
+    }
+  };
+
+  // BACK
+  const handleBack = () => {
+    setStep(1);
+    setOtp(new Array(6).fill(''));
+  };
+
+  // OTP VERIFY
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await verifyRegisterOtp({
+        email: email,
+        otp: otp.join(''),
+      });
+      console.log('Registration Token:', response.data.registrationToken);
+      // Store user data in cookies
+      COOKIE_STORAGE.setToken(response.data.registrationToken);
+      // Navigate to the dynamic path
+      navigate('/auth/register/setup-role');
+      toast.success('Registration successful!');
+    } catch (error) {
+      toast.error('Verification failed. Please try again.');
+      console.error('OTP verification error:', error);
+    }
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      {toasts.map((toast) => (
-        <Toast
-          key={toast.id}
-          type={toast.type}
-          message={toast.message}
-          duration={toast.duration}
-          onClose={() => removeToast(toast.id)}
-        />
-      ))}
       <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* Left Section - Logo & Illustration */}
+        <div className="grid min-h-[650px] grid-cols-1 md:grid-cols-2">
+          {/* LEFT */}
           <div className="flex flex-col items-center justify-center bg-white p-10">
-            <Logo t={t} />
+            <div className="flex items-center gap-2">
+              <img
+                className="h-10 w-10 object-contain"
+                src="/images/icons/title.png"
+                alt="Logo"
+              />
+              <h1 className="text-3xl font-bold text-gray-900">UnoSicurezza</h1>
+            </div>
+
             <div className="mt-10 max-w-md">
               <img
                 className="w-full object-contain"
-                src={illustration}
-                alt={step === STEPS.OTP ? 'OTP Verification' : 'Email Sign Up'}
-                loading="lazy"
+                src={
+                  step === 2
+                    ? '/image/icon/otp.png'
+                    : '/image/icon/password.jpg'
+                }
+                alt=""
               />
             </div>
           </div>
 
-          {/* Right Section - Form */}
-          <div className="relative flex items-center justify-center bg-[#F1F9F6] px-6 py-8 lg:px-12">
+          {/* RIGHT */}
+          <div className="relative flex items-center justify-center bg-[#F1F9F6] px-8 py-12 lg:px-20">
             {/* Close Icon - Top Right */}
             <button
-              onClick={() => navigate('/')} // or wherever you want to navigate
-              className="absolute top-4 right-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+              onClick={() => navigate('/')}
+              className="absolute top-4 right-4 rounded-full bg-amber-50 p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
               aria-label="Close"
             >
               <GrClose className="text-xl" />
             </button>
 
             <div className="w-full max-w-md">
-              {/* Title */}
-              <div className="mb-8">
+              {/* TITLE */}
+              <div className="mb-4">
                 <Heading
                   level={4}
-                  className="text-center text-2xl text-gray-900"
-                >
-                  {step === STEPS.OTP
-                    ? 'Enter the OTP sent to your email'
-                    : 'Enter your email'}
-                </Heading>
-                {step === STEPS.OTP && email && (
-                  <p className="mt-2 text-center text-sm text-gray-600">
-                    OTP sent to{' '}
-                    <strong className="text-gray-900">{email}</strong>
-                  </p>
-                )}
+                  className="text-center"
+                  h4={
+                    step === 2
+                      ? 'Enter the OTP sent to your email'
+                      : 'Enter your email to register'
+                  }
+                />
               </div>
 
-              {/* Step Renderer */}
-              {step === STEPS.EMAIL ? (
-                <EmailStep
-                  t={t}
-                  email={email}
-                  onEmailChange={setEmail}
-                  onSubmit={handleEmailSubmit}
-                />
-              ) : (
-                <OtpStep
-                  t={t}
-                  email={email}
-                  otp={otp}
-                  inputRefs={inputRefs}
-                  onOtpChange={handleOtpChange}
-                  onBack={goToPreviousStep}
-                  onSubmit={handleOtpSubmit}
-                />
+              {/* EMAIL STEP */}
+              {step === 1 && (
+                <form onSubmit={handleNextFromEmail}>
+                  <Label className="mb-2 block text-lg font-medium">
+                    E-mail
+                  </Label>
+
+                  <InputField
+                    type="email"
+                    value={email}
+                    placeholder="Type Your Email"
+                    className="rounded-2xl border border-green-100 bg-white px-4 py-3"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+
+                  <div className="mt-8 flex items-center justify-end gap-4">
+                    <button
+                      type="button"
+                      onClick={() => navigate('/auth/login')}
+                      className="text-sm text-gray-600 hover:text-[#73BFA1]"
+                    >
+                      Already have an account? Login
+                    </button>
+                    <button
+                      type="submit"
+                      className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
+                    >
+                      {loading ? 'Loading...' : 'Go ahead'}
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* OTP STEP */}
+              {step === 2 && (
+                <form onSubmit={handleVerifyOtp}>
+                  <p className="mb-8 text-center text-gray-600">
+                    OTP sent to <strong>{email}</strong>
+                  </p>
+
+                  <div className="flex justify-center gap-3">
+                    {otp.map((digit, index) => (
+                      <input
+                        key={index}
+                        ref={(el) => (otpRefs.current[index] = el)}
+                        type="text"
+                        maxLength={1}
+                        value={digit}
+                        onChange={(e) => handleOtpChange(e.target.value, index)}
+                        className="h-14 w-14 rounded-xl border border-green-100 bg-white text-center text-xl focus:border-[#73BFA1] focus:outline-none"
+                      />
+                    ))}
+                  </div>
+
+                  {/* BUTTONS */}
+                  <div className="mt-8 flex justify-center gap-3">
+                    <button
+                      type="button"
+                      onClick={handleBack}
+                      className="flex items-center gap-1 rounded-full border border-gray-200 bg-white px-5 py-3 text-gray-600"
+                    >
+                      <IoIosArrowBack />
+                      Back
+                    </button>
+
+                    <button
+                      type="submit"
+                      className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
+                    >
+                      {loading ? 'Verifying...' : 'Verify OTP'}
+                    </button>
+                  </div>
+                </form>
               )}
             </div>
           </div>

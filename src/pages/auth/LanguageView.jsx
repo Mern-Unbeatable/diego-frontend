@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Heading, Paragraph } from '../../components/ui';
 import { GrClose } from 'react-icons/gr';
+import { STORAGE } from '../../utils/storage/authStorage';
 
 const LANGUAGES = [
   { code: 'en', title: 'English', img: '/image/icon/lang-uk.png' },
@@ -15,19 +16,19 @@ const LanguageView = () => {
   const { i18n } = useTranslation();
   const navigate = useNavigate();
 
-  const [selected, setSelected] = useState(i18n.language || 'it');
+  const currentLanguage = i18n.resolvedLanguage || 'en';
 
-  useEffect(() => {
-    setSelected(i18n.language);
-  }, [i18n.language]);
-
-  const handleSelect = (code) => {
-    i18n.changeLanguage(code);
-    setSelected(code);
+  const handleSelect = async (code) => {
+    await i18n.changeLanguage(code);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    STORAGE.setUser({
+      preferredLanguage: currentLanguage,
+    });
+
     navigate('/auth/register');
   };
 
@@ -37,9 +38,6 @@ const LanguageView = () => {
         <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
           <div className="grid min-h-[700px] grid-cols-1 md:grid-cols-2">
             {/* Left Section */}
-
-
-            
 
             {/* Close Icon - Top Right of Entire Card */}
             <button
@@ -93,7 +91,7 @@ const LanguageView = () => {
                       type="button"
                       onClick={() => handleSelect(lang.code)}
                       className={`relative h-40 rounded-2xl border-2 bg-white p-5 transition-all duration-300 hover:scale-105 ${
-                        selected === lang.code
+                        currentLanguage === lang.code
                           ? 'border-[#73BFA1] shadow-md shadow-[#73BFA1]/20'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
@@ -102,12 +100,12 @@ const LanguageView = () => {
                       <div className="absolute top-3 right-3">
                         <div
                           className={`flex h-6 w-6 items-center justify-center rounded-full transition-all ${
-                            selected === lang.code
+                            currentLanguage === lang.code
                               ? 'bg-[#73BFA1]'
                               : 'bg-gray-200'
                           }`}
                         >
-                          {selected === lang.code && (
+                          {currentLanguage === lang.code && (
                             <svg
                               className="h-4 w-4 text-white"
                               fill="none"

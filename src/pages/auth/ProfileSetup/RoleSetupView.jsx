@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
+import { STORAGE } from '../../../utils/storage/authStorage';
 
 const roles = [
   { id: 'standard', image: '/image/register/icon.png' },
@@ -40,6 +42,7 @@ const RoleCard = ({ label, image, isSelected, onClick }) => {
 };
 
 const RoleSetupView = () => {
+  const { t } = useTranslation();
   const [selectedRole, setSelectedRole] = useState('standard');
   const navigate = useNavigate();
   const roleLabels = {
@@ -50,6 +53,9 @@ const RoleSetupView = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    STORAGE.setUser({ accountType: selectedRole });
+
     navigate('/auth/register/setup-info', {
       state: { role: selectedRole },
     });
@@ -66,7 +72,7 @@ const RoleSetupView = () => {
         {roles.map((role) => (
           <RoleCard
             key={role.id}
-            label={role.label}
+            label={roleLabels[role.id]}
             image={role.image}
             isSelected={selectedRole === role.id}
             onClick={() => setSelectedRole(role.id)}

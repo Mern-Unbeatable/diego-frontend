@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { BackpackIcon } from 'lucide-react';
 import { BiArrowBack } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
@@ -10,8 +11,10 @@ import {
   Label,
   Paragraph,
 } from '../../../../components/ui';
+import { STORAGE } from '../../../../utils/storage/authStorage';
 
 const CompanyInfoForm = () => {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState('');
   const navigate = useNavigate();
 
@@ -24,8 +27,8 @@ const CompanyInfoForm = () => {
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-
-    console.log(data);
+    STORAGE.setUser({ ...data });
+    console.log('Company Form Data:', data);
 
     // 🔥 NEXT STEP CONTROL
     navigate('/auth/register/setup-password');

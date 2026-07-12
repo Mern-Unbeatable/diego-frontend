@@ -3,7 +3,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 // import { STORAGE } from '../../utils/storage/authStorage';
 import { COOKIE_STORAGE } from '../../utils/cookies/cookieStorage';
-import { loginAPI, otpVerifyAPI } from './authAPI';
+import {
+  loginAPI,
+  verifyLoginOtpAPI,
+  registerAPI,
+  verifyRegisterOtpAPI,
+  registerCompleteAPI,
+} from './authAPI';
 
 //  PLATFORM_ADMIN
 //  COMPANY_ADMIN
@@ -30,7 +36,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      STORAGE.clearAll();
+      COOKIE_STORAGE.clearAll();
     },
     resetAuthError: (state) => {
       state.error = null;
@@ -38,9 +44,9 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      //===================================
+      //=====================================================
       // ✅ LOGIN CASE
-      //===================================
+      //=====================================================
       .addCase(loginAPI.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -54,29 +60,75 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
-      //===================================
+      //=====================================================
       //✅ VERIFY OTP CASE
-      //===================================
-      .addCase(otpVerifyAPI.pending, (state) => {
+      //=====================================================
+      .addCase(verifyLoginOtpAPI.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(otpVerifyAPI.fulfilled, (state, action) => {
+      .addCase(verifyLoginOtpAPI.fulfilled, (state, action) => {
+        console.log('Verify OTP successful:', action.payload);
         const payloadData = action.payload || {};
+
         state.loading = false;
         state.user = payloadData.data.user.level || null;
         state.token = payloadData.data.accessToken || null;
         state.isAuthenticated =
           !!payloadData.data.user && !!payloadData.data.accessToken;
       })
-      .addCase(otpVerifyAPI.rejected, (state, action) => {
+      .addCase(verifyLoginOtpAPI.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      //=====================================================
+      //✅ REGISTER CASE
+      //=====================================================
+      .addCase(registerAPI.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerAPI.fulfilled, (state, action) => {
+        console.log('Register OTP sent successful:', action.payload);
+        state.loading = false;
+      })
+      .addCase(registerAPI.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // ====================================================
+      // ✅ VERIFY REGISTER OTP CASE
+      // ====================================================
+      .addCase(verifyRegisterOtpAPI.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyRegisterOtpAPI.fulfilled, (state, action) => {
+        console.log('Verify Register OTP successful:', action.payload);
+        state.loading = false;
+      })
+      .addCase(verifyRegisterOtpAPI.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // ====================================================
+      // REISTER COMPLETE CASE
+      // ====================================================
+      .addCase(registerCompleteAPI.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerCompleteAPI.fulfilled, (state, action) => {
+        console.log('Register Complete successful:', action.payload);
+        const payloadData = action.payload || {};
+      })
+      .addCase(registerCompleteAPI.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
-
-    //===================================
-    //✅ REGISTER CASE
-    //===================================
   },
 });
 

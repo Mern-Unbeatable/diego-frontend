@@ -1,7 +1,10 @@
 export const endpoints = {
   auth: {
     LOGIN: '/auth/signin',
-    OTP_VERIFY: '/auth/verify-login-otp',
+    VERIFY_LOGIN_OTP: '/auth/verify-login-otp',
+    REGISTER: '/auth/register/start',
+    VERIFY_REGISTER_OTP: '/auth/register/verify-otp',
+    REGISTER_COMPLETE: '/auth/register/complete',
     REFRESH: '/auth/refresh',
   },
   admin: {

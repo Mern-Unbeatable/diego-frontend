@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import StandardInfoForm from './components/StanderInfoForm';
 import CompanyInfoForm from './components/CompanyInfoForm';
 import LicenseInfoForm from './components/LicenseInfoForm';
@@ -8,6 +9,7 @@ import LicenseInfoForm from './components/LicenseInfoForm';
  * Expects role to be passed via navigation state from SetupRole component
  */
 const InfoSetupView = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
 

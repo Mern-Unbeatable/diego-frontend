@@ -23,7 +23,14 @@ const setJSON = (key, value) => setItem(key, JSON.stringify(value));
 export const STORAGE = {
   // === USER ===
   getUser: () => getJSON(storageKeys.USER),
-  setUser: (user) => setJSON(storageKeys.USER, user),
+  setUser: (user) => {
+    const existingUser = getJSON(storageKeys.USER) || {};
+
+    setJSON(storageKeys.USER, {
+      ...existingUser,
+      ...user,
+    });
+  },
   clearUser: () => removeItem(storageKeys.USER),
 
   // === TOKEN ===
