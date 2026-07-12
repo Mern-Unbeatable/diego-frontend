@@ -39,7 +39,7 @@ const CertificatesView = () => {
             <FaChevronLeft className="text-gray-600" />
           </button>
           {/* Page title centered */}
-          <h2 className="text-center text-2xl font-semibold text-[#252525]">
+          <h2 className="text-center text-xl font-bold text-[#252525]">
             Elenco dei certificati
           </h2>
         </div>

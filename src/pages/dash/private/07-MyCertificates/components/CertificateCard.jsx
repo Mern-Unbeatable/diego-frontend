@@ -19,12 +19,12 @@ const CertificateCard = ({ certificate }) => {
   };
 
   return (
-    <div className="mb-8 space-y-8 rounded-xl border border-gray-200 bg-white p-10 shadow-sm">
+    <div className="mb-6 space-y-5 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
       {/* Course title */}
-      <Heading level={3}>{certificate.courseTitle}</Heading>
+      <h3 className="text-2xl font-bold text-gray-900">{certificate.courseTitle}</h3>
 
       {/* Certificate preview image - smaller */}
-      <div className="mx-auto max-w-2xl border border-amber-100 bg-gray-100">
+      <div className="mx-auto max-w-xl border border-amber-100 bg-gray-100">
         <img
           src={certificate.imageUrl || '/image/mandatory_courses/image1.jpg'}
           alt={`Certificate for ${certificate.courseTitle}`}
@@ -37,27 +37,27 @@ const CertificateCard = ({ certificate }) => {
       </div>
 
       {/* Message */}
-      <Heading level={3}>{certificate.message}</Heading>
+      <p className="text-xl font-semibold text-gray-500">{certificate.message}</p>
 
       {/* Action buttons */}
       <div className="flex items-center justify-end gap-2">
         <Button
           onClick={handlePrint}
-          icon={<LuPrinter className="text-base" />}
+          icon={<LuPrinter className="text-sm" />}
           label="Stampa"
           variant="primary"
           size="sm"
-          className="px-4 py-2 text-xl"
+          className="px-3 py-1.5 text-sm font-semibold"
           aria-label="Print certificate"
         />
 
         <Button
           onClick={handleDownload}
-          icon={<LuDownload className="text-base" />}
+          icon={<LuDownload className="text-sm" />}
           label="Scarica"
           variant="primary"
           size="sm"
-          className="px-4 py-2 text-xl"
+          className="px-3 py-1.5 text-sm font-semibold"
           aria-label="Download certificate"
         />
       </div>

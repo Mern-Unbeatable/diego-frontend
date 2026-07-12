@@ -108,6 +108,9 @@ const NotificationsView = lazy(
 const SupportTicketView = lazy(
   () => import('../pages/dash/private/02-Tickets/SupportTicketView.jsx'),
 );
+const SupportTicketDetailView = lazy(
+  () => import('../pages/dash/private/02-Tickets/components/TicketDetail.jsx'),
+);
 const PrivacyPolicyView = lazy(
   () => import('../pages/dash/private/08-PrivacyPolicy/PrivacyPolicyView.jsx'),
 );
@@ -214,6 +217,10 @@ export const dashboardRoutes = [
     routes: [
       { path: ROUTES.PRIVATE_USER.DASHBOARD, element: <StudentHomeView /> },
       { path: ROUTES.PRIVATE_USER.TICKETS, element: <SupportTicketView /> },
+      {
+        path: `${ROUTES.PRIVATE_USER.TICKETS}/:ticketId`,
+        element: <SupportTicketDetailView />,
+      },
       {
         path: ROUTES.PRIVATE_USER.FEEDBACK,
         element: <SupportFeedbackView />,
