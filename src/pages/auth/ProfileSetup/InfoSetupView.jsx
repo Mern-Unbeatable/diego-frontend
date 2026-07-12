@@ -36,11 +36,11 @@ const InfoSetupView = () => {
   }
 
   switch (role) {
-    case 'business':
+    case 'COMPANY':
       return <CompanyInfoForm />;
-    case 'licensed':
+    case 'LICENSEE':
       return <LicenseInfoForm />;
-    case 'standard':
+    case 'PRIVATE':
     default:
       return <StandardInfoForm />;
   }

@@ -43,9 +43,7 @@ const RoleCard = ({ label, image, isSelected, onClick }) => {
 
 const RoleSetupView = () => {
   const { t } = useTranslation();
-  const [selectedRole, setSelectedRole] = useState(
-    () => STORAGE.getUser()?.accountType || 'PRIVATE',
-  );
+  const [selectedRole, setSelectedRole] = useState('PRIVATE');
   const navigate = useNavigate();
   const roleLabels = {
     PRIVATE: t('auth.setup.role.options.standard'),

@@ -18,37 +18,22 @@ const UI_TO_API_ACCOUNT_TYPE = {
   [UI_ACCOUNT_TYPES.STANDARD]: API_ACCOUNT_TYPES.PRIVATE,
   [UI_ACCOUNT_TYPES.BUSINESS]: API_ACCOUNT_TYPES.COMPANY,
   [UI_ACCOUNT_TYPES.LICENSED]: API_ACCOUNT_TYPES.LICENSEE,
-  // allow already-mapped values
   PRIVATE: API_ACCOUNT_TYPES.PRIVATE,
   COMPANY: API_ACCOUNT_TYPES.COMPANY,
   LICENSEE: API_ACCOUNT_TYPES.LICENSEE,
-};
-
-const CITIZENSHIP_MAP = {
-  italiana: 'ITALIAN',
-  italian: 'ITALIAN',
-  ITALIAN: 'ITALIAN',
-  estera: 'FOREIGN',
-  foreign: 'FOREIGN',
-  FOREIGN: 'FOREIGN',
 };
 
 /** Map UI / draft accountType → API accountType */
 export const mapAccountTypeToApi = (accountType) =>
   UI_TO_API_ACCOUNT_TYPE[accountType] || null;
 
-/** Best-effort map API accountType → dashboard role (fallback if response omits level) */
+/** Best-effort map API accountType → dashboard role */
 export const mapAccountTypeToRole = (accountType) => {
   const apiType = mapAccountTypeToApi(accountType);
   if (apiType === API_ACCOUNT_TYPES.PRIVATE) return ROLES.PRIVATE_USER;
   if (apiType === API_ACCOUNT_TYPES.COMPANY) return ROLES.COMPANY_ADMIN;
   if (apiType === API_ACCOUNT_TYPES.LICENSEE) return ROLES.LICENSE_USER;
   return null;
-};
-
-export const mapCitizenshipToApi = (value) => {
-  if (!value) return undefined;
-  return CITIZENSHIP_MAP[value] || String(value).toUpperCase();
 };
 
 const pick = (obj, keys) => {
@@ -62,9 +47,49 @@ const pick = (obj, keys) => {
   return result;
 };
 
+const PRIVATE_FIELDS = [
+  'firstName',
+  'lastName',
+  'birthDate',
+  'city',
+  'country',
+  'residenceAddress',
+  'traineeTaxCode',
+  'citizenship',
+];
+
+/** Exact COMPANY profile keys from POST /auth/register/complete body */
+const COMPANY_FIELDS = [
+  'firstName',
+  'lastName',
+  'fiscalAddress',
+  'fiscalCode',
+  'citizenship',
+  'contactNumber',
+  'serviceType',
+  'companyName',
+  'companyAddress',
+  'companyVatNumber',
+  'companyTaxCode',
+  'companyPosition',
+  'pec',
+  'uniqueCode',
+];
+
+const LICENSEE_FIELDS = [
+  'firstName',
+  'lastName',
+  'companyName',
+  'fiscalAddress',
+  'vatNumber',
+  'fiscalCode',
+  'pec',
+  'uniqueCode',
+];
+
 /**
  * Build POST /auth/register/complete body from registration draft + passwords.
- * Field names follow the Diego-LMS Postman collection.
+ * Field names match the Diego-LMS API body exactly.
  */
 export const buildRegisterCompletePayload = (draft = {}, passwords = {}) => {
   const accountType = mapAccountTypeToApi(draft.accountType);
@@ -87,103 +112,14 @@ export const buildRegisterCompletePayload = (draft = {}, passwords = {}) => {
   };
 
   if (accountType === API_ACCOUNT_TYPES.PRIVATE) {
-    return {
-      ...base,
-      ...pick(draft, [
-        'firstName',
-        'lastName',
-        'birthDate',
-        'city',
-        'country',
-        'residenceAddress',
-        'traineeTaxCode',
-      ]),
-      // legacy form aliases
-      ...(draft.residenceAddress
-        ? {}
-        : draft.address
-          ? { residenceAddress: draft.address }
-          : {}),
-      ...(draft.traineeTaxCode
-        ? {}
-        : draft.taxCode
-          ? { traineeTaxCode: draft.taxCode }
-          : {}),
-      citizenship: mapCitizenshipToApi(draft.citizenship),
-    };
+    return { ...base, ...pick(draft, PRIVATE_FIELDS) };
   }
 
   if (accountType === API_ACCOUNT_TYPES.COMPANY) {
-    return {
-      ...base,
-      ...pick(draft, [
-        'firstName',
-        'lastName',
-        'fiscalAddress',
-        'fiscalCode',
-        'contactNumber',
-        'serviceType',
-        'companyName',
-        'companyAddress',
-        'companyVatNumber',
-        'companyTaxCode',
-        'companyPosition',
-        'pec',
-        'uniqueCode',
-      ]),
-      citizenship: mapCitizenshipToApi(draft.citizenship),
-      // legacy form aliases from CompanyInfoForm
-      ...(draft.fiscalAddress
-        ? {}
-        : draft.office
-          ? { fiscalAddress: draft.office }
-          : {}),
-      ...(draft.companyVatNumber
-        ? {}
-        : draft.vatNumber
-          ? { companyVatNumber: draft.vatNumber }
-          : {}),
-      ...(draft.companyTaxCode || draft.fiscalCode
-        ? draft.fiscalCode
-          ? {}
-          : draft.taxCode
-            ? { fiscalCode: draft.taxCode, companyTaxCode: draft.taxCode }
-            : {}
-        : draft.taxCode
-          ? { fiscalCode: draft.taxCode, companyTaxCode: draft.taxCode }
-          : {}),
-    };
+    return { ...base, ...pick(draft, COMPANY_FIELDS) };
   }
 
-  // LICENSEE
-  return {
-    ...base,
-    ...pick(draft, [
-      'firstName',
-      'lastName',
-      'companyName',
-      'fiscalAddress',
-      'vatNumber',
-      'fiscalCode',
-      'pec',
-      'uniqueCode',
-    ]),
-    ...(draft.fiscalAddress
-      ? {}
-      : draft.office
-        ? { fiscalAddress: draft.office }
-        : {}),
-    ...(draft.fiscalCode
-      ? {}
-      : draft.taxCode
-        ? { fiscalCode: draft.taxCode }
-        : {}),
-    ...(draft.uniqueCode
-      ? {}
-      : draft.subdomain
-        ? { uniqueCode: draft.subdomain }
-        : {}),
-  };
+  return { ...base, ...pick(draft, LICENSEE_FIELDS) };
 };
 
 export const validateRegistrationPassword = (password, confirmPassword) => {
@@ -211,16 +147,26 @@ export const validateRegistrationPassword = (password, confirmPassword) => {
   return null;
 };
 
-/** Normalize register/login success payloads from varying backend envelopes */
+/**
+ * Normalize register/login success payloads.
+ * Expected complete response:
+ * { success, message, data: { user: { level }, accessToken, refreshToken } }
+ */
 export const extractAuthSession = (response) => {
-  const payload = response?.data ?? response ?? {};
-  const data = payload.data ?? payload;
+  const root = response ?? {};
+
+  // Prefer envelope.data when it holds tokens/user (Diego-LMS shape)
+  const data =
+    root.data?.accessToken || root.data?.user
+      ? root.data
+      : root.data?.data?.accessToken || root.data?.data?.user
+        ? root.data.data
+        : root.accessToken || root.user
+          ? root
+          : root.data ?? root;
 
   const accessToken =
-    data.accessToken ||
-    data.tokens?.accessToken ||
-    data.token ||
-    null;
+    data.accessToken || data.tokens?.accessToken || data.token || null;
 
   const refreshToken =
     data.refreshToken || data.tokens?.refreshToken || null;
