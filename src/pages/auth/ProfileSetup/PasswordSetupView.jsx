@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { BiArrowBack } from 'react-icons/bi';
+import { BiArrowBack, BiShow, BiHide } from 'react-icons/bi';
 
 import { Heading, Paragraph, InputField, Label } from '../../../components/ui';
 import { STORAGE } from '../../../utils/storage/authStorage';
@@ -18,6 +19,8 @@ import {
 const PasswordSetupView = () => {
   const navigate = useNavigate();
   const { registerComplete, loading } = useAuth();
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handlePassWordSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +45,9 @@ const PasswordSetupView = () => {
     }
 
     if (!COOKIE_STORAGE.getToken()) {
-      toast.error('Registration session expired. Please verify your email again.');
+      toast.error(
+        'Registration session expired. Please verify your email again.',
+      );
       navigate('/auth/register');
       return;
     }
@@ -123,14 +128,28 @@ const PasswordSetupView = () => {
           >
             Nuova password*
           </Label>
-          <InputField
-            type="password"
-            id="newPassword"
-            name="newPassword"
-            placeholder="Inserisci la password"
-            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/20 focus:outline-none"
-            required
-          />
+          <div className="relative">
+            <InputField
+              type={showNewPassword ? 'text' : 'password'}
+              id="newPassword"
+              name="newPassword"
+              placeholder="Inserisci la password"
+              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 pr-12 text-gray-900 placeholder:text-gray-400 focus:border-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/20 focus:outline-none"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowNewPassword(!showNewPassword)}
+              className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500 transition-colors hover:text-[#73BFA1] focus:outline-none"
+              tabIndex="-1"
+            >
+              {showNewPassword ? (
+                <BiHide className="text-xl" />
+              ) : (
+                <BiShow className="text-xl" />
+              )}
+            </button>
+          </div>
         </div>
 
         <div className="space-y-4 rounded-xl bg-gray-50 p-6">
@@ -179,14 +198,28 @@ const PasswordSetupView = () => {
           >
             Conferma password*
           </Label>
-          <InputField
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder="Conferma la password"
-            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/20 focus:outline-none"
-            required
-          />
+          <div className="relative">
+            <InputField
+              type={showConfirmPassword ? 'text' : 'password'}
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Conferma la password"
+              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 pr-12 text-gray-900 placeholder:text-gray-400 focus:border-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/20 focus:outline-none"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500 transition-colors hover:text-[#73BFA1] focus:outline-none"
+              tabIndex="-1"
+            >
+              {showConfirmPassword ? (
+                <BiHide className="text-xl" />
+              ) : (
+                <BiShow className="text-xl" />
+              )}
+            </button>
+          </div>
         </div>
 
         <div className="flex justify-end pt-4">
