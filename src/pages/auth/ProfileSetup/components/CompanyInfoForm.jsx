@@ -1,11 +1,7 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { BackpackIcon } from 'lucide-react';
 import { BiArrowBack } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
 import {
-  Divider,
   Heading,
   InputField,
   Label,
@@ -15,12 +11,7 @@ import { STORAGE } from '../../../../utils/storage/authStorage';
 
 const CompanyInfoForm = () => {
   const { t } = useTranslation();
-  const [selected, setSelected] = useState('');
   const navigate = useNavigate();
-
-  const handleChange = (value) => {
-    setSelected(selected === value ? '' : value);
-  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -28,9 +19,7 @@ const CompanyInfoForm = () => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     STORAGE.setUser({ ...data });
-    console.log('Company Form Data:', data);
 
-    // 🔥 NEXT STEP CONTROL
     navigate('/auth/register/setup-password');
   };
 
@@ -52,6 +41,41 @@ const CompanyInfoForm = () => {
         <Heading level={4}>{t('auth.setup.companyInfo.title')}</Heading>
 
         <form onSubmit={handleFormSubmit}>
+          <div className="mb-3 flex w-full gap-5">
+            <div className="w-full">
+              <Label
+                htmlFor="firstName"
+                required={true}
+                className="mb-2 block text-sm font-medium"
+              >
+                {t('auth.setup.info.firstNameLabel')}
+              </Label>
+              <InputField
+                type="text"
+                name="firstName"
+                placeholder={t('auth.setup.info.firstNamePlaceholder')}
+                className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+                required
+              />
+            </div>
+            <div className="w-full">
+              <Label
+                htmlFor="lastName"
+                required={true}
+                className="mb-2 block text-sm font-medium"
+              >
+                {t('auth.setup.info.lastNameLabel')}
+              </Label>
+              <InputField
+                type="text"
+                name="lastName"
+                placeholder={t('auth.setup.info.lastNamePlaceholder')}
+                className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+                required
+              />
+            </div>
+          </div>
+
           <div className="mb-6">
             <Label
               htmlFor="companyName"
@@ -65,12 +89,13 @@ const CompanyInfoForm = () => {
               name="companyName"
               placeholder={t('auth.setup.companyInfo.companyNamePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+              required
             />
           </div>
 
           <div className="mb-6">
             <Label
-              htmlFor="office"
+              htmlFor="fiscalAddress"
               required={true}
               className="mb-2 block text-sm font-medium"
             >
@@ -78,58 +103,47 @@ const CompanyInfoForm = () => {
             </Label>
             <InputField
               type="text"
-              name="office"
+              name="fiscalAddress"
               placeholder={t('auth.setup.companyInfo.officePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+              required
             />
           </div>
 
           <div className="mb-6">
             <Label
-              htmlFor="vatNumber"
+              htmlFor="companyVatNumber"
               required={true}
               className="mb-2 block text-sm font-medium"
             >
               {t('auth.setup.companyInfo.vatLabel')}
             </Label>
             <InputField
-              type="number"
-              name="vatNumber"
+              type="text"
+              name="companyVatNumber"
               placeholder={t('auth.setup.companyInfo.vatPlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+              required
             />
           </div>
 
           <div className="mb-6">
             <Label
-              htmlFor="taxCode"
+              htmlFor="fiscalCode"
               required={true}
               className="mb-2 block text-sm font-medium"
             >
               {t('auth.setup.companyInfo.taxCodeLabel')}
             </Label>
             <InputField
-              type="number"
-              name="taxCode"
+              type="text"
+              name="fiscalCode"
               placeholder="987456321"
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
+              required
             />
           </div>
 
-          <div className="mb-6">
-            <Label
-              htmlFor="email"
-              required={true}
-              className="mb-2 block text-sm font-medium"
-            >
-              {t('auth.setup.companyInfo.emailLabel')}
-            </Label>
-            <InputField
-              name="email"
-              placeholder="example@gmail.com"
-              className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
-            />
-          </div>
           <div className="mx-auto flex w-full justify-end py-2">
             <button
               type="submit"

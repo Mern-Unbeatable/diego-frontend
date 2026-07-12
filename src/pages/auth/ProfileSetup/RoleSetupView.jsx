@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { STORAGE } from '../../../utils/storage/authStorage';
 
 const roles = [
-  { id: 'standard', image: '/image/register/icon.png' },
-  { id: 'business', image: '/image/register/icon2.png' },
-  { id: 'licensed', image: '/image/register/icon3.png' },
+  { id: 'PRIVATE', image: '/image/register/icon.png' },
+  { id: 'COMPANY', image: '/image/register/icon2.png' },
+  { id: 'LICENSEE', image: '/image/register/icon3.png' },
 ];
 
 const RoleCard = ({ label, image, isSelected, onClick }) => {
@@ -43,12 +43,14 @@ const RoleCard = ({ label, image, isSelected, onClick }) => {
 
 const RoleSetupView = () => {
   const { t } = useTranslation();
-  const [selectedRole, setSelectedRole] = useState('standard');
+  const [selectedRole, setSelectedRole] = useState(
+    () => STORAGE.getUser()?.accountType || 'PRIVATE',
+  );
   const navigate = useNavigate();
   const roleLabels = {
-    standard: t('auth.setup.role.options.standard'),
-    business: t('auth.setup.role.options.business'),
-    licensed: t('auth.setup.role.options.licensed'),
+    PRIVATE: t('auth.setup.role.options.standard'),
+    COMPANY: t('auth.setup.role.options.business'),
+    LICENSEE: t('auth.setup.role.options.licensed'),
   };
 
   const handleSubmit = (e) => {

@@ -1,38 +1,55 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
-import { Heading, InputField, Label, Toast } from '../../components/ui';
+import { Heading, InputField, Label } from '../../components/ui';
 import { useAuth } from '../../features/auth/authHooks';
 import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
-import { getDashboardPath } from '../../utils/auth/authUtils';
+import { STORAGE } from '../../utils/storage/authStorage';
 import toast from 'react-hot-toast';
 
 const RegisterView = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(() => STORAGE.getUser()?.email || '');
   const [otp, setOtp] = useState(new Array(6).fill(''));
   const [step, setStep] = useState(1);
 
   const otpRefs = useRef([]);
 
-  const { register, loading, error, isAuthenticated, verifyRegisterOtp } =
-    useAuth();
+  const { register, loading, verifyRegisterOtp } = useAuth();
 
   const navigate = useNavigate();
+
+  const getPreferredLanguage = () => {
+    const fromDraft = STORAGE.getUser()?.preferredLanguage;
+    if (fromDraft) return fromDraft;
+    const fromI18n = localStorage.getItem('i18nextLng');
+    return fromI18n?.split('-')[0] || 'en';
+  };
 
   // STEP 1 → STEP 2 (EMAIL)
   const handleNextFromEmail = async (e) => {
     e.preventDefault();
 
     try {
-      // Register the user with email - will send OTP
+      const preferredLanguage = getPreferredLanguage();
+
+      STORAGE.setUser({
+        email,
+        preferredLanguage,
+      });
+
       await register({
-        email: email,
+        email,
+        preferredLanguage,
       });
       toast.success('OTP sent to your email');
       setStep(2);
     } catch (error) {
-      toast.error('Please check your email and try again.');
+      toast.error(
+        typeof error === 'string'
+          ? error
+          : error?.message || 'Please check your email and try again.',
+      );
       console.error('Registration error:', error);
     }
   };
@@ -60,19 +77,41 @@ const RegisterView = () => {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
 
+    const otpCode = otp.join('');
+    if (otpCode.length !== 6) {
+      toast.error('Please enter the 6-digit OTP');
+      return;
+    }
+
     try {
       const response = await verifyRegisterOtp({
-        email: email,
-        otp: otp.join(''),
+        email,
+        otp: otpCode,
       });
-      console.log('Registration Token:', response.data.registrationToken);
-      // Store user data in cookies
-      COOKIE_STORAGE.setToken(response.data.registrationToken);
-      // Navigate to the dynamic path
+
+      const registrationToken = response?.data?.registrationToken;
+
+      if (!registrationToken) {
+        toast.error('Registration token missing. Please try again.');
+        return;
+      }
+
+      STORAGE.setUser({ email });
+
+      COOKIE_STORAGE.setToken(registrationToken);
+
       navigate('/auth/register/setup-role');
-      toast.success('Registration successful!');
+      toast.success('Email verified successfully');
     } catch (error) {
-      toast.error('Verification failed. Please try again.');
+      const message =
+        typeof error === 'string'
+          ? error
+          : error?.message || 'Verification failed. Please try again.';
+      toast.error(message);
+
+      if (/otp|expired|invalid|unauthorized/i.test(String(message))) {
+        setOtp(new Array(6).fill(''));
+      }
       console.error('OTP verification error:', error);
     }
   };
@@ -107,7 +146,6 @@ const RegisterView = () => {
 
           {/* RIGHT */}
           <div className="relative flex items-center justify-center bg-[#F1F9F6] px-8 py-12 lg:px-20">
-            {/* Close Icon - Top Right */}
             <button
               onClick={() => navigate('/')}
               className="absolute top-4 right-4 rounded-full bg-amber-50 p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
@@ -117,7 +155,6 @@ const RegisterView = () => {
             </button>
 
             <div className="w-full max-w-md">
-              {/* TITLE */}
               <div className="mb-4">
                 <Heading
                   level={4}
@@ -130,7 +167,6 @@ const RegisterView = () => {
                 />
               </div>
 
-              {/* EMAIL STEP */}
               {step === 1 && (
                 <form onSubmit={handleNextFromEmail}>
                   <Label className="mb-2 block text-lg font-medium">
@@ -143,6 +179,7 @@ const RegisterView = () => {
                     placeholder="Type Your Email"
                     className="rounded-2xl border border-green-100 bg-white px-4 py-3"
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
 
                   <div className="mt-8 flex items-center justify-end gap-4">
@@ -155,7 +192,8 @@ const RegisterView = () => {
                     </button>
                     <button
                       type="submit"
-                      className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
+                      disabled={loading}
+                      className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1] disabled:opacity-60"
                     >
                       {loading ? 'Loading...' : 'Go ahead'}
                     </button>
@@ -163,7 +201,6 @@ const RegisterView = () => {
                 </form>
               )}
 
-              {/* OTP STEP */}
               {step === 2 && (
                 <form onSubmit={handleVerifyOtp}>
                   <p className="mb-8 text-center text-gray-600">
@@ -176,6 +213,7 @@ const RegisterView = () => {
                         key={index}
                         ref={(el) => (otpRefs.current[index] = el)}
                         type="text"
+                        inputMode="numeric"
                         maxLength={1}
                         value={digit}
                         onChange={(e) => handleOtpChange(e.target.value, index)}
@@ -184,7 +222,6 @@ const RegisterView = () => {
                     ))}
                   </div>
 
-                  {/* BUTTONS */}
                   <div className="mt-8 flex justify-center gap-3">
                     <button
                       type="button"
@@ -197,7 +234,8 @@ const RegisterView = () => {
 
                     <button
                       type="submit"
-                      className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
+                      disabled={loading}
+                      className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1] disabled:opacity-60"
                     >
                       {loading ? 'Verifying...' : 'Verify OTP'}
                     </button>

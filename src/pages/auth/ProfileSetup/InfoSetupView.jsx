@@ -3,20 +3,19 @@ import { useTranslation } from 'react-i18next';
 import StandardInfoForm from './components/StanderInfoForm';
 import CompanyInfoForm from './components/CompanyInfoForm';
 import LicenseInfoForm from './components/LicenseInfoForm';
+import { STORAGE } from '../../../utils/storage/authStorage';
 
 /**
  * InformationRouter - Renders different information forms based on selected role
- * Expects role to be passed via navigation state from SetupRole component
+ * Expects role from navigation state or persisted STORAGE.accountType
  */
 const InfoSetupView = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Get role from navigation state
-  const role = location.state?.role;
+  const role = location.state?.role || STORAGE.getUser()?.accountType;
 
-  // Fallback if no role is found - redirect to role selection
   if (!role) {
     return (
       <div className="p-8">
@@ -36,7 +35,6 @@ const InfoSetupView = () => {
     );
   }
 
-  // Render appropriate form based on role
   switch (role) {
     case 'business':
       return <CompanyInfoForm />;

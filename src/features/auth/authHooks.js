@@ -6,6 +6,7 @@ import {
   verifyLoginOtpAPI,
   registerAPI,
   verifyRegisterOtpAPI,
+  registerCompleteAPI,
 } from './authAPI';
 import { selectAuth } from './authSelectors';
 

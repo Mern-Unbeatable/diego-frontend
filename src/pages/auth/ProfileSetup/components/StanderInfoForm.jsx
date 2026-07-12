@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { GrClose } from 'react-icons/gr';
 import { useNavigate, Link } from 'react-router-dom';
-import { BackpackIcon } from 'lucide-react';
 import { BiArrowBack } from 'react-icons/bi';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,11 +12,13 @@ import { STORAGE } from '../../../../utils/storage/authStorage';
 
 const StandardInfoForm = () => {
   const { t } = useTranslation();
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState(
+    () => STORAGE.getUser()?.citizenship || '',
+  );
   const navigate = useNavigate();
 
   const handleChange = (value) => {
-    setSelected(selected === value ? '' : value);
+    setSelected(value);
   };
 
   const handleFormSubmit = (e) => {
@@ -27,11 +27,11 @@ const StandardInfoForm = () => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
-    console.log('Private formData:', data);
+    STORAGE.setUser({
+      ...data,
+      citizenship: selected || data.citizenship,
+    });
 
-    STORAGE.setUser({ ...data });
-
-    // 🔥 NEXT STEP CONTROL
     navigate('/auth/register/setup-password');
   };
 
@@ -138,7 +138,7 @@ const StandardInfoForm = () => {
 
           <div className="mb-6">
             <Label
-              htmlFor="address"
+              htmlFor="residenceAddress"
               required={true}
               className="mb-2 block text-sm font-medium"
             >
@@ -146,7 +146,7 @@ const StandardInfoForm = () => {
             </Label>
             <InputField
               type="text"
-              name="address"
+              name="residenceAddress"
               placeholder={t('auth.setup.info.addressPlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
@@ -154,63 +154,15 @@ const StandardInfoForm = () => {
 
           <div className="mb-6">
             <Label
-              htmlFor="companyName"
-              required={true}
-              className="mb-2 block text-sm font-medium"
-            >
-              {t('auth.setup.info.companyNameLabel')}
-            </Label>
-            <InputField
-              type="text"
-              name="companyName"
-              placeholder={t('auth.setup.info.companyNamePlaceholder')}
-              className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
-            />
-          </div>
-
-          <div className="mb-6">
-            <Label
-              htmlFor="office"
-              required={true}
-              className="mb-2 block text-sm font-medium"
-            >
-              {t('auth.setup.info.officeLabel')}
-            </Label>
-            <InputField
-              type="text"
-              name="office"
-              placeholder={t('auth.setup.info.officePlaceholder')}
-              className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
-            />
-          </div>
-
-          <div className="mb-6">
-            <Label
-              htmlFor="vatNumber"
-              required={true}
-              className="mb-2 block text-sm font-medium"
-            >
-              {t('auth.setup.info.vatNumberLabel')}
-            </Label>
-            <InputField
-              type="number"
-              name="vatNumber"
-              placeholder={t('auth.setup.info.vatNumberPlaceholder')}
-              className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
-            />
-          </div>
-
-          <div className="mb-6">
-            <Label
-              htmlFor="taxCode"
+              htmlFor="traineeTaxCode"
               required={true}
               className="mb-2 block text-sm font-medium"
             >
               {t('auth.setup.info.taxCodeLabel')}
             </Label>
             <InputField
-              type="number"
-              name="taxCode"
+              type="text"
+              name="traineeTaxCode"
               placeholder={t('auth.setup.info.taxCodePlaceholder')}
               className="rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm"
             />
@@ -222,7 +174,7 @@ const StandardInfoForm = () => {
             <div className="flex items-center gap-8">
               <label className="flex cursor-pointer items-center gap-2">
                 <input
-                  type="checkbox"
+                  type="radio"
                   checked={selected === 'estera'}
                   onChange={() => handleChange('estera')}
                   name="citizenship"
@@ -236,7 +188,7 @@ const StandardInfoForm = () => {
 
               <label className="flex cursor-pointer items-center gap-2">
                 <input
-                  type="checkbox"
+                  type="radio"
                   checked={selected === 'italiana'}
                   onChange={() => handleChange('italiana')}
                   name="citizenship"
