@@ -17,7 +17,7 @@ const MainFooter = () => {
             />
           </div>
 
-          {/* Main Links Grid Fixed */}
+          {/* Main Links Grid */}
           <div className="col-span-4 grid grid-cols-2 gap-10 md:grid-cols-4">
             {/* Prodotto Column */}
             <div className="col-span-1 gap-[32px] text-white">

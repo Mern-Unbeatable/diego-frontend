@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getUserRole, getDashboardPath } from '../../utils/authUtils';
+import { getUserRole, getDashboardPath } from '../../utils/auth/authUtils';
 
 const RoleGuard = ({ allowedRoles }) => {
   const { user, isAuthenticated } = useSelector((state) => state.auth);

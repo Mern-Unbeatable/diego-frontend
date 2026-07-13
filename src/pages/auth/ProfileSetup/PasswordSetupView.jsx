@@ -1,25 +1,106 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GrClose } from 'react-icons/gr';
-import { BiArrowBack } from 'react-icons/bi';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { BiArrowBack, BiShow, BiHide } from 'react-icons/bi';
 
 import { Heading, Paragraph, InputField, Label } from '../../../components/ui';
+import { STORAGE } from '../../../utils/storage/authStorage';
+import COOKIE_STORAGE from '../../../utils/cookies/cookieStorage';
+import { getDashboardPath } from '../../../utils/auth/authUtils';
+import { useAuth } from '../../../features/auth/authHooks';
+import {
+  buildRegisterCompletePayload,
+  extractAuthSession,
+  mapAccountTypeToRole,
+  validateRegistrationPassword,
+} from '../../../utils/auth/registrationHelpers';
 
 const PasswordSetupView = () => {
   const navigate = useNavigate();
+  const { registerComplete, loading } = useAuth();
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handlePassWordSubmit = (e) => {
+  const handlePassWordSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+    const { newPassword, confirmPassword } = data;
 
-    console.log('Password data:', data);
-    navigate('/dashboard/super-admin');
+    const validationError = validateRegistrationPassword(
+      newPassword,
+      confirmPassword,
+    );
+    if (validationError) {
+      toast.error(validationError);
+      return;
+    }
+
+    const draft = STORAGE.getUser() || {};
+    if (!draft.accountType) {
+      toast.error('Please select your role first');
+      navigate('/auth/register/setup-role');
+      return;
+    }
+
+    if (!COOKIE_STORAGE.getToken()) {
+      toast.error(
+        'Registration session expired. Please verify your email again.',
+      );
+      navigate('/auth/register');
+      return;
+    }
+
+    try {
+      const payload = buildRegisterCompletePayload(draft, {
+        password: newPassword,
+        confirmPassword,
+      });
+
+      const response = await registerComplete(payload);
+      const { accessToken, refreshToken, level } = extractAuthSession(response);
+
+      const userRole = level || mapAccountTypeToRole(draft.accountType);
+
+      // Drop registration draft (email, profile fields)
+      STORAGE.clearUser();
+
+      if (!accessToken || !userRole) {
+        COOKIE_STORAGE.clearToken();
+        toast.success('Registration completed. Please log in.');
+        navigate('/auth/login');
+        return;
+      }
+
+      COOKIE_STORAGE.setToken(accessToken);
+      COOKIE_STORAGE.setUser(userRole);
+      if (refreshToken) {
+        COOKIE_STORAGE.setRefreshToken(refreshToken);
+        STORAGE.setRefreshToken(refreshToken);
+      }
+
+      const targetPath = getDashboardPath(userRole) || '/auth/login';
+      toast.success('Registration completed successfully');
+      navigate(targetPath);
+    } catch (error) {
+      const message =
+        typeof error === 'string'
+          ? error
+          : error?.message || 'Registration failed. Please try again.';
+      toast.error(message);
+      console.error('Register complete error:', error);
+
+      // Expired registration token → restart from email/OTP
+      if (/token|expired|unauthorized|otp/i.test(String(message))) {
+        COOKIE_STORAGE.clearToken();
+        navigate('/auth/register');
+      }
+    }
   };
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
-      {/* Header with Steps and Close */}
       <div className="mb-8 flex items-center justify-between">
         <Paragraph className="flex items-center gap-x-2 text-sm text-gray-600">
           <Link
@@ -39,7 +120,6 @@ const PasswordSetupView = () => {
       </Heading>
 
       <form onSubmit={handlePassWordSubmit} className="space-y-6">
-        {/* New Password Field */}
         <div>
           <Label
             htmlFor="newPassword"
@@ -48,16 +128,30 @@ const PasswordSetupView = () => {
           >
             Nuova password*
           </Label>
-          <InputField
-            type="password"
-            id="newPassword"
-            name="newPassword"
-            placeholder="Inserisci la password"
-            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/20 focus:outline-none"
-          />
+          <div className="relative">
+            <InputField
+              type={showNewPassword ? 'text' : 'password'}
+              id="newPassword"
+              name="newPassword"
+              placeholder="Inserisci la password"
+              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 pr-12 text-gray-900 placeholder:text-gray-400 focus:border-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/20 focus:outline-none"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowNewPassword(!showNewPassword)}
+              className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500 transition-colors hover:text-[#73BFA1] focus:outline-none"
+              tabIndex="-1"
+            >
+              {showNewPassword ? (
+                <BiHide className="text-xl" />
+              ) : (
+                <BiShow className="text-xl" />
+              )}
+            </button>
+          </div>
         </div>
 
-        {/* Password Requirements */}
         <div className="space-y-4 rounded-xl bg-gray-50 p-6">
           <Heading level={5} className="text-sm font-semibold text-gray-800">
             Lunghezza minima: <span className="font-bold">8 caratteri</span>{' '}
@@ -96,7 +190,6 @@ const PasswordSetupView = () => {
           </Heading>
         </div>
 
-        {/* Confirm Password Field */}
         <div>
           <Label
             htmlFor="confirmPassword"
@@ -105,22 +198,37 @@ const PasswordSetupView = () => {
           >
             Conferma password*
           </Label>
-          <InputField
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder="842000@Sa"
-            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-gray-900 placeholder:text-gray-400 focus:border-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/20 focus:outline-none"
-          />
+          <div className="relative">
+            <InputField
+              type={showConfirmPassword ? 'text' : 'password'}
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Conferma la password"
+              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 pr-12 text-gray-900 placeholder:text-gray-400 focus:border-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/20 focus:outline-none"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500 transition-colors hover:text-[#73BFA1] focus:outline-none"
+              tabIndex="-1"
+            >
+              {showConfirmPassword ? (
+                <BiHide className="text-xl" />
+              ) : (
+                <BiShow className="text-xl" />
+              )}
+            </button>
+          </div>
         </div>
 
-        {/* Footer with Procedi button */}
         <div className="flex justify-end pt-4">
           <button
             type="submit"
-            className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-8 py-3.5 font-medium text-white transition-all duration-300 hover:scale-105 hover:bg-white hover:text-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/50 focus:outline-none"
+            disabled={loading}
+            className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-8 py-3.5 font-medium text-white transition-all duration-300 hover:scale-105 hover:bg-white hover:text-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/50 focus:outline-none disabled:opacity-60"
           >
-            Procedi
+            {loading ? 'Registrazione...' : 'Procedi'}
           </button>
         </div>
       </form>

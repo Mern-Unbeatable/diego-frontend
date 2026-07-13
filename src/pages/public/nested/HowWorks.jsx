@@ -17,12 +17,13 @@ const accentStyles = {
 
 const HowWorks = () => {
   const { t } = useTranslation();
-  const sections = t('trainingPages.section10.sections', { returnObjects: true }) || [];
+  const sections =
+    t('trainingPages.section10.sections', { returnObjects: true }) || [];
 
   return (
     <div className="min-h-screen bg-white px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-      <div className="mx-auto  max-w-7xl">
-        <section className="mb-6 container lg:mb-10">
+      <div className="mx-auto max-w-6xl">
+        <section className="container mb-6 lg:mb-10">
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             {t('trainingPages.section10.headerTitle')}
           </h1>
@@ -52,29 +53,33 @@ const HowWorks = () => {
                   </h2>
 
                   <div className="mt-5 space-y-4 text-slate-600">
-                    {(sectionText.contents || section.contents || []).map((content, contentIndex) => {
-                      const isSubheading = content === 'How it works' || content === 'Come funziona';
+                    {(sectionText.contents || section.contents || []).map(
+                      (content, contentIndex) => {
+                        const isSubheading =
+                          content === 'How it works' ||
+                          content === 'Come funziona';
 
-                      if (isSubheading) {
+                        if (isSubheading) {
+                          return (
+                            <p
+                              key={`${section.id}-${contentIndex}`}
+                              className="text-justify text-sm font-semibold text-slate-500 sm:text-base"
+                            >
+                              {content}
+                            </p>
+                          );
+                        }
+
                         return (
                           <p
                             key={`${section.id}-${contentIndex}`}
-                            className="text-sm sm:text-base text-justify font-semibold text-slate-500"
+                            className="text-justify text-sm text-slate-600 sm:text-base"
                           >
                             {content}
                           </p>
                         );
-                      }
-
-                      return (
-                        <p
-                          key={`${section.id}-${contentIndex}`}
-                          className="text-sm text-slate-600 sm:text-base text-justify"
-                        >
-                          {content}
-                        </p>
-                      );
-                    })}
+                      },
+                    )}
                   </div>
 
                   {section.badge && (

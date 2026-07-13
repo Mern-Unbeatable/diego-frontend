@@ -14,11 +14,11 @@ const ServicesCategory = ({ categories, loading }) => {
           </p>
         ) : (
           <div>
-            <h2 className="mb-8 text-[32px] md:text-[38px] leading-none font-extrabold text-[#1F1F1F]">
+            <h2 className="mb-8 text-[32px] leading-none font-extrabold text-[#1F1F1F] md:text-[38px]">
               {t('servicesPages.section2.categoryTitle')}
             </h2>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4  lg:grid-cols-6  gap-4 md:gap-5">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 md:gap-5 lg:grid-cols-6">
               {categories.map((category) => {
                 const hasValidPath =
                   typeof category.path === 'string' &&

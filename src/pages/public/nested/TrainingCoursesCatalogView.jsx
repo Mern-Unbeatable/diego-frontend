@@ -12,12 +12,12 @@ const TrainingCoursesSevView = () => {
 
   const categoryOptions = useMemo(
     () => Array.from(new Set(courses.map((course) => course.category))),
-    []
+    [],
   );
 
   const durationOptions = useMemo(
     () => Array.from(new Set(courses.map((course) => course.duration))),
-    []
+    [],
   );
 
   const filteredCourses = useMemo(() => {

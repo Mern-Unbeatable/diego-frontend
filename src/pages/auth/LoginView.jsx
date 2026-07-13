@@ -1,27 +1,38 @@
-import { useState, useRef } from 'react';
-import { Heading, InputField, Label, Toast, useToast } from '../../components/ui';
-import { IoIosArrowBack } from 'react-icons/io';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
+import { Heading, InputField, Label, Toast } from '../../components/ui';
+import { useAuth } from '../../features/auth/authHooks';
+import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
+import { getDashboardPath } from '../../utils/auth/authUtils';
+import toast from 'react-hot-toast';
 
-const RegisterView = () => {
-  const { toasts, addToast, removeToast } = useToast();
+const LoginView = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(new Array(6).fill(''));
   const [step, setStep] = useState(1);
-  const navigate = useNavigate();
+
   const otpRefs = useRef([]);
 
+  const { login, loading, error, isAuthenticated, verifyLoginOtp } = useAuth(); // ← DESTRUCTURE MORE
+
+  const navigate = useNavigate();
   // STEP 1 → STEP 2 (EMAIL)
-  const handleNextFromEmail = (e) => {
+  const handleNextFromEmail = async (e) => {
     e.preventDefault();
 
-    if (!email.trim()) {
-      addToast('Enter email first', 'error');
-      return;
+    try {
+      await login({
+        email: email,
+      });
+      toast.success('OTP sent to your email');
+      // Will auto-redirect via useEffect
+      setStep(2);
+    } catch (error) {
+      toast.error('Please check your email and try again.');
+      console.error('Login error:', error);
     }
-
-    setStep(2);
   };
 
   // OTP change
@@ -44,22 +55,34 @@ const RegisterView = () => {
   };
 
   // OTP VERIFY (STATIC ONLY)
-  const handleVerifyOtp = (e) => {
-    console.log('OTP:', otp.join(''));
-    navigate('/dashboard/super-admin');
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await verifyLoginOtp({
+        email: email,
+        otp: otp.join(''),
+      }); // Call the OTP verification API
+
+      COOKIE_STORAGE.setUser(response.data.user.level); // Store user data in cookies
+      COOKIE_STORAGE.setToken(response.data.accessToken); // Store token in cookies
+
+      // 1. Get the dynamic role from the API response
+      const userRole = response.data.user.level;
+
+      // 2. Get the corresponding path using your utility function
+      const targetPath = getDashboardPath(userRole) || '/login';
+      // 3. Navigate to the dynamic path instead of the hardcoded '/dashboard'
+      navigate(targetPath);
+      toast.success('Successfully verified!');
+    } catch (error) {
+      toast.error('Verification failed. Please try again.');
+      console.error('OTP verification error:', error);
+    }
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      {toasts.map((toast) => (
-        <Toast
-          key={toast.id}
-          type={toast.type}
-          message={toast.message}
-          duration={toast.duration}
-          onClose={() => removeToast(toast.id)}
-        />
-      ))}
       <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
         <div className="grid min-h-[650px] grid-cols-1 md:grid-cols-2">
           {/* LEFT */}
@@ -131,7 +154,7 @@ const RegisterView = () => {
                       type="submit"
                       className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
                     >
-                      Go ahead
+                      {loading ? 'Loading...' : 'Go ahead'}
                     </button>
                   </div>
                 </form>
@@ -173,7 +196,7 @@ const RegisterView = () => {
                       type="submit"
                       className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
                     >
-                      Verify OTP
+                      {loading ? 'Verifying...' : 'Verify OTP'}
                     </button>
                   </div>
                 </form>
@@ -186,4 +209,4 @@ const RegisterView = () => {
   );
 };
 
-export default RegisterView;
+export default LoginView;

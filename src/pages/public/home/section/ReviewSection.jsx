@@ -16,7 +16,10 @@ const ReviewSection = () => {
       <div className="w-full md:w-1/2">
         <div className="space-y-6">
           {/* Title - matches "Condividi la tua recensione con noi" */}
-          <Heading level={2} className="text-2xl font-bold text-[#1a1a1a] sm:text-3xl lg:text-4xl">
+          <Heading
+            level={2}
+            className="text-2xl font-bold text-[#1a1a1a] sm:text-3xl lg:text-4xl"
+          >
             {t('homeView.section2.title')}
           </Heading>
 
@@ -91,14 +94,14 @@ const ReviewSection = () => {
       <div className="w-full md:mt-0 md:w-1/2">
         <div className="relative flex justify-end">
           {/* Green background shape */}
-          <div className="h-[420px] w-[70%] max-w-[450px] bg-[#73BFA1] sm:h-[40px] md:h-[450px] lg:h-[450] rounded-sm " />
+          <div className="h-[420px] w-[70%] max-w-[450px] rounded-2xl bg-[#73BFA1] sm:h-[40px] md:h-[450px] lg:h-[450]" />
 
           {/* Image overlay */}
           <div className="absolute top-6 left-0 sm:top-8 md:top-10 md:left-4 lg:-top-22 lg:left-16">
             <img
               src="./images/Rectangle.png"
               alt="Review illustration"
-              className="h-auto w-[80vw] max-w-[450px] object-cover sm:h-[40px] md:h-[450px] lg:h-[450] rounded-2xl"
+              className="h-auto w-[80vw] max-w-[450px] rounded-2xl object-cover sm:h-[40px] md:h-[450px] lg:h-[450]"
             />
           </div>
         </div>

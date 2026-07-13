@@ -1,42 +1,46 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import StandardInfoForm from './components/StanderInfoForm';
 import CompanyInfoForm from './components/CompanyInfoForm';
 import LicenseInfoForm from './components/LicenseInfoForm';
+import { STORAGE } from '../../../utils/storage/authStorage';
 
 /**
  * InformationRouter - Renders different information forms based on selected role
- * Expects role to be passed via navigation state from SetupRole component
+ * Expects role from navigation state or persisted STORAGE.accountType
  */
 const InfoSetupView = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Get role from navigation state
-  const role = location.state?.role;
+  const role = location.state?.role || STORAGE.getUser()?.accountType;
 
-  // Fallback if no role is found - redirect to role selection
   if (!role) {
     return (
       <div className="p-8">
-        <h2 className="mb-4 text-2xl font-bold">Role Selection Required</h2>
-        <p className="mb-4 text-gray-600">Please select a role first.</p>
+        <h2 className="mb-4 text-2xl font-bold">
+          {t('auth.setup.infoRouter.roleRequiredTitle')}
+        </h2>
+        <p className="mb-4 text-gray-600">
+          {t('auth.setup.infoRouter.roleRequiredDescription')}
+        </p>
         <button
           onClick={() => navigate('/auth/register/setup-role')}
           className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white hover:bg-white hover:text-[#73BFA1]"
         >
-          Go Back to Role Selection
+          {t('auth.setup.infoRouter.backToRoleSelection')}
         </button>
       </div>
     );
   }
 
-  // Render appropriate form based on role
   switch (role) {
-    case 'business':
+    case 'COMPANY':
       return <CompanyInfoForm />;
-    case 'licensed':
+    case 'LICENSEE':
       return <LicenseInfoForm />;
-    case 'standard':
+    case 'PRIVATE':
     default:
       return <StandardInfoForm />;
   }

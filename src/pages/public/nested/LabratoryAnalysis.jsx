@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next';
 
 const LabratoryAnalysis = () => {
   const { t } = useTranslation();
-  const includeItems = t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
+  const includeItems =
+    t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
 
   return (
     <Container className=" ">
@@ -15,23 +16,23 @@ const LabratoryAnalysis = () => {
         image={banner}
         title={t('servicesPages.section17.bannerTitle')}
       />
-      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-6">
+            <h1 className="mb-6 text-4xl font-bold text-gray-900">
               {t('servicesPages.section1.serviceDetailsTitle')}
             </h1>
 
             <div className="prose prose-lg max-w-none">
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="mb-6 leading-relaxed text-gray-600">
                 {t('servicesPages.section17.description')}
               </p>
 
-              <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-6">
+              <h2 className="mt-6 mb-4 text-2xl font-bold text-gray-900">
                 {t('servicesPages.section1.serviceIncludesTitle')}
               </h2>
-              <div className="bg-[#F1F9F6] p-5 rounded-2xl">
-                <ul className="list-disc pl-6 space-y-2 text-gray-600">
+              <div className="rounded-2xl bg-[#F1F9F6] p-5">
+                <ul className="list-disc space-y-2 pl-6 text-gray-600">
                   {includeItems.map((item) => (
                     <li key={item}>{item}</li>
                   ))}

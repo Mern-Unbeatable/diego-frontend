@@ -28,14 +28,16 @@ const MissionCards = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       {missionData.map((item, index) => (
-        <div key={index} className="bg-gray-50 p-6 rounded-lg text-center">
-          <div className="w-12 h-12 bg-[#73BFA1] rounded-full flex items-center justify-center mx-auto mb-4">
+        <div key={index} className="rounded-lg bg-gray-50 p-6 text-center">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#73BFA1]">
             <item.icon className="text-white" size={24} />
           </div>
-          <h3 className="font-bold text-gray-900 mb-4 text-lg">{item.title}</h3>
-          <p className="text-gray-600 text-sm leading-relaxed text-justify">{item.description}</p>
+          <h3 className="mb-2 font-bold text-gray-900">{item.title}</h3>
+          <p className="text-justify text-sm leading-relaxed text-gray-600">
+            {item.description}
+          </p>
         </div>
       ))}
     </div>

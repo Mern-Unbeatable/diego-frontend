@@ -7,8 +7,10 @@ import { useTranslation } from 'react-i18next';
 
 const SafetyEmergencyView = () => {
   const { t } = useTranslation();
-  const includeItems = t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
-  const obligations = t('servicesPages.section6.obligations', { returnObjects: true }) || [];
+  const includeItems =
+    t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
+  const obligations =
+    t('servicesPages.section6.obligations', { returnObjects: true }) || [];
 
   return (
     <Container className=" ">
@@ -16,7 +18,9 @@ const SafetyEmergencyView = () => {
       <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
           <div className="lg:sticky lg:top-24">
-            <Heading level={3}>{t('servicesPages.section6.bannerTitle')}</Heading>
+            <Heading level={3}>
+              {t('servicesPages.section6.bannerTitle')}
+            </Heading>
             <div className="prose prose-lg mt-3 max-w-none">
               <p className="mb-6 leading-relaxed text-gray-600">
                 {t('servicesPages.section6.descriptionLead')}
@@ -35,8 +39,9 @@ const SafetyEmergencyView = () => {
                 {t('servicesPages.section6.descriptionCta')}
               </p>
 
-              {/* <Heading level={3}></Heading> */}
-<h2 className='text-lg md:text-2xl'>{t('servicesPages.section1.serviceIncludesTitle')}</h2>
+              <Heading level={3}>
+                {t('servicesPages.section1.serviceIncludesTitle')}
+              </Heading>
 
               <div className="mt-3 rounded-2xl bg-[#F1F9F6] p-5">
                 <ul className="list-none space-y-3 pl-0 text-gray-600">

@@ -105,8 +105,10 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
           <Button
             label={t('homeView.section4.details')}
             variant="outline"
-            onClick={(e) => handleButtonAction(e, 'Dettagli')}
-            className="flex-1 rounded-full border-gray-300 font-semibold text-gray-700 hover:border-gray-400"
+            onClick={(e) =>
+              handleButtonAction(e, t('homeView.section4.details'))
+            }
+            className="w-full rounded-full border-gray-300 font-semibold text-gray-700 hover:border-gray-400"
           />
         </div>
       </div>

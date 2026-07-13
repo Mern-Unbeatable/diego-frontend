@@ -1,20 +1,29 @@
+// authSlice.js
+
 import { createSlice } from '@reduxjs/toolkit';
-import { STORAGE } from '../../config/storage/storageKeys';
-import { loginAPI } from './authAPI';
+// import { STORAGE } from '../../utils/storage/authStorage';
+import { COOKIE_STORAGE } from '../../utils/cookies/cookieStorage';
+import {
+  loginAPI,
+  verifyLoginOtpAPI,
+  registerAPI,
+  verifyRegisterOtpAPI,
+  registerCompleteAPI,
+} from './authAPI';
 
 //  PLATFORM_ADMIN
 //  COMPANY_ADMIN
 //  COMPANY_EMPLOYEE
 //  LICENSE_USER
 //  PRIVATE_USER
-
-const storedUser = ''; // Hardcoded for testing purposes
-const storedToken = ''; // Hardcoded for testing purposes
+const userRoles = COOKIE_STORAGE.getUser();
+const storedToken = COOKIE_STORAGE.getToken();
+const storedUser = userRoles || null;
 
 const initialState = {
-  user: storedUser || null,
+  user: storedUser,
   token: storedToken || null,
-  isAuthenticated: !!storedToken && !!storedUser,
+  isAuthenticated: !!storedUser && !!storedToken,
   loading: false,
   error: null,
 };
@@ -27,7 +36,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      STORAGE.clearAll();
+      COOKIE_STORAGE.clearAll();
     },
     resetAuthError: (state) => {
       state.error = null;
@@ -35,27 +44,103 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      //===================================
+      //=====================================================
       // ✅ LOGIN CASE
-      //===================================
+      //=====================================================
       .addCase(loginAPI.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(loginAPI.fulfilled, (state, action) => {
+        console.log('Login successful:', action.payload);
         state.loading = false;
-        state.user = action.payload.user || null;
-        state.token = action.payload.token || null;
-        state.isAuthenticated = !!action.payload.user && !!action.payload.token;
       })
       .addCase(loginAPI.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
 
-    //===================================
-    // REGISTER CASE
-    //===================================
+      //=====================================================
+      //✅ VERIFY OTP CASE
+      //=====================================================
+      .addCase(verifyLoginOtpAPI.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyLoginOtpAPI.fulfilled, (state, action) => {
+        console.log('Verify OTP successful:', action.payload);
+        const payloadData = action.payload || {};
+
+        state.loading = false;
+        state.user = payloadData.data.user.level || null;
+        state.token = payloadData.data.accessToken || null;
+        state.isAuthenticated =
+          !!payloadData.data.user && !!payloadData.data.accessToken;
+      })
+      .addCase(verifyLoginOtpAPI.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      //=====================================================
+      //✅ REGISTER CASE
+      //=====================================================
+      .addCase(registerAPI.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerAPI.fulfilled, (state, action) => {
+        console.log('Register OTP sent successful:', action.payload);
+        state.loading = false;
+      })
+      .addCase(registerAPI.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // ====================================================
+      // ✅ VERIFY REGISTER OTP CASE
+      // ====================================================
+      .addCase(verifyRegisterOtpAPI.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyRegisterOtpAPI.fulfilled, (state, action) => {
+        console.log('Verify Register OTP successful:', action.payload);
+        state.loading = false;
+      })
+      .addCase(verifyRegisterOtpAPI.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // ====================================================
+      // REISTER COMPLETE CASE
+      // ====================================================
+      .addCase(registerCompleteAPI.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerCompleteAPI.fulfilled, (state, action) => {
+        console.log('Register Complete successful:', action.payload);
+        const payloadData = action.payload || {};
+        const data = payloadData.data || payloadData;
+
+        state.loading = false;
+        state.user =
+          data.user?.level ||
+          data.user?.role ||
+          (typeof data.user === 'string' ? data.user : null) ||
+          data.level ||
+          null;
+        state.token =
+          data.accessToken || data.tokens?.accessToken || data.token || null;
+        state.isAuthenticated = !!state.user && !!state.token;
+      })
+      .addCase(registerCompleteAPI.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 

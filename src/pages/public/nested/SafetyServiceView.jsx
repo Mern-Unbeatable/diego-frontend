@@ -7,7 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 const SafetyServiceView = () => {
   const { t } = useTranslation();
-  const includeItems = t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
+  const includeItems =
+    t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
 
   return (
     <Container className=" ">
@@ -19,7 +20,9 @@ const SafetyServiceView = () => {
       <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
           <div className="lg:sticky lg:top-24">
-            <Heading level={3}>{t('servicesPages.section1.serviceDetailsTitle')}</Heading>
+            <Heading level={3}>
+              {t('servicesPages.section1.serviceDetailsTitle')}
+            </Heading>
 
             <div className="prose prose-lg mt-3 max-w-none">
               <p className="mb-6 text-justify leading-relaxed text-gray-600">
@@ -42,7 +45,8 @@ const SafetyServiceView = () => {
                     />
                   </svg>
                   <span>
-                    <span className="font-semibold">ASPP</span> {t('servicesPages.section4.aspp')}
+                    <span className="font-semibold">ASPP</span>{' '}
+                    {t('servicesPages.section4.aspp')}
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -60,7 +64,8 @@ const SafetyServiceView = () => {
                     />
                   </svg>
                   <span>
-                    <span className="font-semibold">RSPP</span> {t('servicesPages.section4.rspp')}
+                    <span className="font-semibold">RSPP</span>{' '}
+                    {t('servicesPages.section4.rspp')}
                   </span>
                 </li>
               </ul>

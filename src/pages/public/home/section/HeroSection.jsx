@@ -28,29 +28,34 @@ const HeroSection = () => {
       </div>
 
       <div className="flex flex-col justify-center space-y-4 text-left md:space-y-6">
-        <Heading level={1} className="text-4xl font-bold tracking-tight text-[#1a1a1a] sm:text-5xl lg:text-6xl">
+        <Heading
+          level={1}
+          className="text-4xl font-bold tracking-tight text-[#1a1a1a] sm:text-5xl lg:text-6xl"
+        >
           {t('homeView.section1.title')}
         </Heading>
-        
-        <Heading level={3} className="text-lg font-bold text-[#505050] md:text-xl ">
+
+        <Heading
+          level={3}
+          className="text-lg font-bold text-[#505050] md:text-xl"
+        >
           {t('homeView.section1.subtitle')}
         </Heading>
-        
+
         <div className="space-y-2 text-base text-[#555555] md:text-lg">
           <Paragraph>{t('homeView.section1.descriptionLineOne')}</Paragraph>
           <Paragraph>{t('homeView.section1.descriptionLineTwo')}</Paragraph>
         </div>
-        
+
         <div className="pt-2">
-          <Link to='/services' >
-             <Button
-            label={t('homeView.section1.button')}
-            variant="primary"
-            size="lg"
-            className="rounded-full bg-[#6dbfa3] px-6 py-3 text-white hover:bg-[#5aa68c]"
-          />
+          <Link to="/services">
+            <Button
+              label={t('homeView.section1.button')}
+              variant="primary"
+              size="lg"
+              className="rounded-full bg-[#6dbfa3] px-6 py-3 text-white hover:bg-[#5aa68c]"
+            />
           </Link>
-       
         </div>
       </div>
     </Container>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../../../../components/ui/layouts/Card';
-import { Heading } from '../../../../components/ui';
 import { FaChevronLeft, FaRegCopy } from 'react-icons/fa';
 
 const CredentialsView = () => {
@@ -25,68 +24,68 @@ const CredentialsView = () => {
   };
 
   return (
-    <div className="p-6 md:p-10">
-      <div className="mx-auto max-w-3xl">
+    <div className="p-4 md:p-8">
+      <div className="mx-auto max-w-2xl">
         <Card>
-          <div className="px-4 py-6 md:px-8 md:py-10">
+          <div className="px-4 py-6 md:px-6 md:py-8">
             <button
               onClick={() => navigate(-1)}
               aria-label="Back"
-              className="mb-6 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-sm hover:bg-gray-50"
+              className="mb-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm hover:bg-gray-50 border border-gray-100"
             >
-              <FaChevronLeft className="text-gray-600" />
+              <FaChevronLeft className="text-gray-600 text-xs" />
             </button>
-            <Heading level={3} className="mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-5">
               Nuove credenziali ricevute
-            </Heading>
+            </h3>
 
-            <div className="space-y-5">
+            <div className="space-y-4">
               <div>
-                <label className="mb-2 block text-sm text-gray-700">
+                <label className="mb-1 block text-xs font-semibold text-gray-500">
                   Nome utente*
                 </label>
-                <div className="flex items-center justify-between rounded-md bg-[#f3faf6] px-4 py-3">
-                  <span className="text-gray-700">{credentials.username}</span>
+                <div className="flex items-center justify-between rounded-md bg-[#f3faf6] px-3.5 py-2 text-xs md:text-sm">
+                  <span className="text-gray-700 font-medium">{credentials.username}</span>
                   <button
                     onClick={() => copyToClipboard(credentials.username)}
                     aria-label="Copia username"
-                    className="text-gray-600"
+                    className="text-gray-500 hover:text-gray-800 transition"
                   >
-                    <FaRegCopy />
+                    <FaRegCopy size={13} />
                   </button>
                 </div>
               </div>
 
               <div>
-                <label className="mb-2 block text-sm text-gray-700">
+                <label className="mb-1 block text-xs font-semibold text-gray-500">
                   Password*
                 </label>
-                <div className="flex items-center justify-between rounded-md bg-[#f3faf6] px-4 py-3">
-                  <span className="text-gray-700">{credentials.password}</span>
+                <div className="flex items-center justify-between rounded-md bg-[#f3faf6] px-3.5 py-2 text-xs md:text-sm">
+                  <span className="text-gray-700 font-medium">{credentials.password}</span>
                   <button
                     onClick={() => copyToClipboard(credentials.password)}
                     aria-label="Copia password"
-                    className="text-gray-600"
+                    className="text-gray-500 hover:text-gray-800 transition"
                   >
-                    <FaRegCopy />
+                    <FaRegCopy size={13} />
                   </button>
                 </div>
               </div>
 
               <div>
-                <label className="mb-2 block text-sm text-gray-700">
+                <label className="mb-1 block text-xs font-semibold text-gray-500">
                   Nome del corso*
                 </label>
-                <div className="rounded-md bg-[#f3faf6] px-4 py-3 text-gray-600">
+                <div className="rounded-md bg-[#f3faf6] px-3.5 py-2 text-xs md:text-sm text-gray-600 font-medium">
                   {credentials.courseName}
                 </div>
               </div>
 
               <div>
-                <label className="mb-2 block text-sm text-gray-700">
+                <label className="mb-1 block text-xs font-semibold text-gray-500">
                   Invia da*
                 </label>
-                <div className="rounded-md bg-[#f3faf6] px-4 py-3 text-gray-600">
+                <div className="rounded-md bg-[#f3faf6] px-3.5 py-2 text-xs md:text-sm text-gray-600 font-medium">
                   {credentials.sentBy}
                 </div>
               </div>

@@ -7,8 +7,10 @@ import { useTranslation } from 'react-i18next';
 
 const SafetyDrinkingWater = () => {
   const { t } = useTranslation();
-  const includeItems = t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
-  const parameterItems = t('servicesPages.section10.parameterItems', { returnObjects: true }) || [];
+  const includeItems =
+    t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
+  const parameterItems =
+    t('servicesPages.section10.parameterItems', { returnObjects: true }) || [];
 
   return (
     <Container className=" ">
@@ -44,7 +46,9 @@ const SafetyDrinkingWater = () => {
                   <li className="leading-relaxed">
                     <div>
                       <span>
-                        <strong>{t('servicesPages.section10.fullAnalysisLead')}</strong>{' '}
+                        <strong>
+                          {t('servicesPages.section10.fullAnalysisLead')}
+                        </strong>{' '}
                       </span>
 
                       <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-gray-500">

@@ -31,7 +31,7 @@ const Checkout = () => {
           defaultValue: course.objectives ?? [],
         }),
       })),
-    [t]
+    [t],
   );
   const selectedCourseId =
     Number(searchParams.get('id')) || localizedCourses[0]?.id;
@@ -40,7 +40,7 @@ const Checkout = () => {
     () =>
       localizedCourses.find((course) => course.id === selectedCourseId) ??
       localizedCourses[0],
-    [localizedCourses, selectedCourseId]
+    [localizedCourses, selectedCourseId],
   );
 
   return (

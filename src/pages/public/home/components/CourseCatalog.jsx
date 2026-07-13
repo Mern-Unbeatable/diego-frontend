@@ -95,7 +95,10 @@ const CourseCatalog = () => {
 
   return (
     <Container size="full" className="py-12 sm:py-16 lg:py-20">
-      <Heading level={2} className="mb-8 sm:mb-12  text-2xl font-bold text-[#1a1a1a] sm:text-3xl lg:text-4xl">
+      <Heading
+        level={2}
+        className="mb-8 text-2xl font-bold text-[#1a1a1a] sm:mb-12 sm:text-3xl lg:text-4xl"
+      >
         {t('homeView.section3.exploreCatalog')}
       </Heading>
 

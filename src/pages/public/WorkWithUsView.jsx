@@ -21,11 +21,14 @@ const WorkWithUsView = () => {
     buttonText: t('workWithUs.section1.buttonText'),
     contactFormTitle: t('workWithUs.section1.contactFormTitle'),
     additionalFields: [
-      { type: 'text', placeholder: t('workWithUs.section1.aziendaPlaceholder') },
+      {
+        type: 'text',
+        placeholder: t('workWithUs.section1.aziendaPlaceholder'),
+      },
     ],
   };
 
-  // Data for Professionals Section
+  // ── Section 2: Professionals ────────────────────────────────────
   const professionalsData = {
     title: t('workWithUs.section2.title'),
     description: t('workWithUs.section2.description'),
@@ -48,36 +51,36 @@ const WorkWithUsView = () => {
   return (
     <Container>
       <div className="w-full bg-[#fff]">
-        <Banner
-          image={banner}
-          title={t('workWithUs.section5.bannerTitle')}
-        />
+        {/* Banner */}
+        <Banner image={banner} title={t('workWithUs.section5.bannerTitle')} />
 
-
-        <div className="max-w-6xl mx-auto px-4 py-12 text-center">
-
-          <span className='bg-[#E4F0E8] text-sm p-3 rounded-full  text-[#5C9981]'>
+        {/* Hero */}
+        <div className="mx-auto max-w-4xl px-4 py-12 text-center">
+          <span className="rounded-full bg-[#E4F0E8] p-3 text-sm text-[#5C9981]">
             {t('workWithUs.section5.badge')}
           </span>
-          <h1 className=" mt-5 text-2xl font-bold text-gray-900 mb-4">
+          <h1 className="mt-5 mb-4 text-2xl font-bold text-gray-900">
             {t('workWithUs.section5.heroTitle')}
           </h1>
-          <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-sm leading-relaxed text-gray-600">
             {t('workWithUs.section5.heroDescription')}
           </p>
         </div>
 
-        {/* Formation Entities Section */}
+        {/* Section 1 — Formation Entities */}
+        <div className="bg-[#FAFAFA]">
+          <CollaborationSection {...formationData} />
+        </div>
 
-        <div className='bg-[#FAFAFA]'>  <CollaborationSection {...formationData} /> </div>
+        {/* Section 2 — Professionals */}
+        <div className="bg-[#fff]">
+          <CollaborationSection {...professionalsData} />
+        </div>
 
-        {/* Professionals Section */}
-        <div className='bg-[#fff]'> <CollaborationSection {...professionalsData} /></div>
-
-        {/* Collaboration Benefits Section */}
+        {/* Section 3 — Collaboration Benefits */}
         <BenefitsSection />
 
-        {/* Collaboration Request Form Section */}
+        {/* Section 4 — Collaboration Request Form */}
         <CollaborationRequestForm />
       </div>
     </Container>

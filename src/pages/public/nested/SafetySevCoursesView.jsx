@@ -1,13 +1,14 @@
+import { useTranslation } from 'react-i18next';
+import { Container, Heading } from '../../../components/ui';
 import Banner from '../../../components/common/Banner';
 import banner from '../../../../src/assets/images/banner/safety/banner4.png';
-import { Container, Heading } from '../../../components/ui';
 import ServiceForm from '../services/components/ServiceForm';
 import { ArrowRight } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 const SafetyServiceView = () => {
   const { t } = useTranslation();
-  const includeItems = t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
+  const includeItems =
+    t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
 
   return (
     <Container className=" ">
@@ -20,15 +21,18 @@ const SafetyServiceView = () => {
       <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
           <div className="lg:sticky lg:top-26">
-            <Heading level={3}>{t('servicesPages.section1.serviceDetailsTitle')}</Heading>
+            <Heading level={3}>
+              {t('servicesPages.section1.serviceDetailsTitle')}
+            </Heading>
 
             <div className="prose prose-lg mt-3">
               <p className="mb-6 text-justify leading-relaxed text-gray-600">
                 {t('servicesPages.section3.description')}
               </p>
 
-              {/* <Heading level={3}></Heading> */}
-              <h2 className=' text-lg md:text-2xl'>{t('servicesPages.section1.serviceIncludesTitle')} </h2>
+              <Heading level={3}>
+                {t('servicesPages.section1.serviceIncludesTitle')}
+              </Heading>
               <div className="mt-3 rounded-2xl bg-[#F1F9F6] p-5">
                 <ul className="list-none space-y-3 pl-0 text-gray-600">
                   {includeItems.map((item) => (

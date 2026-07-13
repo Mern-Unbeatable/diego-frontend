@@ -7,7 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 const SafetyServiceView = () => {
   const { t } = useTranslation();
-  const includeItems = t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
+  const includeItems =
+    t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
 
   return (
     <Container className=" ">

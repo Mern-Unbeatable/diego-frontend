@@ -1,6 +1,6 @@
 import { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
 import { ROLES } from '../config/roles.js';
+import { ROUTES } from '../config/routes.js';
 
 //==========================================================================
 // SUPER_ADMIN
@@ -91,7 +91,7 @@ const StudentHomeView = lazy(
   () => import('../pages/dash/private/01-Home/StudentHomeView.jsx'),
 );
 const StudentProfileView = lazy(
-  () => import('../pages/dash/private/components/StudentProfileView.jsx'),
+  () => import('../pages/dash/private/10-profile/StudentProfileView.jsx'),
 );
 const CertificatesView = lazy(
   () => import('../pages/dash/private/07-MyCertificates/CertificatesView.jsx'),
@@ -107,6 +107,9 @@ const NotificationsView = lazy(
 );
 const SupportTicketView = lazy(
   () => import('../pages/dash/private/02-Tickets/SupportTicketView.jsx'),
+);
+const SupportTicketDetailView = lazy(
+  () => import('../pages/dash/private/02-Tickets/components/TicketDetail.jsx'),
 );
 const PrivacyPolicyView = lazy(
   () => import('../pages/dash/private/08-PrivacyPolicy/PrivacyPolicyView.jsx'),
@@ -129,16 +132,19 @@ export const dashboardRoutes = [
     id: 'SUPER_ADMIN',
     roles: [ROLES.PLATFORM_ADMIN],
     routes: [
-      { path: 'super-admin', element: <SuperAdminView /> },
+      { path: ROUTES.PLATFORM_ADMIN.DASHBOARD, element: <SuperAdminView /> },
       {
-        path: 'super-admin/license-management',
+        path: ROUTES.PLATFORM_ADMIN.LICENSES,
         element: <LicenseManagementView />,
       },
-      { path: 'super-admin/settings/*', element: <AdminSettingsDashboard /> },
-      { path: 'super-admin/ticket', element: <TicketView /> },
-      { path: 'super-admin/feedback', element: <FeedbackView /> },
-      { path: 'super-admin/figures', element: <FiguresView /> },
-      { path: 'super-admin/report', element: <AdminReportView /> },
+      {
+        path: ROUTES.PLATFORM_ADMIN.SETTINGS + '/*',
+        element: <AdminSettingsDashboard />,
+      },
+      { path: ROUTES.PLATFORM_ADMIN.TICKETS, element: <TicketView /> },
+      { path: ROUTES.PLATFORM_ADMIN.FEEDBACK, element: <FeedbackView /> },
+      { path: ROUTES.PLATFORM_ADMIN.FIGURES, element: <FiguresView /> },
+      { path: ROUTES.PLATFORM_ADMIN.REPORTS, element: <AdminReportView /> },
     ],
   },
 
@@ -147,27 +153,33 @@ export const dashboardRoutes = [
     id: 'COMPANY_ADMIN',
     roles: [ROLES.COMPANY_ADMIN],
     routes: [
-      { path: 'company-admin', element: <CompanyHomeView /> },
-      { path: 'company-admin/training', element: <CompanyTrainingView /> },
+      { path: ROUTES.COMPANY_ADMIN.DASHBOARD, element: <CompanyHomeView /> },
+      { path: ROUTES.COMPANY_ADMIN.TRAINING, element: <CompanyTrainingView /> },
       {
-        path: 'company-admin/training/courses/:courseId',
+        path: `${ROUTES.COMPANY_ADMIN.TRAINING}/courses/:courseId`,
         element: <CompanyCourseRosterView />,
       },
-      { path: 'company-admin/ticket', element: <CompanyTicketListView /> },
-      { path: 'company-admin/ticket/new', element: <CompanyOpenTicketView /> },
       {
-        path: 'company-admin/ticket/:ticketId',
+        path: ROUTES.COMPANY_ADMIN.TICKETS,
+        element: <CompanyTicketListView />,
+      },
+      {
+        path: `${ROUTES.COMPANY_ADMIN.TICKETS}/new`,
+        element: <CompanyOpenTicketView />,
+      },
+      {
+        path: `${ROUTES.COMPANY_ADMIN.TICKETS}/:ticketId`,
         element: <CompanyTicketDetailView />,
       },
       {
-        path: 'company-admin/certificates',
+        path: ROUTES.COMPANY_ADMIN.CERTIFICATES,
         element: <CompanyCertificatesView />,
       },
       {
-        path: 'company-admin/privacy-policy',
+        path: ROUTES.COMPANY_ADMIN.PRIVACY,
         element: <CompanyPrivacyPolicyView />,
       },
-      { path: 'company-admin/my-courses', element: <CompanyCourseList /> },
+      { path: ROUTES.COMPANY_ADMIN.COURSES, element: <CompanyCourseList /> },
     ],
   },
 
@@ -175,7 +187,12 @@ export const dashboardRoutes = [
     /** ✅ Company employee route group */
     id: 'COMPANY_EMPLOYEE',
     roles: [ROLES.COMPANY_EMPLOYEE],
-    routes: [{ path: 'company-employee', element: <CompanyCourseList /> }],
+    routes: [
+      {
+        path: ROUTES.COMPANY_EMPLOYEE.DASHBOARD,
+        element: <CompanyCourseList />,
+      },
+    ],
   },
 
   {
@@ -183,13 +200,13 @@ export const dashboardRoutes = [
     id: 'LICENSE_USER',
     roles: [ROLES.LICENSE_USER],
     routes: [
-      { path: 'license-user', element: <LicenseHomeView /> },
-      { path: 'license-user/license', element: <LicenseView /> },
-      { path: 'license-user/enrolled-students', element: <EnrolledView /> },
-      { path: 'license-user/course-list', element: <CourseListView /> },
-      { path: 'license-user/ticket', element: <LicenseTicketView /> },
-      { path: 'license-user/report', element: <LicenseReportView /> },
-      { path: 'license-user/privacy-policy', element: <LicensePrivacyView /> },
+      { path: ROUTES.LICENSE_USER.DASHBOARD, element: <LicenseHomeView /> },
+      { path: ROUTES.LICENSE_USER.LICENSE, element: <LicenseView /> },
+      { path: ROUTES.LICENSE_USER.STUDENTS, element: <EnrolledView /> },
+      { path: ROUTES.LICENSE_USER.COURSES, element: <CourseListView /> },
+      { path: ROUTES.LICENSE_USER.TICKETS, element: <LicenseTicketView /> },
+      { path: ROUTES.LICENSE_USER.REPORTS, element: <LicenseReportView /> },
+      { path: ROUTES.LICENSE_USER.PRIVACY, element: <LicensePrivacyView /> },
     ],
   },
 
@@ -198,19 +215,29 @@ export const dashboardRoutes = [
     id: 'PRIVATE_USER',
     roles: [ROLES.PRIVATE_USER],
     routes: [
-      { path: 'private-user', element: <StudentHomeView /> },
-      { path: 'private-user/ticket', element: <SupportTicketView /> },
+      { path: ROUTES.PRIVATE_USER.DASHBOARD, element: <StudentHomeView /> },
+      { path: ROUTES.PRIVATE_USER.TICKETS, element: <SupportTicketView /> },
       {
-        path: 'private-user/feedback',
+        path: `${ROUTES.PRIVATE_USER.TICKETS}/:ticketId`,
+        element: <SupportTicketDetailView />,
+      },
+      {
+        path: ROUTES.PRIVATE_USER.FEEDBACK,
         element: <SupportFeedbackView />,
       },
-      { path: 'private-user/profile', element: <StudentProfileView /> },
-      { path: 'private-user/credentials', element: <CredentialsView /> },
-      { path: 'private-user/notifications', element: <NotificationsView /> },
-      { path: 'private-user/certificates', element: <CertificatesView /> },
-      { path: 'private-user/privacy-policy', element: <PrivacyPolicyView /> },
-      { path: 'private-user/course', element: <CourseHomeView /> },
-      { path: 'private-user/course/:id', element: <CourseDetailsView /> },
+      { path: ROUTES.PRIVATE_USER.PROFILE, element: <StudentProfileView /> },
+      { path: ROUTES.PRIVATE_USER.CREDENTIALS, element: <CredentialsView /> },
+      {
+        path: ROUTES.PRIVATE_USER.NOTIFICATIONS,
+        element: <NotificationsView />,
+      },
+      { path: ROUTES.PRIVATE_USER.CERTIFICATES, element: <CertificatesView /> },
+      { path: ROUTES.PRIVATE_USER.PRIVACY, element: <PrivacyPolicyView /> },
+      { path: ROUTES.PRIVATE_USER.COURSE, element: <CourseHomeView /> },
+      {
+        path: `${ROUTES.PRIVATE_USER.COURSE}/:id`,
+        element: <CourseDetailsView />,
+      },
     ],
   },
 ];

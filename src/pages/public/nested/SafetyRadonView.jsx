@@ -7,8 +7,10 @@ import { useTranslation } from 'react-i18next';
 
 const SafetyRadonView = () => {
   const { t } = useTranslation();
-  const includeItems = t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
-  const riskItems = t('servicesPages.section9.riskItems', { returnObjects: true }) || [];
+  const includeItems =
+    t('servicesPages.section1.includeItems', { returnObjects: true }) || [];
+  const riskItems =
+    t('servicesPages.section9.riskItems', { returnObjects: true }) || [];
 
   return (
     <Container className=" ">
@@ -17,7 +19,7 @@ const SafetyRadonView = () => {
         image={banner}
         title={t('servicesPages.section9.bannerTitle')}
       />
-      <div className="mx-auto container px-4 py-12 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
           <div className="lg:sticky lg:top-24">
             <h1 className="mb-6 text-4xl font-bold text-gray-900">
@@ -25,7 +27,7 @@ const SafetyRadonView = () => {
             </h1>
 
             <div className="prose prose-lg max-w-none">
-              <p className="mb-6 leading-relaxed text-gray-600 text-justify">
+              <p className="mb-6 text-justify leading-relaxed text-gray-600">
                 {t('servicesPages.section9.description')}
               </p>
 

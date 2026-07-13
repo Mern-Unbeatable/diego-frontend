@@ -7,7 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 const SafetyLegionView = () => {
   const { t } = useTranslation();
-  const specialItems = t('servicesPages.section8.specialItems', { returnObjects: true }) || [];
+  const specialItems =
+    t('servicesPages.section8.specialItems', { returnObjects: true }) || [];
 
   return (
     <Container className=" ">
@@ -24,10 +25,10 @@ const SafetyLegionView = () => {
             </h1>
 
             <div className="prose prose-lg max-w-none">
-              <p className="mb-6 leading-relaxed text-gray-600 text-justify">
+              <p className="mb-6 text-justify leading-relaxed text-gray-600">
                 {t('servicesPages.section8.paragraph1')}
               </p>
-              <p className="mb-6 leading-relaxed text-gray-600 text-justify">
+              <p className="mb-6 text-justify leading-relaxed text-gray-600">
                 {t('servicesPages.section8.paragraph2')}
               </p>
               <p className="mb-6 leading-relaxed text-gray-600">

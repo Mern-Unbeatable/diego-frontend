@@ -735,6 +735,7 @@
       "emailLabel": "电子邮箱",
       "emailPlaceholder": "请输入邮箱",
       "goAhead": "继续",
+      "loginInstead": "已有账号？登录",
       "back": "返回",
       "verifyOtp": "验证 OTP",
       "confirm": "确认",

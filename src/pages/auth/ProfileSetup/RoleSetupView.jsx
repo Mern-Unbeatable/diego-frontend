@@ -1,23 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
+import { STORAGE } from '../../../utils/storage/authStorage';
 
 const roles = [
-  {
-    id: 'standard',
-    label: 'Utente standard - Liv. 1',
-    image: '/image/register/icon.png',
-  },
-  {
-    id: 'business',
-    label: 'Azienda - Liv. 2',
-    image: '/image/register/icon2.png',
-  },
-  {
-    id: 'licensed',
-    label: 'Utente licenza - Liv. 3',
-    image: '/image/register/icon3.png',
-  },
+  { id: 'PRIVATE', image: '/image/register/icon.png' },
+  { id: 'COMPANY', image: '/image/register/icon2.png' },
+  { id: 'LICENSEE', image: '/image/register/icon3.png' },
 ];
 
 const RoleCard = ({ label, image, isSelected, onClick }) => {
@@ -52,11 +42,20 @@ const RoleCard = ({ label, image, isSelected, onClick }) => {
 };
 
 const RoleSetupView = () => {
-  const [selectedRole, setSelectedRole] = useState('standard');
+  const { t } = useTranslation();
+  const [selectedRole, setSelectedRole] = useState('PRIVATE');
   const navigate = useNavigate();
+  const roleLabels = {
+    PRIVATE: t('auth.setup.role.options.standard'),
+    COMPANY: t('auth.setup.role.options.business'),
+    LICENSEE: t('auth.setup.role.options.licensed'),
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    STORAGE.setUser({ accountType: selectedRole });
+
     navigate('/auth/register/setup-info', {
       state: { role: selectedRole },
     });
@@ -73,7 +72,7 @@ const RoleSetupView = () => {
         {roles.map((role) => (
           <RoleCard
             key={role.id}
-            label={role.label}
+            label={roleLabels[role.id]}
             image={role.image}
             isSelected={selectedRole === role.id}
             onClick={() => setSelectedRole(role.id)}

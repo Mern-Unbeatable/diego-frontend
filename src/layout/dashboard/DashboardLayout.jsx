@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
-// import DevRoleSwitcher from './DevRoleSwitcher';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 
 const DashboardLayout = () => {
   return (

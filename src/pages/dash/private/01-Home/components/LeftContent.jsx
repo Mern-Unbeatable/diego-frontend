@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../../../../../components/ui/layouts/Card';
 import { FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa';
-import { IoIosStarOutline, IoMdStar } from 'react-icons/io';
+import { IoIosStarOutline } from 'react-icons/io';
+import CourseCard from './CourseCard';
+import HeroBanner from './HeroBanner';
 
 const LeftContent = () => {
   const courses = [
@@ -86,30 +88,7 @@ const LeftContent = () => {
   return (
     <>
       {/* Hero Banner */}
-      <div className="relative w-full overflow-hidden rounded-3xl bg-gradient-to-br from-[#73BFA1] to-[#5aa687] p-8 shadow-lg md:p-12">
-        {/* Decorative stars cluster (keeps same look on large screens, scales/positions on smaller screens) */}
-        <div className="pointer-events-none absolute inset-0 gap-4">
-          <IoMdStar className="absolute -top-18 right-16 hidden h-40 w-40 text-white opacity-20 md:block" />
-          <IoMdStar className="absolute top-20 right-6 hidden h-16 w-16 text-white opacity-10 md:block" />
-          <IoMdStar className="absolute top-28 right-36 hidden h-26 w-26 text-white opacity-10 md:block" />
-          <IoMdStar className="absolute top-38 -right-2 hidden h-26 w-26 text-white opacity-10 md:block" />
-          <IoMdStar className="absolute top-8 right-62 hidden h-26 w-26 text-white opacity-10 md:block" />
-          <IoMdStar className="absolute top-3 right-3 block h-28 w-28 text-white opacity-15 md:hidden" />
-        </div>
-
-        <div className="relative z-10 max-w-2xl">
-          <h1 className="mb-6 text-3xl leading-tight font-bold text-white md:text-4xl">
-            Affina le tue competenze professionali
-          </h1>
-
-          <button
-            type="button"
-            className="transform rounded-full bg-[#284338] px-8 py-3 font-semibold text-white shadow-md transition duration-300 hover:scale-105 hover:bg-slate-900"
-          >
-            Inizia ora
-          </button>
-        </div>
-      </div>
+      <HeroBanner />
 
       {/* Course Cards Section */}
       <div>
@@ -140,60 +119,14 @@ const LeftContent = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
           {visibleCourses.map((course) => (
-            <Card
+            <CourseCard
               key={course.id}
-              padding="none"
-              shadow="sm"
-              className="cursor-pointer overflow-hidden transition hover:shadow-lg"
-              onClick={() => navigate(`/dashboard/private-user/course/1`)}
-            >
-              <div className="relative h-48 bg-gray-200">
-                <img
-                  src={course.image}
-                  alt={course.title}
-                  className="h-full w-full object-cover"
-                  onError={(e) => {
-                    e.target.src =
-                      'https://via.placeholder.com/400x300?text=Course+Image';
-                  }}
-                />
-                <button
-                  type="button"
-                  className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/50 opacity-60 shadow-md hover:bg-gray-100"
-                >
-                  <span className="text-gray-600">♡</span>
-                </button>
-              </div>
-
-              <div className="p-4">
-                <p
-                  className={`mb-2 inline-block rounded-full px-3 py-1 text-sm tracking-wide uppercase ${getCategoryClasses(course.category)}`}
-                >
-                  {course.category}
-                </p>
-                <h3 className="mb-3 text-lg font-semibold text-gray-800">
-                  {course.title}
-                </h3>
-
-                <div className="mb-4">
-                  <div className="h-2 w-full rounded-full bg-gray-200">
-                    <div
-                      className="h-2 rounded-full bg-[#73BFA1] transition-all"
-                      style={{ width: `${course.progress}%` }}
-                    ></div>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  className="w-full rounded-full bg-[#73BFA1] py-2.5 font-medium text-white transition hover:bg-[#5aa687]"
-                >
-                  {course.buttonText}
-                </button>
-              </div>
-            </Card>
+              course={course}
+              onCardClick={() => navigate(`/dashboard/private-user/course/1`)}
+              getCategoryClasses={getCategoryClasses}
+            />
           ))}
         </div>
       </div>

@@ -22,6 +22,7 @@ import {
   TrainingOurPlatformView,
   VideoAndAuthorizationView,
 } from '../pages/public/nested';
+
 import LabratoryAnalysis from '../pages/public/nested/LabratoryAnalysis';
 
 export const nestedPublicRoutes = [

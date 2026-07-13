@@ -33,7 +33,7 @@ const CourseDetails = () => {
           defaultValue: course.objectives ?? [],
         }),
       })),
-    [t]
+    [t],
   );
   const selectedCourseId =
     Number(searchParams.get('id')) || localizedCourses[0]?.id;
@@ -42,7 +42,7 @@ const CourseDetails = () => {
     () =>
       localizedCourses.find((course) => course.id === selectedCourseId) ??
       localizedCourses[0],
-    [localizedCourses, selectedCourseId]
+    [localizedCourses, selectedCourseId],
   );
 
   const filledStars = Math.round(selectedCourse?.rating ?? 0);
@@ -95,7 +95,7 @@ const CourseDetails = () => {
               <span className="text-sm text-gray-600">
                 {selectedCourse?.rating}/5 (
                 {new Intl.NumberFormat(i18n.language || 'en').format(
-                  selectedCourse?.reviews ?? 0
+                  selectedCourse?.reviews ?? 0,
                 )}
                 )
               </span>
@@ -143,12 +143,15 @@ const CourseDetails = () => {
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-[#73BFA1]" />
                 <span>
-                  {t('trainingPages.section8.headers.duration')}: {selectedCourse?.duration}
+                  {t('trainingPages.section8.headers.duration')}:{' '}
+                  {selectedCourse?.duration}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-[#73BFA1]" />
-                <span>{t('trainingPages.section11.code')} {selectedCourse?.code}</span>
+                <span>
+                  {t('trainingPages.section11.code')} {selectedCourse?.code}
+                </span>
               </div>
             </div>
 
