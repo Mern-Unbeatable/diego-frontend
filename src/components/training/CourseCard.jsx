@@ -19,18 +19,18 @@ export default function CoursesSection() {
 
   return (
     <section className="bg-[#f6f6f6] py-10">
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-7xl px-4">
         <h2 className="mb-8 text-[30px] font-semibold text-[#333]">
           {t('trainingPages.section7.title', {
             defaultValue: pageContent.courseCardsTitle ?? 'Corsi obbligatori',
           })}
         </h2>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
           {localizedCourses.map((course) => (
             <div
               key={course.id}
-              className="overflow-hidden rounded-xl border border-[#d8e7e2] bg-white transition-all duration-300 hover:shadow-lg"
+              className="overflow-hidden rounded-xl border-2 border-[#d8e7e2] bg-white transition-all duration-300 hover:shadow-lg"
             >
               <div className="p-3 pb-0">
                 <img
@@ -41,11 +41,11 @@ export default function CoursesSection() {
               </div>
 
               <div className="px-4 py-2">
-                <h3 className="mb-2 text-[15px] leading-5 font-semibold text-[#3a3a3a]">
+                <h3 className="mb-2 text-base md:text-lg leading-5 font-semibold text-[#3a3a3a]">
                   {course.title}
                 </h3>
 
-                <p className="line-clamp-4 text-[12px] leading-5 text-[#8b8b8b]">
+                <p className="line-clamp-4 text-sm leading-5 text-[#8b8b8b]">
                   {course.description}
                 </p>
 
@@ -54,7 +54,7 @@ export default function CoursesSection() {
                     {course.oldPrice}
                   </span>
 
-                  <span className="text-[20px] font-bold text-[#34b86a]">
+                  <span className="text-xl mt-2 font-bold text-[#34b86a]">
                     {course.price}
                   </span>
                 </div>

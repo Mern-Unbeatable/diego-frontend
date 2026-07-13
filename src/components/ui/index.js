@@ -9,6 +9,7 @@ export { default as Skeleton } from './Utilities/Skeleton';
 
 export { default as Heading } from './typography/Heading';
 export { default as Paragraph } from './typography/Paragraph';
+export { default as Header } from './typography/Header';
 
 export { default as DataTable } from './tables/DataTable';
 export { default as TableHeader } from './tables/TableHeader';

@@ -18,6 +18,7 @@ const SafetyBuildingView = () => {
         description={t('servicesPages.section12.bannerDescription')}
         image={banner}
         title={t('servicesPages.section12.bannerTitle')}
+        subtitle="AMMINISTRAZIONE CONDOMINI"
       />
       <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">

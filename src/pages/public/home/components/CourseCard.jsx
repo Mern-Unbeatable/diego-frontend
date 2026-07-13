@@ -77,7 +77,7 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-col p-5">
+      <div className="flex flex-col p-4 md:p-5">
         <Heading
           level={5}
           className="mb-2 line-clamp-1 text-lg font-semibold text-gray-800"
@@ -90,18 +90,17 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
         </Paragraph>
 
         {/* Rating + Price */}
-        <div className="mt-auto grid grid-cols-1 gap-3 sm:grid-cols-2 sm:items-center">
-          {renderRating()}
+        <div className="mt-2 text-start">
           {renderPrice()}
+          {/* {renderRating()} */}
         </div>
 
         {/* Actions */}
-        <div className="mt-4 flex flex-wrap justify-between gap-3">
+        <div className="mt-4 flex flex-row items-center justify-between gap-3">
           <Button
             label={t('homeView.section4.enrollNow')}
             onClick={(e) => handleButtonAction(e, 'Iscriviti ora')}
-            className="w-full rounded-full font-semibold"
-            style={{ backgroundColor: '#3FC89E', color: '#fff' }}
+            className="flex-1 rounded-full bg-[#3FC89E] font-semibold text-white"
           />
           <Button
             label={t('homeView.section4.details')}

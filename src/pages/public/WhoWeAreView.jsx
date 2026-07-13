@@ -39,47 +39,43 @@ const ChiSiamo = () => {
                   </p>
                 </div>
 
-                <div>
-                  <h3 className="mb-2 font-semibold">
-                    {t('chiSiamo.section1.whatWeDoLabel')}
-                  </h3>
-                  <p>
-                    <strong>{t('chiSiamo.section1.formazione')}</strong>{' '}
-                    {t('chiSiamo.section1.formazioneDesc')}
-                  </p>
-                </div>
+      <div>
+        <h3 className="mb-2 font-semibold text-gray-900">
+          {t('chiSiamo.section1.whatWeDoLabel')}
+        </h3>
+        <p>
+          <strong>{t('chiSiamo.section1.formazione')}</strong>{' '}
+          {t('chiSiamo.section1.formazioneDesc')}
+        </p>
+      </div>
 
-                <div>
-                  <p>
-                    <strong>{t('chiSiamo.section1.sicurezza')}</strong>{' '}
-                    {t('chiSiamo.section1.sicurezzaDesc')}
-                  </p>
-                </div>
+      <p>
+        <strong>{t('chiSiamo.section1.sicurezza')}</strong>{' '}
+        {t('chiSiamo.section1.sicurezzaDesc')}
+      </p>
 
-                <div>
-                  <p>
-                    <strong>{t('chiSiamo.section1.salute')}</strong>{' '}
-                    {t('chiSiamo.section1.saluteDesc')}
-                  </p>
-                </div>
+      <p>
+        <strong>{t('chiSiamo.section1.salute')}</strong>{' '}
+        {t('chiSiamo.section1.saluteDesc')}
+      </p>
 
-                <div>
-                  <p className="italic">{t('chiSiamo.section1.tagline')}</p>
-                </div>
-              </div>
-            </div>
+      <p className="italic text-gray-600">
+        {t('chiSiamo.section1.tagline')}
+      </p>
+    </div>
+  </div>
 
-            {/* Right Image */}
-            <div className="flex-1">
-              <div className="h-80 overflow-hidden rounded-lg bg-gradient-to-br from-green-100 to-green-50">
-                <img
-                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop"
-                  alt="Team collaboration"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
+  {/* Right Image */}
+  <div className="flex-1 order-1 md:order-2 w-full">
+    <div className="h-56 sm:h-72 md:h-80 overflow-hidden rounded-lg bg-gradient-to-br from-green-100 to-green-50">
+      <img
+        src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop"
+        alt="Team collaboration"
+        className="h-full w-full object-cover border-4 border-[#D4EBE2]"
+      />
+    </div>
+  </div>
+</div>
         </div>
 
         {/* Mission Section */}

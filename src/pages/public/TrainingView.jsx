@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Container from '../../components/common/Container';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +7,7 @@ const TrainingView = () => {
 
   return (
     <section className="bg-white py-10 sm:py-14 lg:py-20">
-      <Container className="max-w-7xl">
+      <Container className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14">
           <div className="max-w-2xl">
             <h1 className="l max-w-xl text-3xl leading-tight font-semibold text-[#555b5d] sm:text-4xl">
@@ -26,19 +27,20 @@ const TrainingView = () => {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a
-                href="#"
+              <Link
+                to={'/training/courses/catalog'}
                 className="inline-flex items-center justify-center rounded-full bg-[#73bfa1] px-6 py-3 text-sm font-medium text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#63b291]"
               >
+                {' '}
                 {t('trainingPages.section13.goToCatalog')}
-              </a>
+              </Link>
 
-              <a
-                href="#"
+              <Link
+               to={"/"}
                 className="inline-flex items-center justify-center rounded-full border border-[#2f3133] bg-white px-6 py-3 text-sm font-medium text-[#2f3133] transition-colors duration-200 hover:border-[#73bfa1] hover:text-[#73bfa1]"
               >
                 {t('trainingPages.section13.platformDetails')}
-              </a>
+              </Link>
             </div>
           </div>
 

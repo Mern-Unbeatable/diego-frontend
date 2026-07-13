@@ -7,7 +7,7 @@ const Container = ({ children, size = 'full', className = '' }) => {
     sm: 'max-w-2xl',
   };
 
-  const classes = `mx-auto px-4 sm:px-6 md:px-8 lg:px-[120px] ${sizes[size]} ${className}`;
+  const classes = `mx-auto px-4 sm:px-6 md:px-8  ${sizes[size]} ${className}`;
   return <section className={classes}>{children}</section>;
 };
 

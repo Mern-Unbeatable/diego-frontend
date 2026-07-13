@@ -71,7 +71,7 @@
       "submitButton": "Invia"
     },
     "section3": {
-      "exploreCatalog": "Esplora il nostro catalogo servizi",
+      "exploreCatalog": "Esplora il nostro catalogo corsi",
       "exploreAllCourses": "Esplora tutti i nostri corsi"
     },
     "section4": {
@@ -91,8 +91,8 @@
       ]
     },
     "section2": {
-      "bannerTitle": "Servizi",
-      "bannerDescription": "Esplora i nostri servizi e contattaci",
+      "bannerTitle": "Servizio ASPP e RSPP",
+      "bannerDescription": "La sicurezza sul lavoro ha due alleati: ASPP e RSPP",
       "loading": "Caricamento",
       "categoryTitle": "Servizi"
     },
@@ -102,8 +102,8 @@
       "description": "Corsi finalizzati a garantire alle aziende e gestori soggetti al D. lgs. 105/2015 l'affinare delle proprie capacità a livello capillare in merito alla gestione in sicurezza di tutti i processi che la rendono soggetta. Il gestore deve riportare nel Documento il proprio impegno a realizzare, adottare, nonché a mantenere e ricercare il miglioramento continuo del proprio sistema di gestione della sicurezza. Motivo per il quale UnoSicurezza propone una vasta gamma di corsi che possano soddisfare le richieste del gestore e che rispettino l'ottica obbligatoria della formazione continua (D. lgs. 105/2015 art. 14 all'Appendice 1 dell'Allegato B). Corsi fatti su misura, grazie alla collaborazione con il vostro gruppo HS."
     },
     "section4": {
-      "bannerTitle": "Servizi",
-      "bannerDescription": "Esplora i nostri servizi e contattaci",
+      "bannerTitle": "Servizio ASPP e RSPP",
+      "bannerDescription": "La sicurezza sul lavoro ha due alleati: ASPP e RSPP",
       "description": "La sicurezza non è semplicemente un argomento di cui farsi beffa durante la quotidiana attività lavorativa. A volte può risultare macchinosa e complessa perché non si hanno le conoscenze sufficienti per portarla a termine. Altre volte invece si pensa che sia un adempimento che, una volta concluso, non richiede più impegno, ma non è così. La sicurezza richiede mantenimento e miglioramento continuo secondo i dettami di legge. Motivo per il quale UnoSicurezza aiuta le imprese a fornire il servizio di:",
       "aspp": "(Addetto per il Servizio di Prevenzione e Protezione)",
       "rspp": "(Responsabile per il Servizio di Prevenzione e Protezione)"
@@ -216,7 +216,7 @@
     },
     "section12": {
       "bannerTitle": "Building management",
-      "bannerDescription": "Misurazioni e valutazioni del gas radon negli ambienti di lavoro",
+      "bannerDescription": "Il nostro servizio di building management è progettato per ottimizzare la gestione e la manutenzione degli edifici. Offriamo soluzioni integrate che garantiscono efficienza energetica, sicurezza degli ambienti e conformità normativa. Il nostro obiettivo è ridurre i costi operativi e migliorare il comfort e la produttività degli spazi.",
       "description": "Il team UnoSicurezza offre il servizio di building management e amministrazione condominiale per poter sgravare i propri clienti possessori/gestori di edifici che vogliono ottimizzare i processi di:",
       "processItems": [
         "Manutenzioni e riparazioni",
@@ -505,13 +505,13 @@
         {
           "title": "Azienda - Livello 2",
           "contents": [
-            "Il Livello 2 è pensato per aziende che acquistano pacchetti multipli per i dipendenti.",
-            "Come funziona",
-            "Invio credenziali admin e utenti",
-            "Primo accesso con profilazione dipendente",
-            "Assegnazione corsi e monitoraggio avanzamento",
-            "Archivio cloud con report e attestati",
-            "Sistema ordinato e accessibile nel tempo."
+            "Il Livello 2 è pensato per le aziende che acquistano pacchetti formativi multipli per i propri dipendenti, con gestione semplice e centralizzata.",
+            "Come funziona: ",
+            "Invio credenziali: L’azienda riceve le credenziali admin per gestire il pacchetto e inviare ai dipendenti username e password univoci per ciascun corso.",
+            "Primo accesso dei dipendenti: Ogni dipendente completa una profilazione con dati personali necessari per validare il percorso e generare l’attestato finale.",
+            "Funzionalità admin: L’admin può assegnare corsi, monitorare l’avanzamento, consultare report dettagliati e scaricare gli attestati finali.",
+            "Archiviazione cloud: Attestati e report sono conservati in cloud in modo sicuro e organizzato, con ricerca, esportazione, notifiche e backup automatici.",
+            "Il sistema garantisce ordine e accessibilità nel tempo."
           ]
         },
         {

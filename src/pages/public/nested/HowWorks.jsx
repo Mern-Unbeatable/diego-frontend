@@ -39,7 +39,7 @@ const HowWorks = () => {
         </section>
 
         {/* Sections */}
-        <div className="space-y-14 lg:space-y-10">
+        <div className="space-y-14 lg:space-y-18">
           {howWorksData.map((section, index) => {
             const isReverse = section.reverse;
             const styles = accentStyles[section.id];
@@ -83,7 +83,7 @@ const HowWorks = () => {
                   </div>
 
                   {section.badge && (
-                    <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#73BFA1]/25 bg-[#73BFA1]/10 px-4 py-2 text-sm font-medium text-[#5F9F86]">
+                    <div className="mt-4 inline-flex items-center gap-6 rounded-full border border-[#73BFA1]/25 bg-[#73BFA1]/10 px-4 py-2 text-sm font-medium text-[#5F9F86]">
                       <span className="h-2 w-2 rounded-full bg-[#73BFA1]" />
                       {section.badge}
                     </div>
@@ -94,7 +94,7 @@ const HowWorks = () => {
 
             const imageBlock = (
               <div className={`flex-1 ${isReverse ? 'lg:order-1' : ''}`}>
-                <div className="mx-auto max-w-sm">
+                <div className="mx-auto">
                   <img
                     src={section.image}
                     alt={sectionText.title || section.title}
@@ -107,7 +107,7 @@ const HowWorks = () => {
             return (
               <section
                 key={section.id}
-                className="grid items-center gap-6 lg:grid-cols-2 lg:gap-10"
+                className="grid items-center gap-6 lg:grid-cols-2 lg:gap-22"
               >
                 {textBlock}
                 {imageBlock}
