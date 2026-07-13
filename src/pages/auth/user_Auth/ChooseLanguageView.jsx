@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Heading, Paragraph } from '../../components/ui';
+import { Heading, Paragraph } from '../../../components/ui';
 
 const LANGUAGES = [
   { code: 'en', title: 'English', img: '/image/icon/lang-uk.png' },

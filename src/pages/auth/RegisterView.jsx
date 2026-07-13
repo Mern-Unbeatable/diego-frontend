@@ -34,7 +34,6 @@ const RegisterView = () => {
       const preferredLanguage = getPreferredLanguage();
 
       STORAGE.setUser({
-        email,
         preferredLanguage,
       });
 
@@ -42,6 +41,7 @@ const RegisterView = () => {
         email,
         preferredLanguage,
       });
+
       toast.success('OTP sent to your email');
       setStep(2);
     } catch (error) {
@@ -95,8 +95,6 @@ const RegisterView = () => {
         toast.error('Registration token missing. Please try again.');
         return;
       }
-
-      STORAGE.setUser({ email });
 
       COOKIE_STORAGE.setToken(registrationToken);
 

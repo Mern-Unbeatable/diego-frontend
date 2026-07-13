@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { STORAGE } from '../../../utils/storage/authStorage';
@@ -43,22 +43,38 @@ const RoleCard = ({ label, image, isSelected, onClick }) => {
 
 const RoleSetupView = () => {
   const { t } = useTranslation();
-  const [selectedRole, setSelectedRole] = useState('PRIVATE');
   const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Get accountType from URL if it exists
+  const initialRole = searchParams.get('accountType') || '';
+
+  const [selectedRole, setSelectedRole] = useState(initialRole);
+
   const roleLabels = {
     PRIVATE: t('auth.setup.role.options.standard'),
     COMPANY: t('auth.setup.role.options.business'),
     LICENSEE: t('auth.setup.role.options.licensed'),
   };
 
+  const handleRoleChange = (role) => {
+    setSelectedRole(role);
+
+    // Update URL
+    setSearchParams({ accountType: role });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    STORAGE.setUser({ accountType: selectedRole });
-
-    navigate('/auth/register/setup-info', {
-      state: { role: selectedRole },
+    // Save to localStorage
+    STORAGE.setUser({
+      accountType: selectedRole,
     });
+
+    // Navigate with query param
+    navigate(`/auth/register/setup-info?accountType=${selectedRole}`);
   };
 
   return (
@@ -75,7 +91,7 @@ const RoleSetupView = () => {
             label={roleLabels[role.id]}
             image={role.image}
             isSelected={selectedRole === role.id}
-            onClick={() => setSelectedRole(role.id)}
+            onClick={() => handleRoleChange(role.id)}
           />
         ))}
       </div>

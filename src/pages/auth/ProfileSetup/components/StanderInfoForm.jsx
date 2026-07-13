@@ -19,17 +19,18 @@ const inputClass =
  */
 const StandardInfoForm = () => {
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
   const draft = STORAGE.getUser() || {};
   const [citizenship, setCitizenship] = useState(
     () => draft.citizenship || 'ITALIAN',
   );
-  const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-
     STORAGE.setUser({
       ...data,
       citizenship,
@@ -58,7 +59,11 @@ const StandardInfoForm = () => {
         <form onSubmit={handleFormSubmit}>
           <div className="mb-3 flex w-full gap-5">
             <div className="w-full">
-              <Label htmlFor="firstName" required className="mb-2 block text-sm font-medium">
+              <Label
+                htmlFor="firstName"
+                required
+                className="mb-2 block text-sm font-medium"
+              >
                 {t('auth.setup.info.firstNameLabel')}
               </Label>
               <InputField
@@ -72,7 +77,11 @@ const StandardInfoForm = () => {
               />
             </div>
             <div className="w-full">
-              <Label htmlFor="lastName" required className="mb-2 block text-sm font-medium">
+              <Label
+                htmlFor="lastName"
+                required
+                className="mb-2 block text-sm font-medium"
+              >
                 {t('auth.setup.info.lastNameLabel')}
               </Label>
               <InputField
@@ -88,7 +97,11 @@ const StandardInfoForm = () => {
           </div>
 
           <div className="mb-6">
-            <Label htmlFor="birthDate" required className="mb-2 block text-sm font-medium">
+            <Label
+              htmlFor="birthDate"
+              required
+              className="mb-2 block text-sm font-medium"
+            >
               {t('auth.setup.info.birthDateLabel')}
             </Label>
             <InputField
@@ -103,7 +116,11 @@ const StandardInfoForm = () => {
 
           <div className="mb-6 flex w-full gap-5">
             <div className="w-full">
-              <Label htmlFor="city" required className="mb-2 block text-sm font-medium">
+              <Label
+                htmlFor="city"
+                required
+                className="mb-2 block text-sm font-medium"
+              >
                 {t('auth.setup.info.cityLabel')}
               </Label>
               <InputField
@@ -117,7 +134,11 @@ const StandardInfoForm = () => {
               />
             </div>
             <div className="w-full">
-              <Label htmlFor="country" required className="mb-2 block text-sm font-medium">
+              <Label
+                htmlFor="country"
+                required
+                className="mb-2 block text-sm font-medium"
+              >
                 {t('auth.setup.info.countryLabel')}
               </Label>
               <InputField

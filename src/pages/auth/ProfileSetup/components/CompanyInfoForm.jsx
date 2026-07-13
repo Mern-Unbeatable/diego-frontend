@@ -13,13 +13,6 @@ import { STORAGE } from '../../../../utils/storage/authStorage';
 const inputClass =
   'rounded-2xl border border-green-100 bg-white px-4 py-3 text-sm';
 
-/** Keys kept from earlier registration steps (not company profile fields) */
-const REGISTRATION_META_KEYS = [
-  'email',
-  'preferredLanguage',
-  'accountType',
-];
-
 /**
  * COMPANY fields for POST /auth/register/complete
  * Matches API body exactly (password / confirmPassword / consent / preferredLanguage
@@ -37,36 +30,9 @@ const CompanyInfoForm = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+    console.log('company data:', data);
 
-    // Keep only registration meta + exact COMPANY body fields
-    // (avoid leftover PRIVATE fields polluting the complete payload)
-    const meta = {};
-    REGISTRATION_META_KEYS.forEach((key) => {
-      if (draft[key] !== undefined && draft[key] !== null && draft[key] !== '') {
-        meta[key] = draft[key];
-      }
-    });
-
-    STORAGE.clearUser();
-    STORAGE.setUser({
-      ...meta,
-      accountType: meta.accountType || 'business',
-      firstName: data.firstName,
-      lastName: data.lastName,
-      fiscalAddress: data.fiscalAddress,
-      fiscalCode: data.fiscalCode,
-      citizenship,
-      contactNumber: data.contactNumber,
-      serviceType: data.serviceType,
-      companyName: data.companyName,
-      companyAddress: data.companyAddress,
-      companyVatNumber: data.companyVatNumber,
-      companyTaxCode: data.companyTaxCode,
-      companyPosition: data.companyPosition,
-      pec: data.pec,
-      uniqueCode: data.uniqueCode,
-    });
-
+    STORAGE.setUser(data);
     navigate('/auth/register/setup-password');
   };
 

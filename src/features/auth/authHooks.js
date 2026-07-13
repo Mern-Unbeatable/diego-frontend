@@ -14,7 +14,7 @@ export const useAuth = () => {
   const dispatch = useDispatch();
   const authState = useSelector(selectAuth);
 
-  // EMAIL LOGIN OTP CALLBACK
+  // ✅ EMAIL LOGIN OTP CALLBACK
   const login = useCallback(
     async (credentials) => {
       const result = await dispatch(loginAPI(credentials)).unwrap();
@@ -23,7 +23,7 @@ export const useAuth = () => {
     [dispatch],
   );
 
-  // VERIFY LOGIN OTP CALLBACK
+  // ✅ VERIFY LOGIN OTP CALLBACK
   const verifyLoginOtp = useCallback(
     async (otp) => {
       const result = await dispatch(verifyLoginOtpAPI(otp)).unwrap();
@@ -33,7 +33,7 @@ export const useAuth = () => {
     [dispatch],
   );
 
-  // REGISTER CALLBACK
+  // ✅ REGISTER CALLBACK
   const register = useCallback(
     async (credentials) => {
       const result = await dispatch(registerAPI(credentials)).unwrap();
@@ -42,7 +42,7 @@ export const useAuth = () => {
     [dispatch],
   );
 
-  // REGISTER OTP CALLBACK
+  // ✅ REGISTER OTP CALLBACK
   const verifyRegisterOtp = useCallback(
     async (otp) => {
       const result = await dispatch(verifyRegisterOtpAPI(otp)).unwrap();
@@ -51,7 +51,7 @@ export const useAuth = () => {
     [dispatch],
   );
 
-  // REGISTER COMPLETE CALLBACK
+  //✅  REGISTER COMPLETE CALLBACK
   const registerComplete = useCallback(
     async (credentials) => {
       const result = await dispatch(registerCompleteAPI(credentials)).unwrap();

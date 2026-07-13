@@ -19,6 +19,7 @@ import {
 const PasswordSetupView = () => {
   const navigate = useNavigate();
   const { registerComplete, loading } = useAuth();
+
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -26,63 +27,13 @@ const PasswordSetupView = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    const { newPassword, confirmPassword } = data;
 
-    const validationError = validateRegistrationPassword(
-      newPassword,
-      confirmPassword,
-    );
-    if (validationError) {
-      toast.error(validationError);
-      return;
-    }
-
+    STORAGE.setUser(data);
     const draft = STORAGE.getUser() || {};
-    if (!draft.accountType) {
-      toast.error('Please select your role first');
-      navigate('/auth/register/setup-role');
-      return;
-    }
-
-    if (!COOKIE_STORAGE.getToken()) {
-      toast.error(
-        'Registration session expired. Please verify your email again.',
-      );
-      navigate('/auth/register');
-      return;
-    }
 
     try {
-      const payload = buildRegisterCompletePayload(draft, {
-        password: newPassword,
-        confirmPassword,
-      });
-
-      const response = await registerComplete(payload);
-      const { accessToken, refreshToken, level } = extractAuthSession(response);
-
-      const userRole = level || mapAccountTypeToRole(draft.accountType);
-
-      // Drop registration draft (email, profile fields)
-      STORAGE.clearUser();
-
-      if (!accessToken || !userRole) {
-        COOKIE_STORAGE.clearToken();
-        toast.success('Registration completed. Please log in.');
-        navigate('/auth/login');
-        return;
-      }
-
-      COOKIE_STORAGE.setToken(accessToken);
-      COOKIE_STORAGE.setUser(userRole);
-      if (refreshToken) {
-        COOKIE_STORAGE.setRefreshToken(refreshToken);
-        STORAGE.setRefreshToken(refreshToken);
-      }
-
-      const targetPath = getDashboardPath(userRole) || '/auth/login';
+      const response = await registerComplete(draft);
       toast.success('Registration completed successfully');
-      navigate(targetPath);
     } catch (error) {
       const message =
         typeof error === 'string'
@@ -90,12 +41,6 @@ const PasswordSetupView = () => {
           : error?.message || 'Registration failed. Please try again.';
       toast.error(message);
       console.error('Register complete error:', error);
-
-      // Expired registration token → restart from email/OTP
-      if (/token|expired|unauthorized|otp/i.test(String(message))) {
-        COOKIE_STORAGE.clearToken();
-        navigate('/auth/register');
-      }
     }
   };
 
@@ -122,7 +67,7 @@ const PasswordSetupView = () => {
       <form onSubmit={handlePassWordSubmit} className="space-y-6">
         <div>
           <Label
-            htmlFor="newPassword"
+            htmlFor="password"
             required={true}
             className="mb-2 block text-base font-semibold text-gray-800"
           >
@@ -131,8 +76,8 @@ const PasswordSetupView = () => {
           <div className="relative">
             <InputField
               type={showNewPassword ? 'text' : 'password'}
-              id="newPassword"
-              name="newPassword"
+              id="password"
+              name="password"
               placeholder="Inserisci la password"
               className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 pr-12 text-gray-900 placeholder:text-gray-400 focus:border-[#73BFA1] focus:ring-2 focus:ring-[#73BFA1]/20 focus:outline-none"
               required
