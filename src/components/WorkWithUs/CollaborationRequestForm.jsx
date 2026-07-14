@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
+import { createContactService } from '../../features/public/contact/contactService';
+
+const MAX_INT_32 = 2147483647;
 
 const CollaborationRequestForm = () => {
   const { t } = useTranslation();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     nomeAzienda: '',
@@ -20,10 +25,62 @@ const CollaborationRequestForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you can handle the form submission, e.g., send data to an API
-    console.log('Form submitted:', formData);
+
+    const rawPhoneDigits = formData.telefono.replace(/\D/g, '');
+    const normalizedPhoneDigits =
+      rawPhoneDigits.length > 10 && rawPhoneDigits.startsWith('39')
+        ? rawPhoneDigits.slice(2)
+        : rawPhoneDigits;
+
+    const phoneNumber = Number(normalizedPhoneDigits);
+    if (
+      !normalizedPhoneDigits ||
+      !Number.isInteger(phoneNumber) ||
+      phoneNumber <= 0 ||
+      phoneNumber > MAX_INT_32
+    ) {
+      toast.error('Use digits only and remove country code from phone number.');
+      return;
+    }
+
+    const trimmedName = formData.nominativoReferente.trim();
+    const [firstName = '', ...lastNameParts] = trimmedName.split(/\s+/);
+    const lastName = lastNameParts.join(' ') || '-';
+
+    const payload = {
+      firstName: firstName || '-',
+      lastName,
+      phone: phoneNumber,
+      agencyName: formData.nomeAzienda.trim() || 'N/A',
+      vat: 'N/A',
+      email: formData.email.trim(),
+      message: [
+        `Tipo collaborazione: ${formData.tipoCollaborazione || '-'}`,
+        `Dimensione azienda: ${formData.dimensioneAzienda || '-'}`,
+        `Descrizione: ${formData.descrizione.trim() || '-'}`,
+      ].join(' | '),
+    };
+
+    try {
+      setIsSubmitting(true);
+      await createContactService(payload);
+      toast.success('Your message has been sent successfully');
+      setFormData({
+        nomeAzienda: '',
+        tipoCollaborazione: '',
+        nominativoReferente: '',
+        email: '',
+        telefono: '',
+        dimensioneAzienda: '',
+        descrizione: '',
+      });
+    } catch (error) {
+      toast.error(error?.message || 'Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -180,9 +237,10 @@ const CollaborationRequestForm = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full rounded-md bg-[#73BFA1] py-3 font-semibold text-white transition duration-200"
+                disabled={isSubmitting}
+                className="w-full rounded-md bg-[#73BFA1] py-3 font-semibold text-white transition duration-200 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {t('workWithUs.section4.submit')}
+                {isSubmitting ? 'Sending...' : t('workWithUs.section4.submit')}
               </button>
             </form>
           </div>
@@ -320,9 +378,10 @@ const CollaborationRequestForm = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full rounded-md bg-[#73BFA1] py-3 font-semibold text-white transition duration-200"
+            disabled={isSubmitting}
+            className="w-full rounded-md bg-[#73BFA1] py-3 font-semibold text-white transition duration-200 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {t('workWithUs.section4.submit')}
+            {isSubmitting ? 'Sending...' : t('workWithUs.section4.submit')}
           </button>
         </form>
       </div>

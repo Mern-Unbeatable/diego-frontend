@@ -96,19 +96,20 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
         </div>
 
         {/* Actions */}
-        <div className="mt-4 flex flex-row items-center justify-between gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row mt-2">
           <Button
             label={t('homeView.section4.enrollNow')}
             onClick={(e) => handleButtonAction(e, 'Iscriviti ora')}
-            className="flex-1 rounded-full bg-[#3FC89E] font-semibold text-white"
+            className="flex-1 rounded-full bg-[#3FC89E] px-3 py-3 font-semibold text-white hover:bg-[#35b88f]"
           />
+
           <Button
             label={t('homeView.section4.details')}
             variant="outline"
             onClick={(e) =>
               handleButtonAction(e, t('homeView.section4.details'))
             }
-            className="w-full rounded-full border-gray-300 font-semibold text-gray-700 hover:border-gray-400"
+            className="flex-1 rounded-full border border-gray-300 px-3 py-3 font-semibold text-gray-700 hover:border-gray-400 hover:bg-gray-50"
           />
         </div>
       </div>

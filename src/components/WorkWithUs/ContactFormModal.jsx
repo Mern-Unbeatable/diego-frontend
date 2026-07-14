@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
+import { createContactService } from '../../features/public/contact/contactService';
+
+const MAX_INT_32 = 2147483647;
 
 export default function ContactFormModal({ isOpen, onClose }) {
   const { t } = useTranslation();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     nome: '',
     cognome: '',
@@ -22,11 +27,46 @@ export default function ContactFormModal({ isOpen, onClose }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Add your submit logic here
-    onClose();
+
+    const rawPhoneDigits = formData.telefono.replace(/\D/g, '');
+    const normalizedPhoneDigits =
+      rawPhoneDigits.length > 10 && rawPhoneDigits.startsWith('39')
+        ? rawPhoneDigits.slice(2)
+        : rawPhoneDigits;
+
+    const phoneNumber = Number(normalizedPhoneDigits);
+    if (
+      !normalizedPhoneDigits ||
+      !Number.isInteger(phoneNumber) ||
+      phoneNumber <= 0 ||
+      phoneNumber > MAX_INT_32
+    ) {
+      toast.error('Use digits only and remove country code from phone number.');
+      return;
+    }
+
+    const payload = {
+      firstName: formData.nome.trim(),
+      lastName: formData.cognome.trim(),
+      phone: phoneNumber,
+      agencyName: formData.azienda.trim(),
+      vat: formData.piva.trim() || 'N/A',
+      email: formData.email.trim(),
+      message: formData.messaggio.trim() || 'Work with us modal request',
+    };
+
+    try {
+      setIsSubmitting(true);
+      await createContactService(payload);
+      toast.success('Your message has been sent successfully');
+      handleCancel();
+    } catch (error) {
+      toast.error(error?.message || 'Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCancel = () => {
@@ -179,9 +219,10 @@ export default function ContactFormModal({ isOpen, onClose }) {
             <div className="grid grid-cols-2 gap-3 pt-2">
               <button
                 type="submit"
-                className="w-full rounded-md bg-[#73BFA1] py-2 font-semibold text-white transition duration-300 hover:bg-[#73BFA1]"
+                disabled={isSubmitting}
+                className="w-full rounded-md bg-[#73BFA1] py-2 font-semibold text-white transition duration-300 hover:bg-[#73BFA1] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {t('contactUs.section1.submit')}
+                {isSubmitting ? 'Sending...' : t('contactUs.section1.submit')}
               </button>
               <button
                 type="button"

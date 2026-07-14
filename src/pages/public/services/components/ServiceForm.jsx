@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Toast, useToast } from '../../../../components/ui';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
+import { createServiceRequestService } from '../../../../features/public/serviceRequest/serviceRequestService';
 
 const initialFormData = {
   nome: '',
@@ -16,7 +17,6 @@ const initialFormData = {
 
 export default function ServiceForm({ title }) {
   const { t } = useTranslation();
-  const { toasts, addToast, removeToast } = useToast();
   const [formData, setFormData] = useState(initialFormData);
 
   const [files, setFiles] = useState([]);
@@ -33,7 +33,7 @@ export default function ServiceForm({ title }) {
       'application/msword': ['.doc', '.docx'],
       'application/vnd.ms-excel': ['.xls', '.xlsx'],
     },
-    maxSize: 25 * 1024 * 1024, // 25MB
+    maxSize: 10 * 1024 * 1024, // 10MB
   });
 
   const removeFile = (indexToRemove) => {
@@ -65,46 +65,37 @@ export default function ServiceForm({ title }) {
     e.preventDefault();
     setLoading(true);
 
-    // Create FormData object for file upload
     const submitData = new FormData();
-    Object.keys(formData).forEach((key) => {
-      submitData.append(key, formData[key]);
-    });
+    submitData.append(
+      'serviceName',
+      title || t('servicesPages.section19.defaultService'),
+    );
+    submitData.append('firstName', formData.nome.trim());
+    submitData.append('lastName', formData.cognome.trim());
+    submitData.append('companyName', formData.azienda.trim());
+    submitData.append('vatNumber', formData.piva.trim());
+    submitData.append('phone', formData.telefono.trim());
+    submitData.append('email', formData.email.trim());
+    submitData.append('message', formData.messaggio.trim());
+
     files.forEach((file) => {
       submitData.append('documents', file);
     });
 
     try {
-      // Dummy submit flow: simulate request latency
-      await new Promise((resolve) => setTimeout(resolve, 900));
-
-      // Replace with your API endpoint
-      // const response = await axios.post('/api/service-request', submitData);
-      console.log('Form submitted:', formData);
-      console.log('Files:', files);
-
-      // Reset form after successful dummy submission
+      await createServiceRequestService(submitData);
       setFormData(initialFormData);
       setFiles([]);
-      addToast('Richiesta inviata con successo!', 'success');
+      toast.success('Richiesta inviata con successo!');
     } catch (error) {
       console.error('Error submitting form:', error);
-      addToast("Errore durante l'invio della richiesta", 'error');
+      toast.error("Errore durante l'invio della richiesta");
     } finally {
       setLoading(false);
     }
   };
   return (
     <div className="relative rounded-2xl border border-gray-100 bg-[#FFF5E6] p-6 shadow-lg md:p-8">
-      {toasts.map((toast) => (
-        <Toast
-          key={toast.id}
-          type={toast.type}
-          message={toast.message}
-          duration={toast.duration}
-          onClose={() => removeToast(toast.id)}
-        />
-      ))}
       <h2 className="mb-2 text-2xl font-bold text-gray-900">
         {t('servicesPages.section19.title')}
       </h2>
@@ -253,7 +244,7 @@ export default function ServiceForm({ title }) {
                 </>
               )}
             </p>
-            <p className="mt-1 text-sm text-gray-500">Massimo 25MB per file</p>
+            <p className="mt-1 text-sm text-gray-500">Massimo 10MB per file</p>
           </div>
 
           {/* File List */}

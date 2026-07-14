@@ -166,6 +166,10 @@ const refreshAccessToken = async () => {
 
 axiosInstance.interceptors.request.use(
   (config) => {
+    if (config.skipAuth) {
+      return config;
+    }
+
     const token = COOKIE_STORAGE.getToken();
 
     if (token) {
