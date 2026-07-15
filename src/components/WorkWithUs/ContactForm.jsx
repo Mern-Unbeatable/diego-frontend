@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import { createContactService } from '../../features/public/contact/contactService';
+import { useContact } from '../../features/public/contact/contactHooks';
 
 const MAX_INT_32 = 2147483647;
 
 const ContactFormDesign = ({ title }) => {
   const { t } = useTranslation();
+  const { createContact } = useContact();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     nome: '',
@@ -57,7 +58,7 @@ const ContactFormDesign = ({ title }) => {
 
     try {
       setIsSubmitting(true);
-      await createContactService(payload);
+      await createContact(payload);
       toast.success('Your message has been sent successfully');
       handleReset();
     } catch (error) {

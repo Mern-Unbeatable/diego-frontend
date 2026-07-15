@@ -214,7 +214,7 @@ import { Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import { createContactService } from '../../features/public/contact/contactService';
+import { useContact } from '../../features/public/contact/contactHooks';
 import Banner from '../../components/common/Banner';
 import Container from '../../components/ui/layouts/Container';
 import banner from '../../../src/assets/images/banner/whoweare/banner3.png';
@@ -223,6 +223,7 @@ const MAX_INT_32 = 2147483647;
 
 export default function ContactUsView() {
   const { t } = useTranslation();
+  const { createContact } = useContact();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     nome: '',
@@ -278,7 +279,7 @@ export default function ContactUsView() {
 
     try {
       setIsSubmitting(true);
-      await createContactService(payload);
+      await createContact(payload);
       toast.success('Your message has been sent successfully');
       handleReset();
     } catch (error) {

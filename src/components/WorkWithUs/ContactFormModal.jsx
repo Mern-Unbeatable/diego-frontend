@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import { createContactService } from '../../features/public/contact/contactService';
+import { useContact } from '../../features/public/contact/contactHooks';
 
 const MAX_INT_32 = 2147483647;
 
 export default function ContactFormModal({ isOpen, onClose }) {
   const { t } = useTranslation();
+  const { createContact } = useContact();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     nome: '',
@@ -59,7 +60,7 @@ export default function ContactFormModal({ isOpen, onClose }) {
 
     try {
       setIsSubmitting(true);
-      await createContactService(payload);
+      await createContact(payload);
       toast.success('Your message has been sent successfully');
       handleCancel();
     } catch (error) {

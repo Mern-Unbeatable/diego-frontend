@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import { createServiceRequestService } from '../../../../features/public/serviceRequest/serviceRequestService';
+import { useServiceRequest } from '../../../../features/public/serviceRequest/serviceRequestHooks';
 
 const initialFormData = {
   nome: '',
@@ -17,6 +17,7 @@ const initialFormData = {
 
 export default function ServiceForm({ title }) {
   const { t } = useTranslation();
+  const { createServiceRequest } = useServiceRequest();
   const [formData, setFormData] = useState(initialFormData);
 
   const [files, setFiles] = useState([]);
@@ -83,7 +84,7 @@ export default function ServiceForm({ title }) {
     });
 
     try {
-      await createServiceRequestService(submitData);
+      await createServiceRequest(submitData);
       setFormData(initialFormData);
       setFiles([]);
       toast.success('Richiesta inviata con successo!');
