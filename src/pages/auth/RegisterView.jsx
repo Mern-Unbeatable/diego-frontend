@@ -289,6 +289,13 @@ const RegisterView = () => {
 
                   <div className="mt-4 flex items-center justify-end gap-4">
                     <button
+                      type="button"
+                      onClick={() => navigate('/auth/login')}
+                      className="text-sm text-gray-600 transition-colors hover:text-[#73BFA1]"
+                    >
+                      Already have an account? Login
+                    </button>
+                    <button
                       type="submit"
                       disabled={loading || !email}
                       className="rounded-full border-2 border-[#73BFA1] bg-[#73BFA1] px-6 py-3 text-white transition-all hover:bg-white hover:text-[#73BFA1] disabled:cursor-not-allowed disabled:opacity-60"

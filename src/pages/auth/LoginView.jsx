@@ -319,7 +319,6 @@ const LoginView = () => {
                     >
                       Didn't receive OTP?{' '}
                       <strong className="text-[#73BFA1] hover:underline">
-                        {' '}
                         Resend
                       </strong>
                     </button>
