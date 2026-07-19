@@ -21,4 +21,8 @@ export const endpoints = {
     GET_ALL: '/subscriptions',
     CREATE: '/subscriptions/create',
   },
+  public: {
+    CONTACTS: '/contacts',
+    SERVICE_REQUESTS: '/service-requests',
+  },
 };

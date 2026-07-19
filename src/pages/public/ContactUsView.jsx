@@ -213,12 +213,18 @@
 import { Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
+import { useContact } from '../../features/public/contact/contactHooks';
 import Banner from '../../components/common/Banner';
 import Container from '../../components/ui/layouts/Container';
 import banner from '../../../src/assets/images/banner/whoweare/banner3.png';
 
+const MAX_INT_32 = 2147483647;
+
 export default function ContactUsView() {
   const { t } = useTranslation();
+  const { createContact } = useContact();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     nome: '',
     cognome: '',
@@ -237,9 +243,58 @@ export default function ContactUsView() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+
+    const rawPhoneDigits = formData.telefono.replace(/\D/g, '');
+    const normalizedPhoneDigits =
+      rawPhoneDigits.length > 10 && rawPhoneDigits.startsWith('39')
+        ? rawPhoneDigits.slice(2)
+        : rawPhoneDigits;
+
+    if (!normalizedPhoneDigits) {
+      toast.error('Please enter a valid phone number');
+      return;
+    }
+
+    const phoneNumber = Number(normalizedPhoneDigits);
+    if (
+      !Number.isInteger(phoneNumber) ||
+      phoneNumber <= 0 ||
+      phoneNumber > MAX_INT_32
+    ) {
+      toast.error('Use digits only and remove country code from phone number.');
+      return;
+    }
+
+    const payload = {
+      firstName: formData.nome.trim(),
+      lastName: formData.cognome.trim(),
+      phone: phoneNumber,
+      agencyName: formData.azienda.trim(),
+      vat: formData.partitaIva.trim(),
+      email: formData.email.trim(),
+      message: formData.messaggio.trim(),
+    };
+
+    try {
+      setIsSubmitting(true);
+      await createContact(payload);
+      toast.success('Your message has been sent successfully');
+      handleReset();
+    } catch (error) {
+      const errorMessage = error?.message || '';
+      const isPhoneOverflowError = errorMessage.includes(
+        'Unable to fit integer value',
+      );
+      toast.error(
+        isPhoneOverflowError
+          ? 'Phone number is too large. Please remove country code and try again.'
+          : errorMessage || 'Failed to send message. Please try again.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
@@ -389,9 +444,10 @@ export default function ContactUsView() {
               <div className="flex gap-6">
                 <button
                   type="submit"
-                  className="flex-1 rounded-lg bg-[#73BFA1] px-6 py-3 font-medium text-white transition duration-200"
+                  disabled={isSubmitting}
+                  className="flex-1 rounded-lg bg-[#73BFA1] px-6 py-3 font-medium text-white transition duration-200 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {t('contactUs.section1.submit')}
+                  {isSubmitting ? 'Sending...' : t('contactUs.section1.submit')}
                 </button>
                 <button
                   type="button"
