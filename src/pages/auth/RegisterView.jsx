@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
 import { Heading, InputField, Label } from '../../components/ui';
@@ -216,7 +216,7 @@ const RegisterView = () => {
       <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
         <div className="grid min-h-[650px] grid-cols-1 md:grid-cols-2">
           {/* LEFT */}
-          <div className="flex flex-col items-center justify-center bg-white p-10">
+          <div className="flex flex-col items-center justify-center bg-white">
             <div className="flex items-center gap-2">
               <img
                 className="h-10 w-10 object-contain"
@@ -228,13 +228,11 @@ const RegisterView = () => {
 
             <div className="mt-10 max-w-md">
               <img
-                className="w-full object-contain"
+                className="h-[500px] w-full object-contain"
                 src={
-                  step === 2
-                    ? '/image/icon/otp.png'
-                    : '/image/icon/password.jpg'
+                  step === 2 ? '/image/icon/otp.png' : '/image/icon/gmail.png'
                 }
-                alt=""
+                alt="gmail icon"
               />
             </div>
           </div>
@@ -260,6 +258,17 @@ const RegisterView = () => {
                       : 'Enter your email to register'
                   }
                 />
+                <div className="pt-2">
+                  <p className="text-center">
+                    You have an account?{' '}
+                    <Link
+                      to="/auth/login"
+                      className="cursor-pointer text-[#73BFA1] hover:underline"
+                    >
+                      Login
+                    </Link>{' '}
+                  </p>
+                </div>
               </div>
 
               {step === 1 && (
@@ -278,14 +287,7 @@ const RegisterView = () => {
                     autoFocus
                   />
 
-                  <div className="mt-8 flex items-center justify-end gap-4">
-                    <button
-                      type="button"
-                      onClick={() => navigate('/auth/login')}
-                      className="text-sm text-gray-600 transition-colors hover:text-[#73BFA1]"
-                    >
-                      Already have an account? Login
-                    </button>
+                  <div className="mt-4 flex items-center justify-end gap-4">
                     <button
                       type="submit"
                       disabled={loading || !email}

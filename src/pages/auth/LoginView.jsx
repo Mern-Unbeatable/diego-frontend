@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
 import { Heading, InputField, Label, Toast } from '../../components/ui';
@@ -188,7 +188,7 @@ const LoginView = () => {
       <div className="mx-auto w-full max-w-6xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
         <div className="grid min-h-[650px] grid-cols-1 md:grid-cols-2">
           {/* LEFT */}
-          <div className="flex flex-col items-center justify-center bg-white p-10">
+          <div className="flex flex-col items-center justify-center bg-white">
             <div className="flex items-center gap-2">
               <img
                 className="h-10 w-10 object-contain"
@@ -200,13 +200,11 @@ const LoginView = () => {
 
             <div className="mt-10 max-w-md">
               <img
-                className="w-full object-contain"
+                className="h-[500px] w-full object-contain"
                 src={
-                  step === 2
-                    ? '/image/icon/otp.png'
-                    : '/image/icon/password.jpg'
+                  step === 2 ? '/image/icon/otp.png' : '/image/icon/gmail.png'
                 }
-                alt=""
+                alt="gmail icon"
               />
             </div>
           </div>
@@ -228,12 +226,24 @@ const LoginView = () => {
                 <Heading
                   level={4}
                   className="text-center"
-                  h4={
-                    step === 2
-                      ? 'Enter the OTP sent to your email'
-                      : 'Scrivi la tua e-mail'
-                  }
+                  h4={step === 2 ? 'Enter the OTP' : 'Scrivi la tua e-mail'}
                 />
+
+                {step === 2 ? (
+                  ''
+                ) : (
+                  <div className="pt-2">
+                    <p className="text-center">
+                      You don't have an account?{' '}
+                      <Link
+                        to="/auth/register"
+                        className="cursor-pointer text-[#73BFA1] hover:underline"
+                      >
+                        Sginup
+                      </Link>{' '}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* EMAIL STEP */}
@@ -252,7 +262,7 @@ const LoginView = () => {
                     required
                   />
 
-                  <div className="mt-8 flex justify-end">
+                  <div className="mt-4 flex justify-end">
                     <button
                       type="submit"
                       disabled={loading || !email}
@@ -301,9 +311,13 @@ const LoginView = () => {
                         toast.success('OTP resent to your email');
                         // Add resend logic here
                       }}
-                      className="text-sm text-[#73BFA1] hover:underline"
+                      className="text-sm"
                     >
-                      Didn't receive OTP? Resend
+                      Didn't receive OTP?{' '}
+                      <strong className="text-[#73BFA1] hover:underline">
+                        {' '}
+                        Resend
+                      </strong>
                     </button>
                   </div>
 
