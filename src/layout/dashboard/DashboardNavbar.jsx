@@ -44,7 +44,7 @@ const DashboardNavbar = () => {
 
         {isCompanyArea ? (
           <Link
-            to="/dashboard/company-admin/gestisci-formazione?addUser=1"
+            to="/dashboard/company-admin/training"
             className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#63a88c]"
           >
             <Plus size={16} />

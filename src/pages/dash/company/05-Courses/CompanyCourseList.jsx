@@ -1,7 +1,7 @@
 import { ArrowLeft, Download, Send } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import EmployeeModal from '../EmployeeModal';
+import EmployeeModal from '../02-Training/components/EmployeeModal';
 
 const courses = [
   {
@@ -266,7 +266,7 @@ const CompanyCourseList = () => {
         </section>
       </section>
 
-      {assignOpen ? (
+      {assignOpen && (
         <EmployeeModal
           mode="add"
           employee={
@@ -281,7 +281,7 @@ const CompanyCourseList = () => {
           }
           onClose={() => setAssignOpen(false)}
         />
-      ) : null}
+      )}
 
       <StudentTrackingModal
         course={selectedCourse}
