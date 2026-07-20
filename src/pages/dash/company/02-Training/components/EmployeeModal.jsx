@@ -73,6 +73,7 @@ const Field = ({ label, placeholder, value, onChange, name }) => (
   </label>
 );
 
+// testing purpose
 const EmployeeModal = ({ mode, employee, onClose, onSave }) => {
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
