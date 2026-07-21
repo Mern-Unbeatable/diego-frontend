@@ -87,10 +87,10 @@ export default function ServiceForm({ title }) {
       await createServiceRequest(submitData);
       setFormData(initialFormData);
       setFiles([]);
-      toast.success('Richiesta inviata con successo!');
+      toast.success(t('servicesPages.section19.successAlert'));
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error("Errore durante l'invio della richiesta");
+      toast.error(t('servicesPages.section19.errorAlert'));
     } finally {
       setLoading(false);
     }
@@ -245,7 +245,9 @@ export default function ServiceForm({ title }) {
                 </>
               )}
             </p>
-            <p className="mt-1 text-sm text-gray-500">Massimo 10MB per file</p>
+            <p className="mt-1 text-sm text-gray-500">
+              {t('servicesPages.section19.maxFileSize')}
+            </p>
           </div>
 
           {/* File List */}
@@ -311,14 +313,7 @@ export default function ServiceForm({ title }) {
 
           <div className="mt-5 rounded-3xl bg-[#F1F9F6] p-5 text-justify">
             <label className="text-sm text-gray-600">
-              Il sottoscritto autorizza il trattamento dei dati personali nel
-              rispetto della vigente normativa sulla protezione dei dati
-              personali ed, in particolare, il Regolamento Europeo per la
-              protezione dei dati personali 2016/679, il D.lgs. 30/06/2003 n.
-              196 e successive modifiche e integrazioni, come modificato da
-              ultimo dal d.lgs. 10/08/2018 n. 101, autorizza inoltre, il
-              ricevente a trattare i dati per la finalità di fornitura dei
-              servizi richiesti per i quali lo si contatta.
+              {t('servicesPages.section19.privacyText')}
             </label>
           </div>
         </div>
