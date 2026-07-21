@@ -1,124 +1,154 @@
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { ArrowLeft, X } from 'lucide-react';
-import { validateForm } from '../../../../../utils/validate/validateForm';
+import { validateEmployeeForm } from '../../../../../utils/validate/validateForm';
+import {
+  COURSE_OPTIONS,
+  POSITION_OPTIONS,
+  STATUS_OPTIONS,
+  EMPLOYEE_STATUS,
+} from '../../../../../features/company/employee/employeeConstants';
 
-const formFields = [
-  { name: 'name', label: 'Nome', placeholder: 'Inserisci il tuo nome...' },
-  {
-    name: 'surname',
-    label: 'Cognome',
-    placeholder: 'Inserisci il tuo cognome...',
-  },
-  {
-    name: 'email',
-    label: 'E-mail dipendente',
-    placeholder: 'franco.rossi@mototo.com',
-  },
-  {
-    name: 'phone',
-    label: 'Numero di contatto',
-    placeholder: '+39 340 00 00000',
-  },
-  { name: 'birthDate', label: 'Data di nascita', placeholder: 'GG/MM/AAAA' },
-  {
-    name: 'birthPlace',
-    label: 'Luogo',
-    placeholder: 'Inserisci il luogo di nascita',
-  },
-  {
-    name: 'taxCode',
-    label: 'Codice Fiscale',
-    placeholder: 'Inserisci il tuo codice fiscale',
-  },
-];
-
-const extraFields = [
-  {
-    name: 'courseName',
-    label: 'Nome del corso',
-    placeholder: 'Inserisci il nome del corso',
-  },
-  {
-    name: 'password',
-    label: 'Password',
-    placeholder: 'Crea una password per il tuo lavoratore',
-  },
+const courseSelectOptions = [
+  { value: '', label: 'Nessun corso assegnato' },
+  ...COURSE_OPTIONS.map((course) => ({ value: course.id, label: course.title })),
 ];
 
 const emptyForm = {
-  name: '',
-  surname: '',
+  firstName: '',
+  lastName: '',
   email: '',
   phone: '',
-  birthDate: '',
-  birthPlace: '',
-  taxCode: '',
-  courseName: '',
+  position: '',
+  hireDate: '',
+  status: EMPLOYEE_STATUS.ACTIVE,
+  assignedCourseId: '',
   password: '',
 };
 
-const Field = ({ label, placeholder, value, onChange, name }) => (
+const inputClasses =
+  'h-12 w-full rounded-lg border border-transparent bg-[#edf5f2] px-4 text-sm text-[#2f2f2f] outline-none placeholder:text-[#9da8a4] focus:border-[#73bfa1] disabled:cursor-not-allowed disabled:opacity-70';
+
+const Field = forwardRef(
+  (
+    { label, placeholder, value, onChange, onBlur, name, type = 'text', error, required, disabled },
+    ref,
+  ) => (
+    <label className="block">
+      <span className="mb-1.5 block text-sm font-medium text-[#222222]">
+        {label}
+        {required && <span className="text-[#e34f4f]">*</span>}
+      </span>
+      <input
+        ref={ref}
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        className={inputClasses}
+        placeholder={placeholder}
+        disabled={disabled}
+        data-error={!!error}
+      />
+      {error && <p className="mt-1 text-xs text-[#e34f4f]">{error}</p>}
+    </label>
+  ),
+);
+Field.displayName = 'Field';
+
+const SelectInput = ({
+  label,
+  value,
+  onChange,
+  onBlur,
+  name,
+  options,
+  error,
+  required,
+  disabled,
+}) => (
   <label className="block">
     <span className="mb-1.5 block text-sm font-medium text-[#222222]">
       {label}
-      <span className="text-[#e34f4f]">*</span>
+      {required && <span className="text-[#e34f4f]">*</span>}
     </span>
-    <input
+    <select
       name={name}
       value={value}
       onChange={onChange}
-      className="h-12 w-full rounded-lg border border-transparent bg-[#edf5f2] px-4 text-sm text-[#2f2f2f] outline-none placeholder:text-[#9da8a4] focus:border-[#73bfa1]"
-      placeholder={placeholder}
-    />
+      onBlur={onBlur}
+      className={inputClasses}
+      disabled={disabled}
+      data-error={!!error}
+    >
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+    {error && <p className="mt-1 text-xs text-[#e34f4f]">{error}</p>}
   </label>
 );
 
-const EmployeeModal = ({ mode, employee, onClose, onSave }) => {
+/**
+ * Single reusable modal for the employee CRUD flow.
+ *
+ * @param {'add'|'edit'|'view'} mode
+ * @param {object|null} initialData - employee record for edit/view, prefilled fields for add
+ * @param {(payload: object) => Promise<void>|void} onSubmit
+ * @param {() => void} onClose
+ */
+const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) => {
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [touched, setTouched] = useState({});
+  const [submitError, setSubmitError] = useState('');
   const modalRef = useRef(null);
   const firstInputRef = useRef(null);
 
-  // Focus trap and auto-focus
+  const isViewMode = mode === 'view';
+  const isEditMode = mode === 'edit';
+
   useEffect(() => {
     if (firstInputRef.current) {
       firstInputRef.current.focus();
     }
 
     const handleEscape = (e) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
+      if (e.key === 'Escape') onClose();
     };
 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, [onClose]);
 
-  // Populate form for edit mode
   useEffect(() => {
-    if (mode === 'edit' && employee) {
-      const parts = employee.name?.split(' ') || ['', ''];
+    if (initialData) {
       setForm({
-        name: parts[0] || '',
-        surname: parts.slice(1).join(' ') || '',
-        email: employee.email || '',
-        phone: employee.phone || '',
+        firstName: initialData.firstName || '',
+        lastName: initialData.lastName || '',
+        email: initialData.email || '',
+        phone: initialData.phone || '',
+        position: initialData.position || '',
+        hireDate: initialData.hireDate || '',
+        status: initialData.status || EMPLOYEE_STATUS.ACTIVE,
+        assignedCourseId: initialData.assignedCourseId || '',
+        password: '',
       });
     } else {
       setForm(emptyForm);
     }
     setErrors({});
     setTouched({});
-  }, [mode, employee]);
+    setSubmitError('');
+  }, [mode, initialData]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setForm((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
@@ -131,16 +161,18 @@ const EmployeeModal = ({ mode, employee, onClose, onSave }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (isViewMode) return;
 
-    // Mark all fields as touched to show errors
     const allTouched = {};
     Object.keys(form).forEach((key) => {
       allTouched[key] = true;
     });
     setTouched(allTouched);
 
-    if (!validateForm()) {
-      // Scroll to first error
+    const validationErrors = validateEmployeeForm(form, { mode });
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
       const firstError = document.querySelector('[data-error="true"]');
       if (firstError) {
         firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -148,32 +180,54 @@ const EmployeeModal = ({ mode, employee, onClose, onSave }) => {
       return;
     }
 
+    const payload = {
+      firstName: form.firstName.trim(),
+      lastName: form.lastName.trim(),
+      email: form.email.trim(),
+      phone: form.phone.trim(),
+      position: form.position,
+      hireDate: form.hireDate,
+      status: form.status,
+      assignedCourseId: form.assignedCourseId || null,
+    };
+
+    // Password is only sent when it's required (add) or was actually changed (edit).
+    if (form.password?.trim()) {
+      payload.password = form.password.trim();
+    }
+
+    setSubmitError('');
     setIsSubmitting(true);
     try {
-      await onSave?.(form);
+      await onSubmit?.(payload);
       onClose();
     } catch (error) {
-      console.error('Save failed:', error);
-      // Show error notification here
+      setSubmitError(error?.message || 'Salvataggio non riuscito. Riprova.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const title = mode === 'edit' ? 'Modifica utente' : 'Aggiungi utente';
-  const buttonLabel = mode === 'edit' ? 'Richiedi modifica' : 'Salva';
-  const isEditMode = mode === 'edit';
+  const titles = {
+    add: 'Aggiungi utente',
+    edit: 'Modifica utente',
+    view: 'Dettagli utente',
+  };
+  const buttonLabels = {
+    add: 'Salva',
+    edit: 'Salva modifiche',
+  };
+  const title = titles[mode] || titles.add;
+  const buttonLabel = buttonLabels[mode] || buttonLabels.add;
 
   return (
     <>
-      {/* Backdrop */}
       <div
         className="fixed inset-0 z-40 bg-[#113b2b]/40 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Modal */}
       <div
         className="fixed inset-0 z-40 flex items-center justify-center p-4"
         role="dialog"
@@ -184,7 +238,6 @@ const EmployeeModal = ({ mode, employee, onClose, onSave }) => {
           ref={modalRef}
           className="animate-in fade-in zoom-in relative max-h-[95vh] w-full max-w-[740px] overflow-y-auto rounded-2xl bg-white shadow-2xl transition-all duration-300 ease-in-out"
         >
-          {/* Close button - fixed position */}
           <button
             type="button"
             onClick={onClose}
@@ -194,7 +247,6 @@ const EmployeeModal = ({ mode, employee, onClose, onSave }) => {
             <X size={20} />
           </button>
 
-          {/* Header */}
           <div className="border-b border-gray-100 px-8 py-6 sm:px-14">
             <button
               type="button"
@@ -212,66 +264,144 @@ const EmployeeModal = ({ mode, employee, onClose, onSave }) => {
               {title}
             </h3>
 
-            {isEditMode && employee && (
+            {(isEditMode || isViewMode) && initialData && (
               <p className="mt-1 text-center text-sm text-gray-500">
-                Stai modificando {employee.name}
+                {isViewMode ? 'Stai visualizzando' : 'Stai modificando'}{' '}
+                {initialData.firstName} {initialData.lastName}
               </p>
             )}
           </div>
 
-          {/* Form */}
           <form
             onSubmit={handleSubmit}
             className="space-y-5 px-8 py-7 sm:px-14 sm:py-10"
           >
+            {submitError && (
+              <p className="rounded-lg bg-[#fbe9e7] px-4 py-2 text-sm text-[#dd6b5f]">
+                {submitError}
+              </p>
+            )}
+
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              {formFields.map((field, index) => (
-                <div
-                  key={field.name}
-                  className={
-                    field.name === 'email' || field.name === 'phone'
-                      ? 'md:col-span-2'
-                      : ''
-                  }
-                >
+              <Field
+                ref={firstInputRef}
+                label="Nome"
+                placeholder="Inserisci il nome..."
+                name="firstName"
+                value={form.firstName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.firstName ? errors.firstName : ''}
+                required
+                disabled={isSubmitting || isViewMode}
+              />
+              <Field
+                label="Cognome"
+                placeholder="Inserisci il cognome..."
+                name="lastName"
+                value={form.lastName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.lastName ? errors.lastName : ''}
+                required
+                disabled={isSubmitting || isViewMode}
+              />
+              <div className="md:col-span-2">
+                <Field
+                  label="E-mail dipendente"
+                  placeholder="franco.rossi@mototo.com"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.email ? errors.email : ''}
+                  required
+                  disabled={isSubmitting || isViewMode}
+                />
+              </div>
+              <div className="md:col-span-2">
+                <Field
+                  label="Numero di contatto"
+                  placeholder="+39 340 00 00000"
+                  name="phone"
+                  type="tel"
+                  value={form.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.phone ? errors.phone : ''}
+                  required
+                  disabled={isSubmitting || isViewMode}
+                />
+              </div>
+
+              <SelectInput
+                label="Ruolo"
+                name="position"
+                value={form.position}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.position ? errors.position : ''}
+                required
+                disabled={isSubmitting || isViewMode}
+                options={[{ value: '', label: 'Seleziona un ruolo' }, ...POSITION_OPTIONS]}
+              />
+              <Field
+                label="Data di assunzione"
+                name="hireDate"
+                type="date"
+                value={form.hireDate}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.hireDate ? errors.hireDate : ''}
+                required
+                disabled={isSubmitting || isViewMode}
+              />
+              <SelectInput
+                label="Stato"
+                name="status"
+                value={form.status}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.status ? errors.status : ''}
+                required
+                disabled={isSubmitting || isViewMode}
+                options={STATUS_OPTIONS}
+              />
+              <SelectInput
+                label="Corso assegnato"
+                name="assignedCourseId"
+                value={form.assignedCourseId}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                disabled={isSubmitting || isViewMode}
+                options={courseSelectOptions}
+              />
+
+              {!isViewMode && (
+                <div className="md:col-span-2">
                   <Field
-                    ref={index === 0 ? firstInputRef : undefined}
-                    label={field.label}
-                    placeholder={field.placeholder}
-                    name={field.name}
-                    value={form[field.name]}
+                    label={
+                      isEditMode ? 'Nuova password (opzionale)' : 'Password'
+                    }
+                    placeholder={
+                      isEditMode
+                        ? 'Lascia vuoto per non modificarla'
+                        : 'Crea una password per il tuo lavoratore'
+                    }
+                    name="password"
+                    type="password"
+                    value={form.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={touched[field.name] ? errors[field.name] : ''}
-                    required
+                    error={touched.password ? errors.password : ''}
+                    required={!isEditMode}
                     disabled={isSubmitting}
-                    data-error={!!errors[field.name] && touched[field.name]}
                   />
                 </div>
-              ))}
-
-              {mode === 'add' &&
-                extraFields.map((field) => (
-                  <div
-                    key={field.name}
-                    className={field.name === 'note' ? 'md:col-span-2' : ''}
-                  >
-                    <Field
-                      label={field.label}
-                      placeholder={field.placeholder}
-                      name={field.name}
-                      value={form[field.name]}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={touched[field.name] ? errors[field.name] : ''}
-                      disabled={isSubmitting}
-                      data-error={!!errors[field.name] && touched[field.name]}
-                    />
-                  </div>
-                ))}
+              )}
             </div>
 
-            {/* Form actions */}
             <div className="flex flex-col-reverse gap-3 pt-4 sm:flex-row sm:justify-end">
               <button
                 type="button"
@@ -279,39 +409,41 @@ const EmployeeModal = ({ mode, employee, onClose, onSave }) => {
                 className="w-full rounded-full border border-gray-300 px-7 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:ring-2 focus:ring-[#73bfa1] focus:ring-offset-2 focus:outline-none sm:w-auto"
                 disabled={isSubmitting}
               >
-                Annulla
+                {isViewMode ? 'Chiudi' : 'Annulla'}
               </button>
-              <button
-                type="submit"
-                className="relative w-full rounded-full bg-[#73bfa1] px-7 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#63a88c] focus:ring-2 focus:ring-[#73bfa1] focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <span className="opacity-0">{buttonLabel}</span>
-                    <span className="absolute inset-0 flex items-center justify-center">
-                      <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24">
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                          fill="none"
-                        />
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        />
-                      </svg>
-                    </span>
-                  </>
-                ) : (
-                  buttonLabel
-                )}
-              </button>
+              {!isViewMode && (
+                <button
+                  type="submit"
+                  className="relative w-full rounded-full bg-[#73bfa1] px-7 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#63a88c] focus:ring-2 focus:ring-[#73bfa1] focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="opacity-0">{buttonLabel}</span>
+                      <span className="absolute inset-0 flex items-center justify-center">
+                        <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24">
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                            fill="none"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          />
+                        </svg>
+                      </span>
+                    </>
+                  ) : (
+                    buttonLabel
+                  )}
+                </button>
+              )}
             </div>
           </form>
         </div>
