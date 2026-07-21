@@ -6,19 +6,22 @@ const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
 
   return (
     <div
-      className="group cursor-pointer overflow-hidden rounded-xl bg-white p-4 shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-300 hover:shadow-[0_15px_35px_rgba(0,0,0,0.07)] flex flex-col gap-4"
+      className="group flex cursor-pointer flex-col gap-4 overflow-hidden rounded-xl bg-white p-4 shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-300 hover:shadow-[0_15px_35px_rgba(0,0,0,0.07)]"
       onClick={onCardClick}
     >
       <div className="relative h-48 w-full overflow-hidden rounded-xl bg-gray-100">
-        <img
-          src={course.image}
-          alt={course.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          onError={(e) => {
-            e.target.src =
-              'https://via.placeholder.com/400x300?text=Course+Image';
-          }}
-        />
+        {course.thumbnailUrl ? (
+          <img
+            src={course.thumbnailUrl}
+            alt={course.title}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gray-100 text-sm text-gray-400">
+            no image added
+          </div>
+        )}
+
         <button
           type="button"
           className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#CCCCCC80] shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition hover:scale-110"
@@ -28,9 +31,9 @@ const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
           }}
         >
           {isLiked ? (
-            <FaHeart className="text-white text-xs" />
+            <FaHeart className="text-xs text-white" />
           ) : (
-            <FaRegHeart className="text-[#FFFFFF] text-xs" />
+            <FaRegHeart className="text-xs text-[#FFFFFF]" />
           )}
         </button>
       </div>
@@ -44,7 +47,7 @@ const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
           </span>
         </div>
 
-        <h3 className="text-lg font-medium text-gray-800 tracking-tight leading-snug">
+        <h3 className="text-lg leading-snug font-medium tracking-tight text-gray-800">
           {course.title}
         </h3>
 
@@ -53,11 +56,16 @@ const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
             <div
               className="h-2 rounded-full bg-[#73BFA1] transition-all"
               style={{ width: `${course.progress}%` }}
-            ></div>
+            />
           </div>
+          {course.totalLessons > 0 && (
+            <p className="mt-1 text-xs text-gray-500">
+              {course.completedLessons}/{course.totalLessons} lezioni completate
+            </p>
+          )}
         </div>
 
-        <div className="flex flex-col gap-2.5 mt-2">
+        <div className="mt-2 flex flex-col gap-2.5">
           <button
             type="button"
             className="w-full rounded-full bg-[#73BFA1] py-3.5 font-semibold text-white transition hover:bg-[#5daf8f]"

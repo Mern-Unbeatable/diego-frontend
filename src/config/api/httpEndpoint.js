@@ -25,4 +25,10 @@ export const endpoints = {
     CONTACTS: '/contacts',
     SERVICE_REQUESTS: '/service-requests',
   },
+  private: {
+    MY_ENROLLMENTS: '/enrollments/my',
+    MY_TICKETS: '/tickets/my',
+    CREATE_TICKET: '/tickets',
+    GET_TICKET_BY_ID: (ticketId) => `/tickets/${ticketId}`,
+  },
 };
