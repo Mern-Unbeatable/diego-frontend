@@ -2,27 +2,9 @@ import { ArrowLeft, Download, Send } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EmployeeModal from '../02-Training/components/EmployeeModal';
-
-const courses = [
-  {
-    id: 'seveso',
-    title: 'Formazione SEVESO',
-    students: 20,
-    image: '/images/course/course.png',
-  },
-  {
-    id: 'generale',
-    title: 'Formazione generale',
-    students: 15,
-    image: '/images/course/catalog4.png',
-  },
-  {
-    id: 'password',
-    title: 'Sicurezza della Password',
-    students: 15,
-    image: '/images/course/course3.png',
-  },
-];
+import { useEmployees } from '../../../../features/company/employee/employeeHooks';
+import { COURSE_OPTIONS as courses } from '../../../../features/company/employee/employeeConstants';
+import { Toast, useToast } from '../../../../components/ui';
 
 const trackingRows = [
   {
@@ -192,11 +174,18 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
 
 const CompanyCourseList = () => {
   const navigate = useNavigate();
+  const { createEmployee } = useEmployees();
+  const { toasts, addToast, removeToast } = useToast();
   const [assignOpen, setAssignOpen] = useState(false);
   const [trackingOpen, setTrackingOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   const courseCards = useMemo(() => courses, []);
+
+  const handleAssignSubmit = async (payload) => {
+    await createEmployee(payload);
+    addToast('Dipendente assegnato al corso con successo', 'success');
+  };
 
   const openAssign = (course) => {
     setSelectedCourse(course);
@@ -210,6 +199,15 @@ const CompanyCourseList = () => {
 
   return (
     <>
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          duration={toast.duration}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       <section className="space-y-7">
         <button
           type="button"
@@ -269,16 +267,10 @@ const CompanyCourseList = () => {
       {assignOpen && (
         <EmployeeModal
           mode="add"
-          employee={
-            selectedCourse
-              ? {
-                  name: '',
-                  email: '',
-                  phone: '',
-                  courseName: selectedCourse.title,
-                }
-              : null
+          initialData={
+            selectedCourse ? { assignedCourseId: selectedCourse.id } : null
           }
+          onSubmit={handleAssignSubmit}
           onClose={() => setAssignOpen(false)}
         />
       )}
