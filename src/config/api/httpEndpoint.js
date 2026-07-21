@@ -30,6 +30,19 @@ export const endpoints = {
     COURSE_DETAILS_BY_SLUG: '/courses/slug',
     PAYMENTS_INTENT_COURSE: '/payments/intent/course',
     PAYMENTS_INTENT_COURSE_VERIFY: '/payments/intent/course/verify',
+    PAYMENTS_CHECKOUT_COMPANY_COURSE: '/payments/checkout/company-course',
+  },
+  company: {
+    COURSES: '/employees/courses',
+    PROGRESS_REPORT: '/employees/progress-report',
+    CERTIFICATES: '/employees/certificates',
+    EMPLOYEES: '/employees',
+    ASSIGN_COURSES: (userId) => `/employees/${userId}/assign-courses`,
+    ENROLLMENT_REMINDER: (enrollmentId) => `/employees/enrollments/${enrollmentId}/reminder`,
+    CERTIFICATE_DOWNLOAD: (userId, certificateId) =>
+      `/employees/${userId}/certificates/${certificateId}/download`,
+    ASSIGNABLE_COURSES: '/employees/assignable-courses',
+    MY_PROFILE: '/users/me',
   },
   private: {
     MY_ENROLLMENTS: '/enrollments/my',
