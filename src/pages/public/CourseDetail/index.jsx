@@ -5,7 +5,10 @@ import { useTranslation } from 'react-i18next';
 import PricingCardsModal from '../../../components/training/PricingCardsModal';
 import CourseMedia from '../../../components/training/CourseMedia';
 import { useCourse } from '../../../features/public/course/courseHooks';
-import { mapCourseFromApi } from '../../../features/public/course/courseMappers';
+import {
+  getLocalizedValue,
+  mapCourseFromApi,
+} from '../../../features/public/course/courseMappers';
 import { formatEuro } from '../../../utils/courseMedia';
 
 const CourseDetails = () => {
@@ -14,14 +17,14 @@ const CourseDetails = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { getCourseDetails, selectedCourse, loading } = useCourse();
-  const courseSlug = decodeURIComponent(
+  const courseIdentifier = decodeURIComponent(
     (searchParams.get('slug') || searchParams.get('id') || '').trim(),
   );
 
   useEffect(() => {
-    if (!courseSlug) return;
-    getCourseDetails(courseSlug).catch(() => { });
-  }, [getCourseDetails, courseSlug]);
+    if (!courseIdentifier) return;
+    getCourseDetails(courseIdentifier).catch(() => {});
+  }, [getCourseDetails, courseIdentifier]);
 
   const language = (i18n.language || 'en').split('-')[0];
 
@@ -32,8 +35,29 @@ const CourseDetails = () => {
       selectedCourse ||
       null;
 
-    return mapCourseFromApi(courseSource, { language, t, courseSlug });
-  }, [selectedCourse, language, courseSlug, t]);
+    const mapped = mapCourseFromApi(courseSource, {
+      language,
+      t,
+      courseSlug: searchParams.get('slug') || courseSource?.slug,
+    });
+
+    if (!mapped || !courseSource) return mapped;
+
+    const legacyObjectives = [
+      getLocalizedValue(courseSource.methodology, language),
+      getLocalizedValue(courseSource.courseLocation, language),
+      getLocalizedValue(courseSource.selectType, language),
+    ].filter(Boolean);
+
+    const singleUserFeatures = [
+      ...new Set([...(mapped.singleUserFeatures || []), ...legacyObjectives]),
+    ];
+
+    return {
+      ...mapped,
+      singleUserFeatures,
+    };
+  }, [selectedCourse, language, t, searchParams]);
 
   const filledStars = Math.max(0, Math.min(5, Math.round(course?.rating ?? 0)));
 
@@ -169,6 +193,5 @@ const CourseDetails = () => {
     </div>
   );
 };
-
 
 export default CourseDetails;

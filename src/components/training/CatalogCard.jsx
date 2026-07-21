@@ -25,6 +25,7 @@ export default function CatalogCard({ courses = [], loading = false }) {
             const reviewCount = Number(course.reviews || 0);
             const ratingValue = Number(course.rating || 0);
             const courseSlug = course.slug;
+            const courseId = course.id;
 
             return (
               <div
@@ -33,7 +34,7 @@ export default function CatalogCard({ courses = [], loading = false }) {
               >
                 <div className="aspect-[4/3] overflow-hidden p-3 pb-0">
                   <CourseMedia
-                    thumbnailUrl={course.thumbnailUrl}
+                    thumbnailUrl={course.thumbnailUrl || course.image}
                     videoUrl={course.videoUrl}
                     alt={courseTitle || t('trainingPages.section7.courseImageAlt')}
                     className="h-[220px] w-full rounded-lg object-cover"
@@ -92,6 +93,22 @@ export default function CatalogCard({ courses = [], loading = false }) {
                         <Link
                           className="flex-1 rounded-md border border-[#73BFA1] py-2 text-center text-[12px] text-[#34b86a] transition hover:bg-[#73BFA1] hover:text-white"
                           to={`/training/course/details?slug=${courseSlug}`}
+                        >
+                          {t('trainingPages.section5.details')}
+                        </Link>
+                      </>
+                    ) : courseId ? (
+                      <>
+                        <Link
+                          to={`/training/course/checkout?id=${courseId}`}
+                          className="flex-1 rounded-md bg-[#73BFA1] py-2 text-center text-[12px] text-white transition hover:bg-[#2fa15d]"
+                        >
+                          {t('trainingPages.section5.signUp')}
+                        </Link>
+
+                        <Link
+                          className="flex-1 rounded-md border border-[#73BFA1] py-2 text-center text-[12px] text-[#34b86a] transition hover:bg-[#73BFA1] hover:text-white"
+                          to={`/training/course/details?id=${courseId}`}
                         >
                           {t('trainingPages.section5.details')}
                         </Link>
