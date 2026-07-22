@@ -1,20 +1,96 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import rightDownSideBg from '/image/student/ciao.png';
+import { COOKIE_STORAGE } from '../../../../../utils/cookies/cookieStorage';
+
+const fetchAvatarBlobUrl = async (avatarUrl) => {
+  const token = COOKIE_STORAGE.getToken();
+  const response = await fetch(avatarUrl, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to load avatar');
+  }
+
+  const blob = await response.blob();
+  return URL.createObjectURL(blob);
+};
 
 const ProfileBanner = ({ profile, onEditClick }) => {
   const [localAvatarUrl, setLocalAvatarUrl] = useState(null);
+  const [avatarPreviewUrl, setAvatarPreviewUrl] = useState(null);
+  const [avatarError, setAvatarError] = useState(false);
+  const avatarBlobRef = useRef(null);
   const fileInputRef = useRef(null);
-  const avatarUrl = localAvatarUrl || profile?.avatar || null;
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadAvatar = async () => {
+      if (localAvatarUrl) {
+        setAvatarPreviewUrl(localAvatarUrl);
+        setAvatarError(false);
+        return;
+      }
+
+      if (!profile?.avatar) {
+        setAvatarPreviewUrl(null);
+        setAvatarError(false);
+        return;
+      }
+
+      try {
+        const blobUrl = await fetchAvatarBlobUrl(profile.avatar);
+
+        if (cancelled) {
+          URL.revokeObjectURL(blobUrl);
+          return;
+        }
+
+        if (avatarBlobRef.current) {
+          URL.revokeObjectURL(avatarBlobRef.current);
+        }
+
+        avatarBlobRef.current = blobUrl;
+        setAvatarPreviewUrl(blobUrl);
+        setAvatarError(false);
+      } catch {
+        if (!cancelled) {
+          setAvatarPreviewUrl(profile.avatar);
+          setAvatarError(false);
+        }
+      }
+    };
+
+    loadAvatar();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [profile?.avatar, localAvatarUrl]);
+
+  useEffect(
+    () => () => {
+      if (avatarBlobRef.current) {
+        URL.revokeObjectURL(avatarBlobRef.current);
+        avatarBlobRef.current = null;
+      }
+    },
+    [],
+  );
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+
     if (file) {
-      const url = URL.createObjectURL(file);
-      setLocalAvatarUrl(url);
+      setLocalAvatarUrl(URL.createObjectURL(file));
+      setAvatarError(false);
     }
   };
+
+  const showAvatarImage = Boolean(avatarPreviewUrl) && !avatarError;
 
   return (
     <div className="relative mb-10 h-44 w-full overflow-hidden rounded-2xl bg-[#73BFA1] text-white md:h-48">
@@ -33,14 +109,12 @@ const ProfileBanner = ({ profile, onEditClick }) => {
               onClick={() => fileInputRef.current?.click()}
               className="group relative flex h-28 w-28 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-white/30 bg-[#73BFA1] transition-all duration-300 hover:scale-102 md:h-36 md:w-36"
             >
-              {avatarUrl ? (
+              {showAvatarImage ? (
                 <img
-                  src={avatarUrl}
-                  alt={profile?.fullName || 'Profile avatar'}
+                  src={avatarPreviewUrl}
+                  alt={profile?.fullName ?? 'Profile avatar'}
                   className="h-full w-full rounded-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
+                  onError={() => setAvatarError(true)}
                 />
               ) : (
                 <div className="flex h-20 w-20 items-center justify-center rounded-full md:h-24 md:w-24">
@@ -52,11 +126,9 @@ const ProfileBanner = ({ profile, onEditClick }) => {
 
           <div className="ml-4">
             <h2 className="mb-0 text-2xl font-semibold text-white md:text-4xl">
-              {profile?.fullName || '—'}
+              {profile?.fullName}
             </h2>
-            <p className="text-sm text-white md:text-xl">
-              {profile?.email || '—'}
-            </p>
+            <p className="text-sm text-white md:text-xl">{profile?.email}</p>
           </div>
         </div>
       </div>

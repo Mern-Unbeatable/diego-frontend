@@ -10,6 +10,7 @@ import {
   markAllNotificationsReadService,
   getMyCertificatesService,
   getMyProfileService,
+  updateMyProfileService,
 } from './privateService';
 
 export const getMyEnrollmentsAPI = createAsyncThunk(
@@ -105,6 +106,17 @@ export const getMyProfileAPI = createAsyncThunk(
   async (_, { rejectWithValue, signal }) => {
     try {
       return await getMyProfileService({ signal });
+    } catch (error) {
+      return rejectWithValue(handleApiError(error));
+    }
+  },
+);
+
+export const updateMyProfileAPI = createAsyncThunk(
+  'private/updateMyProfile',
+  async (payload, { rejectWithValue, signal }) => {
+    try {
+      return await updateMyProfileService(payload, { signal });
     } catch (error) {
       return rejectWithValue(handleApiError(error));
     }

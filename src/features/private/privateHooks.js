@@ -10,6 +10,7 @@ import {
   markAllNotificationsReadAPI,
   getMyCertificatesAPI,
   getMyProfileAPI,
+  updateMyProfileAPI,
 } from './privateAPI';
 import { resetTicketDetail } from './privateSlice';
 import { selectPrivate } from './privateSelectors';
@@ -94,6 +95,14 @@ export const usePrivate = () => {
     return result;
   }, [dispatch]);
 
+  const updateMyProfile = useCallback(
+    async (payload) => {
+      const result = await dispatch(updateMyProfileAPI(payload)).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
   return {
     fetchMyEnrollments,
     fetchMyTickets,
@@ -105,6 +114,7 @@ export const usePrivate = () => {
     markAllNotificationsAsRead,
     fetchMyCertificates,
     fetchMyProfile,
+    updateMyProfile,
     ...privateState,
   };
 };

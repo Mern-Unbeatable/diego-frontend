@@ -283,38 +283,74 @@ export const mapProfileResponse = (payload) => {
     return null;
   }
 
-  const firstName = user.firstName ?? '';
-  const lastName = user.lastName ?? '';
+  const firstName = user.firstName ?? null;
+  const lastName = user.lastName ?? null;
+  const fullName = [firstName, lastName].filter(Boolean).join(' ') || null;
 
   return {
     id: user.id,
-    email: user.email ?? '',
+    email: user.email ?? null,
     firstName,
     lastName,
-    fullName:
-      [firstName, lastName].filter(Boolean).join(' ') || user.email || '',
+    fullName,
     avatar: user.avatar ?? null,
-    birthDate: formatProfileDateInput(user.birthDate),
-    city: user.city ?? '',
-    country: user.country ?? '',
-    residenceAddress: user.residenceAddress ?? '',
-    traineeTaxCode: user.traineeTaxCode ?? '',
-    companyName: user.companyName ?? '',
-    companyAddress: user.companyAddress ?? '',
-    companyTaxCode: user.companyTaxCode ?? '',
-    companyVatNumber: user.companyVatNumber ?? '',
-    companyPosition: user.companyPosition ?? '',
-    citizenship: user.citizenship ?? '',
-    contactNumber: user.contactNumber ?? '',
-    preferredLanguage: user.preferredLanguage ?? 'en',
-    profileCompleted: user.profileCompleted ?? false,
+    birthDate: user.birthDate ? formatProfileDateInput(user.birthDate) : null,
+    city: user.city ?? null,
+    country: user.country ?? null,
+    residenceAddress: user.residenceAddress ?? null,
+    traineeTaxCode: user.traineeTaxCode ?? null,
+    companyName: user.companyName ?? null,
+    companyAddress: user.companyAddress ?? null,
+    companyTaxCode: user.companyTaxCode ?? null,
+    companyVatNumber: user.companyVatNumber ?? null,
+    companyPosition: user.companyPosition ?? null,
+    citizenship: user.citizenship ?? null,
+    contactNumber: user.contactNumber ?? null,
+    preferredLanguage: user.preferredLanguage ?? null,
+    profileCompleted: user.profileCompleted ?? null,
     level: user.level ?? null,
     status: user.status ?? null,
-    counts: {
-      enrollments: user._count?.enrollments ?? 0,
-      certificates: user._count?.certificates ?? 0,
-      payments: user._count?.payments ?? 0,
-    },
+    counts: user._count
+      ? {
+          enrollments: user._count.enrollments ?? null,
+          certificates: user._count.certificates ?? null,
+          payments: user._count.payments ?? null,
+        }
+      : null,
     enrollments: user.enrollments ?? [],
   };
+};
+
+const setPayloadValue = (payload, key, value) => {
+  if (value == null) return;
+
+  const normalized = typeof value === 'string' ? value.trim() : value;
+
+  if (normalized !== '') {
+    payload[key] = normalized;
+  }
+};
+
+export const mapProfileUpdatePayload = (formValues, preferredLanguage) => {
+  const payload = {};
+
+  setPayloadValue(payload, 'firstName', formValues.firstName);
+  setPayloadValue(payload, 'lastName', formValues.lastName);
+  setPayloadValue(payload, 'fiscalAddress', formValues.address);
+  setPayloadValue(payload, 'city', formValues.city);
+  setPayloadValue(payload, 'country', formValues.country);
+  setPayloadValue(payload, 'companyName', formValues.companyName);
+  setPayloadValue(payload, 'companyAddress', formValues.companyAddress);
+  setPayloadValue(payload, 'companyVatNumber', formValues.companyVatNumber);
+  setPayloadValue(payload, 'traineeTaxCode', formValues.traineeTaxCode);
+
+  if (preferredLanguage) {
+    payload.preferredLanguage = preferredLanguage;
+  }
+
+  if (formValues.birthDate) {
+    payload.birthDate = new Date(formValues.birthDate).toISOString();
+  }
+
+  return payload;
 };

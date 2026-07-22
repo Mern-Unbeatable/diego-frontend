@@ -9,6 +9,7 @@ import {
   markAllNotificationsReadAPI,
   getMyCertificatesAPI,
   getMyProfileAPI,
+  updateMyProfileAPI,
 } from './privateAPI';
 import {
   mapEnrollmentsResponse,
@@ -60,6 +61,8 @@ const initialState = {
   profile: null,
   profileLoading: false,
   profileError: null,
+  profileUpdateLoading: false,
+  profileUpdateError: null,
 };
 
 const privateSlice = createSlice({
@@ -212,6 +215,18 @@ const privateSlice = createSlice({
       .addCase(getMyProfileAPI.rejected, (state, action) => {
         state.profileLoading = false;
         state.profileError = action.payload;
+      })
+      .addCase(updateMyProfileAPI.pending, (state) => {
+        state.profileUpdateLoading = true;
+        state.profileUpdateError = null;
+      })
+      .addCase(updateMyProfileAPI.fulfilled, (state, action) => {
+        state.profileUpdateLoading = false;
+        state.profile = mapProfileResponse(action.payload);
+      })
+      .addCase(updateMyProfileAPI.rejected, (state, action) => {
+        state.profileUpdateLoading = false;
+        state.profileUpdateError = action.payload;
       });
   },
 });

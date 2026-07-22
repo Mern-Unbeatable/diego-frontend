@@ -103,3 +103,16 @@ export const getMyProfileService = async ({ signal } = {}) => {
     signal,
   });
 };
+
+export const updateMyProfileService = async (payload, { signal } = {}) => {
+  return await request({
+    method: 'PATCH',
+    url: endpoints.private.MY_PROFILE,
+    data: payload,
+    signal,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+};
