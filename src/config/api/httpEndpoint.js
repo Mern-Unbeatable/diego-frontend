@@ -30,5 +30,9 @@ export const endpoints = {
     MY_TICKETS: '/tickets/my',
     CREATE_TICKET: '/tickets',
     GET_TICKET_BY_ID: (ticketId) => `/tickets/${ticketId}`,
+    NOTIFICATIONS: '/notifications',
+    MARK_NOTIFICATIONS_READ: '/notifications/mark-read',
+    MARK_ALL_NOTIFICATIONS_READ: '/notifications/mark-all-read',
+    MY_CERTIFICATES: '/certificates/my',
   },
 };

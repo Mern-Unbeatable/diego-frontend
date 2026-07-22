@@ -4,11 +4,17 @@ import {
   getMyTicketsAPI,
   createTicketAPI,
   getTicketByIdAPI,
+  getNotificationsAPI,
+  markNotificationsReadAPI,
+  markAllNotificationsReadAPI,
+  getMyCertificatesAPI,
 } from './privateAPI';
 import {
   mapEnrollmentsResponse,
   mapTicketsResponse,
   mapTicketDetailResponse,
+  mapNotificationsResponse,
+  mapCertificatesResponse,
 } from './privateMappers';
 
 const initialState = {
@@ -23,6 +29,32 @@ const initialState = {
   ticketDetail: null,
   ticketDetailLoading: false,
   ticketDetailError: null,
+  notifications: [],
+  notificationsMeta: {
+    page: 1,
+    limit: 20,
+    total: 0,
+    totalPages: 0,
+    unreadCount: 0,
+  },
+  notificationsLoading: false,
+  notificationsError: null,
+  certificates: [],
+  certificatesMeta: {
+    page: 1,
+    limit: 20,
+    total: 0,
+    totalPages: 0,
+  },
+  certificatesArchive: {
+    hasActiveSubscription: false,
+    expiresAt: null,
+    freeDownloadDays: 30,
+    plan: null,
+  },
+  certificatesLoading: false,
+  certificatesLoadingMore: false,
+  certificatesError: null,
 };
 
 const privateSlice = createSlice({
@@ -34,6 +66,8 @@ const privateSlice = createSlice({
       state.ticketsError = null;
       state.createTicketError = null;
       state.ticketDetailError = null;
+      state.notificationsError = null;
+      state.certificatesError = null;
     },
     resetTicketDetail: (state) => {
       state.ticketDetail = null;
@@ -90,6 +124,76 @@ const privateSlice = createSlice({
       .addCase(getTicketByIdAPI.rejected, (state, action) => {
         state.ticketDetailLoading = false;
         state.ticketDetailError = action.payload;
+      })
+      .addCase(getNotificationsAPI.pending, (state) => {
+        state.notificationsLoading = true;
+        state.notificationsError = null;
+      })
+      .addCase(getNotificationsAPI.fulfilled, (state, action) => {
+        const { notifications, meta } = mapNotificationsResponse(action.payload);
+        state.notificationsLoading = false;
+        state.notifications = notifications;
+        state.notificationsMeta = meta;
+      })
+      .addCase(getNotificationsAPI.rejected, (state, action) => {
+        state.notificationsLoading = false;
+        state.notificationsError = action.payload;
+      })
+      .addCase(markNotificationsReadAPI.fulfilled, (state, action) => {
+        const notificationIds = action.meta.arg?.notificationIds ?? [];
+        let markedCount = 0;
+
+        state.notifications = state.notifications.map((item) => {
+          if (notificationIds.includes(item.id) && item.unread) {
+            markedCount += 1;
+            return { ...item, unread: false, read: true };
+          }
+
+          return item;
+        });
+
+        state.notificationsMeta.unreadCount = Math.max(
+          0,
+          state.notificationsMeta.unreadCount - markedCount,
+        );
+      })
+      .addCase(markAllNotificationsReadAPI.fulfilled, (state) => {
+        state.notifications = state.notifications.map((item) => ({
+          ...item,
+          unread: false,
+          read: true,
+        }));
+        state.notificationsMeta.unreadCount = 0;
+      })
+      .addCase(getMyCertificatesAPI.pending, (state, action) => {
+        const isLoadMore = (action.meta.arg?.page ?? 1) > 1;
+
+        if (isLoadMore) {
+          state.certificatesLoadingMore = true;
+        } else {
+          state.certificatesLoading = true;
+        }
+
+        state.certificatesError = null;
+      })
+      .addCase(getMyCertificatesAPI.fulfilled, (state, action) => {
+        const { certificates, meta, archive } = mapCertificatesResponse(
+          action.payload,
+        );
+        const isLoadMore = (action.meta.arg?.page ?? 1) > 1;
+
+        state.certificatesLoading = false;
+        state.certificatesLoadingMore = false;
+        state.certificatesMeta = meta;
+        state.certificatesArchive = archive;
+        state.certificates = isLoadMore
+          ? [...state.certificates, ...certificates]
+          : certificates;
+      })
+      .addCase(getMyCertificatesAPI.rejected, (state, action) => {
+        state.certificatesLoading = false;
+        state.certificatesLoadingMore = false;
+        state.certificatesError = action.payload;
       });
   },
 });

@@ -1,35 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import CertificateCard from './components/CertificateCard';
 import EmptyCertificateState from './components/EmptyCertificateState';
 import { Container } from '../../../../components/ui';
+import Loading from '../../../../components/ui/Utilities/Loading';
+import { usePrivate } from '../../../../features/private/privateHooks';
 
 const CertificatesView = () => {
   const navigate = useNavigate();
+  const {
+    fetchMyCertificates,
+    certificates,
+    certificatesMeta,
+    certificatesLoading,
+    certificatesLoadingMore,
+    certificatesError,
+  } = usePrivate();
 
-  // Example certificates data - replace with actual data from API/Redux
-  const certificates = [
-    {
-      id: 1,
-      courseTitle: 'Datore di lavoro (Nuovo) 16 ore',
-      imageUrl: '/image/student/c_2.png',
-      message:
-        "Ce l'hai fatta! Il tuo attestato è pronto: clicca qui per scaricarlo.",
-    },
-    {
-      id: 2,
-      courseTitle: 'Generale 4 Ore',
-      imageUrl: '/image/student/c_1.png',
-      message:
-        "Ce l'hai fatta! Il tuo attestato è pronto: clicca qui per scaricarlo.",
-    },
-  ];
+  useEffect(() => {
+    fetchMyCertificates().catch(() => {});
+  }, [fetchMyCertificates]);
+
+  const hasMore = certificatesMeta.page < certificatesMeta.totalPages;
+
+  const handleLoadMore = () => {
+    if (!hasMore || certificatesLoadingMore) return;
+
+    fetchMyCertificates({
+      page: certificatesMeta.page + 1,
+    }).catch(() => {});
+  };
+
+  if (certificatesLoading && certificates.length === 0) {
+    return <Loading size="md" className="min-h-60" />;
+  }
 
   return (
     <Container size="full" className="">
       <div className="">
-        {/* Back button */}
         <div className="mb-10 flex items-center justify-between gap-4">
           <button
             onClick={() => navigate(-1)}
@@ -38,28 +47,38 @@ const CertificatesView = () => {
           >
             <FaChevronLeft className="text-gray-600" />
           </button>
-          {/* Page title centered */}
           <h2 className="text-center text-xl font-bold text-[#252525]">
             Elenco dei certificati
           </h2>
         </div>
 
-        {/* Render all certificates or empty state */}
-        {certificates.length > 0 ? (
+        {certificatesError && (
+          <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {certificatesError}
+          </div>
+        )}
+
+        {!certificatesError && certificates.length > 0 ? (
           <>
             {certificates.map((certificate) => (
               <CertificateCard key={certificate.id} certificate={certificate} />
             ))}
 
-            {/* Load more button */}
-            <div className="mt-8 flex justify-center">
-              <button className="rounded-full bg-[#73BFA1] px-12 py-2.5 font-normal text-white transition-colors hover:bg-[#5fa889]">
-                Loadmore
-              </button>
-            </div>
+            {hasMore && (
+              <div className="mt-8 flex justify-center">
+                <button
+                  type="button"
+                  onClick={handleLoadMore}
+                  disabled={certificatesLoadingMore}
+                  className="rounded-full bg-[#73BFA1] px-12 py-2.5 font-normal text-white transition-colors hover:bg-[#5fa889] disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {certificatesLoadingMore ? 'Caricamento...' : 'Loadmore'}
+                </button>
+              </div>
+            )}
           </>
         ) : (
-          <EmptyCertificateState />
+          !certificatesError && <EmptyCertificateState />
         )}
       </div>
     </Container>

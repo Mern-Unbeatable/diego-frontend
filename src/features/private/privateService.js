@@ -48,3 +48,50 @@ export const getTicketByIdService = async (ticketId, { signal } = {}) => {
     signal,
   });
 };
+
+export const getNotificationsService = async ({ signal } = {}) => {
+  return await request({
+    method: 'GET',
+    url: endpoints.private.NOTIFICATIONS,
+    signal,
+  });
+};
+
+export const markNotificationsReadService = async (
+  { notificationIds },
+  { signal } = {},
+) => {
+  return await request({
+    method: 'PATCH',
+    url: endpoints.private.MARK_NOTIFICATIONS_READ,
+    data: { notificationIds },
+    signal,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+export const markAllNotificationsReadService = async ({ signal } = {}) => {
+  return await request({
+    method: 'PATCH',
+    url: endpoints.private.MARK_ALL_NOTIFICATIONS_READ,
+    signal,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
+export const getMyCertificatesService = async (
+  { page = 1, limit = 20, signal } = {},
+) => {
+  return await request({
+    method: 'GET',
+    url: endpoints.private.MY_CERTIFICATES,
+    params: { page, limit },
+    signal,
+  });
+};

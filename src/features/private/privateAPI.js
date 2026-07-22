@@ -5,6 +5,10 @@ import {
   getMyTicketsService,
   createTicketService,
   getTicketByIdService,
+  getNotificationsService,
+  markNotificationsReadService,
+  markAllNotificationsReadService,
+  getMyCertificatesService,
 } from './privateService';
 
 export const getMyEnrollmentsAPI = createAsyncThunk(
@@ -45,6 +49,50 @@ export const getTicketByIdAPI = createAsyncThunk(
   async (ticketId, { rejectWithValue, signal }) => {
     try {
       return await getTicketByIdService(ticketId, { signal });
+    } catch (error) {
+      return rejectWithValue(handleApiError(error));
+    }
+  },
+);
+
+export const getNotificationsAPI = createAsyncThunk(
+  'private/getNotifications',
+  async (_, { rejectWithValue, signal }) => {
+    try {
+      return await getNotificationsService({ signal });
+    } catch (error) {
+      return rejectWithValue(handleApiError(error));
+    }
+  },
+);
+
+export const markNotificationsReadAPI = createAsyncThunk(
+  'private/markNotificationsRead',
+  async ({ notificationIds }, { rejectWithValue, signal }) => {
+    try {
+      return await markNotificationsReadService({ notificationIds }, { signal });
+    } catch (error) {
+      return rejectWithValue(handleApiError(error));
+    }
+  },
+);
+
+export const markAllNotificationsReadAPI = createAsyncThunk(
+  'private/markAllNotificationsRead',
+  async (_, { rejectWithValue, signal }) => {
+    try {
+      return await markAllNotificationsReadService({ signal });
+    } catch (error) {
+      return rejectWithValue(handleApiError(error));
+    }
+  },
+);
+
+export const getMyCertificatesAPI = createAsyncThunk(
+  'private/getMyCertificates',
+  async ({ page = 1, limit = 20 } = {}, { rejectWithValue, signal }) => {
+    try {
+      return await getMyCertificatesService({ page, limit, signal });
     } catch (error) {
       return rejectWithValue(handleApiError(error));
     }

@@ -5,6 +5,10 @@ import {
   getMyTicketsAPI,
   createTicketAPI,
   getTicketByIdAPI,
+  getNotificationsAPI,
+  markNotificationsReadAPI,
+  markAllNotificationsReadAPI,
+  getMyCertificatesAPI,
 } from './privateAPI';
 import { resetTicketDetail } from './privateSlice';
 import { selectPrivate } from './privateSelectors';
@@ -45,12 +49,55 @@ export const usePrivate = () => {
     dispatch(resetTicketDetail());
   }, [dispatch]);
 
+  const fetchNotifications = useCallback(async () => {
+    const result = await dispatch(getNotificationsAPI()).unwrap();
+    return result;
+  }, [dispatch]);
+
+  const markNotificationsAsRead = useCallback(
+    async (notificationIds) => {
+      const ids = (Array.isArray(notificationIds)
+        ? notificationIds
+        : [notificationIds]
+      ).filter(Boolean);
+
+      if (ids.length === 0) {
+        throw new Error('Nessuna notifica selezionata');
+      }
+
+      const result = await dispatch(
+        markNotificationsReadAPI({ notificationIds: ids }),
+      ).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
+  const markAllNotificationsAsRead = useCallback(async () => {
+    const result = await dispatch(markAllNotificationsReadAPI()).unwrap();
+    return result;
+  }, [dispatch]);
+
+  const fetchMyCertificates = useCallback(
+    async ({ page = 1, limit = 20 } = {}) => {
+      const result = await dispatch(
+        getMyCertificatesAPI({ page, limit }),
+      ).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
   return {
     fetchMyEnrollments,
     fetchMyTickets,
     createTicket,
     fetchTicketById,
     clearTicketDetail,
+    fetchNotifications,
+    markNotificationsAsRead,
+    markAllNotificationsAsRead,
+    fetchMyCertificates,
     ...privateState,
   };
 };
