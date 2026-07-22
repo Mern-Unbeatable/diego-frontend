@@ -1,58 +1,79 @@
 import { ChevronLeft, Trash2 } from 'lucide-react';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import trainingCourses from '../../../data/trainingCourses.json';
-
-const courses = trainingCourses.courses ?? [];
+import CourseMedia from '../../../components/training/CourseMedia';
+import { useCourse } from '../../../features/public/course/courseHooks';
+import {
+  getCheckoutSelection,
+  mapCourseFromApi,
+} from '../../../features/public/course/courseMappers';
+import { formatEuro } from '../../../utils/courseMedia';
 
 const Checkout = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const localizedCourses = useMemo(
-    () =>
-      courses.map((course, index) => ({
-        ...course,
-        title: t(`trainingPages.section7.courses.${index}.title`, {
-          defaultValue: course.title,
-        }),
-        description: t(`trainingPages.section7.courses.${index}.description`, {
-          defaultValue: course.description,
-        }),
-        category: t(`trainingPages.courseMeta.${index}.category`, {
-          defaultValue: course.category,
-        }),
-        duration: t(`trainingPages.courseMeta.${index}.duration`, {
-          defaultValue: course.duration,
-        }),
-        objectives: t(`trainingPages.courseMeta.${index}.objectives`, {
-          returnObjects: true,
-          defaultValue: course.objectives ?? [],
-        }),
-      })),
-    [t],
-  );
-  const selectedCourseId =
-    Number(searchParams.get('id')) || localizedCourses[0]?.id;
+  const { getCourseDetails, selectedCourse, loading } = useCourse();
 
-  const selectedCourse = useMemo(
-    () =>
-      localizedCourses.find((course) => course.id === selectedCourseId) ??
-      localizedCourses[0],
-    [localizedCourses, selectedCourseId],
+  const courseSlug = decodeURIComponent(
+    (searchParams.get('slug') || searchParams.get('id') || '').trim(),
   );
+  const selectedPlan = (searchParams.get('plan') || 'single').trim();
+  const selectedTierId = (searchParams.get('tier') || '').trim();
+
+  useEffect(() => {
+    if (!courseSlug) return;
+    getCourseDetails(courseSlug).catch(() => {});
+  }, [getCourseDetails, courseSlug]);
+
+  const language = (i18n.language || 'en').split('-')[0];
+
+  const course = useMemo(() => {
+    const courseSource =
+      selectedCourse?.course ||
+      selectedCourse?.data?.course ||
+      selectedCourse ||
+      null;
+
+    return mapCourseFromApi(courseSource, { language, t, courseSlug });
+  }, [selectedCourse, language, t, courseSlug]);
+
+  const checkoutItem = useMemo(
+    () =>
+      getCheckoutSelection(course, {
+        plan: selectedPlan,
+        tierId: selectedTierId,
+      }),
+    [course, selectedPlan, selectedTierId],
+  );
+
+  const formattedPrice = formatEuro(checkoutItem?.price ?? 0);
 
   return (
     <div className="min-h-screen p-8">
       <div className="mx-auto max-w-6xl">
+        {loading ? (
+          <p className="mb-4 text-sm text-gray-500">
+            {t('trainingPages.section7.loadingCourses')}
+          </p>
+        ) : null}
+        {!loading && !course ? (
+          <p className="mb-4 text-sm text-gray-500">
+            {t('trainingPages.section7.courseNotFound')}
+          </p>
+        ) : null}
+
         <div className="grid gap-8 rounded-md bg-[#F1F9F6] p-5 md:grid-cols-3">
-          {/* Cart Section */}
           <div className="md:col-span-2">
             <button
               type="button"
               onClick={() =>
-                navigate(`/training/course/details?id=${selectedCourse?.id}`)
+                navigate(
+                  courseSlug
+                    ? `/training/course/details?slug=${encodeURIComponent(courseSlug)}`
+                    : '/training/courses/catalog',
+                )
               }
               className="mb-8 flex items-center gap-2 text-left"
             >
@@ -70,58 +91,62 @@ const Checkout = () => {
                 {t('paymentPages.section1.contains')}
               </p>
 
-              {/* Cart Item */}
-              <div className="flex items-center gap-4 rounded-lg bg-gray-50 p-4">
-                <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded bg-gray-300">
-                  <img
-                    src={selectedCourse?.image}
-                    alt={selectedCourse?.title}
-                    className="h-full w-full object-cover"
-                  />
+              {checkoutItem ? (
+                <div className="flex items-center gap-4 rounded-lg bg-gray-50 p-4">
+                  <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded bg-gray-300">
+                    <CourseMedia
+                      thumbnailUrl={course?.thumbnailUrl}
+                      videoUrl={course?.videoUrl}
+                      alt={checkoutItem.displayTitle}
+                      className="h-full w-full object-cover"
+                      showVideoControls={false}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-gray-800">
+                      {checkoutItem.displayTitle}
+                    </h4>
+                    <p className="text-sm text-gray-600">{course?.category}</p>
+                    <p className="mt-1 text-sm font-medium text-[#73BFA1]">
+                      {checkoutItem.subtitle}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="font-semibold text-gray-800">
+                      {formattedPrice}
+                    </span>
+                    <button
+                      type="button"
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <Trash2 className="h-5 w-5" />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h4 className="font-semibold text-gray-800">
-                    {selectedCourse?.title}
-                  </h4>
-                  <p className="text-sm text-gray-600">
-                    {selectedCourse?.category}
-                  </p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <span className="font-semibold text-gray-800">
-                    {selectedCourse?.price}
-                  </span>
-                  <button className="text-red-500 hover:text-red-700">
-                    <Trash2 className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
+              ) : null}
             </div>
           </div>
 
-          {/* Payment Details Section */}
           <div className="rounded-lg bg-[#D4EBE2] p-6">
             <h3 className="mb-6 text-lg font-semibold text-gray-800">
               {t('paymentPages.section2.title')}
             </h3>
 
-            {/* Payment Methods */}
             <div className="mb-6">
               <p className="mb-3 text-sm font-semibold text-gray-700">
-                {t('paymentPages.section2.network')}
+                {/* {t('paymentPages.section2.network')} */}
               </p>
               <div className="flex w-full items-center justify-center gap-x-3">
-                <img src="/images/payment/payment2.png" alt="Stripe" />
-                <img src="/images/payment/payment.png" alt="VISA" />
-                <img src="/images/payment/payment3.png" alt="RuPay" />
-
+                <img src="/public/image/paymentIcon/stripe.png" alt="Stripe" />
+                {/* <img src="/images/payment/payment.png" alt="VISA" />
+                <img src="/images/payment/payment3.png" alt="RuPay" /> */}
+{/* 
                 <button className="text-sm font-semibold text-green-600 hover:text-green-700">
                   {t('paymentPages.section2.seeAll')}
-                </button>
+                </button> */}
               </div>
             </div>
 
-            {/* Form Fields */}
             <div className="space-y-4">
               <div>
                 <label className="mb-2 block text-sm font-semibold text-gray-700">
@@ -169,21 +194,19 @@ const Checkout = () => {
               </div>
             </div>
 
-            {/* Totals */}
             <div className="my-6 space-y-2 border-t border-[#73BFA1] pt-6">
               <div className="flex justify-between text-gray-700">
                 <span>{t('paymentPages.section2.subtotal')}</span>
-                <span>{selectedCourse?.price}</span>
+                <span>{formattedPrice}</span>
               </div>
               <div className="flex justify-between text-lg font-bold text-gray-800">
                 <span>{t('paymentPages.section2.total')}</span>
-                <span>{selectedCourse?.price}</span>
+                <span>{formattedPrice}</span>
               </div>
             </div>
 
-            {/* Pay Button */}
             <button className="flex w-full items-center justify-center gap-2 rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition hover:bg-[#73BFA1]">
-              <span>{selectedCourse?.price}</span>
+              <span>{formattedPrice}</span>
               <span>{t('paymentPages.section2.payNow')}</span>
               <span>→</span>
             </button>
@@ -193,4 +216,5 @@ const Checkout = () => {
     </div>
   );
 };
+
 export default Checkout;

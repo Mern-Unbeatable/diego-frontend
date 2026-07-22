@@ -1,14 +1,26 @@
-import { useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import CourseCard from './CourseCard';
-
 import { useCarousel } from '../../../../hooks/useCarousel';
 import { Heading, Container, Button } from '../../../../components/ui';
-import { COURSE_DATA } from '../../../../data/courses';
+import { useCourse } from '../../../../features/public/course/courseHooks';
+import { mapPublicCoursesToCatalogCards } from '../../../../features/public/course/courseMappers';
+import { Link } from 'react-router-dom';
 
 const CourseCatalog = () => {
   const { t } = useTranslation();
   const carouselRef = useRef(null);
+  const { getPublicCourses, courses, loading } = useCourse();
+
+  useEffect(() => {
+    getPublicCourses().catch(() => {});
+  }, [getPublicCourses]);
+
+  const catalogCourses = useMemo(
+    () => mapPublicCoursesToCatalogCards(courses),
+    [courses],
+  );
+
   const {
     state,
     totalPages,
@@ -17,9 +29,7 @@ const CourseCatalog = () => {
     handleDragStart,
     handleDragMove,
     handleDragEnd,
-  } = useCarousel(COURSE_DATA.length);
-
-  const handleButtonClick = (action, course) => {};
+  } = useCarousel(catalogCourses.length);
 
   const renderPagination = () => {
     if (!showPagination) return null;
@@ -73,7 +83,7 @@ const CourseCatalog = () => {
             userSelect: 'none',
           }}
         >
-          {COURSE_DATA.map((course) => (
+          {catalogCourses.map((course) => (
             <div
               key={course.id}
               className="p-4"
@@ -81,11 +91,7 @@ const CourseCatalog = () => {
                 minWidth: `${100 / state.itemsPerPage}%`,
               }}
             >
-              <CourseCard
-                course={course}
-                isDragging={state.isDragging}
-                onButtonClick={handleButtonClick}
-              />
+              <CourseCard course={course} isDragging={state.isDragging} />
             </div>
           ))}
         </div>
@@ -103,16 +109,31 @@ const CourseCatalog = () => {
       </Heading>
 
       <div>
-        {renderCarousel()}
-        {renderPagination()}
+        {loading ? (
+          <p className="mb-6 text-sm text-gray-500">
+            {t('trainingPages.section7.loadingCourses')}
+          </p>
+        ) : null}
+
+        {!loading && catalogCourses.length === 0 ? (
+          <p className="mb-6 text-sm text-gray-500">
+            {t('trainingPages.section7.courseNotFound')}
+          </p>
+        ) : null}
+
+        {catalogCourses.length > 0 ? renderCarousel() : null}
+        {catalogCourses.length > 0 ? renderPagination() : null}
 
         <div className="flex justify-center px-2">
-          <Button
-            size="lg"
-            variant="outline"
-            label={t('homeView.section3.exploreAllCourses')}
-            className="w-full max-w-[360px] font-semibold text-[#73BFA1] sm:w-auto"
-          />
+
+          <Link to="/training/courses/catalog">
+            <Button
+              size="lg"
+              variant="outline"
+              label={t('homeView.section3.exploreAllCourses')}
+              className="w-full max-w-[360px] font-semibold text-[#73BFA1] sm:w-auto"
+            />
+          </Link>
         </div>
       </div>
     </Container>

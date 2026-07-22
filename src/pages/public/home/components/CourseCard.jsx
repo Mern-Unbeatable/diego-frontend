@@ -1,56 +1,22 @@
-import { IoIosStar } from 'react-icons/io';
 import { IoStopwatchOutline } from 'react-icons/io5';
 import { Button, Heading, Paragraph } from '../../../../components/ui';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import CourseMedia from '../../../../components/training/CourseMedia';
+import { formatEuro } from '../../../../utils/courseMedia';
 
-const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
+const CourseCard = ({ course, isDragging = false }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const handleButtonAction = (e, action) => {
-    navigate(`/training/course/details?id=${course.id}`);
+
+  const handleButtonAction = () => {
+    if (!course.slug) return;
+    navigate(`/training/course/details?slug=${course.slug}`);
   };
 
-  const renderStars = (rating) => {
-    return [...Array(5)].map((_, index) => (
-      <IoIosStar
-        key={index}
-        className={`h-4 w-4 ${
-          index < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'
-        }`}
-      />
-    ));
-  };
-
-  const renderPrice = () => {
-    return (
-      <div className="grid auto-cols-max grid-flow-col items-center gap-2 sm:justify-self-end">
-        {course.oldPrice && (
-          <span className="text-sm text-gray-400 line-through">
-            €{course.oldPrice.toFixed(2)}
-          </span>
-        )}
-        <span className="text-xl font-bold text-[#3FC89E]">
-          €{course.price.toFixed(2)}
-        </span>
-      </div>
-    );
-  };
-
-  const renderRating = () => {
-    return (
-      <div className="grid grid-cols-[auto_auto_auto] items-center gap-2">
-        <span className="text-lg font-bold text-gray-800">
-          {course.rating.toFixed(1)}
-        </span>
-        <div className="grid auto-cols-max grid-flow-col">
-          {renderStars(course.rating)}
-        </div>
-        <span className="text-sm text-gray-500">
-          ({course.reviews.toLocaleString()})
-        </span>
-      </div>
-    );
+  const handleEnroll = () => {
+    if (!course.slug) return;
+    navigate(`/training/course/checkout?slug=${course.slug}&plan=single`);
   };
 
   return (
@@ -59,24 +25,23 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
         isDragging ? 'opacity-70' : ''
       }`}
     >
-      {/* Image Section */}
       <div className="relative">
-        <img
-          src={course.image}
+        <CourseMedia
+          thumbnailUrl={course.thumbnailUrl}
+          videoUrl={course.videoUrl}
           alt={course.title}
           className="h-48 w-full object-cover"
-          draggable={false}
+          showVideoControls={false}
         />
 
-        {course.duration && (
+        {course.duration ? (
           <div className="absolute top-3 right-3 flex items-center gap-1 rounded-lg bg-white/90 px-3 py-1 text-sm shadow-sm backdrop-blur-sm">
             <IoStopwatchOutline className="h-4 w-4 text-gray-700" />
             <span className="font-medium text-gray-700">{course.duration}</span>
           </div>
-        )}
+        ) : null}
       </div>
 
-      {/* Content Section */}
       <div className="flex flex-col p-4 md:p-5">
         <Heading
           level={5}
@@ -89,26 +54,30 @@ const CourseCard = ({ course, isDragging = false, onButtonClick }) => {
           {course.description}
         </Paragraph>
 
-        {/* Rating + Price */}
         <div className="mt-2 text-start">
-          {renderPrice()}
-          {/* {renderRating()} */}
+          <div className="grid auto-cols-max grid-flow-col items-center gap-2 sm:justify-self-end">
+            {Number(course.oldPrice) > Number(course.price) ? (
+              <span className="text-sm text-gray-400 line-through">
+                {formatEuro(course.oldPrice)}
+              </span>
+            ) : null}
+            <span className="text-xl font-bold text-[#3FC89E]">
+              {formatEuro(course.price)}
+            </span>
+          </div>
         </div>
 
-        {/* Actions */}
-        <div className="flex flex-col gap-3 sm:flex-row mt-2">
+        <div className="mt-2 flex flex-col gap-3 sm:flex-row">
           <Button
             label={t('homeView.section4.enrollNow')}
-            onClick={(e) => handleButtonAction(e, 'Iscriviti ora')}
+            onClick={handleEnroll}
             className="flex-1 rounded-full bg-[#3FC89E] px-3 py-3 font-semibold text-white hover:bg-[#35b88f]"
           />
 
           <Button
             label={t('homeView.section4.details')}
             variant="outline"
-            onClick={(e) =>
-              handleButtonAction(e, t('homeView.section4.details'))
-            }
+            onClick={handleButtonAction}
             className="flex-1 rounded-full border border-gray-300 px-3 py-3 font-semibold text-gray-700 hover:border-gray-400 hover:bg-gray-50"
           />
         </div>

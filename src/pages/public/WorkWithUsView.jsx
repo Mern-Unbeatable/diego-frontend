@@ -55,7 +55,7 @@ const WorkWithUsView = () => {
         <Banner image={banner} title={t('workWithUs.section5.bannerTitle')} />
 
         {/* Hero */}
-        <div className="mx-auto max-w-4xl px-4 py-12 text-center">
+        <div className="mx-auto max-w-4xl  py-12 text-center">
           <span className="rounded-full bg-[#E4F0E8] p-3 text-sm text-[#5C9981]">
             {t('workWithUs.section5.badge')}
           </span>

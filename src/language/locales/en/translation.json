@@ -66,9 +66,15 @@
       "feedbackTitle": "Session feedback",
       "leaveComment": "Leave a comment",
       "rateExperience": "Rate your experience below",
-      "ratingText": "4/5 stars",
+      "ratingText": "Select a rating",
+      "ratingTextSelected": "{{rating}}/5 stars",
+      "selectRating": "Rate {{rating}} out of 5",
       "textAreaPlaceholder": "Write something about your experience...",
-      "submitButton": "Submit"
+      "submitButton": "Submit",
+      "nameRequired": "Please enter your name",
+      "ratingRequired": "Please select a rating",
+      "successAlert": "Review submitted successfully!",
+      "errorAlert": "Error while submitting review"
     },
     "section3": {
       "exploreCatalog": "Explore our service catalog",
@@ -327,6 +333,9 @@
     },
     "section7": {
       "title": "Mandatory courses",
+      "loadingCourses": "Loading courses...",
+      "courseNotFound": "Course data not found.",
+      "courseImageAlt": "Course image",
       "courses": [
         {
           "title": "SEVESO Training - annual package",
@@ -451,15 +460,16 @@
         }
       ],
       "howItWorksTitle": "How it works",
+      "howItWorksImage": "/image/course/level2.png",
       "howItWorksSteps": [
-        "Contact UnoSicurezza teams",
-        "Choose the product: single course or training package",
-        "Collect requirements through form or technical inspection",
-        "Create the customized course with logo, references, media and procedures",
-        "Upload to LMS platform with delivery and monitoring automation",
-        "Asynchronous e-learning delivery from desktop and mobile",
+        "Contact with the UnoSicurezza team",
+        "Choose the product that suits you (single course or package) for quarterly training",
+        "Requirements collection via form or on-site inspection by our technicians",
+        "Custom course creation with logo, company references, photos, videos, operating procedures and internal manuals",
+        "Upload to our LMS platform to automate delivery and training activity monitoring",
+        "E-learning delivery to workers, also from mobile and tablet",
         "Final test",
-        "Certificate release at the end of the course"
+        "Certificate issued at the end of the course"
       ]
     },
     "section9": {
@@ -486,7 +496,7 @@
         },
         {
           "title": "Course delivery",
-          "desc": "e-learning access from PC, tablet and smartphone"
+          "desc": "e-learning for workers from PC, tablet and smartphone"
         }
       ]
     },
@@ -559,6 +569,9 @@
         "title": "Company package",
         "description": "Solution to support companies in monitoring regulatory deadlines, ensuring timely assistance and compliance",
         "subtitle": "Training: the right size for you",
+        "selectTier": "Select a plan",
+        "selectedTier": "Selected: {{label}} — {{price}}",
+        "selectTierFirst": "Select a plan to continue",
         "item1": "1-20 users - €150/user",
         "item2": "21-50 users - €420/user",
         "item3": "51-200 users - €1000/user",

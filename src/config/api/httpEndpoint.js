@@ -24,7 +24,9 @@ export const endpoints = {
   public: {
     CONTACTS: '/contacts',
     SERVICE_REQUESTS: '/service-requests',
+    REVIEWS: '/reviews',
     COURSES_PUBLIC: '/courses/public',
     COURSE_DETAILS: '/courses',
+    COURSE_DETAILS_BY_SLUG: '/courses/slug',
   },
 };
