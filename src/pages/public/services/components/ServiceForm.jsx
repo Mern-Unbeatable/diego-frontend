@@ -96,7 +96,7 @@ export default function ServiceForm({ title }) {
     }
   };
   return (
-    <div className="relative rounded-2xl border border-gray-100 bg-[#FFF5E6] p-6 shadow-lg md:p-8">
+    <div className="relative rounded-2xl border border-gray-100 bg-[#FFF5E6] p-4 shadow-lg md:p-6">
       <h2 className="mb-2 text-2xl font-bold text-gray-900">
         {t('servicesPages.section19.title')}
       </h2>

@@ -66,9 +66,15 @@
       "feedbackTitle": "课程反馈",
       "leaveComment": "留下评论",
       "rateExperience": "请在下方为你的体验评分",
-      "ratingText": "4/5 星",
+      "ratingText": "请选择评分",
+      "ratingTextSelected": "{{rating}}/5 星",
+      "selectRating": "评分 {{rating}}/5",
       "textAreaPlaceholder": "写下你对本次体验的感受...",
-      "submitButton": "提交"
+      "submitButton": "提交",
+      "nameRequired": "请输入您的姓名",
+      "ratingRequired": "请选择评分",
+      "successAlert": "评价提交成功！",
+      "errorAlert": "提交评价时发生错误"
     },
     "section3": {
       "exploreCatalog": "探索我们的服务目录",
@@ -315,6 +321,9 @@
     },
     "section7": {
       "title": "必修课程",
+      "loadingCourses": "正在加载课程...",
+      "courseNotFound": "未找到课程数据。",
+      "courseImageAlt": "课程图片",
       "courses": [
         {
           "title": "SEVESO培训 - 年度套餐",
@@ -439,13 +448,14 @@
         }
       ],
       "howItWorksTitle": "如何运作",
+      "howItWorksImage": "/image/course/level2.png",
       "howItWorksSteps": [
         "联系UnoSicurezza团队",
-        "选择产品：单课或套餐",
-        "通过表单或现场勘查收集需求",
-        "定制课程内容与企业元素",
-        "上传至LMS并自动化管理",
-        "支持PC与移动端学习",
+        "选择适合您的产品（单课或套餐）进行季度培训",
+        "通过表单收集需求，或由我们的技术人员现场勘查",
+        "定制课程，包含企业Logo、参考资料、照片、视频、操作流程和内部手册",
+        "上传至LMS平台，自动发布并监控培训活动",
+        "向员工提供在线学习，支持手机和平板",
         "最终测试",
         "课程结束后颁发证书"
       ]
@@ -474,7 +484,7 @@
         },
         {
           "title": "课程交付",
-          "desc": "通过电脑、平板、手机学习"
+          "desc": "员工可通过电脑、平板和智能手机在线学习"
         }
       ]
     },
@@ -547,6 +557,9 @@
         "title": "企业套餐",
         "description": "帮助企业跟踪法规时限并确保合规",
         "subtitle": "培训：为你匹配的规模",
+        "selectTier": "选择套餐",
+        "selectedTier": "已选择：{{label}} — {{price}}",
+        "selectTierFirst": "请先选择套餐",
         "item1": "1-20用户 - €150/用户",
         "item2": "21-50用户 - €420/用户",
         "item3": "51-200用户 - €1000/用户",

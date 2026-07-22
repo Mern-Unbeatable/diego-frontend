@@ -85,8 +85,8 @@ const CollaborationRequestForm = () => {
   };
 
   return (
-    <div className="bg-cyan-10 px-4 py-16">
-      <div className="bg-cyan-10 px-4 py-16">
+    <div className="bg-cyan-10 px-4 py-14 md:py-16">
+      <div className="bg-cyan-10  ">
         <div className="mx-auto max-w-3xl">
           {/* Header */}
           <div className="mb-12 text-center">
@@ -99,7 +99,7 @@ const CollaborationRequestForm = () => {
           </div>
 
           {/* Form Container */}
-          <div className="rounded-lg border border-gray-200 bg-white p-8">
+          <div className="rounded-lg border border-gray-200 bg-white p-4 md:p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Row 1: Nome azienda & Tipo collaborazione */}
               <div className="grid grid-cols-2 gap-6">
@@ -248,9 +248,8 @@ const CollaborationRequestForm = () => {
         </div>
       </div>
 
-      <div className="rounded-lg border border-gray-200 bg-white p-8">
+      {/* <div className="rounded-lg border border-gray-200 bg-white  p-4 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Row 1: Nome azienda & Tipo collaborazione */}
           <div className="grid grid-cols-2 gap-6">
             <div>
               <label className="mb-2 block text-sm font-semibold text-gray-700">
@@ -293,7 +292,6 @@ const CollaborationRequestForm = () => {
             </div>
           </div>
 
-          {/* Row 2: Referente & Email */}
           <div className="grid grid-cols-2 gap-6">
             <div>
               <label className="mb-2 block text-sm font-semibold text-gray-700">
@@ -323,7 +321,6 @@ const CollaborationRequestForm = () => {
             </div>
           </div>
 
-          {/* Row 3: Telefono & Dimensione */}
           <div className="grid grid-cols-2 gap-6">
             <div>
               <label className="mb-2 block text-sm font-semibold text-gray-700">
@@ -361,7 +358,6 @@ const CollaborationRequestForm = () => {
             </div>
           </div>
 
-          {/* Textarea */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">
               {t('workWithUs.section4.descrizione')}
@@ -376,7 +372,6 @@ const CollaborationRequestForm = () => {
             ></textarea>
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={isSubmitting}
@@ -385,7 +380,7 @@ const CollaborationRequestForm = () => {
             {isSubmitting ? 'Sending...' : t('workWithUs.section4.submit')}
           </button>
         </form>
-      </div>
+      </div> */}
     </div>
   );
 };

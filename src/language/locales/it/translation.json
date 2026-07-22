@@ -66,9 +66,15 @@
       "feedbackTitle": "Feedback sulla sessione",
       "leaveComment": "Lascia un commento",
       "rateExperience": "Valuta la tua esperienza qui sotto",
-      "ratingText": "4/5 stars",
+      "ratingText": "Seleziona una valutazione",
+      "ratingTextSelected": "{{rating}}/5 stelle",
+      "selectRating": "Valuta {{rating}} su 5",
       "textAreaPlaceholder": "Scrivi qualcosa sulla tua esperienza...",
-      "submitButton": "Invia"
+      "submitButton": "Invia",
+      "nameRequired": "Inserisci il tuo nome",
+      "ratingRequired": "Seleziona una valutazione",
+      "successAlert": "Recensione inviata con successo!",
+      "errorAlert": "Errore durante l'invio della recensione"
     },
     "section3": {
       "exploreCatalog": "Esplora il nostro catalogo corsi",
@@ -327,6 +333,9 @@
     },
     "section7": {
       "title": "Corsi obbligatori",
+      "loadingCourses": "Caricamento corsi...",
+      "courseNotFound": "Dati del corso non trovati.",
+      "courseImageAlt": "Immagine del corso",
       "courses": [
         {
           "title": "Formazione SEVESO - pacchetto annuale",
@@ -451,15 +460,16 @@
         }
       ],
       "howItWorksTitle": "Come funziona",
+      "howItWorksImage": "/image/course/level2.png",
       "howItWorksSteps": [
-        "Contatto con il team UnoSicurezza",
-        "Scelta del prodotto: corso singolo o pacchetto",
-        "Raccolta esigenze tramite form o sopralluogo tecnico",
-        "Realizzazione corso personalizzato con logo, riferimenti e procedure",
-        "Caricamento sulla piattaforma LMS con automazione",
-        "Erogazione e-learning da PC e mobile",
+        "Contatto con il team di UnoSicurezza",
+        "Scegli il prodotto che fa per te (corso singolo o pacchetto) per formazione trimestrale",
+        "Raccolta esigenze tramite form, oppure sopralluogo dei nostri tecnici",
+        "Realizzazione del corso/corsi personalizzati con logo e riferimenti aziendali, foto video procedure operative manuali interni",
+        "Caricamento sulla nostra piattaforma LMS che permette di automatizzare l'erogazione e il monitoraggio attività formativa",
+        "Erogazione in e-learning ai lavoratori, anche da cellulare e tablet",
         "Test finale",
-        "Rilascio attestato a fine corso"
+        "Rilascio attestato al termine del corso"
       ]
     },
     "section9": {
@@ -486,7 +496,7 @@
         },
         {
           "title": "Erogazione corso",
-          "desc": "in e-learning da PC, tablet e smartphone"
+          "desc": "in e-learning ai lavoratori da PC, tablet o smartphone"
         }
       ]
     },
@@ -559,6 +569,9 @@
         "title": "Pacchetto Aziendale",
         "description": "Soluzione per supportare le aziende nel monitoraggio delle scadenze normative",
         "subtitle": "Formazione: la taglia perfetta per te",
+        "selectTier": "Seleziona un piano",
+        "selectedTier": "Selezionato: {{label}} — {{price}}",
+        "selectTierFirst": "Seleziona un piano per continuare",
         "item1": "1-20 utenti - €150/utente",
         "item2": "21-50 utenti - €420/utente",
         "item3": "51-200 utenti - €1000/utente",
