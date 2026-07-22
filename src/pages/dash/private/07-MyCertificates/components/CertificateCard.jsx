@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { LuPrinter, LuDownload } from 'react-icons/lu';
 import Button from '../../../../../components/ui/buttons/Buttons';
 
@@ -9,9 +9,6 @@ const NoImageState = () => (
 );
 
 const CertificateCard = ({ certificate }) => {
-  const [imageError, setImageError] = useState(false);
-  const showImage = certificate.imageUrl && !imageError;
-
   const handlePrint = () => {
     if (!certificate.pdfUrl) return;
 
@@ -40,12 +37,11 @@ const CertificateCard = ({ certificate }) => {
       <h3 className="text-2xl font-bold text-gray-900">{certificate.courseTitle}</h3>
 
       <div className="mx-auto max-w-xl overflow-hidden rounded-xl border border-amber-100 bg-gray-100">
-        {showImage ? (
-          <img
-            src={certificate.imageUrl}
-            alt={`Certificate for ${certificate.courseTitle}`}
-            className="mx-auto max-h-[320px] w-full object-contain"
-            onError={() => setImageError(true)}
+        {certificate.pdfUrl ? (
+          <iframe
+            src={`${certificate.pdfUrl}#toolbar=0&navpanes=0`}
+            title={`Certificate for ${certificate.courseTitle}`}
+            className="h-80 w-full bg-white"
           />
         ) : (
           <NoImageState />
@@ -71,7 +67,7 @@ const CertificateCard = ({ certificate }) => {
           size="sm"
           className="px-3 py-1.5 text-sm font-semibold"
           aria-label="Print certificate"
-          disabled={!certificate.canDownload || !certificate.pdfUrl}
+          disabled={!certificate.pdfUrl}
         />
 
         <Button

@@ -225,7 +225,7 @@ export const mapCertificateItem = (certificate) => {
     pdfUrl: certificate.pdfUrl ?? null,
     qrCode: certificate.qrCode ?? null,
     companyLogoUrl: certificate.companyLogoUrl ?? null,
-    imageUrl: certificate.companyLogoUrl || course.thumbnailUrl || null,
+    imageUrl: certificate.pdfUrl ?? null,
     status: certificate.status ?? null,
     issuedAt: formatCertificateDate(certificate.issuedAt),
     downloadableUntil: formatCertificateDate(certificate.downloadableUntil),
