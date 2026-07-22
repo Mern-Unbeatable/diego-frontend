@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { LuPrinter, LuDownload } from 'react-icons/lu';
 import Button from '../../../../../components/ui/buttons/Buttons';
+import { COOKIE_STORAGE } from '../../../../../utils/cookies/cookieStorage';
 
 const NoImageState = () => (
   <div className="flex h-full min-h-[250px] w-full items-center justify-center bg-gray-100 text-sm text-gray-400">
@@ -8,28 +10,135 @@ const NoImageState = () => (
   </div>
 );
 
+const fetchPdfBlobUrl = async (pdfUrl) => {
+  const token = COOKIE_STORAGE.getToken();
+  const response = await fetch(pdfUrl, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+
+  if (!response.ok) {
+    throw new Error('Impossibile caricare il PDF');
+  }
+
+  const blob = await response.blob();
+  return URL.createObjectURL(blob);
+};
+
 const CertificateCard = ({ certificate }) => {
-  const handlePrint = () => {
-    if (!certificate.pdfUrl) return;
+  const previewBlobUrlRef = useRef(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
 
-    const printWindow = window.open(certificate.pdfUrl, '_blank');
+  const getPdfFileName = () =>
+    `certificate-${certificate.courseTitle.replace(/\s+/g, '-').toLowerCase()}.pdf`;
 
-    if (printWindow) {
-      printWindow.onload = () => printWindow.print();
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadPreview = async () => {
+      if (!certificate.pdfUrl) {
+        setPreviewUrl(null);
+        return;
+      }
+
+      setPreviewLoading(true);
+
+      try {
+        const blobUrl = await fetchPdfBlobUrl(certificate.pdfUrl);
+
+        if (cancelled) {
+          URL.revokeObjectURL(blobUrl);
+          return;
+        }
+
+        if (previewBlobUrlRef.current) {
+          URL.revokeObjectURL(previewBlobUrlRef.current);
+        }
+
+        previewBlobUrlRef.current = blobUrl;
+        setPreviewUrl(blobUrl);
+      } catch {
+        if (!cancelled) {
+          setPreviewUrl(certificate.pdfUrl);
+        }
+      } finally {
+        if (!cancelled) {
+          setPreviewLoading(false);
+        }
+      }
+    };
+
+    loadPreview();
+
+    return () => {
+      cancelled = true;
+
+      if (previewBlobUrlRef.current) {
+        URL.revokeObjectURL(previewBlobUrlRef.current);
+        previewBlobUrlRef.current = null;
+      }
+    };
+  }, [certificate.pdfUrl]);
+
+  const resolvePdfUrl = async () => {
+    if (!certificate.pdfUrl) {
+      toast.error(
+        certificate.message || 'Attestato PDF non disponibile al momento',
+      );
+      return null;
+    }
+
+    if (previewBlobUrlRef.current) {
+      return previewBlobUrlRef.current;
+    }
+
+    try {
+      return await fetchPdfBlobUrl(certificate.pdfUrl);
+    } catch {
+      return certificate.pdfUrl;
     }
   };
 
-  const handleDownload = () => {
-    if (!certificate.canDownload || !certificate.pdfUrl) return;
+  const handlePrint = async () => {
+    try {
+      const pdfUrl = await resolvePdfUrl();
+      if (!pdfUrl) return;
 
-    const link = document.createElement('a');
-    link.href = certificate.pdfUrl;
-    link.download = `certificate-${certificate.courseTitle.replace(/\s+/g, '-').toLowerCase()}.pdf`;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      const printWindow = window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+      if (!printWindow) {
+        toast.error('Impossibile aprire la finestra di stampa');
+        return;
+      }
+
+      printWindow.onload = () => {
+        printWindow.focus();
+        printWindow.print();
+      };
+    } catch {
+      toast.error('Impossibile stampare il certificato');
+    }
+  };
+
+  const handleDownload = async () => {
+    try {
+      const pdfUrl = await resolvePdfUrl();
+      if (!pdfUrl) return;
+
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.download = getPdfFileName();
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      if (pdfUrl !== previewBlobUrlRef.current) {
+        URL.revokeObjectURL(pdfUrl);
+      }
+    } catch {
+      toast.error('Impossibile scaricare il certificato');
+    }
   };
 
   return (
@@ -37,9 +146,13 @@ const CertificateCard = ({ certificate }) => {
       <h3 className="text-2xl font-bold text-gray-900">{certificate.courseTitle}</h3>
 
       <div className="mx-auto max-w-xl overflow-hidden rounded-xl border border-amber-100 bg-gray-100">
-        {certificate.pdfUrl ? (
+        {previewLoading ? (
+          <div className="flex min-h-[250px] items-center justify-center text-sm text-gray-400">
+            Caricamento PDF...
+          </div>
+        ) : previewUrl ? (
           <iframe
-            src={`${certificate.pdfUrl}#toolbar=0&navpanes=0`}
+            src={`${previewUrl}#toolbar=0&navpanes=0`}
             title={`Certificate for ${certificate.courseTitle}`}
             className="h-80 w-full bg-white"
           />
@@ -65,9 +178,8 @@ const CertificateCard = ({ certificate }) => {
           label="Stampa"
           variant="primary"
           size="sm"
-          className="px-3 py-1.5 text-sm font-semibold"
+          className="cursor-pointer px-3 py-1.5 text-sm font-semibold"
           aria-label="Print certificate"
-          disabled={!certificate.pdfUrl}
         />
 
         <Button
@@ -76,9 +188,8 @@ const CertificateCard = ({ certificate }) => {
           label="Scarica"
           variant="primary"
           size="sm"
-          className="px-3 py-1.5 text-sm font-semibold"
+          className="cursor-pointer px-3 py-1.5 text-sm font-semibold"
           aria-label="Download certificate"
-          disabled={!certificate.canDownload || !certificate.pdfUrl}
         />
       </div>
     </div>
