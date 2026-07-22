@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowLeft, Calendar, ChevronDown } from 'lucide-react';
 
-const StudentInfoModal = ({ onClose }) => {
+const StudentInfoModal = ({ profile, onClose }) => {
   const overlayRef = useRef(null);
   const dialogRef = useRef(null);
   const dateInputRef = useRef(null);
@@ -63,7 +63,11 @@ const StudentInfoModal = ({ onClose }) => {
           </h3>
         </div>
         {/* Form wraps everything to allow submission */}
-        <form onSubmit={handleSubmit} className="flex min-h-0 flex-1 flex-col">
+        <form
+          key={profile?.id || 'profile-form'}
+          onSubmit={handleSubmit}
+          className="flex min-h-0 flex-1 flex-col"
+        >
           {/* Scrollable middle content */}
           <div className="flex-1 overflow-y-auto p-5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#73BFA1] [&::-webkit-scrollbar-thumb]:rounded-full">
             <div className="mx-auto w-full max-w-[800px] space-y-2">
@@ -81,6 +85,7 @@ const StudentInfoModal = ({ onClose }) => {
                   name="firstName"
                   placeholder="Inserisci il nome"
                   required
+                  defaultValue={profile?.firstName || ''}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -93,6 +98,7 @@ const StudentInfoModal = ({ onClose }) => {
                   name="lastName"
                   placeholder="Inserisci il cognome"
                   required
+                  defaultValue={profile?.lastName || ''}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -107,6 +113,7 @@ const StudentInfoModal = ({ onClose }) => {
                     type="date"
                     name="birthDate"
                     required
+                    defaultValue={profile?.birthDate || ''}
                     className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 pr-11 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px] [&::-webkit-calendar-picker-indicator]:hidden"
                     onClick={() => dateInputRef.current?.showPicker()}
                   />
@@ -126,6 +133,7 @@ const StudentInfoModal = ({ onClose }) => {
                     name="city"
                     placeholder="Inserisci il luogo di nascita"
                     required
+                    defaultValue={profile?.city || ''}
                     className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                   />
                 </div>
@@ -138,15 +146,15 @@ const StudentInfoModal = ({ onClose }) => {
                     <select
                       name="country"
                       required
+                      defaultValue={profile?.country || ''}
                       className="h-11 w-full appearance-none rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 pr-10 text-[13px] text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
-                      defaultValue=""
                     >
                       <option value="" disabled>
                         Seleziona il Paese
                       </option>
-                      <option value="it">Italia</option>
-                      <option value="fr">Francia</option>
-                      <option value="es">Spagna</option>
+                      <option value="Italy">Italia</option>
+                      <option value="France">Francia</option>
+                      <option value="Spain">Spagna</option>
                     </select>
                     <ChevronDown className="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-[#555]" />
                   </div>
@@ -161,6 +169,7 @@ const StudentInfoModal = ({ onClose }) => {
                   name="address"
                   placeholder="Via, numero civico, CAP, città, sigla provincia, paese"
                   required
+                  defaultValue={profile?.residenceAddress || ''}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -172,7 +181,7 @@ const StudentInfoModal = ({ onClose }) => {
                 <input
                   name="companyName"
                   placeholder="Inserisci il nome dell'azienda"
-                  required
+                  defaultValue={profile?.companyName || ''}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -184,7 +193,7 @@ const StudentInfoModal = ({ onClose }) => {
                 <input
                   name="legalOffice"
                   placeholder="Inserisci sede legale (Via, numero civico, CAP, città, sigla provincia, paese)"
-                  required
+                  defaultValue={profile?.companyAddress || ''}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -196,7 +205,7 @@ const StudentInfoModal = ({ onClose }) => {
                 <input
                   name="vatNumber"
                   placeholder="Inserisci la Partita IVA"
-                  required
+                  defaultValue={profile?.companyVatNumber || ''}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -209,7 +218,7 @@ const StudentInfoModal = ({ onClose }) => {
                 <input
                   name="taxCode"
                   placeholder="Inserisci il codice fiscale"
-                  required
+                  defaultValue={profile?.traineeTaxCode || profile?.companyTaxCode || ''}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>

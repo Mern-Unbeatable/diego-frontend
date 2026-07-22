@@ -34,5 +34,6 @@ export const endpoints = {
     MARK_NOTIFICATIONS_READ: '/notifications/mark-read',
     MARK_ALL_NOTIFICATIONS_READ: '/notifications/mark-all-read',
     MY_CERTIFICATES: '/certificates/my',
+    MY_PROFILE: '/users/me',
   },
 };

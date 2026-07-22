@@ -8,6 +8,7 @@ import {
   markNotificationsReadAPI,
   markAllNotificationsReadAPI,
   getMyCertificatesAPI,
+  getMyProfileAPI,
 } from './privateAPI';
 import {
   mapEnrollmentsResponse,
@@ -15,6 +16,7 @@ import {
   mapTicketDetailResponse,
   mapNotificationsResponse,
   mapCertificatesResponse,
+  mapProfileResponse,
 } from './privateMappers';
 
 const initialState = {
@@ -55,6 +57,9 @@ const initialState = {
   certificatesLoading: false,
   certificatesLoadingMore: false,
   certificatesError: null,
+  profile: null,
+  profileLoading: false,
+  profileError: null,
 };
 
 const privateSlice = createSlice({
@@ -68,6 +73,7 @@ const privateSlice = createSlice({
       state.ticketDetailError = null;
       state.notificationsError = null;
       state.certificatesError = null;
+      state.profileError = null;
     },
     resetTicketDetail: (state) => {
       state.ticketDetail = null;
@@ -194,6 +200,18 @@ const privateSlice = createSlice({
         state.certificatesLoading = false;
         state.certificatesLoadingMore = false;
         state.certificatesError = action.payload;
+      })
+      .addCase(getMyProfileAPI.pending, (state) => {
+        state.profileLoading = true;
+        state.profileError = null;
+      })
+      .addCase(getMyProfileAPI.fulfilled, (state, action) => {
+        state.profileLoading = false;
+        state.profile = mapProfileResponse(action.payload);
+      })
+      .addCase(getMyProfileAPI.rejected, (state, action) => {
+        state.profileLoading = false;
+        state.profileError = action.payload;
       });
   },
 });

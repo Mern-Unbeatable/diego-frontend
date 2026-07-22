@@ -9,6 +9,7 @@ import {
   markNotificationsReadAPI,
   markAllNotificationsReadAPI,
   getMyCertificatesAPI,
+  getMyProfileAPI,
 } from './privateAPI';
 import { resetTicketDetail } from './privateSlice';
 import { selectPrivate } from './privateSelectors';
@@ -88,6 +89,11 @@ export const usePrivate = () => {
     [dispatch],
   );
 
+  const fetchMyProfile = useCallback(async () => {
+    const result = await dispatch(getMyProfileAPI()).unwrap();
+    return result;
+  }, [dispatch]);
+
   return {
     fetchMyEnrollments,
     fetchMyTickets,
@@ -98,6 +104,7 @@ export const usePrivate = () => {
     markNotificationsAsRead,
     markAllNotificationsAsRead,
     fetchMyCertificates,
+    fetchMyProfile,
     ...privateState,
   };
 };

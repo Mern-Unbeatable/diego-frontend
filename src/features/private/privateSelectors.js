@@ -9,3 +9,5 @@ export const selectTicketDetail = (state) => state.private.ticketDetail;
 export const selectNotifications = (state) => state.private.notifications;
 
 export const selectNotificationsMeta = (state) => state.private.notificationsMeta;
+
+export const selectMyProfile = (state) => state.private.profile;

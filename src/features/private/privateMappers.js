@@ -269,3 +269,52 @@ export const mapCertificatesResponse = (payload) => {
     },
   };
 };
+
+const formatProfileDateInput = (value) => {
+  if (!value) return '';
+
+  return new Date(value).toISOString().split('T')[0];
+};
+
+export const mapProfileResponse = (payload) => {
+  const user = payload?.data?.user;
+
+  if (!user) {
+    return null;
+  }
+
+  const firstName = user.firstName ?? '';
+  const lastName = user.lastName ?? '';
+
+  return {
+    id: user.id,
+    email: user.email ?? '',
+    firstName,
+    lastName,
+    fullName:
+      [firstName, lastName].filter(Boolean).join(' ') || user.email || '',
+    avatar: user.avatar ?? null,
+    birthDate: formatProfileDateInput(user.birthDate),
+    city: user.city ?? '',
+    country: user.country ?? '',
+    residenceAddress: user.residenceAddress ?? '',
+    traineeTaxCode: user.traineeTaxCode ?? '',
+    companyName: user.companyName ?? '',
+    companyAddress: user.companyAddress ?? '',
+    companyTaxCode: user.companyTaxCode ?? '',
+    companyVatNumber: user.companyVatNumber ?? '',
+    companyPosition: user.companyPosition ?? '',
+    citizenship: user.citizenship ?? '',
+    contactNumber: user.contactNumber ?? '',
+    preferredLanguage: user.preferredLanguage ?? 'en',
+    profileCompleted: user.profileCompleted ?? false,
+    level: user.level ?? null,
+    status: user.status ?? null,
+    counts: {
+      enrollments: user._count?.enrollments ?? 0,
+      certificates: user._count?.certificates ?? 0,
+      payments: user._count?.payments ?? 0,
+    },
+    enrollments: user.enrollments ?? [],
+  };
+};

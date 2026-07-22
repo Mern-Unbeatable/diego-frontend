@@ -95,3 +95,11 @@ export const getMyCertificatesService = async (
     signal,
   });
 };
+
+export const getMyProfileService = async ({ signal } = {}) => {
+  return await request({
+    method: 'GET',
+    url: endpoints.private.MY_PROFILE,
+    signal,
+  });
+};
