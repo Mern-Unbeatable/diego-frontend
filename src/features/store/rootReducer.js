@@ -5,6 +5,7 @@ import courseReducer from '../public/course/courseSlice';
 import serviceRequestReducer from '../public/serviceRequest/serviceRequestSlice';
 import privateReducer from '../private/privateSlice';
 import reviewReducer from '../public/review/reviewSlice';
+import paymentReducer from '../public/payment/paymentSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   serviceRequest: serviceRequestReducer,
   private: privateReducer,
   review: reviewReducer,
+  payment: paymentReducer,
 });
 
 export default rootReducer;

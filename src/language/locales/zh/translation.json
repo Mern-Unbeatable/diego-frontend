@@ -593,7 +593,13 @@
       "cvv": "CVV",
       "subtotal": "小计",
       "total": "总计",
-      "payNow": "立即支付"
+      "payNow": "立即支付",
+      "processing": "处理中...",
+      "preparingPayment": "正在准备安全支付...",
+      "paymentUnavailable": "支付暂不可用，请稍后重试。",
+      "paymentError": "支付失败，请检查银行卡信息后重试。",
+      "nameRequired": "请输入持卡人姓名",
+      "discount": "折扣"
     },
     "section3": {
       "close": "关闭",
