@@ -10,7 +10,7 @@ const StudentHomeView = () => {
           <LeftContent />
         </div>
 
-        {/* Right side - Profile Panel (1/3 width) */}
+     
         {/* Right side - Profile Panel (1/4 width) */}
         <div className="h-full 2xl:col-span-1">
           <ProfileSidebar />
