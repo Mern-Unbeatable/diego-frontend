@@ -28,5 +28,6 @@ export const endpoints = {
     COURSES_PUBLIC: '/courses/public',
     COURSE_DETAILS: '/courses',
     COURSE_DETAILS_BY_SLUG: '/courses/slug',
+    PAYMENTS_INTENT_COURSE: '/payments/intent/course',
   },
 };

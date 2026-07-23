@@ -19,6 +19,8 @@ const rawConfig = Object.freeze({
   IS_PROD: env.PROD,
   API_BASE_URL: env.VITE_API_BASE_URL ?? env.API_BASE_URL,
   APP_NAME: env.VITE_APP_NAME ?? env.APP_NAME,
+  STRIPE_PUBLISHABLE_KEY:
+    env.VITE_STRIPE_PUBLISHABLE_KEY ?? env.STRIPE_PUBLISHABLE_KEY ?? '',
 });
 
 export const ENV_CONFIG = rawConfig;

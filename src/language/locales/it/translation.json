@@ -605,7 +605,13 @@
       "cvv": "CVV",
       "subtotal": "Subtotale",
       "total": "Totale",
-      "payNow": "Paga ora"
+      "payNow": "Paga ora",
+      "processing": "Elaborazione...",
+      "preparingPayment": "Preparazione pagamento sicuro...",
+      "paymentUnavailable": "Pagamento non disponibile. Riprova.",
+      "paymentError": "Pagamento non riuscito. Controlla i dati della carta e riprova.",
+      "nameRequired": "Inserisci il nome sulla carta",
+      "discount": "Sconto"
     },
     "section3": {
       "close": "Chiudi",
