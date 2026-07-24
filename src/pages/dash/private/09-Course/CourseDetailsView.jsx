@@ -8,10 +8,12 @@ import LessonContent from '../../../../components/course/LessonContent';
 import LessonNavigation from '../../../../components/course/LessonNavigation';
 import { useCoursePlayer } from '../../../../features/learning/useCoursePlayer';
 import { getMyCertificatesService, ensureCourseCertificateService } from '../../../../features/learning/learningService';
+import { useDashboardPaths } from '../../../../hooks/useDashboardPaths';
 
 const CourseContentView = () => {
   const { id: courseId } = useParams();
   const navigate = useNavigate();
+  const paths = useDashboardPaths();
   const [finishingScorm, setFinishingScorm] = useState(false);
   const [courseCertificate, setCourseCertificate] = useState(null);
 
@@ -109,7 +111,7 @@ const CourseContentView = () => {
         <p className="mb-4">{error}</p>
         <button
           type="button"
-          onClick={() => navigate('/dashboard/private-user')}
+          onClick={() => navigate(paths.dashboard)}
           className="rounded-full bg-[#55B18D] px-5 py-2 text-sm font-semibold text-white"
         >
           Torna alla dashboard
@@ -145,14 +147,14 @@ const CourseContentView = () => {
       // fall through to certificates page
     }
 
-    navigate('/dashboard/private-user/certificates');
+    navigate(paths.certificates);
   };
 
   return (
     <div>
       <button
         type="button"
-        onClick={() => navigate('/dashboard/private-user')}
+        onClick={() => navigate(paths.dashboard)}
         className="mb-8 inline-flex cursor-pointer items-center text-gray-800 transition-colors hover:text-black"
         aria-label="Back"
       >

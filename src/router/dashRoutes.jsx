@@ -49,6 +49,9 @@ const CompanyOpenTicketView = lazy(
 const CompanyTicketDetailView = lazy(
   () => import('../pages/dash/company/04-Ticket/CompanyTicketDetailView.jsx'),
 );
+const CompanyEmployeeHomeView = lazy(
+  () => import('../pages/dash/company/01-Home/CompanyEmployeeHomeView.jsx'),
+);
 const CompanyCourseList = lazy(
   () => import('../pages/dash/company/05-Courses/CompanyCourseList.jsx'),
 );
@@ -190,8 +193,14 @@ export const dashboardRoutes = [
     routes: [
       {
         path: ROUTES.COMPANY_EMPLOYEE.DASHBOARD,
-        element: <CompanyCourseList />,
+        element: <CompanyEmployeeHomeView />,
       },
+      {
+        path: `${ROUTES.COMPANY_EMPLOYEE.COURSE}/:id`,
+        element: <CourseDetailsView />,
+      },
+      { path: ROUTES.COMPANY_EMPLOYEE.CREDENTIALS, element: <CredentialsView /> },
+      { path: ROUTES.COMPANY_EMPLOYEE.CERTIFICATES, element: <CertificatesView /> },
     ],
   },
 
