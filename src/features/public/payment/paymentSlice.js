@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  createCompanyCourseCheckoutAPI,
   createCoursePaymentIntentAPI,
   verifyCoursePaymentIntentAPI,
 } from './paymentAPI';
@@ -7,9 +8,12 @@ import {
 const initialState = {
   loading: false,
   verifying: false,
+  companyCheckoutLoading: false,
   error: null,
   verifyError: null,
+  companyCheckoutError: null,
   paymentIntent: null,
+  companyCheckout: null,
   enrollment: null,
 };
 
@@ -25,6 +29,10 @@ const paymentSlice = createSlice({
       state.error = null;
       state.verifyError = null;
       state.enrollment = null;
+    },
+    resetCompanyCheckout: (state) => {
+      state.companyCheckout = null;
+      state.companyCheckoutError = null;
     },
   },
   extraReducers: (builder) => {
@@ -52,9 +60,22 @@ const paymentSlice = createSlice({
       .addCase(verifyCoursePaymentIntentAPI.rejected, (state, action) => {
         state.verifying = false;
         state.verifyError = action.payload;
+      })
+      .addCase(createCompanyCourseCheckoutAPI.pending, (state) => {
+        state.companyCheckoutLoading = true;
+        state.companyCheckoutError = null;
+      })
+      .addCase(createCompanyCourseCheckoutAPI.fulfilled, (state, action) => {
+        state.companyCheckoutLoading = false;
+        state.companyCheckout = action.payload?.data || null;
+      })
+      .addCase(createCompanyCourseCheckoutAPI.rejected, (state, action) => {
+        state.companyCheckoutLoading = false;
+        state.companyCheckoutError = action.payload;
       });
   },
 });
 
-export const { resetPaymentError, resetPaymentIntent } = paymentSlice.actions;
+export const { resetPaymentError, resetPaymentIntent, resetCompanyCheckout } =
+  paymentSlice.actions;
 export default paymentSlice.reducer;

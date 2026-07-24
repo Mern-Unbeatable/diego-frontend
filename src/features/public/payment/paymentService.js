@@ -21,3 +21,12 @@ export const verifyCoursePaymentIntentService = async (
     signal,
   });
 };
+
+export const createCompanyCourseCheckoutService = async (payload, { signal } = {}) => {
+  return await request({
+    method: 'POST',
+    url: endpoints.public.PAYMENTS_CHECKOUT_COMPANY_COURSE,
+    data: payload,
+    signal,
+  });
+};

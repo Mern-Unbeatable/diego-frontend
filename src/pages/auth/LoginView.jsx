@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
 import { Heading, InputField, Label, Toast } from '../../components/ui';
@@ -19,6 +19,8 @@ const LoginView = () => {
 
   const { login, loading, error, isAuthenticated, verifyLoginOtp } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectPath = searchParams.get('redirect');
 
   // Auto-focus first input on OTP step
   useEffect(() => {
@@ -169,11 +171,13 @@ const LoginView = () => {
         otp: otpString,
       });
 
+      COOKIE_STORAGE.clearAll();
       COOKIE_STORAGE.setUser(response.data.user.level);
       COOKIE_STORAGE.setToken(response.data.accessToken);
 
       const userRole = response.data.user.level;
-      const targetPath = getDashboardPath(userRole) || '/login';
+      const targetPath =
+        redirectPath || getDashboardPath(userRole) || '/login';
 
       navigate(targetPath);
       toast.success('Successfully verified!');
