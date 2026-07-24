@@ -3,7 +3,7 @@ import { Search, Plus, Eye } from 'lucide-react';
 import Pagination from './Pagination';
 
 const TicketTable = ({
-  filteredTickets,
+  filteredTickets = [],
   search,
   setSearch,
   onViewTicket,

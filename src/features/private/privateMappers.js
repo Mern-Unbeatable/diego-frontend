@@ -1,5 +1,7 @@
 import i18n from '../../language/i18n';
 
+const getPayloadData = (payload) => payload?.data ?? payload ?? {};
+
 const getCourseTitle = (courseTitle) => {
   if (!courseTitle || typeof courseTitle !== 'object') {
     return '';
@@ -62,7 +64,7 @@ export const mapEnrollmentToCourse = (enrollment) => {
 };
 
 export const mapEnrollmentsResponse = (payload) => {
-  const enrollments = payload?.data?.enrollments;
+  const enrollments = getPayloadData(payload)?.enrollments;
 
   if (!Array.isArray(enrollments)) {
     return [];
@@ -127,7 +129,7 @@ export const mapTicketItem = (ticket) => ({
 });
 
 export const mapTicketDetailResponse = (payload) => {
-  const ticket = payload?.data?.ticket;
+  const ticket = getPayloadData(payload)?.ticket;
 
   if (!ticket) {
     return null;
@@ -137,7 +139,7 @@ export const mapTicketDetailResponse = (payload) => {
 };
 
 export const mapTicketsResponse = (payload) => {
-  const tickets = payload?.data?.tickets;
+  const tickets = getPayloadData(payload)?.tickets;
 
   if (!Array.isArray(tickets)) {
     return [];
@@ -185,8 +187,9 @@ export const mapNotificationItem = (notification) => ({
 });
 
 export const mapNotificationsResponse = (payload) => {
-  const notifications = payload?.data?.notifications;
-  const meta = payload?.data?.meta ?? {};
+  const data = getPayloadData(payload);
+  const notifications = data?.notifications;
+  const meta = data?.meta ?? {};
 
   return {
     notifications: Array.isArray(notifications)
@@ -247,9 +250,10 @@ export const mapCertificateItem = (certificate) => {
 };
 
 export const mapCertificatesResponse = (payload) => {
-  const certificates = payload?.data?.certificates;
-  const meta = payload?.data?.meta ?? {};
-  const archive = payload?.data?.archive ?? {};
+  const data = getPayloadData(payload);
+  const certificates = data?.certificates;
+  const meta = data?.meta ?? {};
+  const archive = data?.archive ?? {};
 
   return {
     certificates: Array.isArray(certificates)
@@ -277,7 +281,7 @@ const formatProfileDateInput = (value) => {
 };
 
 export const mapProfileResponse = (payload) => {
-  const user = payload?.data?.user;
+  const user = getPayloadData(payload)?.user;
 
   if (!user) {
     return null;

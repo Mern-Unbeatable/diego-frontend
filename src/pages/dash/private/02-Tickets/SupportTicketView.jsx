@@ -89,9 +89,10 @@ const SupportTicketView = () => {
   };
 
   const filteredTickets = useMemo(() => {
-    if (!search.trim()) return tickets;
+    const ticketList = Array.isArray(tickets) ? tickets : [];
+    if (!search.trim()) return ticketList;
 
-    return tickets.filter((ticket) => {
+    return ticketList.filter((ticket) => {
       const haystack =
         `${ticket.id} ${ticket.subject} ${ticket.status} ${ticket.message}`.toLowerCase();
       return haystack.includes(search.toLowerCase());
