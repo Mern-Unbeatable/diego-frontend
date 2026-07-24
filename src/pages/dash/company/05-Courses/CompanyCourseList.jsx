@@ -355,7 +355,7 @@ const CompanyCourseList = () => {
         )}
       </section>
 
-      {assignOpen && (
+      {assignOpen ? (
         <EmployeeModal
           mode="add"
           saving={saving}
@@ -372,7 +372,7 @@ const CompanyCourseList = () => {
           onSubmit={handleAssignEmployee}
           onClose={() => !saving && setAssignOpen(false)}
         />
-      )}
+      ) : null}
 
       <StudentTrackingModal
         course={selectedCourse}
