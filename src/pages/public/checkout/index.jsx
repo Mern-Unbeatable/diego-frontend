@@ -377,6 +377,8 @@ const Checkout = () => {
                 verifying={paymentVerifying}
                 onSuccess={handlePaymentSuccess}
               />
+
+
             ) : (
               !paymentLoading && (
                 <p className="text-sm text-gray-600">

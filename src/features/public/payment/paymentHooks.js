@@ -10,6 +10,7 @@ import {
 import { resetCompanyCheckout, resetPaymentIntent } from './paymentSlice';
 import { selectPayment } from './paymentSelectors';
 
+
 export const usePayment = () => {
   const dispatch = useDispatch();
   const paymentState = useSelector(selectPayment);

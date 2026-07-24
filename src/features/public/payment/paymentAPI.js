@@ -8,6 +8,7 @@ import {
   verifyCoursePaymentIntentService,
 } from './paymentService';
 
+
 export const createCoursePaymentIntentAPI = createAsyncThunk(
   'payment/createCoursePaymentIntent',
   async (payload, { rejectWithValue, signal }) => {
