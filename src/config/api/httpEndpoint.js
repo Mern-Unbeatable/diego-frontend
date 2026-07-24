@@ -29,5 +29,6 @@ export const endpoints = {
     COURSE_DETAILS: '/courses',
     COURSE_DETAILS_BY_SLUG: '/courses/slug',
     PAYMENTS_INTENT_COURSE: '/payments/intent/course',
+    PAYMENTS_INTENT_COURSE_VERIFY: '/payments/intent/course/verify',
   },
 };

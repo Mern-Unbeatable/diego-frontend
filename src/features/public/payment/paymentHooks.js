@@ -1,6 +1,9 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createCoursePaymentIntentAPI } from './paymentAPI';
+import {
+  createCoursePaymentIntentAPI,
+  verifyCoursePaymentIntentAPI,
+} from './paymentAPI';
 import { resetPaymentIntent } from './paymentSlice';
 import { selectPayment } from './paymentSelectors';
 
@@ -20,8 +23,19 @@ export const usePayment = () => {
     dispatch(resetPaymentIntent());
   }, [dispatch]);
 
+  const verifyCoursePaymentIntent = useCallback(
+    async (paymentIntentId) => {
+      const result = await dispatch(
+        verifyCoursePaymentIntentAPI(paymentIntentId),
+      ).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
   return {
     createCoursePaymentIntent,
+    verifyCoursePaymentIntent,
     clearPaymentIntent,
     ...paymentState,
   };

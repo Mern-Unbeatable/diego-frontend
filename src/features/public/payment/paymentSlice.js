@@ -1,10 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createCoursePaymentIntentAPI } from './paymentAPI';
+import {
+  createCoursePaymentIntentAPI,
+  verifyCoursePaymentIntentAPI,
+} from './paymentAPI';
 
 const initialState = {
   loading: false,
+  verifying: false,
   error: null,
+  verifyError: null,
   paymentIntent: null,
+  enrollment: null,
 };
 
 const paymentSlice = createSlice({
@@ -17,6 +23,8 @@ const paymentSlice = createSlice({
     resetPaymentIntent: (state) => {
       state.paymentIntent = null;
       state.error = null;
+      state.verifyError = null;
+      state.enrollment = null;
     },
   },
   extraReducers: (builder) => {
@@ -32,6 +40,18 @@ const paymentSlice = createSlice({
       .addCase(createCoursePaymentIntentAPI.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(verifyCoursePaymentIntentAPI.pending, (state) => {
+        state.verifying = true;
+        state.verifyError = null;
+      })
+      .addCase(verifyCoursePaymentIntentAPI.fulfilled, (state, action) => {
+        state.verifying = false;
+        state.enrollment = action.payload?.data?.enrollment || null;
+      })
+      .addCase(verifyCoursePaymentIntentAPI.rejected, (state, action) => {
+        state.verifying = false;
+        state.verifyError = action.payload;
       });
   },
 });

@@ -1,5 +1,5 @@
 import { ChevronLeft, Trash2 } from 'lucide-react';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
@@ -20,11 +20,16 @@ const Checkout = () => {
   const { getCourseDetails, selectedCourse, loading: courseLoading } = useCourse();
   const {
     createCoursePaymentIntent,
+    verifyCoursePaymentIntent,
     clearPaymentIntent,
     paymentIntent,
     loading: paymentLoading,
+    verifying: paymentVerifying,
     error: paymentError,
+    verifyError: paymentVerifyError,
   } = usePayment();
+
+  const paymentIntentRequestRef = useRef(null);
 
   const courseSlug = decodeURIComponent(
     (searchParams.get('slug') || searchParams.get('id') || '').trim(),
@@ -61,18 +66,41 @@ const Checkout = () => {
   useEffect(() => {
     if (!course?.id) return undefined;
 
-    clearPaymentIntent();
-    createCoursePaymentIntent({ courseId: course.id }).catch(() => {});
+    const hasIntentForCourse =
+      paymentIntent?.courseId === course.id && paymentIntent?.clientSecret;
 
-    return () => {
-      clearPaymentIntent();
-    };
-  }, [course?.id, createCoursePaymentIntent, clearPaymentIntent]);
+    if (hasIntentForCourse) return undefined;
+
+    if (paymentIntentRequestRef.current === course.id) return undefined;
+    paymentIntentRequestRef.current = course.id;
+
+    createCoursePaymentIntent({ courseId: course.id })
+      .catch(() => {})
+      .finally(() => {
+        if (paymentIntentRequestRef.current === course.id) {
+          paymentIntentRequestRef.current = null;
+        }
+      });
+
+    return undefined;
+  }, [course?.id, createCoursePaymentIntent, paymentIntent?.courseId, paymentIntent?.clientSecret]);
 
   useEffect(() => {
     if (!paymentError) return;
     toast.error(paymentError);
   }, [paymentError]);
+
+  useEffect(() => {
+    if (!paymentVerifyError) return;
+    toast.error(paymentVerifyError);
+  }, [paymentVerifyError]);
+
+  useEffect(
+    () => () => {
+      clearPaymentIntent();
+    },
+    [clearPaymentIntent],
+  );
 
   const displayAmount =
     paymentIntent?.finalPrice ?? checkoutItem?.price ?? paymentIntent?.amount ?? 0;
@@ -80,9 +108,45 @@ const Checkout = () => {
   const clientSecret = paymentIntent?.clientSecret || '';
   const publishableKey = paymentIntent?.publishableKey || null;
 
-  const handlePaymentSuccess = () => {
-    navigate('/training/courses/catalog');
-  };
+  const handlePaymentSuccess = useCallback(
+    async (stripePaymentIntent) => {
+      const paymentIntentId =
+        stripePaymentIntent?.id || paymentIntent?.paymentIntentId;
+
+      if (!paymentIntentId) {
+        toast.error(t('paymentPages.section2.paymentError'));
+        return;
+      }
+
+      try {
+        const result = await verifyCoursePaymentIntent(paymentIntentId);
+        const verified = result?.data?.paid;
+
+        if (!verified) {
+          toast.error(
+            result?.data?.message || t('paymentPages.section2.paymentError'),
+          );
+          return;
+        }
+
+        toast.success(t('paymentPages.section3.title'));
+        navigate(
+          courseSlug
+            ? `/training/course/details?slug=${encodeURIComponent(courseSlug)}&purchased=true`
+            : '/training/courses/catalog?purchased=true',
+        );
+      } catch {
+        toast.error(t('paymentPages.section2.paymentError'));
+      }
+    },
+    [
+      courseSlug,
+      navigate,
+      paymentIntent?.paymentIntentId,
+      t,
+      verifyCoursePaymentIntent,
+    ],
+  );
 
   return (
     <div className="min-h-screen p-8">
@@ -197,9 +261,11 @@ const Checkout = () => {
 
             {clientSecret ? (
               <CheckoutStripeForm
+                key={clientSecret}
                 clientSecret={clientSecret}
                 publishableKey={publishableKey}
                 amount={displayAmount}
+                verifying={paymentVerifying}
                 onSuccess={handlePaymentSuccess}
               />
             ) : (
