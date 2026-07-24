@@ -203,6 +203,8 @@ const Checkout = () => {
                 amount={displayAmount}
                 onSuccess={handlePaymentSuccess}
               />
+
+
             ) : (
               !paymentLoading && (
                 <p className="text-sm text-gray-600">
