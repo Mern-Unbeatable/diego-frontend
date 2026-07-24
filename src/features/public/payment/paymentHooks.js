@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  createCompanyCourseCheckoutAPI,
   createCoursePaymentIntentAPI,
   verifyCoursePaymentIntentAPI,
 } from './paymentAPI';
-import { resetPaymentIntent } from './paymentSlice';
+import { resetCompanyCheckout, resetPaymentIntent } from './paymentSlice';
 import { selectPayment } from './paymentSelectors';
 
 export const usePayment = () => {
@@ -33,10 +34,24 @@ export const usePayment = () => {
     [dispatch],
   );
 
+  const createCompanyCourseCheckout = useCallback(
+    async (payload) => {
+      const result = await dispatch(createCompanyCourseCheckoutAPI(payload)).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
+  const clearCompanyCheckout = useCallback(() => {
+    dispatch(resetCompanyCheckout());
+  }, [dispatch]);
+
   return {
     createCoursePaymentIntent,
     verifyCoursePaymentIntent,
+    createCompanyCourseCheckout,
     clearPaymentIntent,
+    clearCompanyCheckout,
     ...paymentState,
   };
 };

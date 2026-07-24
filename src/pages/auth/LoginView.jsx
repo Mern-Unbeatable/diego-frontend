@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
 import { Heading, InputField, Label, Toast } from '../../components/ui';
@@ -18,6 +18,8 @@ const LoginView = () => {
   const { login, loading, error, isAuthenticated, verifyLoginOtp } = useAuth(); // ← DESTRUCTURE MORE
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectPath = searchParams.get('redirect');
   // STEP 1 → STEP 2 (EMAIL)
   const handleNextFromEmail = async (e) => {
     e.preventDefault();
@@ -62,16 +64,18 @@ const LoginView = () => {
       const response = await verifyLoginOtp({
         email: email,
         otp: otp.join(''),
-      }); // Call the OTP verification API
+      });
 
-      COOKIE_STORAGE.setUser(response.data.user.level); // Store user data in cookies
-      COOKIE_STORAGE.setToken(response.data.accessToken); // Store token in cookies
+      COOKIE_STORAGE.clearAll();
+      COOKIE_STORAGE.setUser(response.data.user.level);
+      COOKIE_STORAGE.setToken(response.data.accessToken);
 
       // 1. Get the dynamic role from the API response
       const userRole = response.data.user.level;
 
       // 2. Get the corresponding path using your utility function
-      const targetPath = getDashboardPath(userRole) || '/login';
+      const targetPath =
+        redirectPath || getDashboardPath(userRole) || '/login';
       // 3. Navigate to the dynamic path instead of the hardcoded '/dashboard'
       navigate(targetPath);
       toast.success('Successfully verified!');

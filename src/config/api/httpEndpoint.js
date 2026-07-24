@@ -30,6 +30,7 @@ export const endpoints = {
     COURSE_DETAILS_BY_SLUG: '/courses/slug',
     PAYMENTS_INTENT_COURSE: '/payments/intent/course',
     PAYMENTS_INTENT_COURSE_VERIFY: '/payments/intent/course/verify',
+    PAYMENTS_CHECKOUT_COMPANY_COURSE: '/payments/checkout/company-course',
   },
   company: {
     COURSES: '/employees/courses',
