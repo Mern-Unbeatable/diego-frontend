@@ -10,6 +10,7 @@ export const createCoursePaymentIntentService = async (payload, { signal } = {})
   });
 };
 
+
 export const verifyCoursePaymentIntentService = async (
   paymentIntentId,
   { signal } = {},
