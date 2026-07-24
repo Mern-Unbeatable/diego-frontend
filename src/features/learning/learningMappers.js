@@ -98,19 +98,39 @@ export const mapCoursePlayerData = ({
     (a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0),
   );
 
-  const activeIndex = allModules.findIndex(
-    (m) => !m.isCompleted && m.isAccessible !== false,
-  );
-  const currentIndex = activeIndex === -1 ? Math.max(allModules.length - 1, 0) : activeIndex;
+  const navigationMode = course.navigationMode ?? 'SEQUENTIAL';
+  let foundCurrent = false;
 
   const modules = allModules.map((item, index) => {
+    let isLocked = item.isLocked ?? false;
+    let isAccessible = item.isAccessible !== false;
+
+    if (navigationMode === 'SEQUENTIAL') {
+      const previousIncomplete = allModules
+        .slice(0, index)
+        .some((module) => !module.isCompleted);
+      if (previousIncomplete) {
+        isLocked = true;
+        isAccessible = false;
+      }
+    } else if (item.isLocked) {
+      isAccessible = false;
+    }
+
     let status = 'upcoming';
-    if (item.isCompleted) status = 'done';
-    else if (index === currentIndex) status = 'current';
-    else if (item.isAccessible === false || item.isLocked) status = 'locked';
+    if (item.isCompleted) {
+      status = 'done';
+    } else if (isLocked || !isAccessible) {
+      status = 'locked';
+    } else if (!foundCurrent) {
+      status = 'current';
+      foundCurrent = true;
+    }
 
     return {
       ...item,
+      isLocked,
+      isAccessible,
       status,
       time:
         item.type === 'quiz'
@@ -130,6 +150,7 @@ export const mapCoursePlayerData = ({
       navigationMode: course.navigationMode ?? 'SEQUENTIAL',
       passScorePercent: course.passScorePercent ?? 80,
     },
+    certificate: progressData?.certificate ?? null,
     enrollment: enrollment
       ? {
           id: enrollment.id,

@@ -116,3 +116,20 @@ export const updateMyProfileService = async (payload, { signal } = {}) => {
     },
   });
 };
+
+export const getMyCredentialsService = async ({ unreadOnly = false, signal } = {}) => {
+  return await request({
+    method: 'GET',
+    url: endpoints.private.MY_CREDENTIALS,
+    params: unreadOnly ? { unreadOnly: true } : undefined,
+    signal,
+  });
+};
+
+export const markCredentialViewedService = async (credentialId, { signal } = {}) => {
+  return await request({
+    method: 'PATCH',
+    url: endpoints.private.MARK_CREDENTIAL_VIEWED(credentialId),
+    signal,
+  });
+};

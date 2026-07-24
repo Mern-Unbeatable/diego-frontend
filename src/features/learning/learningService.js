@@ -91,3 +91,18 @@ export const getMyQuizProgressService = (courseId, { signal } = {}) =>
     url: endpoints.learning.QUIZ_MY_PROGRESS(courseId),
     signal,
   });
+
+export const getMyCertificatesService = (params = {}, { signal } = {}) =>
+  request({
+    method: 'GET',
+    url: endpoints.private.MY_CERTIFICATES,
+    params,
+    signal,
+  });
+
+export const ensureCourseCertificateService = (courseId, { signal } = {}) =>
+  request({
+    method: 'POST',
+    url: endpoints.private.ENSURE_CERTIFICATE(courseId),
+    signal,
+  });

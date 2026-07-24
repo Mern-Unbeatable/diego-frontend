@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 
-const buildScormUrl = (packageUrl, entryPoint) => {
-  if (!packageUrl) return '';
-  const base = packageUrl.endsWith('/') ? packageUrl : `${packageUrl}/`;
-  return `${base}${entryPoint || 'index_lms.html'}`;
+const buildScormUrl = (session) => {
+  if (session?.playerUrl) return session.playerUrl;
+  if (!session?.scormPackageUrl) return '';
+  const base = session.scormPackageUrl.endsWith('/')
+    ? session.scormPackageUrl
+    : `${session.scormPackageUrl}/`;
+  return `${base}${session.scormEntryPoint || 'shared/launchpage.html'}`;
 };
 
 const ScormPlayer = ({ session, onFinish, finishing = false }) => {
-  const iframeSrc = buildScormUrl(session?.scormPackageUrl, session?.scormEntryPoint);
+  const iframeSrc = buildScormUrl(session);
 
   useEffect(() => {
     return () => {
@@ -25,11 +28,14 @@ const ScormPlayer = ({ session, onFinish, finishing = false }) => {
 
   return (
     <div className="space-y-4">
-      <div className="aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg">
+      <div
+        className="w-full overflow-hidden rounded-2xl bg-white shadow-lg"
+        style={{ minHeight: '560px', height: '70vh' }}
+      >
         <iframe
           title="SCORM lesson"
           src={iframeSrc}
-          className="h-full w-full border-0"
+          className="h-full w-full border-0 bg-white"
           allow="fullscreen"
         />
       </div>

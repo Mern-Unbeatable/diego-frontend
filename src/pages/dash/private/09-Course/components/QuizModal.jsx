@@ -1,5 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import QuizResult from './QuizResult';
+
+const formatElapsedTime = (startedAt) => {
+  if (!startedAt) return '—';
+  const elapsedSecs = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
+  const mins = Math.max(1, Math.round(elapsedSecs / 60));
+  return `${mins} min`;
+};
 
 const QuizModal = ({
   isOpen,
@@ -11,6 +18,25 @@ const QuizModal = ({
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
+  const [quizStartedAt, setQuizStartedAt] = useState(null);
+
+  useEffect(() => {
+    if (!isOpen || !quiz) return;
+
+    setCurrentQuestion(0);
+    setAnswers({});
+    setQuizStartedAt(Date.now());
+
+    if (quiz.initialResult) {
+      setResult({
+        ...quiz.initialResult,
+        time: quiz.initialResult.time ?? '—',
+      });
+      return;
+    }
+
+    setResult(null);
+  }, [isOpen, quiz?.id, quiz?.initialResult]);
 
   const quizQuestions = quiz?.uiQuestions ?? [];
   const totalQuestions = quizQuestions.length;
@@ -22,6 +48,7 @@ const QuizModal = ({
     setCurrentQuestion(0);
     setAnswers({});
     setResult(null);
+    setQuizStartedAt(Date.now());
   };
 
   const handleClose = () => {
@@ -75,12 +102,14 @@ const QuizModal = ({
     if (!apiResult) return;
 
     setResult({
-      score: apiResult.scorePercent ?? 0,
-      correct: apiResult.correctCount ?? 0,
-      total: apiResult.totalQuestions ?? totalQuestions,
-      passed: apiResult.passed ?? false,
+      score: apiResult.score ?? apiResult.scorePercent ?? 0,
+      correct: apiResult.correct ?? apiResult.correctCount ?? 0,
+      total: apiResult.total ?? apiResult.totalQuestions ?? totalQuestions,
+      passed: Boolean(apiResult.passed),
       pendingManualReview: apiResult.pendingManualReview ?? false,
-      passScore,
+      passScore: apiResult.passScore ?? apiResult.passScorePercent ?? passScore,
+      time: apiResult.time ?? formatElapsedTime(quizStartedAt),
+      alreadySubmitted: apiResult.alreadySubmitted ?? false,
     });
   };
 

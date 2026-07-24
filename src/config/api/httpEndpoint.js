@@ -34,6 +34,7 @@ export const endpoints = {
   private: {
     MY_ENROLLMENTS: '/enrollments/my',
     MY_COURSE_PROGRESS: (courseId) => `/enrollments/my-progress/${courseId}`,
+    ENSURE_CERTIFICATE: (courseId) => `/enrollments/my-progress/${courseId}/ensure-certificate`,
     MY_TICKETS: '/tickets/my',
     CREATE_TICKET: '/tickets',
     GET_TICKET_BY_ID: (ticketId) => `/tickets/${ticketId}`,
@@ -42,6 +43,8 @@ export const endpoints = {
     MARK_ALL_NOTIFICATIONS_READ: '/notifications/mark-all-read',
     MY_CERTIFICATES: '/certificates/my',
     MY_PROFILE: '/users/me',
+    MY_CREDENTIALS: '/users/me/credentials',
+    MARK_CREDENTIAL_VIEWED: (credentialId) => `/users/me/credentials/${credentialId}/viewed`,
   },
   learning: {
     COURSE_BY_ID: (courseId) => `/courses/${courseId}`,

@@ -24,6 +24,7 @@ const CourseProgram = ({
             const isCurrent = item.status === 'current';
             const isLocked = item.status === 'locked';
             const isQuiz = item.type === 'quiz';
+            const isFinalQuiz = isQuiz && item.quizType === 'FINAL_TEST';
 
             return (
               <button
@@ -58,7 +59,11 @@ const CourseProgram = ({
 
                   <span className="text-base font-semibold text-[#1d1d1d]">
                     {item.title}
-                    {isQuiz ? (
+                    {isFinalQuiz ? (
+                      <span className="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-bold uppercase text-amber-800">
+                        Final Test
+                      </span>
+                    ) : isQuiz ? (
                       <span className="ml-2 text-xs font-medium uppercase text-[#55B18D]">
                         Quiz
                       </span>
