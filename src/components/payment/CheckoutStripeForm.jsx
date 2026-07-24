@@ -45,6 +45,7 @@ const StripeField = ({ label, children }) => (
 const CheckoutPaymentFields = ({
   clientSecret,
   amount,
+  verifying = false,
   onSuccess,
 }) => {
   const { t } = useTranslation();
@@ -93,8 +94,13 @@ const CheckoutPaymentFields = ({
       }
 
       if (paymentIntent?.status === 'succeeded') {
-        toast.success(t('paymentPages.section3.title'));
-        onSuccess?.(paymentIntent);
+        await onSuccess?.(paymentIntent);
+        return;
+      }
+
+      if (paymentIntent?.status === 'processing') {
+        toast.success(t('paymentPages.section2.processing'));
+        await onSuccess?.(paymentIntent);
       }
     } catch (error) {
       console.error('Stripe payment error:', error);
@@ -132,12 +138,12 @@ const CheckoutPaymentFields = ({
 
       <button
         type="submit"
-        disabled={!stripe || processing}
+        disabled={!stripe || processing || verifying}
         className="flex w-full items-center justify-center gap-2 rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition hover:bg-[#5fa889] disabled:cursor-not-allowed disabled:opacity-60"
       >
         <span>{formattedPrice}</span>
         <span>
-          {processing
+          {processing || verifying
             ? t('paymentPages.section2.processing')
             : t('paymentPages.section2.payNow')}
         </span>
@@ -151,6 +157,7 @@ export default function CheckoutStripeForm({
   clientSecret,
   publishableKey,
   amount,
+  verifying = false,
   onSuccess,
 }) {
   const stripePromise = useMemo(() => {
@@ -162,10 +169,11 @@ export default function CheckoutStripeForm({
   if (!stripePromise || !clientSecret) return null;
 
   return (
-    <Elements stripe={stripePromise}>
+    <Elements stripe={stripePromise} options={{ locale: 'auto' }}>
       <CheckoutPaymentFields
         clientSecret={clientSecret}
         amount={amount}
+        verifying={verifying}
         onSuccess={onSuccess}
       />
     </Elements>
