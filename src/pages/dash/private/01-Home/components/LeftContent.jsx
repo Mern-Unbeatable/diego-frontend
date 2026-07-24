@@ -16,7 +16,7 @@ const LeftContent = () => {
   const total = enrollments.length;
 
   useEffect(() => {
-    fetchMyEnrollments().catch(() => {});
+    fetchMyEnrollments().catch(() => { });
   }, [fetchMyEnrollments]);
 
   useEffect(() => {

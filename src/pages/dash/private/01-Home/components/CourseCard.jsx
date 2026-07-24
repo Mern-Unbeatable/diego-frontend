@@ -4,6 +4,7 @@ import { FaRegHeart, FaHeart } from 'react-icons/fa';
 const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
   const [isLiked, setIsLiked] = useState(false);
 
+
   return (
     <div
       className="group flex cursor-pointer flex-col gap-4 overflow-hidden rounded-xl bg-white p-4 shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-300 hover:shadow-[0_15px_35px_rgba(0,0,0,0.07)]"
@@ -68,6 +69,10 @@ const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
         <div className="mt-2 flex flex-col gap-2.5">
           <button
             type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onCardClick?.();
+            }}
             className="w-full rounded-full bg-[#73BFA1] py-3.5 font-semibold text-white transition hover:bg-[#5daf8f]"
           >
             {course.buttonText}
