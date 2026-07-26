@@ -62,9 +62,9 @@ export const useEmployees = () => {
   );
 
   const updateEmployee = useCallback(
-    async (id, payload) => {
+    async (userId, payload) => {
       const updated = await dispatch(
-        updateEmployeeAPI({ id, payload }),
+        updateEmployeeAPI({ userId, payload }),
       ).unwrap();
       await fetchEmployees(pageRef.current);
       return updated;
@@ -73,8 +73,8 @@ export const useEmployees = () => {
   );
 
   const deleteEmployee = useCallback(
-    async (id) => {
-      await dispatch(deleteEmployeeAPI(id)).unwrap();
+    async (userId) => {
+      await dispatch(deleteEmployeeAPI(userId)).unwrap();
       await fetchEmployees(pageRef.current);
     },
     [dispatch, fetchEmployees],

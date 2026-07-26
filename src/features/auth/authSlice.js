@@ -38,6 +38,16 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       COOKIE_STORAGE.clearAll();
     },
+    setUser: (state, action) => {
+      if (action.payload?.token) {
+        state.token = action.payload.token;
+        COOKIE_STORAGE.setToken(action.payload.token);
+      }
+      if (action.payload?.user !== undefined) {
+        state.user = action.payload.user;
+      }
+      state.isAuthenticated = !!state.user && !!state.token;
+    },
     resetAuthError: (state) => {
       state.error = null;
     },
@@ -144,5 +154,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, resetAuthError } = authSlice.actions;
+export const { logout, setUser, resetAuthError } = authSlice.actions;
 export default authSlice.reducer;

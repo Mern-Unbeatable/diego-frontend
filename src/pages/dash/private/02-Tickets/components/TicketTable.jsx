@@ -69,7 +69,7 @@ const TicketTable = ({
               {filteredTickets.map((ticket) => (
                 <tr key={ticket.id} className="border-b border-[#e4e4e4] last:border-b-0 hover:bg-gray-50/50 transition-colors">
                   <td className="pl-6 pr-4 py-4 text-sm text-[#2f2f2f]">
-                    {ticket.id}
+                    {ticket.displayId}
                   </td>
                   <td className="px-4 py-4 text-sm text-[#2f2f2f]">
                     {ticket.subject}

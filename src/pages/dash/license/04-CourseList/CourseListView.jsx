@@ -1,6 +1,6 @@
 import React from 'react';
-import CoursesTable from '../01-Home/components/CoursesTable';
+import CoursesWithPackagesTabs from './CoursesWithPackagesTabs';
 
 export default function CourseListView() {
-  return <CoursesTable />;
+  return <CoursesWithPackagesTabs />;
 }

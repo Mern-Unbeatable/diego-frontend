@@ -55,6 +55,11 @@ const linksByRole = {
       icon: <BsUpload className="text-[18px]" />,
     },
     {
+      path: '/dashboard/super-admin/course-packages',
+      label: 'Pacchetti corso',
+      icon: <IoAlbumsOutline className="text-[19px]" />,
+    },
+    {
       path: '/dashboard/super-admin/report',
       label: 'Report',
       icon: <BsUpload className="text-[18px]" />,
@@ -130,7 +135,7 @@ const linksByRole = {
     },
     {
       path: '/dashboard/license-user/course-list',
-      label: 'Course List',
+      label: 'Corsi e pacchetti',
       icon: <IoDocumentTextOutline className="text-[19px]" />,
     },
     {

@@ -12,7 +12,12 @@ import {
   getCheckoutSelection,
   mapCourseFromApi,
 } from '../../../features/public/course/courseMappers';
-import { formatEuro } from '../../../utils/courseMedia';
+import { formatEuro, toEuroAmount } from '../../../utils/courseMedia';
+import {
+  getPaymentErrorMessage,
+  isEnrollmentConflictError,
+  resolveEnrollmentConflictToast,
+} from '../../../features/public/payment/paymentCheckoutUtils';
 
 const Checkout = () => {
   const { t, i18n } = useTranslation();
@@ -22,22 +27,19 @@ const Checkout = () => {
   const { getCourseDetails, selectedCourse, loading: courseLoading } = useCourse();
   const {
     createCoursePaymentIntent,
+    createCompanyCoursePaymentIntent,
     verifyCoursePaymentIntent,
-    createCompanyCourseCheckout,
+    verifyCompanyCoursePaymentIntent,
     clearPaymentIntent,
-    clearCompanyCheckout,
     paymentIntent,
-    companyCheckout,
     loading: paymentLoading,
-    companyCheckoutLoading,
     verifying: paymentVerifying,
     error: paymentError,
-    companyCheckoutError,
     verifyError: paymentVerifyError,
   } = usePayment();
 
   const paymentIntentRequestRef = useRef(null);
-  const companyCheckoutRequestRef = useRef(null);
+  const enrollmentToastShownRef = useRef(false);
 
   const courseSlug = decodeURIComponent(
     (searchParams.get('slug') || searchParams.get('id') || '').trim(),
@@ -83,94 +85,83 @@ const Checkout = () => {
     [course, selectedPlan, selectedTierId],
   );
 
+  const paymentIntentKey = isCompanyPlan
+    ? `${course?.id || ''}:${selectedTierId}`
+    : course?.id || '';
+
+  const paymentErrorMessage = useMemo(
+    () => getPaymentErrorMessage(paymentError),
+    [paymentError],
+  );
+
+  const hasEnrollmentConflict = isEnrollmentConflictError(paymentErrorMessage);
+
   useEffect(() => {
-    if (!isAuthenticated || !course?.id || isCompanyPlan) return undefined;
+    clearPaymentIntent();
+    paymentIntentRequestRef.current = null;
+    enrollmentToastShownRef.current = false;
+  }, [course?.id, selectedPlan, selectedTierId, clearPaymentIntent]);
 
-    const hasIntentForCourse =
-      paymentIntent?.courseId === course.id && paymentIntent?.clientSecret;
+  useEffect(() => {
+    if (!isAuthenticated || !course?.id) return undefined;
+    if (isCompanyPlan && !selectedTierId) return undefined;
+    if (hasEnrollmentConflict) return undefined;
 
-    if (hasIntentForCourse) return undefined;
+    const hasIntentForSelection = isCompanyPlan
+      ? paymentIntent?.courseId === course.id &&
+        paymentIntent?.tierId === selectedTierId &&
+        paymentIntent?.clientSecret
+      : paymentIntent?.courseId === course.id && paymentIntent?.clientSecret;
 
-    if (paymentIntentRequestRef.current === course.id) return undefined;
-    paymentIntentRequestRef.current = course.id;
+    if (hasIntentForSelection) return undefined;
+    if (paymentIntentRequestRef.current === paymentIntentKey) return undefined;
 
-    createCoursePaymentIntent({ courseId: course.id })
+    paymentIntentRequestRef.current = paymentIntentKey;
+
+    const request = isCompanyPlan
+      ? createCompanyCoursePaymentIntent({
+          courseId: course.id,
+          tierId: selectedTierId,
+        })
+      : createCoursePaymentIntent({ courseId: course.id });
+
+    request
       .catch(() => {})
       .finally(() => {
-        if (paymentIntentRequestRef.current === course.id) {
+        if (paymentIntentRequestRef.current === paymentIntentKey) {
           paymentIntentRequestRef.current = null;
         }
       });
 
-    return () => {
-      clearPaymentIntent();
-    };
-  }, [
-    isAuthenticated,
-    course?.id,
-    isCompanyPlan,
-    createCoursePaymentIntent,
-    clearPaymentIntent,
-    paymentIntent?.courseId,
-    paymentIntent?.clientSecret,
-  ]);
-
-  useEffect(() => {
-    if (!isAuthenticated || !course?.id || !isCompanyPlan || !selectedTierId) {
-      return undefined;
-    }
-
-    const requestKey = `${course.id}:${selectedTierId}`;
-    const hasCheckoutForSelection =
-      companyCheckout?.tierId === selectedTierId && companyCheckout?.url;
-
-    if (hasCheckoutForSelection) return undefined;
-    if (companyCheckoutRequestRef.current === requestKey) return undefined;
-
-    companyCheckoutRequestRef.current = requestKey;
-
-    createCompanyCourseCheckout({
-      courseId: course.id,
-      tierId: selectedTierId,
-    })
-      .catch(() => {})
-      .finally(() => {
-        if (companyCheckoutRequestRef.current === requestKey) {
-          companyCheckoutRequestRef.current = null;
-        }
-      });
-
-    return () => {
-      clearCompanyCheckout();
-    };
+    return undefined;
   }, [
     isAuthenticated,
     course?.id,
     isCompanyPlan,
     selectedTierId,
-    createCompanyCourseCheckout,
-    clearCompanyCheckout,
-    companyCheckout?.tierId,
-    companyCheckout?.url,
+    paymentIntentKey,
+    createCoursePaymentIntent,
+    createCompanyCoursePaymentIntent,
+    paymentIntent?.courseId,
+    paymentIntent?.clientSecret,
+    paymentIntent?.tierId,
+    hasEnrollmentConflict,
   ]);
 
   useEffect(() => {
     if (!paymentError) return;
-    toast.error(
-      typeof paymentError === 'string'
-        ? paymentError
-        : paymentError?.message || t('paymentPages.section2.paymentError'),
-    );
-  }, [paymentError, t]);
 
-  useEffect(() => {
-    if (!companyCheckoutError) return;
+    if (hasEnrollmentConflict) {
+      if (enrollmentToastShownRef.current) return;
+      enrollmentToastShownRef.current = true;
+      toast.error(resolveEnrollmentConflictToast(paymentErrorMessage, t));
+      return;
+    }
+
     toast.error(
-      typeof companyCheckoutError === 'string'
-        ? companyCheckoutError
-        : companyCheckoutError?.message || t('paymentPages.section2.paymentError'),
+      paymentErrorMessage || t('paymentPages.section2.paymentError'),
     );
-  }, [companyCheckoutError, t]);
+  }, [paymentError, paymentErrorMessage, hasEnrollmentConflict, t]);
 
   useEffect(() => {
     if (!paymentVerifyError) return;
@@ -181,14 +172,13 @@ const Checkout = () => {
     );
   }, [paymentVerifyError, t]);
 
-  const displayAmount = isCompanyPlan
-    ? companyCheckout?.totalAmount ?? checkoutItem?.price ?? 0
-    : paymentIntent?.finalPrice ?? checkoutItem?.price ?? paymentIntent?.amount ?? 0;
+  const displayAmount = toEuroAmount(
+    paymentIntent?.finalPrice ?? checkoutItem?.price ?? 0,
+  );
 
   const formattedPrice = formatEuro(displayAmount);
   const clientSecret = paymentIntent?.clientSecret || '';
   const publishableKey = paymentIntent?.publishableKey || null;
-  const stripeCheckoutUrl = companyCheckout?.url || '';
 
   const handlePaymentSuccess = useCallback(
     async (stripePaymentIntent) => {
@@ -201,7 +191,9 @@ const Checkout = () => {
       }
 
       try {
-        const result = await verifyCoursePaymentIntent(paymentIntentId);
+        const result = isCompanyPlan
+          ? await verifyCompanyCoursePaymentIntent(paymentIntentId)
+          : await verifyCoursePaymentIntent(paymentIntentId);
         const verified = result?.data?.paid;
 
         if (!verified) {
@@ -212,6 +204,12 @@ const Checkout = () => {
         }
 
         toast.success(t('paymentPages.section3.title'));
+
+        if (isCompanyPlan) {
+          navigate('/');
+          return;
+        }
+
         navigate(
           courseSlug
             ? `/training/course/details?slug=${encodeURIComponent(courseSlug)}&purchased=true`
@@ -223,23 +221,14 @@ const Checkout = () => {
     },
     [
       courseSlug,
+      isCompanyPlan,
       navigate,
       paymentIntent?.paymentIntentId,
       t,
+      verifyCompanyCoursePaymentIntent,
       verifyCoursePaymentIntent,
     ],
   );
-
-  const handleCompanyCheckout = () => {
-    if (!stripeCheckoutUrl) {
-      toast.error(t('paymentPages.section2.paymentUnavailable'));
-      return;
-    }
-
-    window.location.assign(stripeCheckoutUrl);
-  };
-
-  const isPaymentLoading = isCompanyPlan ? companyCheckoutLoading : paymentLoading;
 
   return (
     <div className="min-h-screen p-8">
@@ -346,7 +335,7 @@ const Checkout = () => {
               </div>
             </div>
 
-            {isAuthenticated && isPaymentLoading ? (
+            {isAuthenticated && paymentLoading ? (
               <p className="mb-4 text-sm text-gray-600">
                 {t('paymentPages.section2.preparingPayment')}
               </p>
@@ -375,33 +364,11 @@ const Checkout = () => {
                   defaultValue: 'Please sign in to continue with payment.',
                 })}
               </p>
-            ) : isCompanyPlan ? (
-              <>
-                {isCompanyPlan && !selectedTierId ? (
-                  <p className="text-sm text-gray-600">
-                    {t('trainingPages.section12.companyPackage.selectTierFirst')}
-                  </p>
-                ) : null}
-
-                {stripeCheckoutUrl ? (
-                  <button
-                    type="button"
-                    onClick={handleCompanyCheckout}
-                    className="flex w-full items-center justify-center gap-2 rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition hover:bg-[#5fa889]"
-                  >
-                    <span>{formattedPrice}</span>
-                    <span>{t('paymentPages.section2.payNow')}</span>
-                    <span>→</span>
-                  </button>
-                ) : (
-                  !companyCheckoutLoading && (
-                    <p className="text-sm text-gray-600">
-                      {t('paymentPages.section2.paymentUnavailable')}
-                    </p>
-                  )
-                )}
-              </>
-            ) : clientSecret ? (
+            ) : isCompanyPlan && !selectedTierId ? (
+              <p className="text-sm text-gray-600">
+                {t('trainingPages.section12.companyPackage.selectTierFirst')}
+              </p>
+            ) : hasEnrollmentConflict ? null : clientSecret ? (
               <CheckoutStripeForm
                 key={clientSecret}
                 clientSecret={clientSecret}

@@ -26,9 +26,9 @@ export const getMyEnrollmentsAPI = createAsyncThunk(
 
 export const getMyTicketsAPI = createAsyncThunk(
   'private/getMyTickets',
-  async (_, { rejectWithValue, signal }) => {
+  async (params = {}, { rejectWithValue, signal }) => {
     try {
-      return await getMyTicketsService({ signal });
+      return await getMyTicketsService(params, { signal });
     } catch (error) {
       return rejectWithValue(handleApiError(error));
     }

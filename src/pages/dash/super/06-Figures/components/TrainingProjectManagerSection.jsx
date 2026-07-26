@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Check, Download, UploadCloud } from 'lucide-react';
 
 const DEFAULT_DOCS = [
@@ -15,6 +15,7 @@ export default function TrainingProjectManagerSection({
   showPersonFields = true,
   companyLabel = 'Societa',
   initial,
+  onFormChange,
   onUpload,
   onDownload,
   showFooterActions = false,
@@ -35,6 +36,26 @@ export default function TrainingProjectManagerSection({
   });
 
   const [files, setFiles] = useState(safeInitial.files || {});
+
+  useEffect(() => {
+    if (!initial) return;
+    setForm({
+      nome: initial.nome ?? '',
+      cognome: initial.cognome ?? '',
+      societa: initial.societa ?? '',
+    });
+    setFiles(initial.files ?? {});
+  }, [initial]);
+
+  const updateForm = (field, value) => {
+    setForm((prev) => {
+      const next = { ...prev, [field]: value };
+      if (typeof onFormChange === 'function') {
+        onFormChange(next);
+      }
+      return next;
+    });
+  };
 
   const handleUpload = async (key, file) => {
     setFiles((prev) => ({
@@ -96,9 +117,7 @@ export default function TrainingProjectManagerSection({
             <Field label="Cognome">
               <input
                 value={form.cognome}
-                onChange={(event) =>
-                  setForm((prev) => ({ ...prev, cognome: event.target.value }))
-                }
+                onChange={(event) => updateForm('cognome', event.target.value)}
                 placeholder="first name"
                 className="h-11 w-full rounded-lg border border-[#cdcdcd] bg-transparent px-4 text-[12px] text-[#555] outline-none"
               />
@@ -106,9 +125,7 @@ export default function TrainingProjectManagerSection({
             <Field label="Nome">
               <input
                 value={form.nome}
-                onChange={(event) =>
-                  setForm((prev) => ({ ...prev, nome: event.target.value }))
-                }
+                onChange={(event) => updateForm('nome', event.target.value)}
                 placeholder="last name"
                 className="h-11 w-full rounded-lg border border-[#cdcdcd] bg-transparent px-4 text-[12px] text-[#555] outline-none"
               />
@@ -118,9 +135,7 @@ export default function TrainingProjectManagerSection({
           <Field label={companyLabel}>
             <input
               value={form.societa}
-              onChange={(event) =>
-                setForm((prev) => ({ ...prev, societa: event.target.value }))
-              }
+              onChange={(event) => updateForm('societa', event.target.value)}
               placeholder={companyLabel}
               className="h-11 w-full rounded-lg border border-[#cdcdcd] bg-transparent px-4 text-[12px] text-[#555] outline-none"
             />

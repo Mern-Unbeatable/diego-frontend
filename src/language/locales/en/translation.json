@@ -610,6 +610,9 @@
       "preparingPayment": "Preparing secure payment...",
       "paymentUnavailable": "Payment is currently unavailable. Please try again.",
       "paymentError": "Payment failed. Please check your card details and try again.",
+      "alreadyEnrolled": "You are already enrolled in this course.",
+      "alreadyCompleted": "You have already completed this course.",
+      "alreadyPurchased": "Your company has already purchased this course.",
       "nameRequired": "Please enter the name on card",
       "discount": "Discount"
     },

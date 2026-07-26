@@ -77,14 +77,13 @@ const employeeSlice = createSlice({
       })
       .addCase(createEmployeeAPI.fulfilled, (state, action) => {
         state.mutating = false;
-        // Optimistic patch so the list updates instantly; the caller also
-        // refetches the current page to reconcile pagination/order.
-        state.items = [action.payload, ...state.items];
+        const employee = action.payload?.employee;
+        if (!employee) return;
+        state.items = [employee, ...state.items];
         state.total += 1;
       })
-      .addCase(createEmployeeAPI.rejected, (state, action) => {
+      .addCase(createEmployeeAPI.rejected, (state) => {
         state.mutating = false;
-        state.error = action.payload;
       })
 
       // ---- update ----
@@ -94,15 +93,14 @@ const employeeSlice = createSlice({
       })
       .addCase(updateEmployeeAPI.fulfilled, (state, action) => {
         state.mutating = false;
-        state.items = state.items.map((employee) =>
-          String(employee.id) === String(action.payload.id)
-            ? action.payload
-            : employee,
+        const employee = action.payload?.employee;
+        if (!employee) return;
+        state.items = state.items.map((item) =>
+          String(item.userId) === String(employee.userId) ? employee : item,
         );
       })
-      .addCase(updateEmployeeAPI.rejected, (state, action) => {
+      .addCase(updateEmployeeAPI.rejected, (state) => {
         state.mutating = false;
-        state.error = action.payload;
       })
 
       // ---- delete ----
@@ -111,16 +109,15 @@ const employeeSlice = createSlice({
         state.error = null;
         // Optimistic removal for an instant UI update.
         state.items = state.items.filter(
-          (employee) => String(employee.id) !== String(action.meta.arg),
+          (employee) => String(employee.userId) !== String(action.meta.arg),
         );
       })
       .addCase(deleteEmployeeAPI.fulfilled, (state) => {
         state.mutating = false;
         state.total = Math.max(0, state.total - 1);
       })
-      .addCase(deleteEmployeeAPI.rejected, (state, action) => {
+      .addCase(deleteEmployeeAPI.rejected, (state) => {
         state.mutating = false;
-        state.error = action.payload;
       });
   },
 });

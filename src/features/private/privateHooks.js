@@ -24,8 +24,8 @@ export const usePrivate = () => {
     return result;
   }, [dispatch]);
 
-  const fetchMyTickets = useCallback(async () => {
-    const result = await dispatch(getMyTicketsAPI()).unwrap();
+  const fetchMyTickets = useCallback(async (params = {}) => {
+    const result = await dispatch(getMyTicketsAPI(params)).unwrap();
     return result;
   }, [dispatch]);
 

@@ -195,7 +195,7 @@ const TicketDetail = () => {
             </h2>
             <div className="space-y-2 leading-relaxed text-[#2f2f2f] md:text-base">
               <p>
-                <span className="font-semibold">ID:</span> {ticketDetail.id}
+                <span className="font-semibold">ID:</span> {ticketDetail.displayId}
               </p>
               <p>
                 <span className="font-semibold">Oggetto:</span>{' '}

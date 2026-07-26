@@ -1,0 +1,15 @@
+export const tagTypesList = [
+  'License',
+  'LicensePlan',
+  'Course',
+  'Lesson',
+  'Quiz',
+  'Dashboard',
+  'EmergencyControls',
+  'Ticket',
+  'Review',
+  'Staff',
+  'LicenseUserDashboard',
+  'CoursePackage',
+  'Enrollment',
+];

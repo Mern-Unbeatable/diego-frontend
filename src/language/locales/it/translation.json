@@ -610,6 +610,9 @@
       "preparingPayment": "Preparazione pagamento sicuro...",
       "paymentUnavailable": "Pagamento non disponibile. Riprova.",
       "paymentError": "Pagamento non riuscito. Controlla i dati della carta e riprova.",
+      "alreadyEnrolled": "Sei già iscritto a questo corso.",
+      "alreadyCompleted": "Hai già completato questo corso.",
+      "alreadyPurchased": "La tua azienda ha già acquistato questo corso.",
       "nameRequired": "Inserisci il nome sulla carta",
       "discount": "Sconto"
     },

@@ -1,123 +1,43 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, X } from 'lucide-react';
-import { validateEmployeeForm } from '../../../../../utils/validate/validateForm';
+import Form from '../../../../../Forms/Form';
+import Input from '../../../../../Forms/Input';
+import Select from '../../../../../Forms/Select';
+import DatePicker from '../../../../../Forms/DatePicker';
 import {
-  COURSE_OPTIONS,
+  EMPLOYEE_STATUS,
   POSITION_OPTIONS,
   STATUS_OPTIONS,
-  EMPLOYEE_STATUS,
 } from '../../../../../features/company/employee/employeeConstants';
-
-const courseSelectOptions = [
-  { value: '', label: 'Nessun corso assegnato' },
-  ...COURSE_OPTIONS.map((course) => ({ value: course.id, label: course.title })),
-];
-
-const emptyForm = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  position: '',
-  hireDate: '',
-  status: EMPLOYEE_STATUS.ACTIVE,
-  assignedCourseId: '',
-  password: '',
-};
-
-const inputClasses =
-  'h-12 w-full rounded-lg border border-transparent bg-[#edf5f2] px-4 text-sm text-[#2f2f2f] outline-none placeholder:text-[#9da8a4] focus:border-[#73bfa1] disabled:cursor-not-allowed disabled:opacity-70';
-
-const Field = forwardRef(
-  (
-    { label, placeholder, value, onChange, onBlur, name, type = 'text', error, required, disabled },
-    ref,
-  ) => (
-    <label className="block">
-      <span className="mb-1.5 block text-sm font-medium text-[#222222]">
-        {label}
-        {required && <span className="text-[#e34f4f]">*</span>}
-      </span>
-      <input
-        ref={ref}
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        className={inputClasses}
-        placeholder={placeholder}
-        disabled={disabled}
-        data-error={!!error}
-      />
-      {error && <p className="mt-1 text-xs text-[#e34f4f]">{error}</p>}
-    </label>
-  ),
-);
-Field.displayName = 'Field';
-
-const SelectInput = ({
-  label,
-  value,
-  onChange,
-  onBlur,
-  name,
-  options,
-  error,
-  required,
-  disabled,
-}) => (
-  <label className="block">
-    <span className="mb-1.5 block text-sm font-medium text-[#222222]">
-      {label}
-      {required && <span className="text-[#e34f4f]">*</span>}
-    </span>
-    <select
-      name={name}
-      value={value}
-      onChange={onChange}
-      onBlur={onBlur}
-      className={inputClasses}
-      disabled={disabled}
-      data-error={!!error}
-    >
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
-    {error && <p className="mt-1 text-xs text-[#e34f4f]">{error}</p>}
-  </label>
-);
+import {
+  createEmployeeFormResolver,
+  mapEmployeeToFormValues,
+} from '../../../../../features/company/employee/employeeMappers';
+import { getAssignableCourses } from '../../../../../features/company/employee/employeeService';
+import { formatApiErrorMessage } from '../../../../../config/api/errorHandler';
 
 /**
  * Single reusable modal for the employee CRUD flow.
- *
- * @param {'add'|'edit'|'view'} mode
- * @param {object|null} initialData - employee record for edit/view, prefilled fields for add
- * @param {(payload: object) => Promise<void>|void} onSubmit
- * @param {() => void} onClose
  */
 const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) => {
-  const [form, setForm] = useState(emptyForm);
-  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [touched, setTouched] = useState({});
   const [submitError, setSubmitError] = useState('');
+  const [courseOptions, setCourseOptions] = useState([]);
   const modalRef = useRef(null);
-  const firstInputRef = useRef(null);
 
   const isViewMode = mode === 'view';
   const isEditMode = mode === 'edit';
 
-  useEffect(() => {
-    if (firstInputRef.current) {
-      firstInputRef.current.focus();
-    }
+  const defaultValues = useMemo(
+    () => mapEmployeeToFormValues(initialData),
+    [initialData],
+  );
 
-    const handleEscape = (e) => {
-      if (e.key === 'Escape') onClose();
+  const resolver = useMemo(() => createEmployeeFormResolver(mode), [mode]);
+
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') onClose();
     };
 
     document.addEventListener('keydown', handleEscape);
@@ -125,84 +45,69 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
   }, [onClose]);
 
   useEffect(() => {
-    if (initialData) {
-      setForm({
-        firstName: initialData.firstName || '',
-        lastName: initialData.lastName || '',
-        email: initialData.email || '',
-        phone: initialData.phone || '',
-        position: initialData.position || '',
-        hireDate: initialData.hireDate || '',
-        status: initialData.status || EMPLOYEE_STATUS.ACTIVE,
-        assignedCourseId: initialData.assignedCourseId || '',
-        password: '',
+    let isMounted = true;
+
+    getAssignableCourses()
+      .then((courses) => {
+        if (isMounted) setCourseOptions(courses);
+      })
+      .catch(() => {
+        if (isMounted) setCourseOptions([]);
       });
-    } else {
-      setForm(emptyForm);
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const courseSelectOptions = useMemo(() => {
+    const options = courseOptions.map((course) => ({
+      value: course.courseId,
+      label: course.label,
+    }));
+
+    if (
+      initialData?.assignedCourseId &&
+      !options.some((option) => option.value === initialData.assignedCourseId)
+    ) {
+      options.unshift({
+        value: initialData.assignedCourseId,
+        label: initialData.assignedCourseTitle || 'Corso assegnato',
+      });
     }
-    setErrors({});
-    setTouched({});
-    setSubmitError('');
-  }, [mode, initialData]);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    return [{ value: '', label: 'Nessun corso assegnato' }, ...options];
+  }, [courseOptions, initialData]);
 
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const handleBlur = (event) => {
-    const { name } = event.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleFormSubmit = async (formValues) => {
     if (isViewMode) return;
 
-    const allTouched = {};
-    Object.keys(form).forEach((key) => {
-      allTouched[key] = true;
-    });
-    setTouched(allTouched);
-
-    const validationErrors = validateEmployeeForm(form, { mode });
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length > 0) {
-      const firstError = document.querySelector('[data-error="true"]');
-      if (firstError) {
-        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-      return;
-    }
-
     const payload = {
-      firstName: form.firstName.trim(),
-      lastName: form.lastName.trim(),
-      email: form.email.trim(),
-      phone: form.phone.trim(),
-      position: form.position,
-      hireDate: form.hireDate,
-      status: form.status,
-      assignedCourseId: form.assignedCourseId || null,
+      firstName: formValues.firstName?.trim(),
+      lastName: formValues.lastName?.trim(),
+      email: formValues.email?.trim(),
+      phone: formValues.phone?.trim(),
+      position: formValues.position,
+      hireDate: formValues.hireDate,
+      status: formValues.status || EMPLOYEE_STATUS.ACTIVE,
+      assignedCourseId: formValues.assignedCourseId || null,
+      previousAssignedCourseId: initialData?.assignedCourseId || null,
     };
 
-    // Password is only sent when it's required (add) or was actually changed (edit).
-    if (form.password?.trim()) {
-      payload.password = form.password.trim();
+    if (formValues.password?.trim()) {
+      payload.password = formValues.password.trim();
     }
 
     setSubmitError('');
     setIsSubmitting(true);
+
     try {
       await onSubmit?.(payload);
       onClose();
     } catch (error) {
-      setSubmitError(error?.message || 'Salvataggio non riuscito. Riprova.');
+      setSubmitError(
+        formatApiErrorMessage(error) || 'Salvataggio non riuscito. Riprova.',
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -272,8 +177,11 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
             )}
           </div>
 
-          <form
-            onSubmit={handleSubmit}
+          <Form
+            key={`${mode}-${initialData?.userId || 'new'}`}
+            resolver={resolver}
+            defaultValues={defaultValues}
+            onSubmit={handleFormSubmit}
             className="space-y-5 px-8 py-7 sm:px-14 sm:py-10"
           >
             {submitError && (
@@ -283,120 +191,99 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
             )}
 
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              <Field
-                ref={firstInputRef}
+              <Input
+                name="firstName"
                 label="Nome"
                 placeholder="Inserisci il nome..."
-                name="firstName"
-                value={form.firstName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.firstName ? errors.firstName : ''}
                 required
                 disabled={isSubmitting || isViewMode}
+                variant="employee"
               />
-              <Field
+              <Input
+                name="lastName"
                 label="Cognome"
                 placeholder="Inserisci il cognome..."
-                name="lastName"
-                value={form.lastName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.lastName ? errors.lastName : ''}
                 required
                 disabled={isSubmitting || isViewMode}
+                variant="employee"
               />
               <div className="md:col-span-2">
-                <Field
+                <Input
+                  name="email"
                   label="E-mail dipendente"
                   placeholder="franco.rossi@mototo.com"
-                  name="email"
                   type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.email ? errors.email : ''}
                   required
-                  disabled={isSubmitting || isViewMode}
+                  disabled={isSubmitting || isViewMode || isEditMode}
+                  variant="employee"
                 />
               </div>
               <div className="md:col-span-2">
-                <Field
+                <Input
+                  name="phone"
                   label="Numero di contatto"
                   placeholder="+39 340 00 00000"
-                  name="phone"
                   type="tel"
-                  value={form.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.phone ? errors.phone : ''}
                   required
                   disabled={isSubmitting || isViewMode}
+                  variant="employee"
                 />
               </div>
 
-              <SelectInput
-                label="Ruolo"
+              <Select
                 name="position"
-                value={form.position}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.position ? errors.position : ''}
+                label="Ruolo"
                 required
                 disabled={isSubmitting || isViewMode}
-                options={[{ value: '', label: 'Seleziona un ruolo' }, ...POSITION_OPTIONS]}
+                variant="employee"
+                options={[
+                  { value: '', label: 'Seleziona un ruolo' },
+                  ...POSITION_OPTIONS,
+                ]}
               />
-              <Field
-                label="Data di assunzione"
-                name="hireDate"
-                type="date"
-                value={form.hireDate}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.hireDate ? errors.hireDate : ''}
-                required
-                disabled={isSubmitting || isViewMode}
-              />
-              <SelectInput
-                label="Stato"
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-[#222222]">
+                  Data di assunzione <span className="text-[#e34f4f]">*</span>
+                </label>
+                <DatePicker
+                  name="hireDate"
+                  hideLabel
+                  required
+                  variant="employee"
+                  disabled={isSubmitting || isViewMode}
+                />
+              </div>
+              <Select
                 name="status"
-                value={form.status}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.status ? errors.status : ''}
+                label="Stato"
                 required
                 disabled={isSubmitting || isViewMode}
+                variant="employee"
                 options={STATUS_OPTIONS}
               />
-              <SelectInput
-                label="Corso assegnato"
+              <Select
                 name="assignedCourseId"
-                value={form.assignedCourseId}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                label="Corso assegnato"
                 disabled={isSubmitting || isViewMode}
+                variant="employee"
                 options={courseSelectOptions}
               />
 
               {!isViewMode && (
                 <div className="md:col-span-2">
-                  <Field
-                    label={
-                      isEditMode ? 'Nuova password (opzionale)' : 'Password'
-                    }
+                  <Input
+                    name="password"
+                    label={isEditMode ? 'Nuova password (opzionale)' : 'Password'}
                     placeholder={
                       isEditMode
                         ? 'Lascia vuoto per non modificarla'
                         : 'Crea una password per il tuo lavoratore'
                     }
-                    name="password"
                     type="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={touched.password ? errors.password : ''}
                     required={!isEditMode}
+                    minLength={isEditMode ? undefined : 6}
                     disabled={isSubmitting}
+                    variant="employee"
                   />
                 </div>
               )}
@@ -445,7 +332,7 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
                 </button>
               )}
             </div>
-          </form>
+          </Form>
         </div>
       </div>
     </>

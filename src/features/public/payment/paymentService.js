@@ -30,3 +30,24 @@ export const createCompanyCourseCheckoutService = async (payload, { signal } = {
     signal,
   });
 };
+
+export const createCompanyCoursePaymentIntentService = async (payload, { signal } = {}) => {
+  return await request({
+    method: 'POST',
+    url: endpoints.public.PAYMENTS_INTENT_COMPANY_COURSE,
+    data: payload,
+    signal,
+  });
+};
+
+export const verifyCompanyCoursePaymentIntentService = async (
+  paymentIntentId,
+  { signal } = {},
+) => {
+  return await request({
+    method: 'GET',
+    url: endpoints.public.PAYMENTS_INTENT_COMPANY_COURSE_VERIFY,
+    params: { paymentIntentId },
+    signal,
+  });
+};

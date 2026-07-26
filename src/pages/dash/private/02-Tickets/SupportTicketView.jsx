@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Toast, useToast } from '../../../../components/ui';
 import Loading from '../../../../components/ui/Utilities/Loading';
@@ -19,8 +19,12 @@ const SupportTicketView = () => {
   const [file, setFile] = useState(null);
 
   useEffect(() => {
-    fetchMyTickets().catch(() => {});
-  }, [fetchMyTickets]);
+    const timeoutId = window.setTimeout(() => {
+      fetchMyTickets({ search: search.trim() || undefined, limit: 50 }).catch(() => {});
+    }, 300);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [fetchMyTickets, search]);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -75,7 +79,7 @@ const SupportTicketView = () => {
 
       addToast('Ticket inviato con successo!', 'success');
       handleCloseCreateModal();
-      await fetchMyTickets();
+      await fetchMyTickets({ limit: 50 });
     } catch (error) {
       addToast(error || 'Errore durante l\'invio del ticket', 'error');
     }
@@ -88,16 +92,8 @@ const SupportTicketView = () => {
     setIsCreateModalOpen(false);
   };
 
-  const filteredTickets = useMemo(() => {
-    const ticketList = Array.isArray(tickets) ? tickets : [];
-    if (!search.trim()) return ticketList;
-
-    return ticketList.filter((ticket) => {
-      const haystack =
-        `${ticket.id} ${ticket.subject} ${ticket.status} ${ticket.message}`.toLowerCase();
-      return haystack.includes(search.toLowerCase());
-    });
-  }, [search, tickets]);
+  const ticketList = Array.isArray(tickets) ? tickets : [];
+  const filteredTickets = ticketList;
 
   if (ticketsLoading) {
     return <Loading size="md" className="min-h-60" />;

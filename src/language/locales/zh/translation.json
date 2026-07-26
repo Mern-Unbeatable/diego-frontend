@@ -598,6 +598,9 @@
       "preparingPayment": "正在准备安全支付...",
       "paymentUnavailable": "支付暂不可用，请稍后重试。",
       "paymentError": "支付失败，请检查银行卡信息后重试。",
+      "alreadyEnrolled": "您已报名此课程。",
+      "alreadyCompleted": "您已完成此课程。",
+      "alreadyPurchased": "您的公司已购买此课程。",
       "nameRequired": "请输入持卡人姓名",
       "discount": "折扣"
     },

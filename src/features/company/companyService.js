@@ -3,6 +3,16 @@ import { endpoints } from '../../config/api/httpEndpoint';
 
 const unwrap = (response) => response?.data ?? response;
 
+export const getCompanyDashboardService = async (params = {}, { signal } = {}) => {
+  const response = await request({
+    method: 'GET',
+    url: endpoints.company.DASHBOARD,
+    params,
+    signal,
+  });
+  return unwrap(response);
+};
+
 export const getCompanyCoursesService = async ({ signal } = {}) => {
   const response = await request({
     method: 'GET',
@@ -38,6 +48,18 @@ export const getCompanyCertificatesService = async (
   return unwrap(response);
 };
 
+export const downloadCompanyCertificateService = async (
+  certificateId,
+  { signal } = {},
+) => {
+  const response = await request({
+    method: 'GET',
+    url: endpoints.certificate.DOWNLOAD(certificateId),
+    signal,
+  });
+  return unwrap(response);
+};
+
 export const getCompanyEmployeesService = async (params = {}, { signal } = {}) => {
   const response = await request({
     method: 'GET',
@@ -53,6 +75,47 @@ export const addCompanyEmployeeService = async (payload, { signal } = {}) => {
     method: 'POST',
     url: endpoints.company.EMPLOYEES,
     data: payload,
+    signal,
+  });
+  return unwrap(response);
+};
+
+export const updateCompanyEmployeeService = async (
+  userId,
+  payload,
+  { signal } = {},
+) => {
+  const response = await request({
+    method: 'PATCH',
+    url: endpoints.company.EMPLOYEE_BY_ID(userId),
+    data: payload,
+    signal,
+  });
+  return unwrap(response);
+};
+
+export const removeCompanyEmployeeService = async (userId, { signal } = {}) => {
+  const response = await request({
+    method: 'DELETE',
+    url: endpoints.company.EMPLOYEE_BY_ID(userId),
+    signal,
+  });
+  return unwrap(response);
+};
+
+export const getCompanyEmployeeDetailService = async (userId, { signal } = {}) => {
+  const response = await request({
+    method: 'GET',
+    url: endpoints.company.EMPLOYEE_BY_ID(userId),
+    signal,
+  });
+  return unwrap(response);
+};
+
+export const getAssignableCoursesService = async ({ signal } = {}) => {
+  const response = await request({
+    method: 'GET',
+    url: endpoints.company.ASSIGNABLE_COURSES,
     signal,
   });
   return unwrap(response);

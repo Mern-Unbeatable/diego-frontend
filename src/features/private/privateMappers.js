@@ -1,4 +1,5 @@
 import i18n from '../../language/i18n';
+import { formatTicketDisplayId } from '../api/ticketMappers';
 
 const getPayloadData = (payload) => payload?.data ?? payload ?? {};
 
@@ -114,6 +115,8 @@ const mapTicketStatus = (status) => {
 
 export const mapTicketItem = (ticket) => ({
   id: ticket.id,
+  ticketNumber: ticket.ticketNumber ?? null,
+  displayId: formatTicketDisplayId(ticket),
   subject: ticket.subject ?? '',
   message: ticket.message ?? '',
   question: ticket.question ?? null,

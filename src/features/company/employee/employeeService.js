@@ -1,56 +1,75 @@
-/**
- * Employee service layer.
- *
- * Shaped exactly like the real-backend services in this codebase
- * (see contactService.js): every function is async and returns the same
- * payload a real endpoint would. Today it delegates to the in-memory mock
- * (`employeeMockDb.js`); swapping to a real backend later only means
- * replacing the bodies below with `request({ method, url, data, signal })`
- * calls against `endpoints.company.employees...`.
- */
-
 import {
-  simulateDelay,
-  dbListEmployees,
-  dbGetEmployeeById,
-  dbCreateEmployee,
-  dbUpdateEmployee,
-  dbDeleteEmployee,
-} from './employeeMockDb';
+  addCompanyEmployeeService,
+  getAssignableCoursesService,
+  getCompanyEmployeeDetailService,
+  getCompanyEmployeesService,
+  removeCompanyEmployeeService,
+  updateCompanyEmployeeService,
+} from '../companyService';
+import {
+  mapAssignableCourseOption,
+  mapEmployeeFormToApiPayload,
+  mapEmployeeFormToUpdatePayload,
+  mapEmployeeFromApi,
+  mapEmployeesListResponse,
+} from './employeeMappers';
 
 export const getEmployees = async (params = {}, { signal } = {}) => {
-  await simulateDelay();
-  if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
-  return dbListEmployees(params);
+  const { page = 1, pageSize = 6, ...rest } = params;
+  const response = await getCompanyEmployeesService(
+    { page, limit: pageSize, ...rest },
+    { signal },
+  );
+
+  return mapEmployeesListResponse(response, { pageSize });
 };
 
-export const getEmployeeById = async (id, { signal } = {}) => {
-  await simulateDelay();
-  if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
-  return dbGetEmployeeById(id);
+export const getEmployeeById = async (userId, { signal } = {}) => {
+  const response = await getCompanyEmployeeDetailService(userId, { signal });
+  return mapEmployeeFromApi(response?.employee ?? response);
+};
+
+export const getAssignableCourses = async ({ signal } = {}) => {
+  const response = await getAssignableCoursesService({ signal });
+  const courses = response?.courses ?? [];
+
+  return courses.map(mapAssignableCourseOption);
 };
 
 export const createEmployee = async (payload, { signal } = {}) => {
-  await simulateDelay();
-  if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
-  return dbCreateEmployee(payload);
+  const assignableCourses = await getAssignableCourses({ signal });
+  const apiPayload = mapEmployeeFormToApiPayload(payload, { assignableCourses });
+  const response = await addCompanyEmployeeService(apiPayload, { signal });
+
+  return {
+    employee: mapEmployeeFromApi(response?.employee),
+    emailSent: Boolean(response?.emailSent),
+    assignedCoursesCount: response?.assignedCoursesCount ?? 0,
+  };
 };
 
-export const updateEmployee = async (id, payload, { signal } = {}) => {
-  await simulateDelay();
-  if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
-  return dbUpdateEmployee(id, payload);
+export const updateEmployee = async (userId, payload, { signal } = {}) => {
+  const assignableCourses = await getAssignableCourses({ signal });
+  const apiPayload = mapEmployeeFormToUpdatePayload(payload, {
+    assignableCourses,
+    previousAssignedCourseId: payload.previousAssignedCourseId,
+  });
+  const response = await updateCompanyEmployeeService(userId, apiPayload, { signal });
+
+  return {
+    employee: mapEmployeeFromApi(response?.employee),
+    emailSent: Boolean(response?.emailSent),
+    assignedCoursesCount: response?.assignedCoursesCount ?? 0,
+  };
 };
 
-export const deleteEmployee = async (id, { signal } = {}) => {
-  await simulateDelay();
-  if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
-  return dbDeleteEmployee(id);
-};
+export const deleteEmployee = async (userId, { signal } = {}) =>
+  removeCompanyEmployeeService(userId, { signal });
 
 export const employeeService = {
   getEmployees,
   getEmployeeById,
+  getAssignableCourses,
   createEmployee,
   updateEmployee,
   deleteEmployee,

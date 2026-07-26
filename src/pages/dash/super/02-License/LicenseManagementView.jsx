@@ -1,18 +1,28 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Search,
   Download,
   Plus,
   Pencil,
   Trash2,
-  X,
-  ChevronDown,
+  Users,
+  Layers,
 } from 'lucide-react';
-import EditLicenseModal from './components/EditLicenseModal';
-import AddLicenseModal from './components/AddLicenseModal';
+import LicenseFormModal from './components/LicenseFormModal';
 import LicenseDetailsModal from './components/LicenseDetailsModal';
+import LicensePlansPanel from './components/LicensePlansPanel';
 import PersonalDetailsModal from '../07-Report/components/PersonalDetailsModal';
-import { Toast, useToast } from '../../../../components/ui';
+import Loading from '../../../../components/ui/Utilities/Loading';
+import {
+  useGetLicensesQuery,
+  useDeleteLicenseMutation,
+} from '../../../../features/api/licenseApi';
+import {
+  showSuccessToast,
+  showInfoToast,
+  showRtkErrorToast,
+  showConfirmToast,
+} from '../../../../utils/toast/toastAlerts';
 
 const euro = new Intl.NumberFormat('it-IT', {
   style: 'currency',
@@ -37,7 +47,7 @@ const StatusPill = ({ value }) => {
 };
 
 const Progress = ({ current, max }) => {
-  const pct = Math.min(100, Math.round((current / max) * 100));
+  const pct = Math.min(100, Math.round((current / Math.max(max, 1)) * 100));
   return (
     <div className="flex min-w-[180px] items-center gap-3">
       <div className="h-2 w-40 rounded-full bg-emerald-100">
@@ -53,109 +63,122 @@ const Progress = ({ current, max }) => {
   );
 };
 
-export default function LicenseManagementView({
-  initialRows = [
-    {
-      azienda: 'TechCorp Training',
-      fatturato: 45230,
-      used: 145,
-      cap: 200,
-      stato: 'Attivo',
-    },
-    {
-      azienda: 'Healthcare Academy',
-      fatturato: 32150,
-      used: 190,
-      cap: 200,
-      stato: 'Attivo',
-    },
-    {
-      azienda: 'Digital Marketing Hub',
-      fatturato: 18950,
-      used: 120,
-      cap: 150,
-      stato: 'Attivo',
-    },
-    {
-      azienda: 'Legal Learning Group',
-      fatturato: 0,
-      used: 250,
-      cap: 300,
-      stato: 'In attesa',
-    },
-    {
-      azienda: 'Manufacturing Skills',
-      fatturato: 28750,
-      used: 45,
-      cap: 50,
-      stato: 'Inattivo',
-    },
-  ],
-  pageSize = 5,
-  onExport,
-  onDelete,
-}) {
-  const { toasts, addToast, removeToast } = useToast();
+export default function LicenseManagementView({ pageSize = 5 }) {
+  const [activeTab, setActiveTab] = useState('licenses');
   const [q, setQ] = useState('');
   const [page, setPage] = useState(1);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editingLicense, setEditingLicense] = useState(null);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+  const [licenseModalMode, setLicenseModalMode] = useState('create');
+  const [editingUserId, setEditingUserId] = useState(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [selectedLicense, setSelectedLicense] = useState(null);
   const [isPersonalDetailsModalOpen, setIsPersonalDetailsModalOpen] =
     useState(false);
 
-  const onAdd = () => setIsAddModalOpen(true);
-  const onEdit = (row) => {
-    setEditingLicense(row);
-    setIsEditModalOpen(true);
+  const {
+    data: licensesData,
+    isLoading: licensesLoading,
+    isFetching: licensesFetching,
+  } = useGetLicensesQuery({
+    page,
+    limit: pageSize,
+    search: q || undefined,
+  });
+
+  const [deleteLicense, { isLoading: deleteLicenseLoading }] =
+    useDeleteLicenseMutation();
+
+  const licensesMeta = licensesData?.meta ?? {
+    page: 1,
+    limit: pageSize,
+    total: 0,
+    totalPages: 1,
   };
-
-  const onViewDetails = (row) => {
-    setSelectedLicense(row);
-    setIsPersonalDetailsModalOpen(true);
-  };
-
-  const filtered = useMemo(() => {
-    const needle = q.trim().toLowerCase();
-    if (!needle) return initialRows;
-    return initialRows.filter((r) => r.azienda.toLowerCase().includes(needle));
-  }, [q, initialRows]);
-
-  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const totalPages = Math.max(1, licensesMeta?.totalPages ?? 1);
   const clampedPage = Math.min(page, totalPages);
-  const start = (clampedPage - 1) * pageSize;
-  const rows = filtered.slice(start, start + pageSize);
+  const rows = licensesData?.licenses ?? [];
+
+  const openCreateLicenseModal = () => {
+    setLicenseModalMode('create');
+    setEditingUserId(null);
+    setIsLicenseModalOpen(true);
+  };
+
+  const openEditLicenseModal = (userId) => {
+    setLicenseModalMode('edit');
+    setEditingUserId(userId);
+    setIsLicenseModalOpen(true);
+  };
+
+  const closeLicenseModal = () => {
+    setIsLicenseModalOpen(false);
+    setEditingUserId(null);
+    setLicenseModalMode('create');
+  };
 
   const handleExport = () => {
-    if (onExport) return onExport();
-    addToast('Esporta rapporto', 'info');
+    showInfoToast('Esporta rapporto');
   };
 
-  const handleDelete = (row) => {
-    if (onDelete) return onDelete(row);
-    addToast(`Elimina: ${row.azienda}`, 'warning');
+  const handleDelete = async (row) => {
+    const confirmed = await showConfirmToast({
+      title: 'Elimina licenza',
+      message: `Sei sicuro di voler eliminare la licenza di ${row.azienda}? L'operazione non può essere annullata.`,
+      confirmLabel: 'Elimina',
+      cancelLabel: 'Annulla',
+      variant: 'danger',
+    });
+
+    if (!confirmed) return;
+
+    try {
+      await deleteLicense(row.userId).unwrap();
+      showSuccessToast('Licenza eliminata');
+    } catch (error) {
+      showRtkErrorToast(error);
+    }
   };
+
+  const listLoading = licensesLoading || licensesFetching;
 
   return (
     <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-black/5">
-      {toasts.map((toast) => (
-        <Toast
-          key={toast.id}
-          type={toast.type}
-          message={toast.message}
-          duration={toast.duration}
-          onClose={() => removeToast(toast.id)}
-        />
-      ))}
-      {/* Toolbar */}
+      <div className="mb-6 flex flex-wrap gap-2 border-b border-[#e3ece8] pb-1">
+        <button
+          type="button"
+          onClick={() => setActiveTab('licenses')}
+          className={`inline-flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+            activeTab === 'licenses'
+              ? 'border-emerald-500 text-emerald-700'
+              : 'border-transparent text-gray-500 hover:text-gray-800'
+          }`}
+        >
+          <Users size={16} />
+          Licenze
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('plans')}
+          className={`inline-flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+            activeTab === 'plans'
+              ? 'border-emerald-500 text-emerald-700'
+              : 'border-transparent text-gray-500 hover:text-gray-800'
+          }`}
+        >
+          <Layers size={16} />
+          Piani licenza
+        </button>
+      </div>
+
+      {activeTab === 'plans' ? (
+        <LicensePlansPanel />
+      ) : (
+        <>
       <div className="flex flex-wrap items-center gap-3 px-2 md:gap-4">
         <h2 className="flex-1 text-[26px] font-semibold text-gray-900 md:text-[28px]">
           Gestione delle licenze
         </h2>
 
-        {/* Search */}
         <div className="flex items-center gap-2 rounded-full bg-gray-100 px-3 py-2">
           <Search className="h-4 w-4 text-gray-500" />
           <input
@@ -170,7 +193,6 @@ export default function LicenseManagementView({
           />
         </div>
 
-        {/* Export */}
         <button
           onClick={handleExport}
           className="inline-flex items-center gap-2 rounded-full border border-emerald-400 px-5 py-3 text-sm font-medium text-emerald-700 hover:bg-emerald-50"
@@ -179,9 +201,8 @@ export default function LicenseManagementView({
           Esporta rapporto
         </button>
 
-        {/* Add license */}
         <button
-          onClick={onAdd}
+          onClick={openCreateLicenseModal}
           className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-medium text-white hover:bg-emerald-600"
         >
           <Plus className="h-5 w-5" />
@@ -189,87 +210,93 @@ export default function LicenseManagementView({
         </button>
       </div>
 
-      {/* Table */}
-      <div className="mt-5 overflow-x-auto">
-        <table className="min-w-full border-separate border-spacing-0">
-          <thead>
-            <tr className="bg-gray-100 text-left">
-              <th className="sticky top-0 z-[1] rounded-tl-2xl px-4 py-4 text-sm font-semibold text-gray-800">
-                Azienda
-              </th>
-              <th className="px-4 py-4 text-sm font-semibold text-gray-800">
-                Fatturato 30 giorni
-              </th>
-              <th className="px-4 py-4 text-sm font-semibold text-gray-800">
-                Utenti attivi
-              </th>
-              <th className="px-4 py-4 text-sm font-semibold text-gray-800">
-                Stato
-              </th>
-              <th className="rounded-tr-2xl px-4 py-4 text-sm font-semibold text-gray-800">
-                Azioni
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={i} className="border-b border-gray-200">
-                <td className="max-w-[220px] truncate px-4 py-5">
-                  <button
-                    onClick={() => onViewDetails(r)}
-                    className="cursor-pointer text-left font-medium text-gray-900 transition-colors duration-200 hover:text-emerald-600"
-                    title="Visualizza dettagli licenza"
+      {listLoading && rows.length === 0 ? (
+        <Loading size="md" className="min-h-60" />
+      ) : (
+        <div className="mt-5 overflow-x-auto">
+          <table className="min-w-full border-separate border-spacing-0">
+            <thead>
+              <tr className="bg-gray-100 text-left">
+                <th className="sticky top-0 z-[1] rounded-tl-2xl px-4 py-4 text-sm font-semibold text-gray-800">
+                  Azienda
+                </th>
+                <th className="px-4 py-4 text-sm font-semibold text-gray-800">
+                  Fatturato 30 giorni
+                </th>
+                <th className="px-4 py-4 text-sm font-semibold text-gray-800">
+                  Utenti attivi
+                </th>
+                <th className="px-4 py-4 text-sm font-semibold text-gray-800">
+                  Stato
+                </th>
+                <th className="rounded-tr-2xl px-4 py-4 text-sm font-semibold text-gray-800">
+                  Azioni
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.id || r.userId} className="border-b border-gray-200">
+                  <td className="max-w-[220px] truncate px-4 py-5">
+                    <button
+                      onClick={() => {
+                        setSelectedLicense(r);
+                        setIsPersonalDetailsModalOpen(true);
+                      }}
+                      className="cursor-pointer text-left font-medium text-gray-900 transition-colors duration-200 hover:text-emerald-600"
+                      title="Visualizza dettagli licenza"
+                    >
+                      {r.azienda}
+                    </button>
+                  </td>
+                  <td className="px-4 py-5 whitespace-nowrap text-gray-900">
+                    {euro.format(r.fatturato)}
+                  </td>
+                  <td className="px-4 py-5">
+                    <Progress current={r.used ?? 0} max={r.cap || 1} />
+                  </td>
+                  <td className="px-4 py-5">
+                    <StatusPill value={r.stato} />
+                  </td>
+                  <td className="px-4 py-5">
+                    <div className="flex items-center gap-4">
+                      <button
+                        onClick={() => openEditLicenseModal(r.userId)}
+                        className="text-gray-700 hover:text-gray-900"
+                        title="Modifica"
+                      >
+                        <Pencil className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(r)}
+                        disabled={deleteLicenseLoading}
+                        className="text-red-600 hover:text-red-700 disabled:opacity-50"
+                        title="Elimina"
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {rows.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={5}
+                    className="px-4 py-10 text-center text-gray-500"
                   >
-                    {r.azienda}
-                  </button>
-                </td>
-                <td className="px-4 py-5 whitespace-nowrap text-gray-900">
-                  {euro.format(r.fatturato)}
-                </td>
-                <td className="px-4 py-5">
-                  <Progress current={r.used} max={r.cap} />
-                </td>
-                <td className="px-4 py-5">
-                  <StatusPill value={r.stato} />
-                </td>
-                <td className="px-4 py-5">
-                  <div className="flex items-center gap-4">
-                    <button
-                      onClick={() => onEdit(r)}
-                      className="text-gray-700 hover:text-gray-900"
-                      title="Modifica"
-                    >
-                      <Pencil className="h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(r)}
-                      className="text-red-600 hover:text-red-700"
-                      title="Elimina"
-                    >
-                      <Trash2 className="h-5 w-5" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {rows.length === 0 && (
-              <tr>
-                <td
-                  colSpan={5}
-                  className="px-4 py-10 text-center text-gray-500"
-                >
-                  Nessun risultato trovato.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+                    Nessun risultato trovato.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
 
-      {/* Footer: count + pagination */}
       <div className="flex flex-col items-center justify-between gap-4 px-2 py-4 md:flex-row">
         <p className="text-sm text-gray-500">
-          Showing {rows.length} of {filtered.length} licensees
+          Showing {rows.length} of {licensesMeta?.total ?? rows.length} licensees
         </p>
 
         <nav className="flex items-center gap-3">
@@ -281,27 +308,21 @@ export default function LicenseManagementView({
             Precedente
           </button>
 
-          {/* Pages (simple demo: show first 2 pages explicitly like screenshot) */}
-          <button
-            onClick={() => setPage(1)}
-            className={`h-8 w-8 rounded-md text-sm ${
-              clampedPage === 1
-                ? 'bg-emerald-500 text-white'
-                : 'text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            1
-          </button>
-          <button
-            onClick={() => setPage(2)}
-            className={`h-8 w-8 rounded-md text-sm ${
-              clampedPage === 2
-                ? 'bg-emerald-500 text-white'
-                : 'text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            2
-          </button>
+          {Array.from({ length: totalPages }, (_, index) => index + 1)
+            .slice(0, 5)
+            .map((pageNumber) => (
+              <button
+                key={pageNumber}
+                onClick={() => setPage(pageNumber)}
+                className={`h-8 w-8 rounded-md text-sm ${
+                  clampedPage === pageNumber
+                    ? 'bg-emerald-500 text-white'
+                    : 'text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                {pageNumber}
+              </button>
+            ))}
 
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
@@ -313,53 +334,28 @@ export default function LicenseManagementView({
         </nav>
       </div>
 
-      {/* Edit License Modal */}
-      <EditLicenseModal
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        license={editingLicense}
-        onSave={(updatedLicense) => {
-          // Handle save logic here
-          console.log('Saving license:', updatedLicense);
-          setIsEditModalOpen(false);
+      <LicenseFormModal
+        isOpen={isLicenseModalOpen}
+        mode={licenseModalMode}
+        userId={editingUserId}
+        onClose={closeLicenseModal}
+        onSuccess={() => {
+          if (licenseModalMode === 'create') setPage(1);
         }}
       />
 
-      {/* Add License Modal */}
-      <AddLicenseModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onSave={(newLicense) => {
-          // Handle add license logic here
-          console.log('Adding new license:', newLicense);
-          setIsAddModalOpen(false);
-        }}
-      />
-
-      {/* License Details Modal */}
       <LicenseDetailsModal
         isOpen={isDetailsModalOpen}
         onClose={() => setIsDetailsModalOpen(false)}
         license={selectedLicense}
         onEdit={(license) => {
           setSelectedLicense(license);
-          setEditingLicense(license);
           setIsDetailsModalOpen(false);
-          setIsEditModalOpen(true);
+          openEditLicenseModal(license.userId);
         }}
-        onDelete={(license) => {
-          if (
-            confirm(
-              `Sei sicuro di voler eliminare la licenza di ${license.azienda}?`,
-            )
-          ) {
-            console.log('Deleting license:', license);
-            setIsDetailsModalOpen(false);
-          }
-        }}
+        onDelete={(license) => handleDelete(license)}
       />
 
-      {/* Personal Details Modal */}
       <PersonalDetailsModal
         isOpen={isPersonalDetailsModalOpen}
         onClose={() => setIsPersonalDetailsModalOpen(false)}
@@ -369,6 +365,8 @@ export default function LicenseManagementView({
           setIsDetailsModalOpen(true);
         }}
       />
+        </>
+      )}
     </div>
   );
 }

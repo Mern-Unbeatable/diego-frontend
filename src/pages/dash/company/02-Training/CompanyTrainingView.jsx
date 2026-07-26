@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
   CalendarDays,
@@ -11,7 +11,6 @@ import {
 } from 'lucide-react';
 import EmployeeModal from './components/EmployeeModal';
 import { useEmployees } from '../../../../features/company/employee/employeeHooks';
-import { getCourseById } from '../../../../features/company/employee/employeeConstants';
 import {
   Alert,
   ConfirmModal,
@@ -20,6 +19,12 @@ import {
   useToast,
 } from '../../../../components/ui';
 import { useModalState } from './hooks/useModalState';
+import { formatApiErrorMessage } from '../../../../config/api/errorHandler';
+import { ROUTES } from '../../../../config/routes';
+import { getCompanyCoursesService } from '../../../../features/company/companyService';
+
+const resolveErrorMessage = (error, fallback) =>
+  formatApiErrorMessage(error) || fallback;
 
 const CompanyTrainingView = () => {
   const {
@@ -43,6 +48,22 @@ const CompanyTrainingView = () => {
     useModalState();
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const [highlightCourse, setHighlightCourse] = useState(null);
+
+  useEffect(() => {
+    const loadHighlightCourse = async () => {
+      try {
+        const data = await getCompanyCoursesService();
+        const courses = data?.courses ?? [];
+        const withEnrollments = courses.find((course) => course.enrolledEmployees > 0);
+        setHighlightCourse(withEnrollments || courses[0] || null);
+      } catch {
+        setHighlightCourse(null);
+      }
+    };
+
+    loadHighlightCourse();
+  }, []);
 
   useEffect(() => {
     fetchEmployees(1);
@@ -58,12 +79,28 @@ const CompanyTrainingView = () => {
   }, [searchParams, setSearchParams, openAdd]);
 
   const handleSubmit = async (payload) => {
-    if (modal.mode === 'edit' && modal.employee) {
-      await updateEmployee(modal.employee.id, payload);
-      addToast('Dipendente aggiornato con successo', 'success');
-    } else {
-      await createEmployee(payload);
+    try {
+      if (modal.mode === 'edit' && modal.employee) {
+        const result = await updateEmployee(modal.employee.userId, payload);
+        addToast('Dipendente aggiornato con successo', 'success');
+        if (result?.emailSent) {
+          addToast('Email di accesso inviata al dipendente', 'success');
+        }
+        return;
+      }
+
+      const result = await createEmployee(payload);
       addToast('Dipendente aggiunto con successo', 'success');
+      if (result?.emailSent) {
+        addToast('Email di accesso inviata al dipendente', 'success');
+      }
+    } catch (error) {
+      resetError();
+      addToast(
+        resolveErrorMessage(error, 'Salvataggio non riuscito. Riprova.'),
+        'error',
+      );
+      throw error;
     }
   };
 
@@ -71,10 +108,13 @@ const CompanyTrainingView = () => {
     const employee = confirmDelete.employee;
     if (!employee) return;
     try {
-      await deleteEmployee(employee.id);
+      await deleteEmployee(employee.userId);
       addToast('Dipendente eliminato con successo', 'success');
     } catch (err) {
-      addToast(err?.message || 'Eliminazione non riuscita', 'error');
+      addToast(
+        resolveErrorMessage(err, 'Eliminazione non riuscita'),
+        'error',
+      );
     } finally {
       confirmDelete.close();
     }
@@ -159,11 +199,9 @@ const CompanyTrainingView = () => {
 
         {!showSkeleton && employees.length > 0 && (
           <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
-            {employees.map((employee) => {
-              const course = getCourseById(employee.assignedCourseId);
-              return (
+            {employees.map((employee) => (
                 <article
-                  key={employee.id}
+                  key={employee.userId || employee.id}
                   className="rounded-xl border border-[#e7e7e7] bg-white p-5"
                 >
                   <div className="mb-4 flex items-start justify-between gap-3">
@@ -200,10 +238,10 @@ const CompanyTrainingView = () => {
                       <CalendarDays size={15} />
                       Assunzione: {employee.hireDate}
                     </p>
-                    {course && (
+                    {employee.assignedCourseTitle && (
                       <p className="flex items-center gap-2">
                         <UsersRound size={15} />
-                        Corso: {course.title}
+                        Corso: {employee.assignedCourseTitle}
                       </p>
                     )}
                   </div>
@@ -234,8 +272,7 @@ const CompanyTrainingView = () => {
                     </button>
                   </div>
                 </article>
-              );
-            })}
+            ))}
           </div>
         )}
 
@@ -282,15 +319,21 @@ const CompanyTrainingView = () => {
         )}
 
         <div className="rounded-xl border border-[#ececec] bg-white px-5 py-4">
-          <p className="mb-3 text-sm text-[#666666]">
-            Corso assegnato: Formazione SEVESO
-          </p>
-          <Link
-            to="/dashboard/company-admin/gestisci-formazione/corsi/seveso"
-            className="inline-flex rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white hover:bg-[#63a88c]"
-          >
-            Vedi iscritti
-          </Link>
+          {highlightCourse ? (
+            <>
+              <p className="mb-3 text-sm text-[#666666]">
+                Corso assegnato: {highlightCourse.courseTitle}
+              </p>
+              <Link
+                to={`${ROUTES.COMPANY_ADMIN.TRAINING}/courses/${highlightCourse.courseId}`}
+                className="inline-flex rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white hover:bg-[#63a88c]"
+              >
+                Vedi iscritti
+              </Link>
+            </>
+          ) : (
+            <p className="text-sm text-[#666666]">Nessun corso assegnato.</p>
+          )}
         </div>
       </section>
 

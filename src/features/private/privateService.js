@@ -13,10 +13,11 @@ export const getMyEnrollmentsService = async (params = {}, { signal } = {}) => {
   return unwrap(response);
 };
 
-export const getMyTicketsService = async ({ signal } = {}) => {
+export const getMyTicketsService = async (params = {}, { signal } = {}) => {
   const response = await request({
     method: 'GET',
     url: endpoints.private.MY_TICKETS,
+    params,
     signal,
   });
   return unwrap(response);
