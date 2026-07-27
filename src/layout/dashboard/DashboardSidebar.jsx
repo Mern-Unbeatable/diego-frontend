@@ -97,13 +97,18 @@ const linksByRole = {
   [ROLES.COMPANY_EMPLOYEE]: [
     {
       path: '/dashboard/company-employee',
-      label: 'Dashboard',
+      label: 'I miei corsi',
       icon: <IoHomeOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/company-employee/item-1',
-      label: 'Item 1',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      path: '/dashboard/company-employee/credentials',
+      label: 'Credenziali',
+      icon: <IoLockClosedOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/company-employee/certificates',
+      label: 'I tuoi attestati',
+      icon: <IoRibbonOutline className="text-[19px]" />,
     },
   ],
 

@@ -29,5 +29,52 @@ export const endpoints = {
     COURSE_DETAILS: '/courses',
     COURSE_DETAILS_BY_SLUG: '/courses/slug',
     PAYMENTS_INTENT_COURSE: '/payments/intent/course',
+    PAYMENTS_INTENT_COURSE_VERIFY: '/payments/intent/course/verify',
+    PAYMENTS_CHECKOUT_COMPANY_COURSE: '/payments/checkout/company-course',
+  },
+  company: {
+    COURSES: '/employees/courses',
+    PROGRESS_REPORT: '/employees/progress-report',
+    CERTIFICATES: '/employees/certificates',
+    EMPLOYEES: '/employees',
+    ASSIGN_COURSES: (userId) => `/employees/${userId}/assign-courses`,
+    ENROLLMENT_REMINDER: (enrollmentId) => `/employees/enrollments/${enrollmentId}/reminder`,
+    CERTIFICATE_DOWNLOAD: (userId, certificateId) =>
+      `/employees/${userId}/certificates/${certificateId}/download`,
+    ASSIGNABLE_COURSES: '/employees/assignable-courses',
+    MY_PROFILE: '/users/me',
+  },
+  private: {
+    MY_ENROLLMENTS: '/enrollments/my',
+    MY_COURSE_PROGRESS: (courseId) => `/enrollments/my-progress/${courseId}`,
+    ENSURE_CERTIFICATE: (courseId) => `/enrollments/my-progress/${courseId}/ensure-certificate`,
+    MY_TICKETS: '/tickets/my',
+    CREATE_TICKET: '/tickets',
+    GET_TICKET_BY_ID: (ticketId) => `/tickets/${ticketId}`,
+    NOTIFICATIONS: '/notifications',
+    MARK_NOTIFICATIONS_READ: '/notifications/mark-read',
+    MARK_ALL_NOTIFICATIONS_READ: '/notifications/mark-all-read',
+    MY_CERTIFICATES: '/certificates/my',
+    MY_PROFILE: '/users/me',
+    MY_CREDENTIALS: '/users/me/credentials',
+    MARK_CREDENTIAL_VIEWED: (credentialId) => `/users/me/credentials/${credentialId}/viewed`,
+  },
+  learning: {
+    COURSE_BY_ID: (courseId) => `/courses/${courseId}`,
+    LESSON_PROGRESS: (courseId) => `/courses/${courseId}/lessons/progress`,
+    LESSON_BY_ID: (courseId, lessonId) =>
+      `/courses/${courseId}/lessons/${lessonId}`,
+    TRACK_LESSON_PROGRESS: (courseId, lessonId) =>
+      `/courses/${courseId}/lessons/${lessonId}/progress`,
+    LESSON_STATUS: (courseId, lessonId) =>
+      `/courses/${courseId}/lessons/${lessonId}/status`,
+    QUIZZES_AVAILABLE: (courseId) => `/quizzes/${courseId}/available`,
+    QUIZ_MY_PROGRESS: (courseId) => `/quizzes/${courseId}/my-progress`,
+    START_QUIZ: (courseId, quizId) =>
+      `/quizzes/${courseId}/start-quiz/${quizId}`,
+    SUBMIT_QUIZ: (courseId, quizId) => `/quizzes/${courseId}/submit/${quizId}`,
+    SCORM_LAUNCH: '/scorm/launch',
+    SCORM_COMMIT: '/scorm/commit',
+    SCORM_FINISH: '/scorm/finish',
   },
 };

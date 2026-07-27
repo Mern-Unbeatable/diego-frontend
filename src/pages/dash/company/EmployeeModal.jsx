@@ -44,7 +44,7 @@ const Field = ({ label, placeholder, value, onChange, name }) => (
     </label>
 );
 
-const EmployeeModal = ({ mode, employee, onClose }) => {
+const EmployeeModal = ({ mode, employee, onClose, onSubmit, saving = false }) => {
     const [form, setForm] = useState(emptyForm);
 
     useEffect(() => {
@@ -70,6 +70,15 @@ const EmployeeModal = ({ mode, employee, onClose }) => {
     const title = mode === 'edit' ? 'Modifica utente' : 'Aggiungi utente';
     const buttonLabel = mode === 'edit' ? 'Richiedi modifica' : 'Salva';
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (onSubmit) {
+            await onSubmit(form);
+            return;
+        }
+        onClose?.();
+    };
+
     return (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-[#113b2b]/60 p-4">
             <div className="max-h-[95vh] w-full max-w-[740px] overflow-y-auto rounded-2xl bg-white px-8 py-7 sm:px-14 sm:py-10">
@@ -79,7 +88,7 @@ const EmployeeModal = ({ mode, employee, onClose }) => {
 
                 <h3 className="mb-8 text-center text-2xl md:text-3xl font-semibold text-[#1f1f1f]">{title}</h3>
 
-                <form className="space-y-5" onSubmit={(event) => event.preventDefault()}>
+                <form className="space-y-5" onSubmit={handleSubmit}>
                     {formFields.map((field) => (
                         <Field
                             key={field.name}
@@ -104,8 +113,12 @@ const EmployeeModal = ({ mode, employee, onClose }) => {
                         ))}
 
                     <div className="flex justify-end pt-2">
-                        <button type="button" onClick={onClose} className="rounded-full bg-[#73bfa1] px-7 py-2.5 text-sm font-semibold text-white hover:bg-[#63a88c]">
-                            {buttonLabel}
+                        <button
+                            type="submit"
+                            disabled={saving}
+                            className="rounded-full bg-[#73bfa1] px-7 py-2.5 text-sm font-semibold text-white hover:bg-[#63a88c] disabled:opacity-60"
+                        >
+                            {saving ? 'Salvataggio...' : buttonLabel}
                         </button>
                     </div>
                 </form>

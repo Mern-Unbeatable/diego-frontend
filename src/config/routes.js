@@ -27,6 +27,9 @@ export const ROUTES = Object.freeze({
 
   COMPANY_EMPLOYEE: {
     DASHBOARD: '/dashboard/company-employee',
+    COURSE: '/dashboard/company-employee/course',
+    CERTIFICATES: '/dashboard/company-employee/certificates',
+    CREDENTIALS: '/dashboard/company-employee/credentials',
   },
 
   LICENSE_USER: {

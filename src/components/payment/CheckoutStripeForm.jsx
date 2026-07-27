@@ -274,7 +274,6 @@ const CheckoutPaymentFields = ({
         await onSuccess?.(paymentIntent);
         return;
       }
- 
       if (paymentIntent?.status === 'processing') {
         toast.success(t('paymentPages.section2.processing'));
         await onSuccess?.(paymentIntent);

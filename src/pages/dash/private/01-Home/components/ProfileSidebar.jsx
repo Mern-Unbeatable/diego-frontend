@@ -2,8 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaUser } from 'react-icons/fa';
 
-const ProfileSidebar = () => {
+const ProfileSidebar = ({ userName = '' }) => {
   const navigate = useNavigate();
+  const displayName = userName || 'Corsista';
 
   const openProfilePage = () => {
     // navigate to the student profile page registered at /private-user/profile
@@ -58,7 +59,7 @@ const ProfileSidebar = () => {
           </div>
 
           <p className="mb-4 text-lg font-semibold text-gray-800">
-            Ciao Prashant
+            Ciao {displayName}
           </p>
 
           <button
