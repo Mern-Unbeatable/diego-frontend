@@ -28,10 +28,7 @@ import ScrollToTop from '../components/common/ScrollToTop.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-
-
-    {/* element={<ScrollToTop />} */}
-      <Route >
+      <Route element={<ScrollToTop />}>
         {/* ✅ PUBLIC */}
         <Route path="/" element={<MainLayout />}>
           {publicRoutes.map((r) => (
