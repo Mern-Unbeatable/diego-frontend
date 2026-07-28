@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Loading = ({ size = 'md', className = '' }) => {
+const Loading = ({ size = 'lg', className = '' }) => {
   const sizes = {
     sm: 'w-4 h-4',
     md: 'w-8 h-8',
@@ -12,7 +12,7 @@ const Loading = ({ size = 'md', className = '' }) => {
       className={`flex min-h-screen items-center justify-center ${className}`}
     >
       <div
-        className={`${sizes[size]} animate-spin rounded-full border-4 border-gray-200 border-t-blue-600`}
+        className={`${sizes[size]} animate-spin rounded-full border-4 border-gray-200 border-t-[#73BFA1]`}
       />
     </div>
   );

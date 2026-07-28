@@ -598,6 +598,9 @@
       "preparingPayment": "正在准备安全支付...",
       "paymentUnavailable": "支付暂不可用，请稍后重试。",
       "paymentError": "支付失败，请检查银行卡信息后重试。",
+      "alreadyEnrolled": "您已报名此课程。",
+      "alreadyCompleted": "您已完成此课程。",
+      "alreadyPurchased": "您的公司已购买此课程。",
       "nameRequired": "请输入持卡人姓名",
       "discount": "折扣"
     },
@@ -879,6 +882,90 @@
         "buyButton": "购买子域名",
         "tipTitle": "提示：",
         "tipText": "购买后将域名提供给我们，我们会自动完成绑定。"
+      }
+    }
+  },
+  "platformAdmin": {
+    "inquiries": {
+      "tabs": {
+        "services": "服务",
+        "contacts": "联系我们",
+        "collaborations": "与我们合作"
+      },
+      "searchPlaceholder": "搜索...",
+      "columns": {
+        "service": "服务",
+        "contact": "联系人",
+        "company": "公司",
+        "name": "姓名",
+        "agency": "机构",
+        "contacts": "联系方式",
+        "type": "类型",
+        "status": "状态",
+        "date": "日期",
+        "actions": "操作"
+      },
+      "actions": {
+        "view": "查看",
+        "delete": "删除"
+      },
+      "detail": {
+        "title": "请求详情",
+        "closeModal": "关闭弹窗",
+        "emptyValue": "—"
+      },
+      "fields": {
+        "service": "服务",
+        "name": "姓名",
+        "company": "公司",
+        "vatNumber": "增值税号",
+        "phone": "电话",
+        "email": "电子邮件",
+        "status": "状态",
+        "message": "消息",
+        "date": "日期",
+        "agency": "机构",
+        "contact": "联系人",
+        "collaborationType": "合作类型",
+        "companySize": "公司规模",
+        "description": "描述",
+        "goals": "目标",
+        "notes": "备注"
+      },
+      "delete": {
+        "confirm": "删除",
+        "cancel": "取消",
+        "message": "确定删除 {{label}} 吗？此操作无法撤销。",
+        "fallbackLabel": "此项"
+      },
+      "services": {
+        "title": "服务请求",
+        "emptyTitle": "未找到服务请求",
+        "emptyDescription": "网站服务表单提交的请求将显示在这里。",
+        "deleteTitle": "删除服务请求",
+        "deleteSuccess": "服务请求已删除"
+      },
+      "contacts": {
+        "title": "联系请求",
+        "emptyTitle": "未找到联系记录",
+        "emptyDescription": "网站联系我们表单提交的消息将显示在这里。",
+        "deleteTitle": "删除联系记录",
+        "deleteSuccess": "联系记录已删除"
+      },
+      "collaborations": {
+        "title": "合作请求",
+        "emptyTitle": "未找到合作申请",
+        "emptyDescription": "网站与我们合作表单提交的申请将显示在这里。",
+        "deleteTitle": "删除合作申请",
+        "deleteSuccess": "合作申请已删除"
+      },
+      "status": {
+        "NEW": "新建",
+        "PENDING": "待处理",
+        "CONTACTED": "已联系",
+        "RESOLVED": "已解决",
+        "IN_PROGRESS": "处理中",
+        "HANDLED": "已处理"
       }
     }
   },

@@ -606,6 +606,9 @@
       "preparingPayment": "جارٍ تجهيز الدفع الآمن...",
       "paymentUnavailable": "الدفع غير متاح حاليًا. يرجى المحاولة مرة أخرى.",
       "paymentError": "فشل الدفع. يرجى التحقق من بيانات البطاقة والمحاولة مرة أخرى.",
+      "alreadyEnrolled": "أنت مسجل بالفعل في هذه الدورة.",
+      "alreadyCompleted": "لقد أكملت هذه الدورة بالفعل.",
+      "alreadyPurchased": "شركتك اشترت هذه الدورة بالفعل.",
       "nameRequired": "يرجى إدخال الاسم على البطاقة",
       "discount": "خصم"
     },
@@ -887,6 +890,90 @@
         "buyButton": "شراء نطاق فرعي",
         "tipTitle": "نصيحة:",
         "tipText": "بعد الشراء، زودنا بالنطاق وسنربطه تلقائيًا."
+      }
+    }
+  },
+  "platformAdmin": {
+    "inquiries": {
+      "tabs": {
+        "services": "الخدمات",
+        "contacts": "اتصل بنا",
+        "collaborations": "اعمل معنا"
+      },
+      "searchPlaceholder": "بحث...",
+      "columns": {
+        "service": "الخدمة",
+        "contact": "جهة الاتصال",
+        "company": "الشركة",
+        "name": "الاسم",
+        "agency": "الوكالة",
+        "contacts": "بيانات الاتصال",
+        "type": "النوع",
+        "status": "الحالة",
+        "date": "التاريخ",
+        "actions": "الإجراءات"
+      },
+      "actions": {
+        "view": "عرض",
+        "delete": "حذف"
+      },
+      "detail": {
+        "title": "تفاصيل الطلب",
+        "closeModal": "إغلاق النافذة",
+        "emptyValue": "—"
+      },
+      "fields": {
+        "service": "الخدمة",
+        "name": "الاسم",
+        "company": "الشركة",
+        "vatNumber": "رقم ضريبة القيمة المضافة",
+        "phone": "الهاتف",
+        "email": "البريد الإلكتروني",
+        "status": "الحالة",
+        "message": "الرسالة",
+        "date": "التاريخ",
+        "agency": "الوكالة",
+        "contact": "جهة الاتصال",
+        "collaborationType": "نوع التعاون",
+        "companySize": "حجم الشركة",
+        "description": "الوصف",
+        "goals": "الأهداف",
+        "notes": "ملاحظات"
+      },
+      "delete": {
+        "confirm": "حذف",
+        "cancel": "إلغاء",
+        "message": "هل تريد حذف {{label}}؟ لا يمكن التراجع عن هذا الإجراء.",
+        "fallbackLabel": "هذا العنصر"
+      },
+      "services": {
+        "title": "طلبات الخدمة",
+        "emptyTitle": "لم يتم العثور على طلبات خدمة",
+        "emptyDescription": "ستظهر الطلبات المرسلة من نموذج الخدمات في الموقع هنا.",
+        "deleteTitle": "حذف طلب الخدمة",
+        "deleteSuccess": "تم حذف طلب الخدمة"
+      },
+      "contacts": {
+        "title": "طلبات الاتصال",
+        "emptyTitle": "لم يتم العثور على جهات اتصال",
+        "emptyDescription": "ستظهر الرسائل المرسلة من نموذج اتصل بنا في الموقع هنا.",
+        "deleteTitle": "حذف جهة الاتصال",
+        "deleteSuccess": "تم حذف جهة الاتصال"
+      },
+      "collaborations": {
+        "title": "طلبات التعاون",
+        "emptyTitle": "لم يتم العثور على طلبات تعاون",
+        "emptyDescription": "ستظهر الطلبات المرسلة من نموذج اعمل معنا في الموقع هنا.",
+        "deleteTitle": "حذف طلب التعاون",
+        "deleteSuccess": "تم حذف طلب التعاون"
+      },
+      "status": {
+        "NEW": "جديد",
+        "PENDING": "قيد الانتظار",
+        "CONTACTED": "تم التواصل",
+        "RESOLVED": "تم الحل",
+        "IN_PROGRESS": "قيد المعالجة",
+        "HANDLED": "تمت المعالجة"
       }
     }
   },

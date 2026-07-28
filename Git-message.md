@@ -29,3 +29,4 @@
 - (test): add unit tests for payment service
 
 - (fixed): client problem solve
+- (solve): private user dashboard and public api integration done 

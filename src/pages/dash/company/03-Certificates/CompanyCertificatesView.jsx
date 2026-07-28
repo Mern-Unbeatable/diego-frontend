@@ -2,16 +2,18 @@ import { Download, Printer } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { ENV_CONFIG } from '../../../../config/env.config';
+import { mapCompanyCertificatesResponse } from '../../../../features/company/companyCertificateMappers';
 import {
-  downloadEmployeeCertificateService,
+  downloadCompanyCertificateService,
   getCompanyCertificatesService,
   getCompanyCoursesService,
 } from '../../../../features/company/companyService';
+import CertificatePreview from './components/CertificatePreview';
 
 const PAGE_SIZE = 6;
 
 const resolveAssetUrl = (path) => {
-  if (!path) return '/image/student/c_1.png';
+  if (!path) return null;
   if (path.startsWith('http')) return path;
   const base = ENV_CONFIG.API_BASE_URL.replace(/\/api\/v1\/?$/, '');
   return `${base}${path.startsWith('/') ? path : `/${path}`}`;
@@ -38,14 +40,15 @@ const CompanyCertificatesView = () => {
   const loadCertificates = useCallback(async (page = 1, filters = {}) => {
     setLoading(true);
     try {
-      const data = await getCompanyCertificatesService({
+      const response = await getCompanyCertificatesService({
         page,
         limit: PAGE_SIZE,
         courseId: filters.courseId || undefined,
         search: filters.search || undefined,
       });
-      setCertificates(data?.certificates ?? []);
-      setMeta(data?.meta ?? { page, total: 0, totalPages: 1 });
+      const data = mapCompanyCertificatesResponse(response);
+      setCertificates(data.certificates);
+      setMeta(data.meta);
     } catch (error) {
       toast.error(error?.message || 'Impossibile caricare gli attestati');
       setCertificates([]);
@@ -72,13 +75,24 @@ const CompanyCertificatesView = () => {
     setSearch('');
   };
 
+  const openCertificate = async (certificate) => {
+    if (!certificate?.id) return null;
+    try {
+      const data = await downloadCompanyCertificateService(certificate.id);
+      return resolveAssetUrl(data?.pdfUrl || certificate.pdfUrl);
+    } catch {
+      return resolveAssetUrl(certificate.pdfUrl);
+    }
+  };
+
   const handleDownload = async (certificate) => {
-    const userId = certificate.employee?.userId;
-    if (!userId || !certificate.id) return;
     try {
       setActionId(certificate.id);
-      const data = await downloadEmployeeCertificateService(userId, certificate.id);
-      const pdfUrl = resolveAssetUrl(data?.pdfUrl || certificate.pdfUrl);
+      const pdfUrl = await openCertificate(certificate);
+      if (!pdfUrl) {
+        toast.error('Attestato PDF non disponibile');
+        return;
+      }
       window.open(pdfUrl, '_blank', 'noopener,noreferrer');
     } catch (error) {
       toast.error(error?.message || 'Download attestato non riuscito');
@@ -88,7 +102,21 @@ const CompanyCertificatesView = () => {
   };
 
   const handlePrint = async (certificate) => {
-    await handleDownload(certificate);
+    try {
+      setActionId(certificate.id);
+      const pdfUrl = await openCertificate(certificate);
+      if (!pdfUrl) {
+        toast.error('Attestato PDF non disponibile');
+        return;
+      }
+      const printWindow = window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+      printWindow?.focus();
+      printWindow?.print();
+    } catch (error) {
+      toast.error(error?.message || 'Stampa attestato non riuscita');
+    } finally {
+      setActionId(null);
+    }
   };
 
   const from = meta.total === 0 ? 0 : (meta.page - 1) * PAGE_SIZE + 1;
@@ -152,28 +180,27 @@ const CompanyCertificatesView = () => {
               <div className="rounded-xl bg-[#edf5f2] p-5">
                 <p className="text-sm text-[#202020]">
                   <span className="font-semibold">Nominativo utente:</span>{' '}
-                  {certificate.employee?.fullName || '—'}
+                  {certificate.employeeName}
                 </p>
                 <p className="mt-1 text-sm text-[#202020]">
                   <span className="font-semibold">ID corsista:</span>{' '}
-                  {certificate.employee?.userId?.slice(0, 8) || '—'}
+                  {certificate.userId?.slice(0, 8) || '—'}
                 </p>
                 <p className="mt-1 text-sm text-[#202020]">
                   <span className="font-semibold">Corso:</span>{' '}
-                  {certificate.course?.title || '—'}
+                  {certificate.courseTitle}
+                </p>
+                <p className="mt-1 text-sm text-[#202020]">
+                  <span className="font-semibold">Data emissione:</span>{' '}
+                  {certificate.issuedAtFormatted}
                 </p>
               </div>
 
               <div className="overflow-hidden rounded-xl bg-[#23473f]">
-                <img
-                  src={resolveAssetUrl(certificate.pdfUrl)}
-                  alt="Certificato"
-                  className="h-[200px] w-full object-cover opacity-80"
-                  onError={(event) => {
-                    event.currentTarget.src = '/images/icons/title.png';
-                    event.currentTarget.className =
-                      'h-[200px] w-full object-contain bg-[#1f3f38] p-8';
-                  }}
+                <CertificatePreview
+                  pdfUrl={resolveAssetUrl(certificate.pdfUrl)}
+                  qrCode={certificate.qrCode}
+                  courseTitle={certificate.courseTitle}
                 />
               </div>
 

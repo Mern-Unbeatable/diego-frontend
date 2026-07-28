@@ -75,8 +75,49 @@ export const formatCourseDuration = (course = {}) => {
   return '-';
 };
 
+export const parseEuroAmount = (value) => {
+  if (value === '' || value === null || value === undefined) return 0;
+  if (typeof value === 'number') return Number.isFinite(value) ? value : 0;
+
+  const raw = String(value).trim().replace(/\s/g, '').replace(/€/g, '');
+  if (!raw) return 0;
+
+  const hasComma = raw.includes(',');
+  const hasDot = raw.includes('.');
+  let normalized = raw;
+
+  if (hasComma && hasDot) {
+    const lastComma = raw.lastIndexOf(',');
+    const lastDot = raw.lastIndexOf('.');
+    normalized =
+      lastComma > lastDot
+        ? raw.replace(/\./g, '').replace(',', '.')
+        : raw.replace(/,/g, '');
+  } else if (hasComma) {
+    normalized = raw.replace(',', '.');
+  }
+
+  const parsed = Number.parseFloat(normalized);
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
+export const toEuroAmount = (value) => {
+  const parsed = parseEuroAmount(value);
+  if (!parsed) return 0;
+
+  // Stripe amounts are stored in cents (e.g. 3000 => €30).
+  if (Number.isInteger(parsed) && parsed >= 100 && parsed % 100 === 0) {
+    const euros = parsed / 100;
+    if (euros > 0 && euros < parsed) return euros;
+  }
+
+  return parsed;
+};
+
 export const formatEuro = (value) =>
   new Intl.NumberFormat('it-IT', {
     style: 'currency',
     currency: 'EUR',
-  }).format(Number(value) || 0);
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(toEuroAmount(value));

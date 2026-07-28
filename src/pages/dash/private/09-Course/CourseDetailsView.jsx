@@ -8,7 +8,6 @@ import LessonContent from '../../../../components/course/LessonContent';
 import LessonNavigation from '../../../../components/course/LessonNavigation';
 import { useCoursePlayer } from '../../../../features/learning/useCoursePlayer';
 import { getMyCertificatesService, ensureCourseCertificateService } from '../../../../features/learning/learningService';
-
 import { useDashboardPaths } from '../../../../hooks/useDashboardPaths';
 
 const CourseContentView = () => {

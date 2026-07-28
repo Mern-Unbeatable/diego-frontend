@@ -1,10 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { ArrowLeft, Calendar, ChevronDown } from 'lucide-react';
+import { usePrivate } from '../../../../../../features/private/privateHooks';
+import { mapProfileUpdatePayload } from '../../../../../../features/private/privateMappers';
 
-const StudentInfoModal = ({ onClose }) => {
+const StudentInfoModal = ({ profile, onClose }) => {
   const overlayRef = useRef(null);
   const dialogRef = useRef(null);
   const dateInputRef = useRef(null);
+  const [submitting, setSubmitting] = useState(false);
+  const { updateMyProfile } = usePrivate();
 
   useEffect(() => {
     const onKey = (e) => {
@@ -26,12 +31,26 @@ const StudentInfoModal = ({ onClose }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const form = new FormData(e.target);
-    const data = Object.fromEntries(form.entries());
-    console.log('Student info submit', data);
-    onClose && onClose();
+    const formValues = Object.fromEntries(form.entries());
+    const payload = mapProfileUpdatePayload(
+      formValues,
+      profile?.preferredLanguage,
+    );
+
+    try {
+      setSubmitting(true);
+      const response = await updateMyProfile(payload);
+      toast.success(response?.message);
+      onClose?.();
+    } catch (error) {
+      toast.error(error || 'Impossibile aggiornare il profilo');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -63,7 +82,11 @@ const StudentInfoModal = ({ onClose }) => {
           </h3>
         </div>
         {/* Form wraps everything to allow submission */}
-        <form onSubmit={handleSubmit} className="flex min-h-0 flex-1 flex-col">
+        <form
+          key={profile?.id || 'profile-form'}
+          onSubmit={handleSubmit}
+          className="flex min-h-0 flex-1 flex-col"
+        >
           {/* Scrollable middle content */}
           <div className="flex-1 overflow-y-auto p-5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#73BFA1] [&::-webkit-scrollbar-thumb]:rounded-full">
             <div className="mx-auto w-full max-w-[800px] space-y-2">
@@ -81,6 +104,7 @@ const StudentInfoModal = ({ onClose }) => {
                   name="firstName"
                   placeholder="Inserisci il nome"
                   required
+                  defaultValue={profile?.firstName ?? undefined}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -93,6 +117,7 @@ const StudentInfoModal = ({ onClose }) => {
                   name="lastName"
                   placeholder="Inserisci il cognome"
                   required
+                  defaultValue={profile?.lastName ?? undefined}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -107,6 +132,7 @@ const StudentInfoModal = ({ onClose }) => {
                     type="date"
                     name="birthDate"
                     required
+                    defaultValue={profile?.birthDate ?? undefined}
                     className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 pr-11 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px] [&::-webkit-calendar-picker-indicator]:hidden"
                     onClick={() => dateInputRef.current?.showPicker()}
                   />
@@ -126,6 +152,7 @@ const StudentInfoModal = ({ onClose }) => {
                     name="city"
                     placeholder="Inserisci il luogo di nascita"
                     required
+                    defaultValue={profile?.city ?? undefined}
                     className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                   />
                 </div>
@@ -138,15 +165,15 @@ const StudentInfoModal = ({ onClose }) => {
                     <select
                       name="country"
                       required
+                      defaultValue={profile?.country ?? undefined}
                       className="h-11 w-full appearance-none rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 pr-10 text-[13px] text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
-                      defaultValue=""
                     >
                       <option value="" disabled>
                         Seleziona il Paese
                       </option>
-                      <option value="it">Italia</option>
-                      <option value="fr">Francia</option>
-                      <option value="es">Spagna</option>
+                      <option value="Italy">Italia</option>
+                      <option value="France">Francia</option>
+                      <option value="Spain">Spagna</option>
                     </select>
                     <ChevronDown className="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-[#555]" />
                   </div>
@@ -161,6 +188,7 @@ const StudentInfoModal = ({ onClose }) => {
                   name="address"
                   placeholder="Via, numero civico, CAP, città, sigla provincia, paese"
                   required
+                  defaultValue={profile?.residenceAddress ?? undefined}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -172,7 +200,7 @@ const StudentInfoModal = ({ onClose }) => {
                 <input
                   name="companyName"
                   placeholder="Inserisci il nome dell'azienda"
-                  required
+                  defaultValue={profile?.companyName ?? undefined}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -182,9 +210,9 @@ const StudentInfoModal = ({ onClose }) => {
                   Sede legale <span className="text-red-500">*</span>
                 </label>
                 <input
-                  name="legalOffice"
+                  name="companyAddress"
                   placeholder="Inserisci sede legale (Via, numero civico, CAP, città, sigla provincia, paese)"
-                  required
+                  defaultValue={profile?.companyAddress ?? undefined}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -194,9 +222,9 @@ const StudentInfoModal = ({ onClose }) => {
                   Partita IVA <span className="text-red-500">*</span>
                 </label>
                 <input
-                  name="vatNumber"
+                  name="companyVatNumber"
                   placeholder="Inserisci la Partita IVA"
-                  required
+                  defaultValue={profile?.companyVatNumber ?? undefined}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -207,9 +235,9 @@ const StudentInfoModal = ({ onClose }) => {
                   <span className="text-red-500">*</span>
                 </label>
                 <input
-                  name="taxCode"
+                  name="traineeTaxCode"
                   placeholder="Inserisci il codice fiscale"
-                  required
+                  defaultValue={profile?.traineeTaxCode ?? undefined}
                   className="h-11 w-full rounded-xl border border-[#edf2ef] bg-[#edf6f1] px-4 text-[13px] text-[#3a3a3a] placeholder:text-[#9aa39d] focus:border-[#cfe6da] focus:outline-none md:h-12 md:text-[16px]"
                 />
               </div>
@@ -221,9 +249,10 @@ const StudentInfoModal = ({ onClose }) => {
             <div className="mx-auto flex w-full max-w-[800px] justify-end">
               <button
                 type="submit"
-                className="rounded-full bg-[#73BFA1] px-6 py-2.5 text-[13px] font-semibold text-white shadow-md hover:opacity-95 md:px-8 md:py-3 md:text-sm"
+                disabled={submitting}
+                className="rounded-full bg-[#73BFA1] px-6 py-2.5 text-[13px] font-semibold text-white shadow-md hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-50 md:px-8 md:py-3 md:text-sm"
               >
-                Salva
+                {submitting ? 'Salvataggio...' : 'Salva'}
               </button>
             </div>
           </div>

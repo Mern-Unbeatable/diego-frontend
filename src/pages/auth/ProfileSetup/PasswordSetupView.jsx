@@ -33,7 +33,9 @@ const PasswordSetupView = () => {
 
     try {
       const response = await registerComplete(draft);
+      COOKIE_STORAGE.setUser(response.data.user.level);
       toast.success('Registration completed successfully');
+      STORAGE.clearAll();
     } catch (error) {
       const message =
         typeof error === 'string'

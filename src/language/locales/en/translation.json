@@ -610,6 +610,9 @@
       "preparingPayment": "Preparing secure payment...",
       "paymentUnavailable": "Payment is currently unavailable. Please try again.",
       "paymentError": "Payment failed. Please check your card details and try again.",
+      "alreadyEnrolled": "You are already enrolled in this course.",
+      "alreadyCompleted": "You have already completed this course.",
+      "alreadyPurchased": "Your company has already purchased this course.",
       "nameRequired": "Please enter the name on card",
       "discount": "Discount"
     },
@@ -891,6 +894,90 @@
         "buyButton": "Buy subdomain",
         "tipTitle": "Tip:",
         "tipText": "after purchase, provide the domain and we will connect it automatically."
+      }
+    }
+  },
+  "platformAdmin": {
+    "inquiries": {
+      "tabs": {
+        "services": "Services",
+        "contacts": "Contact us",
+        "collaborations": "Work with us"
+      },
+      "searchPlaceholder": "Search...",
+      "columns": {
+        "service": "Service",
+        "contact": "Contact",
+        "company": "Company",
+        "name": "Name",
+        "agency": "Agency",
+        "contacts": "Contacts",
+        "type": "Type",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View",
+        "delete": "Delete"
+      },
+      "detail": {
+        "title": "Request details",
+        "closeModal": "Close modal",
+        "emptyValue": "—"
+      },
+      "fields": {
+        "service": "Service",
+        "name": "Name",
+        "company": "Company",
+        "vatNumber": "VAT number",
+        "phone": "Phone",
+        "email": "Email",
+        "status": "Status",
+        "message": "Message",
+        "date": "Date",
+        "agency": "Agency",
+        "contact": "Contact",
+        "collaborationType": "Collaboration type",
+        "companySize": "Company size",
+        "description": "Description",
+        "goals": "Goals",
+        "notes": "Notes"
+      },
+      "delete": {
+        "confirm": "Delete",
+        "cancel": "Cancel",
+        "message": "Delete {{label}}? This action cannot be undone.",
+        "fallbackLabel": "this item"
+      },
+      "services": {
+        "title": "Service requests",
+        "emptyTitle": "No service requests found",
+        "emptyDescription": "Requests submitted from the Services form on the website will appear here.",
+        "deleteTitle": "Delete service request",
+        "deleteSuccess": "Service request deleted"
+      },
+      "contacts": {
+        "title": "Contact requests",
+        "emptyTitle": "No contacts found",
+        "emptyDescription": "Messages submitted from the Contact us form on the website will appear here.",
+        "deleteTitle": "Delete contact",
+        "deleteSuccess": "Contact deleted"
+      },
+      "collaborations": {
+        "title": "Collaboration requests",
+        "emptyTitle": "No collaborations found",
+        "emptyDescription": "Applications submitted from the Work with us form on the website will appear here.",
+        "deleteTitle": "Delete collaboration",
+        "deleteSuccess": "Collaboration deleted"
+      },
+      "status": {
+        "NEW": "New",
+        "PENDING": "Pending",
+        "CONTACTED": "Contacted",
+        "RESOLVED": "Resolved",
+        "IN_PROGRESS": "In progress",
+        "HANDLED": "Handled"
       }
     }
   },

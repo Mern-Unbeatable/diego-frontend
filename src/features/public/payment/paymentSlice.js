@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   createCompanyCourseCheckoutAPI,
+  createCompanyCoursePaymentIntentAPI,
   createCoursePaymentIntentAPI,
+  verifyCompanyCoursePaymentIntentAPI,
   verifyCoursePaymentIntentAPI,
 } from './paymentAPI';
 
@@ -49,6 +51,18 @@ const paymentSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      .addCase(createCompanyCoursePaymentIntentAPI.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createCompanyCoursePaymentIntentAPI.fulfilled, (state, action) => {
+        state.loading = false;
+        state.paymentIntent = action.payload?.data || null;
+      })
+      .addCase(createCompanyCoursePaymentIntentAPI.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(verifyCoursePaymentIntentAPI.pending, (state) => {
         state.verifying = true;
         state.verifyError = null;
@@ -58,6 +72,17 @@ const paymentSlice = createSlice({
         state.enrollment = action.payload?.data?.enrollment || null;
       })
       .addCase(verifyCoursePaymentIntentAPI.rejected, (state, action) => {
+        state.verifying = false;
+        state.verifyError = action.payload;
+      })
+      .addCase(verifyCompanyCoursePaymentIntentAPI.pending, (state) => {
+        state.verifying = true;
+        state.verifyError = null;
+      })
+      .addCase(verifyCompanyCoursePaymentIntentAPI.fulfilled, (state) => {
+        state.verifying = false;
+      })
+      .addCase(verifyCompanyCoursePaymentIntentAPI.rejected, (state, action) => {
         state.verifying = false;
         state.verifyError = action.payload;
       })

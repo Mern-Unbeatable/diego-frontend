@@ -20,7 +20,7 @@ const CourseDetails = () => {
 
   useEffect(() => {
     if (!courseSlug) return;
-    getCourseDetails(courseSlug).catch(() => {});
+    getCourseDetails(courseSlug).catch(() => { });
   }, [getCourseDetails, courseSlug]);
 
   const language = (i18n.language || 'en').split('-')[0];
@@ -81,11 +81,10 @@ const CourseDetails = () => {
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`h-5 w-5 ${
-                      i < filledStars
-                        ? 'fill-yellow-400 text-yellow-400'
-                        : 'text-gray-300'
-                    }`}
+                    className={`h-5 w-5 ${i < filledStars
+                      ? 'fill-yellow-400 text-yellow-400'
+                      : 'text-gray-300'
+                      }`}
                   />
                 ))}
               </div>
@@ -170,5 +169,6 @@ const CourseDetails = () => {
     </div>
   );
 };
+
 
 export default CourseDetails;

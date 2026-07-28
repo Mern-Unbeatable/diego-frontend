@@ -26,6 +26,12 @@ const FiguresView = lazy(
 const AdminReportView = lazy(
   () => import('../pages/dash/super/07-Report/AdminReportView.jsx'),
 );
+const CoursePackagesView = lazy(
+  () => import('../pages/dash/super/08-CoursePackages/CoursePackagesView.jsx'),
+);
+const InquiriesView = lazy(
+  () => import('../pages/dash/super/09-Inquiries/InquiriesView.jsx'),
+);
 
 //==========================================================================
 // COMPANY_ADMIN
@@ -148,6 +154,8 @@ export const dashboardRoutes = [
       { path: ROUTES.PLATFORM_ADMIN.FEEDBACK, element: <FeedbackView /> },
       { path: ROUTES.PLATFORM_ADMIN.FIGURES, element: <FiguresView /> },
       { path: ROUTES.PLATFORM_ADMIN.REPORTS, element: <AdminReportView /> },
+      { path: ROUTES.PLATFORM_ADMIN.COURSE_PACKAGES, element: <CoursePackagesView /> },
+      { path: ROUTES.PLATFORM_ADMIN.INQUIRIES, element: <InquiriesView /> },
     ],
   },
 

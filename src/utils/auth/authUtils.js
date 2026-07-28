@@ -11,7 +11,7 @@ export const dashboardPath = {
 export const getUserRole = (user) => {
   if (!user) return null;
   if (typeof user === 'string') return user;
-  if (typeof user === 'object') return user.role || null;
+  if (typeof user === 'object') return user.level || user.role || null;
   return null;
 };
 

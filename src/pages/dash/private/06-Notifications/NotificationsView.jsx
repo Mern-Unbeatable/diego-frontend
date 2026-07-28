@@ -1,34 +1,16 @@
-import React from 'react';
-
-import { Bell, Check, Trash2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Bell, CheckCheck } from 'lucide-react';
 import { FaChevronLeft } from 'react-icons/fa';
+import Loading from '../../../../components/ui/Utilities/Loading';
+import { usePrivate } from '../../../../features/private/privateHooks';
 
-const sampleNotifications = [
-  {
-    id: 1,
-    title: 'Hai un nuovo corso da frequentare',
-    message: 'Inizia il tuo corso di formazione! Il team UnoSicurezza',
-    time: '5 min ago',
-    unread: true,
-  },
-  {
-    id: 2,
-    title: 'Nessuna attività nelle ultime 48 ore',
-    message: 'La crescita professionale non si ferma qui!',
-    time: '10 min ago',
-    unread: false,
-  },
-  {
-    id: 3,
-    title: 'Hai un nuovo corso da frequentare',
-    message: 'Inizia il tuo corso di formazione! Il team UnoSicurezza',
-    time: '5 min ago',
-    unread: true,
-  },
-];
+const getSuccessMessage = (response, fallback) =>
+  response?.message || fallback;
 
-const NotificationItem = ({ item }) => (
-  <div className="group relative flex items-center justify-between rounded-xl bg-white p-4 shadow-sm transition-all hover:bg-gray-50/50">
+const NotificationItem = ({ item, onMarkAsRead, isMarking }) => (
+  <div className="relative flex items-center justify-between rounded-xl bg-white p-4 shadow-sm transition-all hover:bg-gray-50/50">
     <div className="flex items-center gap-4">
       <div
         className={`flex h-14 w-14 items-center justify-center rounded-full ${item.unread ? 'bg-[#F1F9F6]' : 'bg-white'}`}
@@ -39,60 +21,149 @@ const NotificationItem = ({ item }) => (
       <div className="space-y-1">
         <h2 className="text-lg text-[#252525]">{item.title}</h2>
         <p className="text-base text-gray-400">{item.message}</p>
+        {item.pdfUrl && (
+          <a
+            href={item.pdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-sm font-medium text-[#73BFA1] hover:underline"
+          >
+            Scarica attestato
+          </a>
+        )}
       </div>
     </div>
 
-    <div className="ml-4 flex min-w-[70px] items-center justify-end">
-      {/* Time and Unread dot (hidden on hover) */}
-      <div className="flex flex-col items-end transition-all duration-200 group-hover:hidden">
-        <span className="text-xs whitespace-nowrap text-gray-400">
-          {item.time}
-        </span>
-        {item.unread && (
-          <span className="mt-2 h-2 w-2 rounded-full bg-[#73BFA1]" />
-        )}
-      </div>
+    <div className="ml-4 flex shrink-0 flex-col items-end justify-center gap-2">
+      <span className="text-xs whitespace-nowrap text-gray-400">
+        {item.sentAt}
+      </span>
 
-      {/* Action buttons (shown on hover) */}
-      <div className="hidden items-center gap-2 transition-all duration-200 group-hover:flex">
-        {item.unread && (
-          <button
-            type="button"
-            title="Segna come letto"
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F1F9F6] text-[#73BFA1] shadow-sm transition-all hover:bg-[#73BFA1] hover:text-white"
-          >
-            <Check size={15} />
-          </button>
-        )}
+      {item.unread ? (
         <button
           type="button"
-          title="Elimina"
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-red-50 text-red-500 shadow-sm transition-all hover:bg-red-500 hover:text-white"
+          disabled={isMarking}
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            onMarkAsRead(item.id);
+          }}
+          className="group flex items-center gap-1.5 text-sm font-medium text-[#73BFA1] transition-colors hover:text-[#5fa88d] disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <Trash2 size={15} />
+          {isMarking ? 'Aggiornamento...' : 'Mark as read'}
+          {!isMarking && (
+            <CheckCheck
+              size={16}
+              className="opacity-0 transition-opacity group-hover:opacity-100"
+            />
+          )}
         </button>
-      </div>
+      ) : null}
     </div>
   </div>
 );
 
 const NotificationsView = () => {
-  return (
-    <div className="">
-      {/* top row: small back button left, action right */}
-      <div className="mb-6 flex items-center justify-between">
-        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F1F9F6] shadow-sm">
-          <FaChevronLeft className="text-gray-600" />
-        </button>
+  const navigate = useNavigate();
+  const [markingId, setMarkingId] = useState(null);
+  const [markingAll, setMarkingAll] = useState(false);
+  const {
+    fetchNotifications,
+    markNotificationsAsRead,
+    markAllNotificationsAsRead,
+    notifications,
+    notificationsMeta,
+    notificationsLoading,
+    notificationsError,
+  } = usePrivate();
 
-        <button className="text-xl font-semibold text-[#73BFA1]">
-          Segna tutti come già letti
+  useEffect(() => {
+    fetchNotifications().catch(() => {});
+  }, [fetchNotifications]);
+
+  const handleMarkAsRead = async (notificationId) => {
+    if (!notificationId) return;
+
+    try {
+      setMarkingId(notificationId);
+      const response = await markNotificationsAsRead([notificationId]);
+      toast.success(
+        getSuccessMessage(response, 'Notifica segnata come letta'),
+      );
+    } catch (error) {
+      toast.error(error || 'Impossibile segnare la notifica come letta');
+    } finally {
+      setMarkingId(null);
+    }
+  };
+
+  const handleMarkAllAsRead = async () => {
+    if (notificationsMeta.unreadCount === 0) return;
+
+    try {
+      setMarkingAll(true);
+      const response = await markAllNotificationsAsRead();
+      toast.success(
+        getSuccessMessage(response, 'Tutte le notifiche segnate come lette'),
+      );
+    } catch (error) {
+      toast.error(error || 'Impossibile segnare le notifiche come lette');
+    } finally {
+      setMarkingAll(false);
+    }
+  };
+
+  if (notificationsLoading && notifications.length === 0) {
+    return <Loading size="md" className="min-h-60" />;
+  }
+
+  return (
+    <div>
+      <div className="mb-6 flex items-center justify-between">
+        {/* <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F1F9F6] shadow-sm"
+        >
+          <FaChevronLeft className="text-gray-600" />
+        </button> */}
+
+        <button
+          type="button"
+          onClick={handleMarkAllAsRead}
+          className="text-xl font-semibold text-[#73BFA1] disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={notificationsMeta.unreadCount === 0 || markingAll}
+        >
+          {markingAll
+            ? 'Aggiornamento...'
+            : `Segna tutti come già letti${
+                notificationsMeta.unreadCount > 0
+                  ? ` (${notificationsMeta.unreadCount})`
+                  : ''
+              }`}
         </button>
       </div>
 
+      {notificationsError && (
+        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {notificationsError}
+        </div>
+      )}
+
+      {!notificationsError && notifications.length === 0 && (
+        <div className="rounded-xl border border-gray-200 bg-white px-4 py-8 text-center text-gray-500">
+          Nessuna notifica disponibile
+        </div>
+      )}
+
       <div className="space-y-4">
-        {sampleNotifications.map((n) => (
-          <NotificationItem key={n.id} item={n} />
+        {notifications.map((notification) => (
+          <NotificationItem
+            key={notification.id}
+            item={notification}
+            onMarkAsRead={handleMarkAsRead}
+            isMarking={markingId === notification.id || markingAll}
+          />
         ))}
       </div>
     </div>

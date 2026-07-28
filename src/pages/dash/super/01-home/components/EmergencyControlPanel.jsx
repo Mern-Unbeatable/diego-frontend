@@ -1,29 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Download, UserPlus, CreditCard } from 'lucide-react';
+import Loading from '../../../../../components/ui/Utilities/Loading';
 
-export default function EmergencyControlPanel() {
-  const [permissions, setPermissions] = useState({
+export default function EmergencyControlPanel({
+  permissions,
+  loading = false,
+  saving = false,
+  onToggle,
+}) {
+  const values = permissions || {
     download: true,
     userPanel: true,
     payments: true,
     maintenance: false,
-  });
+  };
 
-  const toggle = (key) =>
-    setPermissions((prev) => ({ ...prev, [key]: !prev[key] }));
+  const toggle = (key) => {
+    if (saving || loading || !onToggle) return;
+    onToggle(key);
+  };
 
   const Switch = ({ active, onClick, color = 'emerald' }) => (
     <button
+      type="button"
       role="switch"
       aria-checked={active}
       onClick={onClick}
+      disabled={saving || loading}
       className={`relative inline-flex h-8 w-16 items-center rounded-full transition ${
         active
           ? color === 'emerald'
             ? 'bg-emerald-500'
             : 'bg-red-600'
           : 'bg-gray-300'
-      }`}
+      } ${saving || loading ? 'cursor-not-allowed opacity-60' : ''}`}
     >
       <span
         className={`h-6 w-6 transform rounded-full bg-white shadow transition ${
@@ -38,7 +48,7 @@ export default function EmergencyControlPanel() {
     title,
     desc,
     active,
-    onToggle,
+    onToggleClick,
     color = 'emerald',
   }) => (
     <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
@@ -49,7 +59,7 @@ export default function EmergencyControlPanel() {
           </span>
           <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
         </div>
-        <Switch active={active} onClick={onToggle} color={color} />
+        <Switch active={active} onClick={onToggleClick} color={color} />
       </div>
 
       <p className="mt-6 text-base text-gray-800">{desc}</p>
@@ -66,6 +76,10 @@ export default function EmergencyControlPanel() {
     </div>
   );
 
+  if (loading && !permissions) {
+    return <Loading size="md" className="min-h-40" />;
+  }
+
   return (
     <div className="rounded-3xl border border-gray-200 bg-white p-8">
       <h1 className="mb-8 text-2xl font-semibold text-gray-900">
@@ -77,29 +91,29 @@ export default function EmergencyControlPanel() {
           icon={<Download className="h-5 w-5" />}
           title="Permesso download"
           desc="Consenti agli utenti di scaricare gli attestati"
-          active={permissions.download}
-          onToggle={() => toggle('download')}
+          active={values.download}
+          onToggleClick={() => toggle('download')}
         />
         <PermissionCard
           icon={<UserPlus className="h-5 w-5" />}
           title="Nuovo pannello di controllo utente"
           desc="Abilita la creazione di nuovi account utente"
-          active={permissions.userPanel}
-          onToggle={() => toggle('userPanel')}
+          active={values.userPanel}
+          onToggleClick={() => toggle('userPanel')}
         />
         <PermissionCard
           icon={<CreditCard className="h-5 w-5" />}
           title="Elaborazione dei pagamenti"
           desc="Elaborare i pagamenti degli abbonamenti e dei corsi"
-          active={permissions.payments}
-          onToggle={() => toggle('payments')}
+          active={values.payments}
+          onToggleClick={() => toggle('payments')}
         />
         <PermissionCard
           icon={<UserPlus className="h-5 w-5" />}
           title="Piattaforma in manutenzione"
           desc="Piattaforma in manutenzione"
-          active={permissions.maintenance}
-          onToggle={() => toggle('maintenance')}
+          active={values.maintenance}
+          onToggleClick={() => toggle('maintenance')}
           color="red"
         />
       </div>

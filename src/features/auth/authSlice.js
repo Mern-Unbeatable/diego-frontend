@@ -26,6 +26,7 @@ const initialState = {
   isAuthenticated: !!storedUser && !!storedToken,
   loading: false,
   error: null,
+  loginOtp: null,
 };
 
 const authSlice = createSlice({
@@ -36,10 +37,24 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      state.loginOtp = null;
       COOKIE_STORAGE.clearAll();
+    },
+    setUser: (state, action) => {
+      if (action.payload?.token) {
+        state.token = action.payload.token;
+        COOKIE_STORAGE.setToken(action.payload.token);
+      }
+      if (action.payload?.user !== undefined) {
+        state.user = action.payload.user;
+      }
+      state.isAuthenticated = !!state.user && !!state.token;
     },
     resetAuthError: (state) => {
       state.error = null;
+    },
+    clearLoginOtp: (state) => {
+      state.loginOtp = null;
     },
   },
   extraReducers: (builder) => {
@@ -52,8 +67,10 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginAPI.fulfilled, (state, action) => {
-        console.log('Login successful:', action.payload);
         state.loading = false;
+        const payload = action.payload || {};
+        const data = payload.data || payload;
+        state.loginOtp = data?.otp || null;
       })
       .addCase(loginAPI.rejected, (state, action) => {
         state.loading = false;
@@ -68,10 +85,10 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(verifyLoginOtpAPI.fulfilled, (state, action) => {
-        console.log('Verify OTP successful:', action.payload);
         const payloadData = action.payload || {};
 
         state.loading = false;
+        state.loginOtp = null;
         state.user = payloadData.data.user.level || null;
         state.token = payloadData.data.accessToken || null;
         state.isAuthenticated =
@@ -144,5 +161,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, resetAuthError } = authSlice.actions;
+export const { logout, setUser, resetAuthError, clearLoginOtp } = authSlice.actions;
 export default authSlice.reducer;

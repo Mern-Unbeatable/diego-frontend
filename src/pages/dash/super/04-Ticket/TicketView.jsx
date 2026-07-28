@@ -6,9 +6,9 @@ export default function TicketView() {
 
   const tabs = [
     { id: 'panoramica', label: 'Panoramica' },
-    { id: 'aperti', label: 'Tickets aperti' },
-    { id: 'chiusi', label: 'Tickets chiusi' },
-    { id: 'attesa', label: 'In attesa di approvazione' },
+    { id: 'aperti', label: 'Ticket aperti' },
+    { id: 'attesa', label: 'In lavorazione' },
+    { id: 'chiusi', label: 'Ticket chiusi' },
   ];
 
   return (

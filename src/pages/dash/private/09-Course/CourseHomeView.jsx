@@ -193,11 +193,10 @@ const CourseHomeView = () => {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
-                  activeTab === tab
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
-                    : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-800'
-                }`}
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${activeTab === tab
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
+                  : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-800'
+                  }`}
               >
                 {tab === 'all'
                   ? 'All Courses'
@@ -207,18 +206,17 @@ const CourseHomeView = () => {
                       ? 'Completed'
                       : 'Not Started'}
                 <span
-                  className={`ml-2 rounded-full px-2 py-0.5 text-sm ${
-                    activeTab === tab
-                      ? 'bg-white/20 text-white'
-                      : 'bg-gray-100 text-gray-600'
-                  }`}
+                  className={`ml-2 rounded-full px-2 py-0.5 text-sm ${activeTab === tab
+                    ? 'bg-white/20 text-white'
+                    : 'bg-gray-100 text-gray-600'
+                    }`}
                 >
                   {tab === 'all'
                     ? courses.length
                     : tab === 'in-progress'
                       ? courses.filter(
-                          (c) => c.progress > 0 && c.progress < 100,
-                        ).length
+                        (c) => c.progress > 0 && c.progress < 100,
+                      ).length
                       : tab === 'completed'
                         ? courses.filter((c) => c.progress === 100).length
                         : courses.filter((c) => c.progress === 0).length}

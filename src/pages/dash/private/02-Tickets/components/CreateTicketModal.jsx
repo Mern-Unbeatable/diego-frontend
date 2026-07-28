@@ -12,9 +12,11 @@ const CreateTicketModal = ({
   description,
   setDescription,
   file,
+  setFile,
   handleFileChange,
   handleDragOver,
   handleDrop,
+  isSubmitting = false,
 }) => {
   if (!isOpen) return null;
 
@@ -25,7 +27,8 @@ const CreateTicketModal = ({
       <div className="relative w-full max-w-2xl rounded-xl bg-white p-6">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition"
+          disabled={isSubmitting}
+          className="absolute right-4 top-4 rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition disabled:cursor-not-allowed disabled:opacity-50"
         >
           <X size={20} />
         </button>
@@ -82,7 +85,8 @@ const CreateTicketModal = ({
                 id="fileUpload"
                 onChange={handleFileChange}
                 className="hidden"
-                accept="*"
+                accept="image/*"
+                disabled={isSubmitting}
               />
               <label htmlFor="fileUpload" className="cursor-pointer">
                 <div className="flex flex-col items-center">
@@ -98,9 +102,19 @@ const CreateTicketModal = ({
                 </div>
               </label>
               {file && (
-                <div className="mt-4 text-sm text-gray-700">
-                  File selezionato:{' '}
-                  <span className="font-medium">{file.name}</span>
+                <div className="mt-4 flex items-center justify-center gap-3 text-sm text-gray-700">
+                  <span>
+                    File selezionato:{' '}
+                    <span className="font-medium">{file.name}</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setFile(null)}
+                    disabled={isSubmitting}
+                    className="text-red-500 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Rimuovi
+                  </button>
                 </div>
               )}
             </div>
@@ -117,11 +131,13 @@ const CreateTicketModal = ({
               type="button"
               className="rounded-full border-red-400 text-red-500 hover:bg-red-50"
               onClick={onClose}
+              disabled={isSubmitting}
             />
             <Button
-              label="Invia"
+              label={isSubmitting ? 'Invio in corso...' : 'Invia'}
               type="submit"
               className="rounded-full bg-[#73BFA1] hover:bg-[#5fa488]"
+              disabled={isSubmitting}
             />
           </div>
         </form>

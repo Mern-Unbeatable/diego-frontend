@@ -36,43 +36,9 @@ const ProgressBar = ({ value, max }) => {
 };
 
 export default function LicenseeManagement({
-  rows = [
-    {
-      azienda: 'TechCorp Training',
-      fatturato: 45230,
-      users: 145,
-      cap: 200,
-      stato: 'Attivo',
-    },
-    {
-      azienda: 'Healthcare Academy',
-      fatturato: 32150,
-      users: 190,
-      cap: 200,
-      stato: 'Attivo',
-    },
-    {
-      azienda: 'Digital Marketing Hub',
-      fatturato: 18950,
-      users: 120,
-      cap: 150,
-      stato: 'Attivo',
-    },
-    {
-      azienda: 'Legal Learning Group',
-      fatturato: 0,
-      users: 250,
-      cap: 300,
-      stato: 'In attesa di',
-    },
-    {
-      azienda: 'Manufacturing Skills',
-      fatturato: 28750,
-      users: 45,
-      cap: 50,
-      stato: 'Inattivo',
-    },
-  ],
+  rows = [],
+  search = '',
+  onSearchChange,
   onExport,
   onEditGlobal,
   onEditRow,
@@ -124,8 +90,9 @@ export default function LicenseeManagement({
           <input
             type="search"
             placeholder="Cerca"
+            value={search}
             className="bg-transparent text-sm outline-none"
-            onChange={() => {}}
+            onChange={(e) => onSearchChange?.(e.target.value)}
           />
         </div>
 
@@ -169,8 +136,8 @@ export default function LicenseeManagement({
             </tr>
           </thead>
           <tbody>
-            {rows.map((r, i) => (
-              <tr key={i} className="border-b border-gray-200">
+            {rows.map((r) => (
+              <tr key={r.id || r.userId || r.azienda} className="border-b border-gray-200">
                 <td className="max-w-[220px] truncate px-4 py-5 text-gray-900">
                   {r.azienda}
                 </td>
@@ -178,7 +145,7 @@ export default function LicenseeManagement({
                   {euro.format(r.fatturato)}
                 </td>
                 <td className="px-4 py-5">
-                  <ProgressBar value={r.users} max={r.cap} />
+                  <ProgressBar value={r.users ?? r.used ?? 0} max={r.cap || 1} />
                 </td>
                 <td className="px-4 py-5">
                   <StatusPill status={r.stato} />

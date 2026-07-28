@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
@@ -10,11 +8,10 @@ const DashboardLayout = () => {
     <div className="flex h-screen overflow-hidden bg-[#fcfcfb]">
       <DashboardSidebar />
 
-      <div className="ml-[300px] flex min-w-0 flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col lg:ml-[300px]">
         <DashboardNavbar />
-        {/* <DevRoleSwitcher /> */}
 
-        <main className="flex-1 overflow-y-auto p-12">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-12">
           <Outlet />
         </main>
       </div>

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../../../../components/ui/layouts/Card';
 import { FaChevronLeft, FaRegCopy } from 'react-icons/fa';
-// import {
-//   getMyCredentialsService,
-//   markCredentialViewedService,
-// } from '../../../../features/private/privateService';
+import {
+  getMyCredentialsService,
+  markCredentialViewedService,
+} from '../../../../features/private/privateService';
 
 const CredentialsView = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const CredentialsView = () => {
         setCredentials(latest);
 
         if (latest?.id && !latest.viewedAt) {
-          await markCredentialViewedService(latest.id).catch(() => { });
+          await markCredentialViewedService(latest.id).catch(() => {});
         }
       } catch (e) {
         if (active) {
@@ -61,7 +61,7 @@ const CredentialsView = () => {
   const selectCredential = async (item) => {
     setCredentials(item);
     if (item?.id && !item.viewedAt) {
-      await markCredentialViewedService(item.id).catch(() => { });
+      await markCredentialViewedService(item.id).catch(() => {});
     }
   };
 
@@ -106,10 +106,11 @@ const CredentialsView = () => {
                 key={item.id}
                 type="button"
                 onClick={() => selectCredential(item)}
-                className={`rounded-full px-3 py-1 text-xs border ${credentials.id === item.id
+                className={`rounded-full px-3 py-1 text-xs border ${
+                  credentials.id === item.id
                     ? 'bg-green-50 border-green-200 text-green-800'
                     : 'bg-white border-gray-200 text-gray-600'
-                  }`}
+                }`}
               >
                 {item.courseName}
               </button>

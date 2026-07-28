@@ -1,179 +1,221 @@
-import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Modal } from '../../../../../components/ui';
+import Loading from '../../../../../components/ui/Utilities/Loading';
+import {
+  useGetTicketByIdQuery,
+  useUpdateTicketMutation,
+  useUpdateTicketStatusMutation,
+} from '../../../../../features/api/ticketApi';
+import { buildTicketAnswerPayload, formatTicketDisplayId } from '../../../../../features/api/ticketMappers';
+import {
+  showSuccessToast,
+  showRtkErrorToast,
+  showErrorToast,
+} from '../../../../../utils/toast/toastAlerts';
 
-export default function TicketDetailModal({
-  isOpen,
-  onClose,
-  ticket,
-  onMarkInProgress,
-  onSaveResponse,
-}) {
+export default function TicketDetailModal({ isOpen, onClose, ticketId }) {
   const [response, setResponse] = useState('');
 
-  const handleSubmit = (e) => {
+  const {
+    data: ticket,
+    isLoading,
+    isError,
+  } = useGetTicketByIdQuery(ticketId, {
+    skip: !isOpen || !ticketId,
+  });
+
+  const [updateTicket, { isLoading: savingReply }] = useUpdateTicketMutation();
+  const [updateTicketStatus, { isLoading: savingStatus }] =
+    useUpdateTicketStatusMutation();
+
+  useEffect(() => {
+    if (!isOpen) setResponse('');
+    else if (ticket?.answer) setResponse(ticket.answer);
+  }, [isOpen, ticket?.answer, ticketId]);
+
+  const handleSubmitReply = async (e) => {
     e.preventDefault();
-    if (onSaveResponse && response.trim()) {
-      onSaveResponse(ticket.id, response);
-      setResponse('');
+    if (!ticketId || !response.trim()) {
+      showErrorToast('Scrivi una risposta prima di inviare');
+      return;
+    }
+
+    try {
+      await updateTicket({
+        id: ticketId,
+        ...buildTicketAnswerPayload(response),
+      }).unwrap();
+      showSuccessToast('Risposta inviata con successo');
+    } catch (error) {
+      showRtkErrorToast(error);
     }
   };
 
-  const handleMarkInProgress = () => {
-    if (onMarkInProgress) {
-      onMarkInProgress(ticket.id);
+  const handleMarkInProgress = async () => {
+    if (!ticketId) return;
+    try {
+      await updateTicketStatus({ id: ticketId, status: 'IN_PROGRESS' }).unwrap();
+      showSuccessToast('Ticket segnato come in lavorazione');
+    } catch (error) {
+      showRtkErrorToast(error);
     }
   };
 
-  if (!isOpen || !ticket) return null;
+  const handleResolve = async () => {
+    if (!ticketId) return;
+    try {
+      if (response.trim()) {
+        await updateTicket({
+          id: ticketId,
+          ...buildTicketAnswerPayload(response),
+          status: 'RESOLVED',
+        }).unwrap();
+      } else {
+        await updateTicketStatus({ id: ticketId, status: 'RESOLVED' }).unwrap();
+      }
+      showSuccessToast('Ticket risolto');
+      onClose();
+    } catch (error) {
+      showRtkErrorToast(error);
+    }
+  };
+
+  const handleCloseTicket = async () => {
+    if (!ticketId) return;
+    try {
+      await updateTicketStatus({ id: ticketId, status: 'CLOSED' }).unwrap();
+      showSuccessToast('Ticket chiuso');
+      onClose();
+    } catch (error) {
+      showRtkErrorToast(error);
+    }
+  };
+
+  if (!isOpen || !ticketId) return null;
+
+  const saving = savingReply || savingStatus;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="mx-4 w-full max-w-2xl rounded-xl border border-gray-100 bg-white p-8 shadow-2xl">
-        {/* Header */}
-        <div className="mb-8 flex items-start justify-between">
-          <div className="flex-1">
-            <div className="mb-2 flex items-center space-x-3">
-              <div className="h-3 w-3 rounded-full bg-emerald-500"></div>
-              <h2 className="text-2xl font-bold text-gray-900">
-                {ticket.problema || 'Problema di accesso al corso'}
-              </h2>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
-                Ticket ID: TK{String(ticket.id).padStart(3, '0')}
-              </span>
-              <span className="text-sm text-gray-500">
-                Creato il {ticket.data || '12/07/2000'}
-              </span>
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            className="ml-4 rounded-lg p-2 text-gray-400 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600"
-          >
-            <X className="h-5 w-5" />
-          </button>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={ticket?.subject || 'Dettaglio ticket'}
+      description={
+        ticket
+          ? `Ticket ${formatTicketDisplayId(ticket)} · ${ticket.createdAtFormatted}`
+          : undefined
+      }
+      size="md"
+      zIndex={60}
+      accentColor="bg-emerald-500"
+    >
+      {isLoading ? (
+        <Loading size="md" className="min-h-40" />
+      ) : isError || !ticket ? (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700">
+          Impossibile caricare il ticket.
         </div>
-
-        {/* User Info */}
-        <div className="mb-8">
-          <div className="mb-4 flex items-center space-x-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 font-semibold text-white">
-              {(ticket.utente || 'Michael Johnson').charAt(0).toUpperCase()}
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900">
-                {ticket.utente || 'Michael Johnson'}
-              </h3>
-              <p className="text-sm text-gray-500">Cliente</p>
-            </div>
+      ) : (
+        <div className="space-y-6">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800">
+              {ticket.status}
+            </span>
+            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+              {ticket.userLevelLabel}
+            </span>
+            {ticket.tenantName !== '—' && (
+              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+                {ticket.tenantName}
+              </span>
+            )}
           </div>
-          <div className="relative">
-            <div className="absolute top-0 bottom-0 left-0 w-1 rounded-full bg-gradient-to-b from-emerald-400 to-emerald-600"></div>
-            <div className="ml-6 rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-              <p className="leading-relaxed text-gray-800">
-                {ticket.descrizione ||
-                  'Non riesco ad accedere al corso JavaScript avanzato. Ricevo un errore quando clicco sul link.'}
-              </p>
-              <div className="mt-4 flex justify-end">
-                <span className="inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-600">
-                  {ticket.data || '12/07/2000'}
-                </span>
+
+          <div>
+            <div className="mb-3 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 font-semibold text-white">
+                {ticket.userName.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">{ticket.userName}</h3>
+                <p className="text-sm text-gray-500">{ticket.userEmail}</p>
               </div>
             </div>
+            <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+              <p className="leading-relaxed text-gray-800">{ticket.message}</p>
+              <p className="mt-3 text-right text-xs text-gray-500">
+                {ticket.createdAtFormatted}
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* Admin Response Section */}
-        <div className="mb-8">
-          <div className="mb-6 flex items-center space-x-3">
-            <div className="h-2 w-2 rounded-full bg-emerald-500"></div>
-            <h3 className="text-lg font-semibold text-gray-900">
-              Risposta dell'amministratore
-            </h3>
-          </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="relative">
+          {ticket.answer && (
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+              <p className="mb-2 text-sm font-semibold text-emerald-800">
+                Risposta precedente
+              </p>
+              <p className="text-sm text-gray-800">{ticket.answer}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmitReply} className="space-y-4">
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-gray-900">
+                Risposta amministratore
+              </label>
               <textarea
                 value={response}
                 onChange={(e) => setResponse(e.target.value)}
                 placeholder="Scrivi la tua risposta dettagliata qui..."
                 rows={4}
-                className="w-full resize-none rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm placeholder-gray-400 transition-colors duration-200 focus:border-emerald-500 focus:bg-emerald-50/30 focus:ring-0 focus:outline-none"
+                maxLength={500}
+                className="w-full resize-none rounded-xl border-2 border-gray-200 px-4 py-3 text-sm focus:border-emerald-500 focus:outline-none"
               />
-              <div className="absolute right-3 bottom-3 text-sm text-gray-400">
-                {response.length}/500
-              </div>
             </div>
-            <div className="flex items-center justify-between rounded-xl bg-gray-50 p-4">
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <div className="h-2 w-2 rounded-full bg-gray-400"></div>
-                <span>
-                  {response.length > 0
-                    ? `Bozza salvata automaticamente`
-                    : 'Ultima modifica: 09/07/2000'}
-                </span>
-              </div>
-              <div className="flex space-x-3">
-                <button
-                  type="button"
-                  onClick={() => setResponse('')}
-                  className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition-colors duration-200 hover:bg-gray-50 focus:ring-2 focus:ring-gray-300 focus:outline-none"
-                >
-                  Cancella
-                </button>
-                <button
-                  type="button"
-                  onClick={handleMarkInProgress}
-                  className="rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 px-6 py-2 text-sm font-medium text-white shadow-lg transition-all duration-200 hover:from-emerald-600 hover:to-emerald-700 hover:shadow-xl focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:outline-none"
-                >
-                  Segna in corso
-                </button>
-              </div>
+
+            <div className="flex flex-wrap justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => setResponse('')}
+                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50"
+              >
+                Cancella
+              </button>
+              <button
+                type="button"
+                onClick={handleMarkInProgress}
+                disabled={saving || ticket.rawStatus === 'IN_PROGRESS'}
+                className="rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700 disabled:opacity-50"
+              >
+                Segna in corso
+              </button>
+              <button
+                type="submit"
+                disabled={saving || !response.trim()}
+                className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+              >
+                {savingReply ? 'Invio...' : 'Invia risposta'}
+              </button>
+              <button
+                type="button"
+                onClick={handleResolve}
+                disabled={saving}
+                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+              >
+                Risolvi
+              </button>
+              <button
+                type="button"
+                onClick={handleCloseTicket}
+                disabled={saving}
+                className="rounded-lg bg-gray-700 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+              >
+                Chiudi ticket
+              </button>
             </div>
           </form>
         </div>
-
-        {/* Previous Responses (if any) */}
-        {ticket.risposte && ticket.risposte.length > 0 && (
-          <div className="border-t-2 border-gray-100 pt-6">
-            <div className="mb-4 flex items-center space-x-3">
-              <div className="h-2 w-2 rounded-full bg-blue-500"></div>
-              <h4 className="text-lg font-semibold text-gray-900">
-                Cronologia risposte
-              </h4>
-            </div>
-            <div className="space-y-3">
-              {ticket.risposte.map((risposta, index) => (
-                <div key={index} className="relative">
-                  <div className="absolute top-0 bottom-0 left-0 w-1 rounded-full bg-gradient-to-b from-blue-400 to-blue-600"></div>
-                  <div className="ml-6 rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-emerald-100 p-4">
-                    <div className="mb-2 flex items-center space-x-2">
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-sm font-semibold text-white">
-                        A
-                      </div>
-                      <span className="text-sm font-medium text-emerald-800">
-                        Admin
-                      </span>
-                      <span className="text-sm text-emerald-600">
-                        #{index + 1}
-                      </span>
-                    </div>
-                    <p className="text-sm leading-relaxed text-gray-800">
-                      {risposta.testo}
-                    </p>
-                    <div className="mt-3 flex justify-end">
-                      <span className="inline-flex items-center rounded-md border border-emerald-300 bg-white px-2 py-1 text-sm font-medium text-emerald-700">
-                        {risposta.data}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+      )}
+    </Modal>
   );
 }

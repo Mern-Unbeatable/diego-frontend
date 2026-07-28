@@ -2,7 +2,9 @@ import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createCompanyCourseCheckoutAPI,
+  createCompanyCoursePaymentIntentAPI,
   createCoursePaymentIntentAPI,
+  verifyCompanyCoursePaymentIntentAPI,
   verifyCoursePaymentIntentAPI,
 } from './paymentAPI';
 import { resetCompanyCheckout, resetPaymentIntent } from './paymentSlice';
@@ -34,6 +36,24 @@ export const usePayment = () => {
     [dispatch],
   );
 
+  const createCompanyCoursePaymentIntent = useCallback(
+    async (payload) => {
+      const result = await dispatch(createCompanyCoursePaymentIntentAPI(payload)).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
+  const verifyCompanyCoursePaymentIntent = useCallback(
+    async (paymentIntentId) => {
+      const result = await dispatch(
+        verifyCompanyCoursePaymentIntentAPI(paymentIntentId),
+      ).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
   const createCompanyCourseCheckout = useCallback(
     async (payload) => {
       const result = await dispatch(createCompanyCourseCheckoutAPI(payload)).unwrap();
@@ -49,6 +69,8 @@ export const usePayment = () => {
   return {
     createCoursePaymentIntent,
     verifyCoursePaymentIntent,
+    createCompanyCoursePaymentIntent,
+    verifyCompanyCoursePaymentIntent,
     createCompanyCourseCheckout,
     clearPaymentIntent,
     clearCompanyCheckout,

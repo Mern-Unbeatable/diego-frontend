@@ -1,117 +1,139 @@
-import { ArrowLeft, Calendar, Download, Mail, Pencil, Phone, Trash2, UsersRound } from 'lucide-react';
+import { ArrowLeft, Calendar, Download, Mail, Phone, UsersRound } from 'lucide-react';
+import { useGetLicenseeStudentDetailQuery } from '../../../../../features/api/enrollmentApi';
+import {
+  canDownloadCertificate,
+  useCertificateDownload,
+} from '../../../../../features/api/certificateHelpers';
+import { getRtkErrorMessage } from '../../../../../features/api/utils';
+import Loading from '../../../../../components/ui/Utilities/Loading';
 
-const detailRows = [
-    {
-        id: 1,
-        course: 'Formazion...',
-        startDate: 'GG/MM/AAAA',
-        endDate: 'GG/MM/AAAA',
-        totalTime: '19:04:09',
-        score: '90%',
-        trainer: 'Trainer name',
-        feedback: 'Corso molto utile, facili da seguire.',
-    },
-    {
-        id: 2,
-        course: 'Formazion...',
-        startDate: 'GG/MM/AAAA',
-        endDate: 'GG/MM/AAAA',
-        totalTime: '19:04:09',
-        score: '90%',
-        trainer: 'Trainer name',
-        feedback: 'Eccellente! Test finale molto chiaro e utile.',
-    },
-    {
-        id: 3,
-        course: 'Cyber Secu...',
-        startDate: 'GG/MM/AAAA',
-        endDate: 'GG/MM/AAAA',
-        totalTime: '19:04:09',
-        score: '90%',
-        trainer: 'Trainer name',
-        feedback: 'Buon corso, ma alcune lezioni erano troppo lunghe.',
-    },
-    {
-        id: 4,
-        course: 'Formazion...',
-        startDate: 'GG/MM/AAAA',
-        endDate: 'GG/MM/AAAA',
-        totalTime: '19:04:09',
-        score: '90%',
-        trainer: 'Trainer name',
-        feedback: 'Alcuni materiali non erano aggiornati, ma utile nel complesso.',
-    },
-];
+const PersonalDetailsModal = ({ open, onClose, studentId, onOpenTraining }) => {
+  const { downloadById, isDownloading } = useCertificateDownload();
+  const { data, isLoading, isError, error } = useGetLicenseeStudentDetailQuery(studentId, {
+    skip: !open || !studentId,
+  });
 
-const PersonalDetailsModal = ({ open, onClose, student, onOpenTraining }) => {
-    if (!open || !student) return null;
+  if (!open || !studentId) return null;
 
-    return (
-        <div className="fixed inset-0 z-40 overflow-y-auto bg-[#173f31]/75 p-3 sm:p-6">
-            <section className="mx-auto max-w-[1380px] rounded-2xl bg-white p-5 sm:p-8">
-                <button type="button" onClick={onClose} className="inline-flex text-[#2f2f2f]">
-                    <ArrowLeft size={20} />
-                </button>
-                <h2 className="-mt-4 text-center text-2xl md:text-3xl font-semibold text-[#202020]">Personal details</h2>
+  const student = data?.student;
+  const courses = data?.courses ?? [];
 
-                <section className="mt-5 rounded-xl bg-[#f6f6f6] p-5">
-                    <div className="mb-4 flex items-start justify-between">
-                        <div className="space-y-2">
-                            <p className="flex items-center gap-2 text-xl md:text-2xl font-semibold text-[#2b2b2b]"><UsersRound size={15} className="text-[#73bfa1]" /> Franco rossi</p>
-                            <p className="flex items-center gap-2 text-sm md:text-base text-[#555555]"><Mail size={16} /> kenzi.lawson@example.com</p>
-                            <p className="flex items-center gap-2 text-sm md:text-base text-[#555555]"><Phone size={16} /> +39 123 456 7890</p>
-                            <p className="flex items-center gap-2 text-sm md:text-base text-[#555555]"><Calendar size={16} /> Assunzione: 15/03/2022</p>
-                        </div>
-                        <span className="rounded-full bg-[#73bfa1] px-3 py-1 text-sm font-semibold text-white">Attivo</span>
-                    </div>
+  return (
+    <div className="fixed inset-0 z-40 overflow-y-auto bg-[#173f31]/75 p-3 sm:p-6">
+      <section className="mx-auto max-w-[1380px] rounded-2xl bg-white p-5 sm:p-8">
+        <button type="button" onClick={onClose} className="inline-flex text-[#2f2f2f]">
+          <ArrowLeft size={20} />
+        </button>
+        <h2 className="-mt-4 text-center text-2xl font-semibold text-[#202020] md:text-3xl">
+          Dettagli personali
+        </h2>
 
-                    <div className="flex gap-3">
-                        <button type="button" className="inline-flex items-center gap-2 rounded-lg border border-[#8ecfb5] px-6 py-2 text-sm font-semibold text-[#6ab292]"><Pencil size={15} /> Modifica</button>
-                        <button type="button" className="inline-flex items-center gap-2 rounded-lg border border-[#ef6b5a] px-6 py-2 text-sm font-semibold text-[#e15241]"><Trash2 size={15} /> Elimina</button>
-                    </div>
-                </section>
-
-                <section className="mt-5 overflow-x-auto">
-                    <table className="w-full min-w-[1280px] border-collapse">
-                        <thead>
-                            <tr className="bg-[#f1f1f1] text-left">
-                                <th className="px-4 py-3 text-sm md:text-base font-semibold text-[#262626]">Nome del Corso</th>
-                                <th className="px-4 py-3 text-sm md:text-base font-semibold text-[#262626]">Data di Inizio</th>
-                                <th className="px-4 py-3 text-sm md:text-base font-semibold text-[#262626]">Data di Fine</th>
-                                <th className="px-4 py-3 text-sm md:text-base font-semibold text-[#262626]">Tempo Totale</th>
-                                <th className="px-4 py-3 text-sm md:text-base font-semibold text-[#262626]">Punteggi Totali</th>
-                                <th className="px-4 py-3 text-sm md:text-base font-semibold text-[#262626]">Trainer</th>
-                                <th className="px-4 py-3 text-sm md:text-base font-semibold text-[#262626]">Sondaggio di Feedback</th>
-                                <th className="px-4 py-3 text-sm md:text-base font-semibold text-[#262626]">Azione</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {detailRows.map((row) => (
-                                <tr key={row.id} className="border-b border-[#dddddd]">
-                                    <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.course}</td>
-                                    <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.startDate}</td>
-                                    <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.endDate}</td>
-                                    <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.totalTime}</td>
-                                    <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.score}</td>
-                                    <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.trainer}</td>
-                                    <td className="max-w-[250px] px-4 py-3 text-sm text-[#2f2f2f]">{row.feedback}</td>
-                                    <td className="px-4 py-3">
-                                        <div className="flex items-center gap-3">
-                                            <button type="button" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#ececec] text-[#414141]"><Pencil size={14} /></button>
-                                            <button type="button" onClick={onOpenTraining} className="rounded-full border border-[#87cab0] px-5 py-1.5 text-sm font-semibold text-[#73bfa1]">See Details</button>
-                                            <button type="button" className="inline-flex h-9 w-[54px] items-center justify-center rounded-full bg-[#73bfa1] text-white"><Download size={14} /></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-
-
-                </section>
+        {isLoading ? (
+          <Loading size="md" className="min-h-40" />
+        ) : isError ? (
+          <p className="mt-6 text-sm text-red-600">{getRtkErrorMessage(error)}</p>
+        ) : (
+          <>
+            <section className="mt-5 rounded-xl bg-[#f6f6f6] p-5">
+              <div className="mb-2 flex items-start justify-between gap-4">
+                <div className="space-y-2">
+                  <p className="flex items-center gap-2 text-xl font-semibold text-[#2b2b2b] md:text-2xl">
+                    <UsersRound size={15} className="text-[#73bfa1]" />
+                    {student?.fullName}
+                  </p>
+                  <p className="flex items-center gap-2 text-sm text-[#555555] md:text-base">
+                    <Mail size={16} />
+                    {student?.email}
+                  </p>
+                  <p className="flex items-center gap-2 text-sm text-[#555555] md:text-base">
+                    <Phone size={16} />
+                    {student?.phone}
+                  </p>
+                  <p className="flex items-center gap-2 text-sm text-[#555555] md:text-base">
+                    <Calendar size={16} />
+                    Iscritto dal: {student?.hireDate}
+                  </p>
+                </div>
+                <span className="rounded-full bg-[#73bfa1] px-3 py-1 text-sm font-semibold text-white">
+                  Attivo
+                </span>
+              </div>
             </section>
-        </div>
-    );
+
+            <section className="mt-5 overflow-x-auto">
+              <table className="w-full min-w-[1100px] border-collapse">
+                <thead>
+                  <tr className="bg-[#f1f1f1] text-left">
+                    <th className="px-4 py-3 text-sm font-semibold text-[#262626] md:text-base">
+                      Nome del Corso
+                    </th>
+                    <th className="px-4 py-3 text-sm font-semibold text-[#262626] md:text-base">
+                      Data di Inizio
+                    </th>
+                    <th className="px-4 py-3 text-sm font-semibold text-[#262626] md:text-base">
+                      Data di Fine
+                    </th>
+                    <th className="px-4 py-3 text-sm font-semibold text-[#262626] md:text-base">
+                      Tempo Totale
+                    </th>
+                    <th className="px-4 py-3 text-sm font-semibold text-[#262626] md:text-base">
+                      Punteggio
+                    </th>
+                    <th className="px-4 py-3 text-sm font-semibold text-[#262626] md:text-base">
+                      Trainer
+                    </th>
+                    <th className="px-4 py-3 text-sm font-semibold text-[#262626] md:text-base">
+                      Azione
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {courses.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} className="px-4 py-8 text-center text-sm text-[#6b7471]">
+                        Nessun corso per questo studente.
+                      </td>
+                    </tr>
+                  ) : (
+                    courses.map((row) => (
+                      <tr key={row.enrollmentId} className="border-b border-[#dddddd]">
+                        <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.courseName}</td>
+                        <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.startDate}</td>
+                        <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.endDate}</td>
+                        <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.totalTime}</td>
+                        <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.score}</td>
+                        <td className="px-4 py-3 text-sm text-[#2f2f2f]">{row.trainer}</td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => onOpenTraining?.(row)}
+                              className="rounded-full border border-[#87cab0] px-4 py-1.5 text-sm font-semibold text-[#73bfa1]"
+                            >
+                              See Details
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => downloadById(row.certificate)}
+                              disabled={!canDownloadCertificate(row.certificate) || isDownloading}
+                              className="inline-flex h-9 w-[54px] items-center justify-center rounded-full bg-[#73bfa1] text-white disabled:opacity-40"
+                              aria-label="Download certificato"
+                            >
+                              <Download size={14} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </section>
+          </>
+        )}
+      </section>
+    </div>
+  );
 };
 
 export default PersonalDetailsModal;

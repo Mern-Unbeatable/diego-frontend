@@ -2,24 +2,22 @@ import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import { useContact } from '../../features/public/contact/contactHooks';
+import { useCollaboration } from '../../features/public/collaboration/collaborationHooks';
 
-const MAX_INT_32 = 2147483647;
+const INITIAL_FORM_DATA = {
+  nomeAzienda: '',
+  tipoCollaborazione: '',
+  nominativoReferente: '',
+  email: '',
+  telefono: '',
+  dimensioneAzienda: '',
+  descrizione: '',
+};
 
 const CollaborationRequestForm = () => {
   const { t } = useTranslation();
-  const { createContact } = useContact();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [formData, setFormData] = useState({
-    nomeAzienda: '',
-    tipoCollaborazione: '',
-    nominativoReferente: '',
-    email: '',
-    telefono: '',
-    dimensioneAzienda: '',
-    descrizione: '',
-  });
+  const { createCollaboration, loading } = useCollaboration();
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,58 +27,42 @@ const CollaborationRequestForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const rawPhoneDigits = formData.telefono.replace(/\D/g, '');
-    const normalizedPhoneDigits =
-      rawPhoneDigits.length > 10 && rawPhoneDigits.startsWith('39')
-        ? rawPhoneDigits.slice(2)
-        : rawPhoneDigits;
+    const companyName = formData.nomeAzienda.trim();
+    const contactName = formData.nominativoReferente.trim();
+    const email = formData.email.trim();
+    const telephone = formData.telefono.trim();
+    const description = formData.descrizione.trim();
 
-    const phoneNumber = Number(normalizedPhoneDigits);
     if (
-      !normalizedPhoneDigits ||
-      !Number.isInteger(phoneNumber) ||
-      phoneNumber <= 0 ||
-      phoneNumber > MAX_INT_32
+      !companyName ||
+      !formData.tipoCollaborazione ||
+      !contactName ||
+      !email ||
+      !telephone ||
+      !formData.dimensioneAzienda ||
+      !description
     ) {
-      toast.error('Use digits only and remove country code from phone number.');
+      toast.error('Please fill in all required fields.');
       return;
     }
 
-    const trimmedName = formData.nominativoReferente.trim();
-    const [firstName = '', ...lastNameParts] = trimmedName.split(/\s+/);
-    const lastName = lastNameParts.join(' ') || '-';
-
     const payload = {
-      firstName: firstName || '-',
-      lastName,
-      phone: phoneNumber,
-      agencyName: formData.nomeAzienda.trim() || 'N/A',
-      vat: 'N/A',
-      email: formData.email.trim(),
-      message: [
-        `Tipo collaborazione: ${formData.tipoCollaborazione || '-'}`,
-        `Dimensione azienda: ${formData.dimensioneAzienda || '-'}`,
-        `Descrizione: ${formData.descrizione.trim() || '-'}`,
-      ].join(' | '),
+      companyName,
+      collaborationType: formData.tipoCollaborazione,
+      contactName,
+      email,
+      telephone,
+      companySize: formData.dimensioneAzienda,
+      description,
     };
 
     try {
-      setIsSubmitting(true);
-      await createContact(payload);
-      toast.success('Your message has been sent successfully');
-      setFormData({
-        nomeAzienda: '',
-        tipoCollaborazione: '',
-        nominativoReferente: '',
-        email: '',
-        telefono: '',
-        dimensioneAzienda: '',
-        descrizione: '',
-      });
+      await createCollaboration(payload);
+      toast.success('Your collaboration request has been sent successfully');
+      setFormData(INITIAL_FORM_DATA);
     } catch (error) {
-      toast.error(error?.message || 'Failed to send message. Please try again.');
-    } finally {
-      setIsSubmitting(false);
+      const message = typeof error === 'string' ? error : error?.message;
+      toast.error(message || 'Failed to send request. Please try again.');
     }
   };
 
@@ -129,17 +111,20 @@ const CollaborationRequestForm = () => {
                       onChange={handleChange}
                       className="w-full cursor-pointer appearance-none rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                     >
-                      <option value="">{t('workWithUs.section4.tipo1')}</option>
-                      <option value="pmi">
+                      <option value="">{t('workWithUs.section4.tipoCollaborazione')}</option>
+                      <option value="TRAINING_BODY">
+                        {t('workWithUs.section4.tipo1')}
+                      </option>
+                      <option value="HR_CONSULTANT">
                         {t('workWithUs.section4.tipo2')}
                       </option>
-                      <option value="medio">
+                      <option value="CONSULTING_COMPANY">
                         {t('workWithUs.section4.tipo3')}
                       </option>
-                      <option value="grande">
+                      <option value="COMPANY">
                         {t('workWithUs.section4.tipo4')}
                       </option>
-                      <option value="altro">
+                      <option value="OTHER">
                         {t('workWithUs.section4.tipo5')}
                       </option>
                     </select>
@@ -204,14 +189,17 @@ const CollaborationRequestForm = () => {
                       onChange={handleChange}
                       className="w-full cursor-pointer appearance-none rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                     >
-                      <option value="">{t('workWithUs.section4.dim1')}</option>
-                      <option value="pmi">
+                      <option value="">{t('workWithUs.section4.dimensione')}</option>
+                      <option value="STARTUP">
+                        {t('workWithUs.section4.dim1')}
+                      </option>
+                      <option value="SMALL">
                         {t('workWithUs.section4.dim2')}
                       </option>
-                      <option value="medio">
+                      <option value="MEDIUM">
                         {t('workWithUs.section4.dim3')}
                       </option>
-                      <option value="grande">
+                      <option value="LARGE">
                         {t('workWithUs.section4.dim4')}
                       </option>
                     </select>
@@ -238,10 +226,10 @@ const CollaborationRequestForm = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={loading}
                 className="w-full rounded-md bg-[#73BFA1] py-3 font-semibold text-white transition duration-200 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {isSubmitting ? 'Sending...' : t('workWithUs.section4.submit')}
+                {loading ? 'Sending...' : t('workWithUs.section4.submit')}
               </button>
             </form>
           </div>
