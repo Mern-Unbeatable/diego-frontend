@@ -469,7 +469,7 @@ export const getEmptyLessonFormValues = (orderIndex = 0) => ({
   contentType: 'VIDEO_YOUTUBE',
   durationSecs: '',
   youtubeUrl: '',
-  scormEntryPoint: 'index_lms.html',
+  scormEntryPoint: 'shared/launchpage.html',
   isRequired: true,
   isLocked: false,
   file: null,
@@ -497,7 +497,7 @@ export const mapApiLessonToFormValues = (lesson, orderIndex = 0) => {
     contentType: lesson.contentType || 'VIDEO_YOUTUBE',
     durationSecs: lesson.durationSecs ?? '',
     youtubeUrl: lesson.youtubeUrl || '',
-    scormEntryPoint: lesson.scormEntryPoint || 'index_lms.html',
+    scormEntryPoint: lesson.scormEntryPoint || 'shared/launchpage.html',
     isRequired: lesson.isRequired ?? true,
     isLocked: lesson.isLocked ?? false,
     file: null,
@@ -612,7 +612,7 @@ export const mapLessonFormToPayload = (lesson, index, { isUpdate = false } = {})
       files.scormPackageUrl = lesson.file;
     }
     payload.contentType = 'SCORM_12';
-    payload.scormEntryPoint = String(lesson.scormEntryPoint || 'index_lms.html').trim();
+    payload.scormEntryPoint = String(lesson.scormEntryPoint || 'shared/launchpage.html').trim();
     payload.scormVersion = '1.2';
     return { payload, files };
   }

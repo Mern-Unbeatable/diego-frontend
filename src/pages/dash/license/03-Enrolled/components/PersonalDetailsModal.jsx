@@ -7,6 +7,7 @@ import {
 import { getRtkErrorMessage } from '../../../../../features/api/utils';
 import Loading from '../../../../../components/ui/Utilities/Loading';
 
+
 const PersonalDetailsModal = ({ open, onClose, studentId, onOpenTraining }) => {
   const { downloadById, isDownloading } = useCertificateDownload();
   const { data, isLoading, isError, error } = useGetLicenseeStudentDetailQuery(studentId, {

@@ -93,6 +93,38 @@ const getBestQuizAttempt = (enrollment) => {
   return null;
 };
 
+const getEnrollmentProgressDetail = (enrollment) => {
+  const fromRaw = enrollment?.raw?.progress;
+  if (fromRaw && typeof fromRaw === 'object') return fromRaw;
+  if (enrollment?.progress && typeof enrollment.progress === 'object') return enrollment.progress;
+  return {};
+};
+
+const mapLessonProgressRows = (lessons = []) =>
+  [...lessons]
+    .sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0))
+    .map((lesson) => ({
+      lessonId: lesson.lessonId,
+      title: lesson.lessonTitle || '—',
+      orderIndex: lesson.orderIndex ?? 0,
+      contentType: lesson.contentType || '—',
+      completed: Boolean(lesson.completed),
+      statusLabel: lesson.completed
+        ? 'Completata'
+        : lesson.startedAt
+          ? 'In corso'
+          : 'Non iniziata',
+      timeSpent: formatDurationFromSeconds(lesson.timeSpentSecs),
+      watchPercent:
+        lesson.watchPercent != null && !lesson.isScorm
+          ? `${Math.round(lesson.watchPercent)}%`
+          : lesson.isScorm
+            ? lesson.scormStatus || '—'
+            : '—',
+      startedAt: formatEnrollmentDateTime(lesson.startedAt),
+      completedAt: formatEnrollmentDateTime(lesson.completedAt),
+    }));
+
 const mapEnrollmentCourseRow = (enrollment, locale = 'it') => {
   const course = enrollment.course || {};
   const bestQuiz = getBestQuizAttempt(enrollment);
@@ -108,12 +140,18 @@ const mapEnrollmentCourseRow = (enrollment, locale = 'it') => {
     courseName: title,
     startDate: formatEnrollmentDate(enrollment.startedAt || enrollment.createdAt),
     endDate: formatEnrollmentDate(enrollment.completedAt),
-    totalTime: formatDurationFromSeconds(enrollment.progress?.totalTimeSpentSecs),
+    totalTime: formatDurationFromSeconds(
+      getEnrollmentProgressDetail(enrollment).totalTimeSpentSecs
+        ?? enrollment.progress?.totalTimeSpentSecs,
+    ),
     score: bestQuiz?.scorePercent != null ? `${Math.round(bestQuiz.scorePercent)}%` : '—',
     trainer: getTrainerName(course),
     feedback: '—',
     status: enrollment.status,
-    progress: enrollment.progress?.percentage ?? 0,
+    progress: getEnrollmentProgressDetail(enrollment).percentage
+      ?? enrollment.progress?.percentage
+      ?? 0,
+    lessonProgress: mapLessonProgressRows(getEnrollmentProgressDetail(enrollment).lessons),
     certificate: enrollment.certificate || null,
     raw: enrollment,
   };
@@ -181,9 +219,13 @@ export const mapLicenseeStudentDetailResponse = (payload, locale = 'it') => {
 
 export const mapEnrollmentTrainingReport = ({ student, enrollment }, locale = 'it') => {
   const course = enrollment?.course || enrollment?.raw?.course || {};
-  const progress = enrollment?.progress || enrollment?.raw?.progress || {};
+  const progressDetail = getEnrollmentProgressDetail(enrollment);
   const bestQuiz = getBestQuizAttempt(enrollment?.raw || enrollment);
   const certificate = enrollment?.certificate || enrollment?.raw?.certificate;
+
+  const progressPercent =
+    progressDetail.percentage
+    ?? (typeof enrollment?.progress === 'number' ? enrollment.progress : 0);
 
   const teacherName = getTrainerName(course);
   const courseTitle = getLocalizedText(course.courseTitle, locale);
@@ -227,12 +269,14 @@ export const mapEnrollmentTrainingReport = ({ student, enrollment }, locale = 'i
       accessDate: formatEnrollmentDateTime(bestQuiz?.attemptedAt || enrollment?.raw?.startedAt),
       score: bestQuiz?.scorePercent != null ? `${Math.round(bestQuiz.scorePercent)}%` : '—',
       result: bestQuiz?.passed ? 'Superato' : bestQuiz ? 'Non superato' : '—',
-      totalTime: formatDurationFromSeconds(bestQuiz?.timeSpentSecs),
+      totalTime: formatDurationFromSeconds(
+        bestQuiz?.timeSpentSecs ?? progressDetail.totalTimeSpentSecs,
+      ),
     },
     progress: {
-      percentage: progress.percentage ?? enrollment?.progress ?? 0,
+      percentage: progressPercent,
       accessDate: formatEnrollmentDate(enrollment?.raw?.startedAt || enrollment?.startDate),
-      timeSpent: formatDurationFromSeconds(progress.totalTimeSpentSecs),
+      timeSpent: formatDurationFromSeconds(progressDetail.totalTimeSpentSecs),
     },
     certificate: certificate
       ? {
@@ -242,6 +286,8 @@ export const mapEnrollmentTrainingReport = ({ student, enrollment }, locale = 'i
           status: certificate.status,
         }
       : null,
-    totalLearningTime: formatDurationFromSeconds(progress.totalTimeSpentSecs),
+    totalLearningTime: formatDurationFromSeconds(progressDetail.totalTimeSpentSecs),
+    lessons: mapLessonProgressRows(progressDetail.lessons),
+    antiCheat: enrollment?.raw?.antiCheat || enrollment?.antiCheat || null,
   };
 };

@@ -27,6 +27,7 @@ const EnrolledView = () => {
     limit: PAGE_SIZE,
   });
 
+
   const students = data?.students ?? [];
   const meta = data?.meta ?? {};
   const total = meta.total ?? students.length;
@@ -147,9 +148,8 @@ const EnrolledView = () => {
                 key={pageNumber}
                 type="button"
                 onClick={() => setPage(pageNumber)}
-                className={`inline-flex h-[34px] min-w-[34px] items-center justify-center rounded-md px-2 ${
-                  pageNumber === page ? 'bg-[#73bfa1] text-white' : ''
-                }`}
+                className={`inline-flex h-[34px] min-w-[34px] items-center justify-center rounded-md px-2 ${pageNumber === page ? 'bg-[#73bfa1] text-white' : ''
+                  }`}
               >
                 {pageNumber}
               </button>

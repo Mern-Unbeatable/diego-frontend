@@ -75,12 +75,29 @@ export const scormLaunchService = (payload, { signal } = {}) =>
     url: endpoints.learning.SCORM_LAUNCH,
     data: payload,
     signal,
+    timeout: 120000,
   });
 
 export const scormFinishService = (payload, { signal } = {}) =>
   request({
     method: 'POST',
     url: endpoints.learning.SCORM_FINISH,
+    data: payload,
+    signal,
+  });
+
+export const getScormProgressService = (enrollmentId, lessonId, { signal } = {}) =>
+  request({
+    method: 'GET',
+    url: endpoints.learning.SCORM_PROGRESS(enrollmentId),
+    params: lessonId ? { lessonId } : undefined,
+    signal,
+  });
+
+export const logAntiCheatService = (enrollmentId, payload, { signal } = {}) =>
+  request({
+    method: 'POST',
+    url: endpoints.learning.ANTI_CHEAT(enrollmentId),
     data: payload,
     signal,
   });

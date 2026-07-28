@@ -1,34 +1,83 @@
 import { useEffect, useRef, useState } from 'react';
 import ScormPlayer from './ScormPlayer';
-
-const getYoutubeEmbedUrl = (url) => {
-  if (!url) return '';
-  try {
-    const parsed = new URL(url);
-    if (parsed.hostname.includes('youtu.be')) {
-      return `https://www.youtube.com/embed/${parsed.pathname.replace('/', '')}`;
-    }
-    const videoId = parsed.searchParams.get('v');
-    if (videoId) return `https://www.youtube.com/embed/${videoId}`;
-    return url;
-  } catch {
-    return url;
-  }
-};
+import AntiCheatOverlay from './AntiCheatOverlay';
+import YoutubePlayer from './YoutubePlayer';
+import DocumentViewer from './DocumentViewer';
+import { useAntiCheatGuard } from '../../hooks/useAntiCheatGuard';
+import { useVideoProgress } from '../../hooks/useVideoProgress';
+import { DOCUMENT_CONTENT_TYPES, useDocumentProgress } from '../../hooks/useDocumentProgress';
 
 const LessonContent = ({
   course,
   lesson,
   moduleItem,
+  enrollmentId,
   scormSession,
   lessonLoading,
-  onCompleteLesson,
+  onTrackVideoProgress,
   onLaunchScorm,
-  onFinishScorm,
+  onScormComplete,
+  onPollScormProgress,
+  onLogAntiCheat,
   finishingScorm = false,
 }) => {
   const videoRef = useRef(null);
-  const [startedAt] = useState(() => Date.now());
+  const isLessonComplete = Boolean(moduleItem?.status === 'done');
+
+  const { blocked, blockReason, resume } = useAntiCheatGuard({
+    enabled: Boolean(enrollmentId && lesson?.id && !isLessonComplete),
+    enrollmentId,
+    lessonId: lesson?.id,
+    onLogEvent: onLogAntiCheat,
+  });
+
+  const initialWatchPercent = moduleItem?.watchPercent ?? 0;
+  const initialLastPositionSecs = moduleItem?.lastPositionSecs ?? 0;
+  const durationSecs = lesson?.durationSecs ?? moduleItem?.durationSecs ?? null;
+
+  const [youtubeWatchPercent, setYoutubeWatchPercent] = useState(initialWatchPercent);
+
+  useEffect(() => {
+    setYoutubeWatchPercent(initialWatchPercent);
+  }, [lesson?.id, initialWatchPercent]);
+
+  const handleTrackedProgress = async (payload) => {
+    if (!lesson?.id) return null;
+    if (payload?.watchPercent != null) {
+      setYoutubeWatchPercent((prev) => Math.max(prev, payload.watchPercent));
+    }
+    return onTrackVideoProgress?.(lesson.id, payload);
+  };
+
+  const { watchPercent: uploadWatchPercent, minWatchPercent } = useVideoProgress({
+    enabled: Boolean(
+      lesson?.id
+      && enrollmentId
+      && !isLessonComplete
+      && lesson?.contentType === 'VIDEO_UPLOAD',
+    ),
+    videoRef,
+    initialWatchPercent,
+    initialLastPositionSecs,
+    onSaveProgress: handleTrackedProgress,
+  });
+
+  const {
+    watchPercent: documentWatchPercent,
+    minWatchPercent: documentMinPercent,
+    requiredSecs: documentRequiredSecs,
+  } = useDocumentProgress({
+    enabled: Boolean(
+      lesson?.id
+      && enrollmentId
+      && !isLessonComplete
+      && DOCUMENT_CONTENT_TYPES.includes(lesson?.contentType),
+    ),
+    durationSecs,
+    initialWatchPercent,
+    initialLastPositionSecs,
+    onSaveProgress: handleTrackedProgress,
+  });
 
   useEffect(() => {
     if (!lesson?.id) return undefined;
@@ -70,56 +119,72 @@ const LessonContent = ({
 
   const contentType = lesson.contentType;
   const title = lesson.title || moduleItem?.title || course?.title;
-
-  const handleComplete = () => {
-    const elapsedSecs = Math.max(0, Math.round((Date.now() - startedAt) / 1000));
-    onCompleteLesson?.(lesson.id, elapsedSecs);
-  };
+  const isVideoLesson = ['VIDEO_UPLOAD', 'VIDEO_YOUTUBE'].includes(contentType);
+  const isDocumentLesson = DOCUMENT_CONTENT_TYPES.includes(contentType);
+  const isScormLesson = ['SCORM', 'SCORM_12'].includes(contentType);
 
   let body = null;
 
-  if (['SCORM', 'SCORM_12'].includes(contentType)) {
+  if (isScormLesson) {
     body = (
       <ScormPlayer
         session={scormSession}
+        enrollmentId={enrollmentId}
+        lessonId={lesson.id}
         finishing={finishingScorm}
-        onFinish={(sessionId) => onFinishScorm?.(sessionId, 'completed')}
+        onComplete={onScormComplete}
+        onPollProgress={onPollScormProgress}
       />
     );
   } else if (contentType === 'VIDEO_YOUTUBE') {
     body = (
-      <div className="aspect-video overflow-hidden rounded-2xl bg-black shadow-lg">
-        <iframe
-          title={title}
-          src={getYoutubeEmbedUrl(lesson.youtubeUrl)}
-          className="h-full w-full border-0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      </div>
+      <YoutubePlayer
+        youtubeUrl={lesson.youtubeUrl}
+        title={title}
+        initialLastPositionSecs={initialLastPositionSecs}
+        onProgressUpdate={handleTrackedProgress}
+      />
     );
   } else if (contentType === 'VIDEO_UPLOAD') {
     body = (
-      <div className="aspect-video overflow-hidden rounded-2xl bg-black shadow-lg">
-        <video
-          ref={videoRef}
-          src={lesson.contentUrl}
-          controls
-          className="h-full w-full bg-black"
-        >
-          <track kind="captions" />
-        </video>
+      <div className="space-y-3">
+        <div className="aspect-video overflow-hidden rounded-2xl bg-black shadow-lg">
+          <video
+            ref={videoRef}
+            src={lesson.contentUrl}
+            controls
+            className="h-full w-full bg-black"
+          >
+            <track kind="captions" />
+          </video>
+        </div>
+        <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600">
+          <div className="flex items-center justify-between gap-3">
+            <span>Progresso visione</span>
+            <span className="font-semibold text-[#1d1d1d]">{uploadWatchPercent}%</span>
+          </div>
+          <div className="mt-2 h-2 rounded-full bg-gray-200">
+            <div
+              className="h-2 rounded-full bg-[#55B18D] transition-all"
+              style={{ width: `${uploadWatchPercent}%` }}
+            />
+          </div>
+          <p className="mt-2 text-xs text-gray-500">
+            Completa almeno {minWatchPercent}% del video per segnare la lezione come completata.
+          </p>
+        </div>
       </div>
     );
-  } else if (['PDF', 'FILE', 'WORD', 'EXCEL'].includes(contentType)) {
+  } else if (isDocumentLesson) {
     body = (
-      <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-white shadow-lg">
-        <iframe
-          title={title}
-          src={lesson.contentUrl}
-          className="h-full w-full border-0"
-        />
-      </div>
+      <DocumentViewer
+        title={title}
+        contentUrl={lesson.contentUrl}
+        contentType={contentType}
+        watchPercent={documentWatchPercent}
+        minWatchPercent={documentMinPercent}
+        requiredSecs={documentRequiredSecs}
+      />
     );
   } else {
     body = (
@@ -130,30 +195,22 @@ const LessonContent = ({
   }
 
   return (
-    <div className="space-y-6">
-      {body}
+    <>
+      <AntiCheatOverlay visible={blocked} message={blockReason} onResume={resume} />
 
-      {!['SCORM', 'SCORM_12'].includes(contentType) ? (
-        <div className="flex justify-end">
-          <button
-            type="button"
-            onClick={handleComplete}
-            className="rounded-full bg-[#55B18D] px-6 py-3 text-sm font-semibold text-white hover:bg-[#439678]"
-          >
-            Segna come completata
-          </button>
+      <div className="space-y-6">
+        {body}
+
+        <div>
+          <h2 className="text-[22px] font-semibold text-[#1d1d1d]">{title}</h2>
+          {course?.description ? (
+            <p className="mt-3 text-base leading-relaxed text-[#5a5a5a]">
+              {course.description}
+            </p>
+          ) : null}
         </div>
-      ) : null}
-
-      <div>
-        <h2 className="text-[22px] font-semibold text-[#1d1d1d]">{title}</h2>
-        {course?.description ? (
-          <p className="mt-3 text-base leading-relaxed text-[#5a5a5a]">
-            {course.description}
-          </p>
-        ) : null}
       </div>
-    </div>
+    </>
   );
 };
 

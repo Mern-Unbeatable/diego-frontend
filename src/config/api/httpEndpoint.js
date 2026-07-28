@@ -5,7 +5,7 @@ export const endpoints = {
     REGISTER: '/auth/register/start',
     VERIFY_REGISTER_OTP: '/auth/register/verify-otp',
     REGISTER_COMPLETE: '/auth/register/complete',
-    REFRESH: '/auth/refresh',
+    REFRESH: '/auth/refresh-token',
   },
   admin: {
     GET_USER_QR_CODE: '/qr-cards/by-email',
@@ -112,5 +112,7 @@ export const endpoints = {
     SCORM_LAUNCH: '/scorm/launch',
     SCORM_COMMIT: '/scorm/commit',
     SCORM_FINISH: '/scorm/finish',
+    SCORM_PROGRESS: (enrollmentId) => `/scorm/progress/${enrollmentId}`,
+    ANTI_CHEAT: (enrollmentId) => `/enrollments/${enrollmentId}/anti-cheat`,
   },
 };

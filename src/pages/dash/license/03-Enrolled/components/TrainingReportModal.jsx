@@ -54,6 +54,7 @@ const TrainingReportModal = ({ open, onClose, studentId, enrollment }) => {
       { student: data.student, enrollment: fullEnrollment },
       'it',
     );
+
   }, [data, enrollment]);
 
   const handleDownload = () => {

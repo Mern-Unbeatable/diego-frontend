@@ -34,9 +34,27 @@ const formatValidationErrors = (errors = []) =>
     .filter(Boolean)
     .join('\n');
 
+const extractErrorPayload = (response) => {
+  if (!response) return {};
+  if (response.data && typeof response.data === 'object') return response.data;
+  return response;
+};
+
 export const getRtkErrorMessage = (error) => {
   if (!error) return 'Request failed';
   if (typeof error === 'string') return error;
+
+  if (error?.status === 'FETCH_ERROR') {
+    const fetchMessage = error?.error || error?.data?.message;
+    if (fetchMessage && fetchMessage !== 'Rejected') {
+      return `Network error: ${fetchMessage}. Verify backend is running on port 5000 and restart the frontend dev server.`;
+    }
+    return 'Network error: cannot reach API. Start backend (npm run dev in lms) and restart frontend (npm run dev in diego-frontend).';
+  }
+
+  if (error?.status === 'PARSING_ERROR') {
+    return 'Server returned an invalid response. Check backend logs.';
+  }
 
   const validationErrors = collectValidationErrors(error);
   if (validationErrors) {
@@ -50,8 +68,14 @@ export const getRtkErrorMessage = (error) => {
   return 'Request failed';
 };
 
-export const transformErrorResponse = (response) => ({
-  message: response?.data?.message || 'Request failed',
-  errors: response?.data?.errors || null,
-  status: response?.status,
-});
+export const transformErrorResponse = (response, meta) => {
+  const payload = extractErrorPayload(response);
+  const status = meta?.response?.status ?? payload?.statusCode ?? response?.status;
+
+  return {
+    message: payload?.message || response?.message || 'Request failed',
+    errors: payload?.errors || response?.errors || null,
+    status,
+    statusCode: payload?.statusCode ?? status,
+  };
+};

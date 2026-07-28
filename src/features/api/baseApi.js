@@ -6,14 +6,26 @@ import { COOKIE_STORAGE } from '../../utils/cookies/cookieStorage';
 import { STORAGE } from '../../utils/storage/authStorage';
 import { tagTypesList } from './tagList';
 
+const getStoredAccessToken = (getState) =>
+  getState()?.auth?.token ||
+  COOKIE_STORAGE.getToken() ||
+  STORAGE.getToken();
+
 const baseQuery = fetchBaseQuery({
   baseUrl: ENV_CONFIG.API_BASE_URL,
   credentials: 'include',
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState()?.auth?.token || COOKIE_STORAGE.getToken();
+  timeout: 120000,
+  prepareHeaders: (headers, { getState, extra, endpoint, type, arg }) => {
+    const token = getStoredAccessToken(getState);
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }
+
+    const body = typeof arg === 'object' && arg !== null ? arg.body : undefined;
+    if (body instanceof FormData) {
+      headers.delete('content-type');
+    }
+
     return headers;
   },
 });
@@ -36,19 +48,28 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       extraOptions,
     );
 
-    const refreshData = refreshResult?.data?.data ?? refreshResult?.data;
+    const refreshPayload = refreshResult?.data?.data ?? refreshResult?.data ?? {};
+    const refreshData = refreshPayload?.data ?? refreshPayload;
     const newToken =
       refreshData?.accessToken ||
       refreshData?.tokens?.accessToken ||
       refreshData?.token;
+    const newRefreshToken =
+      refreshData?.refreshToken ||
+      refreshData?.tokens?.refreshToken;
 
     if (refreshResult?.data?.success !== false && newToken) {
       COOKIE_STORAGE.setToken(newToken);
       STORAGE.setToken(newToken);
+      if (newRefreshToken) {
+        COOKIE_STORAGE.setRefreshToken(newRefreshToken);
+        STORAGE.setRefreshToken(newRefreshToken);
+      }
       api.dispatch(setUser({ token: newToken }));
       result = await baseQuery(args, api, extraOptions);
     } else {
       api.dispatch(logout());
+      api.dispatch(baseApi.util.resetApiState());
     }
   }
 

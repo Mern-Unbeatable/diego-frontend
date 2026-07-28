@@ -64,7 +64,7 @@ function LessonFormFields({ isEdit, onClose, onSubmit, saving }) {
     setValue('youtubeUrl', '');
     setValue(
       'scormEntryPoint',
-      value === 'SCORM' || value === 'SCORM_12' ? 'index_lms.html' : '',
+      value === 'SCORM' || value === 'SCORM_12' ? 'shared/launchpage.html' : '',
     );
   };
 
@@ -126,12 +126,10 @@ function LessonFormFields({ isEdit, onClose, onSubmit, saving }) {
 
       {(contentType === 'SCORM' || contentType === 'SCORM_12') && (
         <>
-          <Input
-            name="scormEntryPoint"
-            label="ENTRY POINT SCORM"
-            placeholder="index_lms.html"
-            variant="course"
-          />
+          <p className="text-xs text-[#5a6a64]">
+            Upload a single SCORM 1.2 .zip package (e.g. ContentPackagingSingleSCO_SCORM12.zip).
+            Entry point is auto-detected from imsmanifest.xml.
+          </p>
           <LessonFileField
             name="file"
             accept=".zip,application/zip"

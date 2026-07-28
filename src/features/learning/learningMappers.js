@@ -24,11 +24,102 @@ const formatDuration = (durationSecs) => {
 
 const isLessonCompleted = (lesson) => {
   if (!lesson) return false;
-  if (lesson.isCompleted) return true;
+  if (lesson.isCompleted === true) return true;
+  if ((lesson.watchPercent ?? 0) >= 90) return true;
   if (['SCORM', 'SCORM_12'].includes(lesson.contentType)) {
     return ['COMPLETED', 'PASSED'].includes(lesson.scormStatus);
   }
   return lesson.completed === true;
+};
+
+export const isModuleAccessible = (module) =>
+  Boolean(module && module.status !== 'locked');
+
+export const findNextAccessibleModule = (modules, currentModuleId) => {
+  if (!Array.isArray(modules) || !currentModuleId) return null;
+  const currentIndex = modules.findIndex((module) => module.id === currentModuleId);
+  if (currentIndex < 0) return null;
+  return modules.slice(currentIndex + 1).find((module) => isModuleAccessible(module)) ?? null;
+};
+
+export const findPreviousAccessibleModule = (modules, currentModuleId) => {
+  if (!Array.isArray(modules) || !currentModuleId) return null;
+  const currentIndex = modules.findIndex((module) => module.id === currentModuleId);
+  if (currentIndex <= 0) return null;
+  for (let i = currentIndex - 1; i >= 0; i -= 1) {
+    if (isModuleAccessible(modules[i])) return modules[i];
+  }
+  return null;
+};
+
+const hasSequentialBlockers = (allModules, index) =>
+  allModules.slice(0, index).some((module) => {
+    if (module.type === 'quiz') return false;
+    if (!module.isRequired) return false;
+    return !module.isCompleted;
+  });
+
+export const refreshModuleLocks = (modules, navigationMode = 'SEQUENTIAL') => {
+  if (!Array.isArray(modules)) return [];
+
+  let foundCurrent = false;
+
+  return modules.map((item, index) => {
+    let isLocked = Boolean(item.isLocked);
+    let isAccessible = true;
+
+    if (navigationMode === 'SEQUENTIAL') {
+      if (hasSequentialBlockers(modules, index)) {
+        isLocked = true;
+        isAccessible = false;
+      } else {
+        isLocked = false;
+        isAccessible = true;
+      }
+    } else if (item.isLocked) {
+      isLocked = true;
+      isAccessible = false;
+    }
+
+    let status = 'upcoming';
+    if (item.isCompleted) {
+      status = 'done';
+    } else if (isLocked || !isAccessible) {
+      status = 'locked';
+    } else if (!foundCurrent) {
+      status = 'current';
+      foundCurrent = true;
+    }
+
+    return {
+      ...item,
+      isLocked,
+      isAccessible,
+      status,
+    };
+  });
+};
+
+export const applyLessonCompletionToModules = (
+  modules,
+  completedLessonId,
+  navigationMode = 'SEQUENTIAL',
+  extra = {},
+) => {
+  if (!Array.isArray(modules) || !completedLessonId) return modules;
+
+  const updated = modules.map((module) =>
+    module.id === completedLessonId
+      ? {
+          ...module,
+          isCompleted: true,
+          watchPercent: Math.max(module.watchPercent ?? 0, extra.watchPercent ?? 90),
+          lastPositionSecs: extra.lastPositionSecs ?? module.lastPositionSecs ?? 0,
+        }
+      : module,
+  );
+
+  return refreshModuleLocks(updated, navigationMode);
 };
 
 export const mapCoursePlayerData = ({
@@ -61,13 +152,15 @@ export const mapCoursePlayerData = ({
     durationSecs: lesson.durationSecs ?? null,
     isRequired: lesson.isRequired ?? true,
     isLocked: lesson.isLocked ?? false,
-    isAccessible: lesson.isAccessible ?? true,
+    isAccessible: true,
     isCompleted: isLessonCompleted(lesson),
     contentUrl: lesson.contentUrl ?? null,
     youtubeUrl: lesson.youtubeUrl ?? null,
     scormPackageUrl: lesson.scormPackageUrl ?? null,
     scormEntryPoint: lesson.scormEntryPoint ?? null,
     timeSpentSecs: lesson.timeSpentSecs ?? 0,
+    watchPercent: lesson.watchPercent ?? 0,
+    lastPositionSecs: lesson.lastPositionSecs ?? 0,
     scormStatus: lesson.scormStatus ?? null,
   }));
 
@@ -102,18 +195,19 @@ export const mapCoursePlayerData = ({
   let foundCurrent = false;
 
   const modules = allModules.map((item, index) => {
-    let isLocked = item.isLocked ?? false;
-    let isAccessible = item.isAccessible !== false;
+    let isLocked = Boolean(item.isLocked);
+    let isAccessible = true;
 
     if (navigationMode === 'SEQUENTIAL') {
-      const previousIncomplete = allModules
-        .slice(0, index)
-        .some((module) => !module.isCompleted);
-      if (previousIncomplete) {
+      if (hasSequentialBlockers(allModules, index)) {
         isLocked = true;
         isAccessible = false;
+      } else {
+        isLocked = false;
+        isAccessible = true;
       }
     } else if (item.isLocked) {
+      isLocked = true;
       isAccessible = false;
     }
 

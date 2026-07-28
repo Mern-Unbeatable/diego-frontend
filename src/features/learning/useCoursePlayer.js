@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
+import { normalizeApiError } from '../../config/api/client';
 import {
   getAvailableQuizzesService,
   getCourseByIdService,
@@ -11,12 +12,19 @@ import {
   startQuizService,
   submitQuizService,
   trackLessonProgressService,
+  getScormProgressService,
+  logAntiCheatService,
 } from './learningService';
 import {
   mapCoursePlayerData,
   mapQuizAnswersForApi,
   mapQuizQuestionsForUi,
+  findNextAccessibleModule,
+  findPreviousAccessibleModule,
+  applyLessonCompletionToModules,
+  isModuleAccessible,
 } from './learningMappers';
+import { MIN_WATCH_PERCENT } from './trackingConstants';
 
 const mapQuizResultForUi = (apiResult, fallbackPassScore = 70) => ({
   score: apiResult?.scorePercent ?? 0,
@@ -43,6 +51,7 @@ export const useCoursePlayer = (courseId) => {
 
   const activeLessonIdRef = useRef(null);
   const activeQuizIdRef = useRef(null);
+  const advancedLessonsRef = useRef(new Set());
 
   useEffect(() => {
     activeLessonIdRef.current = activeLessonId;
@@ -52,24 +61,38 @@ export const useCoursePlayer = (courseId) => {
     activeQuizIdRef.current = activeQuiz?.id ?? null;
   }, [activeQuiz?.id]);
 
-  const loadPlayer = useCallback(async ({ preserveSelection = false } = {}) => {
-    if (!courseId) return;
+  const loadPlayer = useCallback(async ({
+    preserveSelection = false,
+    advanceFromModuleId = null,
+  } = {}) => {
+    if (!courseId) return null;
 
     const keepLessonId = preserveSelection ? activeLessonIdRef.current : null;
     const keepQuizId = preserveSelection ? activeQuizIdRef.current : null;
+    const advanceFromId = advanceFromModuleId ?? keepLessonId;
 
-    if (!preserveSelection) {
+    if (!preserveSelection && !advanceFromModuleId) {
       setLoading(true);
     }
     setError(null);
 
     try {
-      const [courseRes, progressRes, quizzesRes, quizProgressRes] = await Promise.all([
+      const settled = await Promise.allSettled([
         getCourseByIdService(courseId),
         getLessonProgressService(courseId),
         getAvailableQuizzesService(courseId),
         getMyQuizProgressService(courseId),
       ]);
+
+      const courseRes = settled[0].status === 'fulfilled' ? settled[0].value : null;
+      const progressRes = settled[1].status === 'fulfilled' ? settled[1].value : null;
+      const quizzesRes = settled[2].status === 'fulfilled' ? settled[2].value : null;
+      const quizProgressRes = settled[3].status === 'fulfilled' ? settled[3].value : null;
+
+      if (!courseRes) {
+        const progressErr = settled[1].status === 'rejected' ? settled[1].reason : null;
+        throw progressErr ?? settled[0].reason ?? new Error('Errore nel caricamento del corso');
+      }
 
       const mapped = mapCoursePlayerData({
         coursePayload: courseRes,
@@ -83,6 +106,20 @@ export const useCoursePlayer = (courseId) => {
       }
 
       setPlayerData(mapped);
+
+      if (advanceFromId) {
+        const nextModule = findNextAccessibleModule(mapped.modules, advanceFromId);
+        if (nextModule) {
+          setActiveQuiz(null);
+          setScormSession(null);
+          if (nextModule.type === 'quiz') {
+            setActiveLessonId(null);
+          } else {
+            setActiveLessonId(nextModule.id);
+          }
+          return { mapped, nextModule };
+        }
+      }
 
       if (preserveSelection) {
         if (keepQuizId) {
@@ -101,22 +138,38 @@ export const useCoursePlayer = (courseId) => {
       if (currentModule?.type !== 'quiz') {
         setActiveLessonId(currentModule?.id ?? null);
       }
+
+      return mapped;
     } catch (err) {
-      const message =
-        err?.response?.data?.message || err?.message || 'Errore nel caricamento del corso';
+      const message = normalizeApiError(err).message;
+
+      if (preserveSelection || advanceFromModuleId) {
+        console.warn('Course player refresh failed:', message);
+        return null;
+      }
+
       setError(message);
+      return null;
     } finally {
-      if (!preserveSelection) {
+      if (!preserveSelection && !advanceFromModuleId) {
         setLoading(false);
       }
     }
-
-    return null;
   }, [courseId]);
 
   useEffect(() => {
+    advancedLessonsRef.current = new Set();
     loadPlayer();
-  }, [loadPlayer]);
+  }, [courseId, loadPlayer]);
+
+  useEffect(() => {
+    if (!playerData?.modules) return;
+    playerData.modules.forEach((module) => {
+      if (module.status === 'done' && module.type !== 'quiz') {
+        advancedLessonsRef.current.add(module.id);
+      }
+    });
+  }, [playerData?.modules]);
 
   const loadLessonDetail = useCallback(
     async (lessonId) => {
@@ -129,9 +182,7 @@ export const useCoursePlayer = (courseId) => {
         setActiveLesson(lesson);
         return lesson;
       } catch (err) {
-        toast.error(
-          err?.response?.data?.message || err?.message || 'Impossibile caricare la lezione',
-        );
+        toast.error(normalizeApiError(err).message || 'Impossibile caricare la lezione');
         return null;
       } finally {
         setLessonLoading(false);
@@ -146,8 +197,9 @@ export const useCoursePlayer = (courseId) => {
   }, [activeLessonId, loadLessonDetail, playerData]);
 
   const selectModule = useCallback(
-    async (moduleId) => {
-      const module = playerData?.modules?.find((m) => m.id === moduleId);
+    async (moduleId, snapshot = null) => {
+      const data = snapshot ?? playerData;
+      const module = data?.modules?.find((m) => m.id === moduleId);
       if (!module) return;
 
       if (module.status === 'locked') {
@@ -156,13 +208,15 @@ export const useCoursePlayer = (courseId) => {
       }
 
       if (module.type === 'quiz') {
+        setActiveLessonId(null);
+        setScormSession(null);
         setActiveQuiz(null);
         setQuizLoading(true);
         try {
           const response = await startQuizService(
             courseId,
             module.quizId,
-            playerData.enrollment.id,
+            data.enrollment.id,
           );
           const quiz = response?.data?.quiz ?? null;
           const passScore = module.passScorePercent ?? quiz.passScorePercent ?? 80;
@@ -201,25 +255,209 @@ export const useCoursePlayer = (courseId) => {
     [courseId, playerData],
   );
 
+  const advanceToNextModuleLocal = useCallback(
+    (completedModuleId, snapshot = null) => {
+      const data = snapshot ?? playerData;
+      const modules = data?.modules ?? [];
+      const nextModule = findNextAccessibleModule(modules, completedModuleId);
+      if (!nextModule) return null;
+
+      setActiveQuiz(null);
+      setScormSession(null);
+
+      if (nextModule.type === 'quiz') {
+        setActiveLessonId(null);
+        selectModule(nextModule.id, data);
+      } else {
+        setActiveLessonId(nextModule.id);
+      }
+
+      return nextModule;
+    },
+    [playerData, selectModule],
+  );
+
+  const advanceAfterCompletion = useCallback(
+    async (completedModuleId) => {
+      try {
+        const result = await loadPlayer({ advanceFromModuleId: completedModuleId });
+        if (result?.nextModule) {
+          if (result.nextModule.type === 'quiz') {
+            await selectModule(result.nextModule.id, result.mapped);
+          }
+          return result.nextModule;
+        }
+      } catch {
+        // loadPlayer handles errors internally; fall through to local navigation
+      }
+
+      return advanceToNextModuleLocal(completedModuleId);
+    },
+    [advanceToNextModuleLocal, loadPlayer, selectModule],
+  );
+
   const completeLesson = useCallback(
-    async (lessonId, timeSpentSecs = 0) => {
+    async (lessonId, timeSpentSecs = 0, extra = {}) => {
       if (!courseId || !lessonId) return;
+
+      let optimisticSnapshot = null;
+      setPlayerData((prev) => {
+        if (!prev) return prev;
+        const modules = applyLessonCompletionToModules(
+          prev.modules,
+          lessonId,
+          prev.course?.navigationMode ?? 'SEQUENTIAL',
+          {
+            watchPercent: extra.watchPercent ?? 100,
+            lastPositionSecs: extra.lastPositionSecs,
+          },
+        );
+        optimisticSnapshot = { ...prev, modules };
+        return optimisticSnapshot;
+      });
+      advanceToNextModuleLocal(lessonId, optimisticSnapshot);
 
       try {
         await trackLessonProgressService(courseId, lessonId, {
           completed: true,
           timeSpentSecs,
+          watchPercent: extra.watchPercent ?? 100,
+          lastPositionSecs: extra.lastPositionSecs,
         });
         toast.success('Lezione completata');
-        await loadPlayer({ preserveSelection: true });
+        await advanceAfterCompletion(lessonId);
       } catch (err) {
         toast.error(
-          err?.response?.data?.message || err?.message || 'Errore nel salvataggio del progresso',
+          err?.response?.data?.message
+            || err?.message
+            || 'Progresso salvato solo in locale. Controlla la connessione al server.',
         );
       }
     },
-    [courseId, loadPlayer],
+    [courseId, advanceAfterCompletion, advanceToNextModuleLocal],
   );
+
+  const trackVideoProgress = useCallback(
+    async (lessonId, payload) => {
+      if (!courseId || !lessonId) return null;
+
+      const reachedThreshold =
+        payload?.completed === true || (payload?.watchPercent ?? 0) >= MIN_WATCH_PERCENT;
+      const alreadyAdvanced = advancedLessonsRef.current.has(lessonId);
+      const shouldFinalize = reachedThreshold && !alreadyAdvanced;
+
+      try {
+        const savePayload = reachedThreshold
+          ? {
+              ...payload,
+              completed: true,
+              watchPercent: Math.max(payload?.watchPercent ?? 0, MIN_WATCH_PERCENT),
+            }
+          : payload;
+
+        if (shouldFinalize) {
+          advancedLessonsRef.current.add(lessonId);
+          let optimisticSnapshot = null;
+          setPlayerData((prev) => {
+            if (!prev) return prev;
+            const modules = applyLessonCompletionToModules(
+              prev.modules,
+              lessonId,
+              prev.course?.navigationMode ?? 'SEQUENTIAL',
+              savePayload,
+            );
+            const completedLessons = modules.filter(
+              (m) => m.type !== 'quiz' && m.isCompleted,
+            ).length;
+            const totalLessons = modules.filter((m) => m.type !== 'quiz').length;
+            optimisticSnapshot = {
+              ...prev,
+              modules,
+              progress: totalLessons > 0
+                ? Math.round((completedLessons / totalLessons) * 100)
+                : prev.progress,
+            };
+            return optimisticSnapshot;
+          });
+
+          window.setTimeout(() => {
+            advanceToNextModuleLocal(lessonId, optimisticSnapshot);
+          }, 400);
+        }
+
+        try {
+          const response = await trackLessonProgressService(courseId, lessonId, savePayload);
+
+          if (shouldFinalize) {
+            toast.success('Lezione completata — passaggio alla lezione successiva');
+            await advanceAfterCompletion(lessonId);
+          }
+
+          return response?.data?.progress ?? response?.data ?? null;
+        } catch (apiErr) {
+          console.error('Video progress save failed:', apiErr?.message);
+          if (shouldFinalize) {
+            toast.error(
+              'Progresso salvato in locale. Controlla la connessione al server.',
+            );
+          }
+          return null;
+        }
+      } catch (err) {
+        console.error('Video progress handler failed:', err?.message);
+        return null;
+      }
+    },
+    [courseId, advanceAfterCompletion, advanceToNextModuleLocal],
+  );
+
+  const logAntiCheat = useCallback(async (payload) => {
+    if (!payload?.enrollmentId) return null;
+    try {
+      await logAntiCheatService(payload.enrollmentId, {
+        lessonId: payload.lessonId,
+        eventType: payload.eventType,
+        metadata: payload.metadata,
+      });
+      return true;
+    } catch (err) {
+      console.error('Anti-cheat log failed:', err?.message);
+      return null;
+    }
+  }, []);
+
+  const pollScormProgress = useCallback(
+    async (enrollmentId, lessonId) => {
+      if (!enrollmentId) return null;
+      try {
+        const response = await getScormProgressService(enrollmentId, lessonId);
+        const progressList = response?.data?.progress ?? response?.data?.data?.progress ?? [];
+        const row = Array.isArray(progressList)
+          ? progressList.find((item) => item.lessonId === lessonId)
+          : null;
+        if (!row) return null;
+        return {
+          scormStatus: row.scormStatus,
+          scormScore: row.scormScore,
+          isCompleted: row.completed || ['COMPLETED', 'PASSED'].includes(row.scormStatus),
+        };
+      } catch {
+        return null;
+      }
+    },
+    [],
+  );
+
+  const handleScormComplete = useCallback(async () => {
+    const completedLessonId = activeLessonIdRef.current;
+    toast.success('Lezione SCORM completata');
+    setScormSession(null);
+    if (completedLessonId) {
+      await advanceAfterCompletion(completedLessonId);
+    } else {
+      await loadPlayer({ preserveSelection: true });
+    }
+  }, [advanceAfterCompletion, loadPlayer]);
 
   const launchScorm = useCallback(
     async (lessonId) => {
@@ -231,12 +469,14 @@ export const useCoursePlayer = (courseId) => {
           lessonId,
         });
         const session = response?.data ?? response;
+        if (!session?.playerUrl) {
+          toast.error('Sessione SCORM non avviata correttamente dal server.');
+          return null;
+        }
         setScormSession(session);
         return session;
       } catch (err) {
-        toast.error(
-          err?.response?.data?.message || err?.message || 'Impossibile avviare SCORM',
-        );
+        toast.error(normalizeApiError(err).message || 'Impossibile avviare SCORM');
         return null;
       }
     },
@@ -245,6 +485,7 @@ export const useCoursePlayer = (courseId) => {
 
   const finishScorm = useCallback(
     async (sessionId, status = 'completed') => {
+      const completedLessonId = activeLessonIdRef.current;
       try {
         await scormFinishService({
           sessionId,
@@ -255,14 +496,16 @@ export const useCoursePlayer = (courseId) => {
         });
         toast.success('Lezione SCORM completata');
         setScormSession(null);
-        await loadPlayer({ preserveSelection: true });
+        if (completedLessonId) {
+          await advanceAfterCompletion(completedLessonId);
+        } else {
+          await loadPlayer({ preserveSelection: true });
+        }
       } catch (err) {
-        toast.error(
-          err?.response?.data?.message || err?.message || 'Errore chiusura SCORM',
-        );
+        toast.error(normalizeApiError(err).message || 'Errore chiusura SCORM');
       }
     },
-    [loadPlayer],
+    [advanceAfterCompletion, loadPlayer],
   );
 
   const submitQuiz = useCallback(
@@ -333,20 +576,30 @@ export const useCoursePlayer = (courseId) => {
 
   const navigation = useMemo(() => {
     const modules = playerData?.modules ?? [];
-    const currentIndex = modules.findIndex((m) => m.id === currentModuleId);
-    const previous = currentIndex > 0 ? modules[currentIndex - 1] : null;
-    const next = currentIndex >= 0 && currentIndex < modules.length - 1
-      ? modules[currentIndex + 1]
+    const resolvedModule =
+      modules.find((m) => m.id === currentModuleId)
+      ?? modules.find((m) => m.id === activeLessonId)
+      ?? null;
+    const resolvedId = resolvedModule?.id ?? currentModuleId ?? activeLessonId ?? null;
+    const currentIndex = resolvedId
+      ? modules.findIndex((m) => m.id === resolvedId)
+      : -1;
+
+    const previous = resolvedId
+      ? findPreviousAccessibleModule(modules, resolvedId)
       : null;
+    const next = resolvedId
+      ? findNextAccessibleModule(modules, resolvedId)
+      : modules.find((m) => isModuleAccessible(m) && m.status !== 'done') ?? null;
 
     return {
       currentIndex,
       previous,
       next,
-      hasPrevious: Boolean(previous && previous.status !== 'locked'),
-      hasNext: Boolean(next && next.status !== 'locked'),
+      hasPrevious: Boolean(previous),
+      hasNext: Boolean(next),
     };
-  }, [currentModuleId, playerData?.modules]);
+  }, [activeLessonId, currentModuleId, playerData?.modules]);
 
   const goToPreviousModule = useCallback(() => {
     if (navigation.previous && navigation.previous.status !== 'locked') {
@@ -356,11 +609,17 @@ export const useCoursePlayer = (courseId) => {
   }, [navigation.previous, selectModule]);
 
   const goToNextModule = useCallback(() => {
-    if (navigation.next && navigation.next.status !== 'locked') {
+    const next = navigation.next
+      ?? (currentModuleId
+        ? findNextAccessibleModule(playerData?.modules ?? [], currentModuleId)
+        : null);
+    if (next && isModuleAccessible(next)) {
       setActiveQuiz(null);
-      selectModule(navigation.next.id);
+      selectModule(next.id);
+    } else if (next?.status === 'locked') {
+      toast.error('Completa le lezioni precedenti per sbloccare il contenuto successivo.');
     }
-  }, [navigation.next, selectModule]);
+  }, [currentModuleId, navigation.next, playerData?.modules, selectModule]);
 
   const activeModule = useMemo(
     () => playerData?.modules?.find((m) => m.id === activeLessonId) ?? null,
@@ -382,6 +641,10 @@ export const useCoursePlayer = (courseId) => {
     loadPlayer,
     selectModule,
     completeLesson,
+    trackVideoProgress,
+    logAntiCheat,
+    pollScormProgress,
+    handleScormComplete,
     launchScorm,
     finishScorm,
     submitQuiz,

@@ -4,7 +4,6 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
 import { Heading, InputField, Label, Toast } from '../../components/ui';
 import { useAuth } from '../../features/auth/authHooks';
-import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
 import { getDashboardPath } from '../../utils/auth/authUtils';
 import toast from 'react-hot-toast';
 
@@ -171,11 +170,7 @@ const LoginView = () => {
         otp: otpString,
       });
 
-      COOKIE_STORAGE.clearAll();
-      COOKIE_STORAGE.setUser(response.data.user.level);
-      COOKIE_STORAGE.setToken(response.data.accessToken);
-
-      const userRole = response.data.user.level;
+      const userRole = response?.data?.user?.level;
       const targetPath =
         redirectPath || getDashboardPath(userRole) || '/login';
 

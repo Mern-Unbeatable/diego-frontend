@@ -14,7 +14,6 @@ const CourseContentView = () => {
   const { id: courseId } = useParams();
   const navigate = useNavigate();
   const paths = useDashboardPaths();
-  const [finishingScorm, setFinishingScorm] = useState(false);
   const [courseCertificate, setCourseCertificate] = useState(null);
 
   const {
@@ -29,9 +28,11 @@ const CourseContentView = () => {
     quizLoading,
     submittingQuiz,
     selectModule,
-    completeLesson,
+    trackVideoProgress,
+    logAntiCheat,
+    pollScormProgress,
+    handleScormComplete,
     launchScorm,
-    finishScorm,
     submitQuiz,
     closeQuiz,
     navigation,
@@ -90,15 +91,6 @@ const CourseContentView = () => {
 
   const handleCloseQuiz = () => {
     closeQuiz();
-  };
-
-  const handleFinishScorm = async (sessionId, status) => {
-    setFinishingScorm(true);
-    try {
-      await finishScorm(sessionId, status);
-    } finally {
-      setFinishingScorm(false);
-    }
   };
 
   if (loading) {
@@ -207,12 +199,14 @@ const CourseContentView = () => {
             course={course}
             lesson={activeLesson}
             moduleItem={activeModule}
+            enrollmentId={playerData?.enrollment?.id}
             scormSession={scormSession}
             lessonLoading={lessonLoading}
-            onCompleteLesson={completeLesson}
+            onTrackVideoProgress={trackVideoProgress}
             onLaunchScorm={launchScorm}
-            onFinishScorm={handleFinishScorm}
-            finishingScorm={finishingScorm}
+            onScormComplete={handleScormComplete}
+            onPollScormProgress={pollScormProgress}
+            onLogAntiCheat={logAntiCheat}
           />
 
           {!activeQuiz ? (

@@ -26,6 +26,7 @@ import {
   showErrorToast,
   showRtkErrorToast,
 } from '../../../../../utils/toast/toastAlerts';
+import { getRtkErrorMessage } from '../../../../../features/api/utils';
 import CourseForm from './CourseForm';
 import QuizBuilderModal from './QuizBuilderModal';
 
@@ -69,7 +70,7 @@ export default function CourseFormModal({
     isError: courseLoadError,
     error: courseError,
   } = useGetCourseByIdQuery(courseId, {
-    skip: !isOpen || !isEdit,
+    skip: !isOpen || !isEdit || !courseId,
     refetchOnMountOrArgChange: true,
   });
 
@@ -214,6 +215,16 @@ export default function CourseFormModal({
     }
   };
 
+  const courseLoadMessage = useMemo(
+    () => getRtkErrorMessage(courseError),
+    [courseError],
+  );
+
+  const isNetworkError = courseError?.status === 'FETCH_ERROR';
+  const isAuthError = courseError?.status === 401
+    || courseLoadMessage.toLowerCase().includes('token')
+    || courseLoadMessage.toLowerCase().includes('unauthorized');
+
   if (!isOpen) return null;
 
   const title = isEdit ? 'Modifica Corso' : 'Aggiungi nuovi corsi';
@@ -242,8 +253,15 @@ export default function CourseFormModal({
           <div className="mx-auto mt-10 max-w-[720px] rounded-2xl border border-[#f0d4cf] bg-[#fff7f5] px-6 py-10 text-center">
             <p className="text-lg font-medium text-[#b42318]">Impossibile caricare il corso</p>
             <p className="mt-2 text-sm text-[#7a4f47]">
-              {courseError?.data?.message || 'Riprova più tardi o seleziona un altro corso.'}
+              {isNetworkError
+                ? 'Impossibile contattare il server API. Avvia il backend (porta 5000) e riavvia il frontend.'
+                : isAuthError
+                  ? 'Sessione scaduta o non valida. Esci, accedi di nuovo e riprova.'
+                  : courseLoadMessage || 'Riprova più tardi o seleziona un altro corso.'}
             </p>
+            {courseError?.status ? (
+              <p className="mt-2 text-xs text-[#9a6f66]">Codice errore: {courseError.status}</p>
+            ) : null}
           </div>
         ) : (
           <Form

@@ -1,8 +1,9 @@
 // authSlice.js
 
 import { createSlice } from '@reduxjs/toolkit';
-// import { STORAGE } from '../../utils/storage/authStorage';
 import { COOKIE_STORAGE } from '../../utils/cookies/cookieStorage';
+import { STORAGE } from '../../utils/storage/authStorage';
+import { readPersistedAuth } from './authHydration';
 import {
   loginAPI,
   verifyLoginOtpAPI,
@@ -11,21 +12,29 @@ import {
   registerCompleteAPI,
 } from './authAPI';
 
-//  PLATFORM_ADMIN
-//  COMPANY_ADMIN
-//  COMPANY_EMPLOYEE
-//  LICENSE_USER
-//  PRIVATE_USER
-const userRoles = COOKIE_STORAGE.getUser();
-const storedToken = COOKIE_STORAGE.getToken();
-const storedUser = userRoles || null;
+const persistedAuth = readPersistedAuth();
 
 const initialState = {
-  user: storedUser,
-  token: storedToken || null,
-  isAuthenticated: !!storedUser && !!storedToken,
+  user: persistedAuth.user,
+  token: persistedAuth.token,
+  isAuthenticated: persistedAuth.isAuthenticated,
   loading: false,
   error: null,
+};
+
+const persistAuthCredentials = ({ user, token, refreshToken }) => {
+  if (token) {
+    COOKIE_STORAGE.setToken(token);
+    STORAGE.setToken(token);
+  }
+  if (refreshToken) {
+    COOKIE_STORAGE.setRefreshToken(refreshToken);
+    STORAGE.setRefreshToken(refreshToken);
+  }
+  if (user) {
+    COOKIE_STORAGE.setUser(user);
+    STORAGE.setUser(user);
+  }
 };
 
 const authSlice = createSlice({
@@ -37,14 +46,26 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       COOKIE_STORAGE.clearAll();
+      STORAGE.clearAll();
+    },
+    hydrateAuth: (state) => {
+      const persisted = readPersistedAuth();
+      state.user = persisted.user;
+      state.token = persisted.token;
+      state.isAuthenticated = persisted.isAuthenticated;
     },
     setUser: (state, action) => {
       if (action.payload?.token) {
         state.token = action.payload.token;
         COOKIE_STORAGE.setToken(action.payload.token);
+        STORAGE.setToken(action.payload.token);
       }
       if (action.payload?.user !== undefined) {
         state.user = action.payload.user;
+        if (action.payload.user) {
+          COOKIE_STORAGE.setUser(action.payload.user);
+          STORAGE.setUser(action.payload.user);
+        }
       }
       state.isAuthenticated = !!state.user && !!state.token;
     },
@@ -80,12 +101,18 @@ const authSlice = createSlice({
       .addCase(verifyLoginOtpAPI.fulfilled, (state, action) => {
         console.log('Verify OTP successful:', action.payload);
         const payloadData = action.payload || {};
+        const data = payloadData.data || payloadData;
 
         state.loading = false;
-        state.user = payloadData.data.user.level || null;
-        state.token = payloadData.data.accessToken || null;
-        state.isAuthenticated =
-          !!payloadData.data.user && !!payloadData.data.accessToken;
+        state.user = data.user?.level || data.user || null;
+        state.token = data.accessToken || data.tokens?.accessToken || data.token || null;
+        state.isAuthenticated = !!state.user && !!state.token;
+
+        persistAuthCredentials({
+          user: data.user || state.user,
+          token: state.token,
+          refreshToken: data.refreshToken || data.tokens?.refreshToken || null,
+        });
       })
       .addCase(verifyLoginOtpAPI.rejected, (state, action) => {
         state.loading = false;
@@ -146,6 +173,12 @@ const authSlice = createSlice({
         state.token =
           data.accessToken || data.tokens?.accessToken || data.token || null;
         state.isAuthenticated = !!state.user && !!state.token;
+
+        persistAuthCredentials({
+          user: data.user || state.user,
+          token: state.token,
+          refreshToken: data.refreshToken || data.tokens?.refreshToken || null,
+        });
       })
       .addCase(registerCompleteAPI.rejected, (state, action) => {
         state.loading = false;
@@ -154,5 +187,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setUser, resetAuthError } = authSlice.actions;
+export const { logout, setUser, resetAuthError, hydrateAuth } = authSlice.actions;
 export default authSlice.reducer;
