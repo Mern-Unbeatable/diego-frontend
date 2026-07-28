@@ -37,21 +37,6 @@ const persistAuthCredentials = ({ user, token, refreshToken }) => {
   }
 };
 
-const persistAuthCredentials = ({ user, token, refreshToken }) => {
-  if (token) {
-    COOKIE_STORAGE.setToken(token);
-    STORAGE.setToken(token);
-  }
-  if (refreshToken) {
-    COOKIE_STORAGE.setRefreshToken(refreshToken);
-    STORAGE.setRefreshToken(refreshToken);
-  }
-  if (user) {
-    COOKIE_STORAGE.setUser(user);
-    STORAGE.setUser(user);
-  }
-};
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
