@@ -15,6 +15,7 @@ export const ROUTES = Object.freeze({
     FIGURES: '/dashboard/super-admin/figures',
     REPORTS: '/dashboard/super-admin/report',
     COURSE_PACKAGES: '/dashboard/super-admin/course-packages',
+    INQUIRIES: '/dashboard/super-admin/inquiries',
   },
 
   COMPANY_ADMIN: {

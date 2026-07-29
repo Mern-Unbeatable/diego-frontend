@@ -897,6 +897,90 @@
       }
     }
   },
+  "platformAdmin": {
+    "inquiries": {
+      "tabs": {
+        "services": "Servizi",
+        "contacts": "Contattaci",
+        "collaborations": "Lavora con noi"
+      },
+      "searchPlaceholder": "Cerca...",
+      "columns": {
+        "service": "Servizio",
+        "contact": "Contatto",
+        "company": "Azienda",
+        "name": "Nome",
+        "agency": "Agenzia",
+        "contacts": "Contatti",
+        "type": "Tipo",
+        "status": "Stato",
+        "date": "Data",
+        "actions": "Azioni"
+      },
+      "actions": {
+        "view": "Visualizza",
+        "delete": "Elimina"
+      },
+      "detail": {
+        "title": "Dettaglio richiesta",
+        "closeModal": "Chiudi modale",
+        "emptyValue": "—"
+      },
+      "fields": {
+        "service": "Servizio",
+        "name": "Nome",
+        "company": "Azienda",
+        "vatNumber": "Partita IVA",
+        "phone": "Telefono",
+        "email": "Email",
+        "status": "Stato",
+        "message": "Messaggio",
+        "date": "Data",
+        "agency": "Agenzia",
+        "contact": "Contatto",
+        "collaborationType": "Tipo collaborazione",
+        "companySize": "Dimensione azienda",
+        "description": "Descrizione",
+        "goals": "Obiettivi",
+        "notes": "Note"
+      },
+      "delete": {
+        "confirm": "Elimina",
+        "cancel": "Annulla",
+        "message": "Eliminare {{label}}? L'operazione non può essere annullata.",
+        "fallbackLabel": "questo elemento"
+      },
+      "services": {
+        "title": "Richieste servizi",
+        "emptyTitle": "Nessuna richiesta servizio trovata",
+        "emptyDescription": "Le richieste inviate dal modulo Services del sito appariranno qui.",
+        "deleteTitle": "Elimina richiesta servizio",
+        "deleteSuccess": "Richiesta servizio eliminata"
+      },
+      "contacts": {
+        "title": "Richieste contatto",
+        "emptyTitle": "Nessun contatto trovato",
+        "emptyDescription": "I messaggi inviati dal modulo Contact us del sito appariranno qui.",
+        "deleteTitle": "Elimina contatto",
+        "deleteSuccess": "Contatto eliminato"
+      },
+      "collaborations": {
+        "title": "Richieste collaborazione",
+        "emptyTitle": "Nessuna collaborazione trovata",
+        "emptyDescription": "Le candidature inviate dal modulo Work with us appariranno qui.",
+        "deleteTitle": "Elimina collaborazione",
+        "deleteSuccess": "Collaborazione eliminata"
+      },
+      "status": {
+        "NEW": "Nuovo",
+        "PENDING": "In attesa",
+        "CONTACTED": "Contattato",
+        "RESOLVED": "Risolto",
+        "IN_PROGRESS": "In lavorazione",
+        "HANDLED": "Gestito"
+      }
+    }
+  },
   "footer": {
     "product": "Prodotto",
     "overview": "Panoramica",

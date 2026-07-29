@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Bell,
-  Plus,
   Search,
   UserRound,
   LogOut,
@@ -11,13 +9,14 @@ import {
   HelpCircle,
   User,
   ChevronDown,
+  Menu,
 } from 'lucide-react';
 import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
+import { useUIStore } from '../../features/zustand';
 
 const DashboardNavbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const { openSidebar } = useUIStore();
 
   const handleLogout = () => {
     COOKIE_STORAGE.clearAll();
@@ -25,21 +24,32 @@ const DashboardNavbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-20 border-b border-[#ececec] bg-[#f7f7f7]/95 px-4 py-4 backdrop-blur sm:px-6 lg:px-16">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="w-full text-center lg:w-auto lg:text-left">
-          <span className="text-sm font-medium text-[#2a2a2a]">
-            Stai cercando nuovi corsi?{' '}
-          </span>
-          <Link
-            to="/"
-            className="text-sm font-medium text-[#73bfa1] hover:underline"
+    <header className="sticky top-0 z-20 border-b border-[#ececec] bg-[#f7f7f7]/95 px-4 py-3 backdrop-blur sm:px-6 lg:px-16">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3 lg:min-w-0 lg:flex-1">
+          <button
+            type="button"
+            onClick={openSidebar}
+            className="rounded-full bg-white p-2 text-[#414141] shadow-sm hover:bg-[#f0f0f0] lg:hidden"
+            aria-label="Apri menu"
           >
-            Esplora ora
-          </Link>
+            <Menu size={20} />
+          </button>
+
+          <div className="hidden min-w-0 text-left lg:block">
+            <span className="text-sm font-medium text-[#2a2a2a]">
+              Stai cercando nuovi corsi?{' '}
+            </span>
+            <Link
+              to="/"
+              className="text-sm font-medium text-[#73bfa1] hover:underline"
+            >
+              Esplora ora
+            </Link>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <button
             type="button"
             className="rounded-full bg-white p-2 text-[#414141] shadow-sm hover:bg-[#f0f0f0]"

@@ -9,6 +9,7 @@ import {
   registerCompleteAPI,
 } from './authAPI';
 import { selectAuth } from './authSelectors';
+import { clearLoginOtp } from './authSlice';
 
 export const useAuth = () => {
   const dispatch = useDispatch();
@@ -60,12 +61,17 @@ export const useAuth = () => {
     [dispatch],
   );
 
+  const resetLoginOtp = useCallback(() => {
+    dispatch(clearLoginOtp());
+  }, [dispatch]);
+
   return {
     login,
     verifyLoginOtp,
     register,
     verifyRegisterOtp,
     registerComplete,
+    resetLoginOtp,
     ...authState, // This gives you loading, error, user, token, isAuthenticated
   };
 };

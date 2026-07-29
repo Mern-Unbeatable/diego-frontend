@@ -3,6 +3,7 @@ import authReducer from '../auth/authSlice';
 import contactReducer from '../public/contact/contactSlice';
 import courseReducer from '../public/course/courseSlice';
 import serviceRequestReducer from '../public/serviceRequest/serviceRequestSlice';
+import collaborationReducer from '../public/collaboration/collaborationSlice';
 import privateReducer from '../private/privateSlice';
 import reviewReducer from '../public/review/reviewSlice';
 import paymentReducer from '../public/payment/paymentSlice';
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   contact: contactReducer,
   course: courseReducer,
   serviceRequest: serviceRequestReducer,
+  collaboration: collaborationReducer,
   private: privateReducer,
   review: reviewReducer,
   payment: paymentReducer,

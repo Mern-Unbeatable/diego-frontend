@@ -10,6 +10,7 @@ const ConfirmModal = ({
   confirmLabel = 'Conferma',
   cancelLabel = 'Annulla',
   variant = 'default',
+  zIndex = 50,
 }) => (
   <Modal
     isOpen={isOpen}
@@ -18,6 +19,7 @@ const ConfirmModal = ({
     size="sm"
     showCloseButton={false}
     closeOnBackdrop
+    zIndex={zIndex}
     footer={
       <div className="flex justify-end gap-3">
         <Button type="button" onClick={onClose}>

@@ -20,6 +20,7 @@ const initialState = {
   isAuthenticated: persistedAuth.isAuthenticated,
   loading: false,
   error: null,
+  loginOtp: null,
 };
 
 const persistAuthCredentials = ({ user, token, refreshToken }) => {
@@ -45,6 +46,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      state.loginOtp = null;
       COOKIE_STORAGE.clearAll();
       STORAGE.clearAll();
     },
@@ -72,6 +74,9 @@ const authSlice = createSlice({
     resetAuthError: (state) => {
       state.error = null;
     },
+    clearLoginOtp: (state) => {
+      state.loginOtp = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -83,8 +88,10 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginAPI.fulfilled, (state, action) => {
-        console.log('Login successful:', action.payload);
         state.loading = false;
+        const payload = action.payload || {};
+        const data = payload.data || payload;
+        state.loginOtp = data?.otp || null;
       })
       .addCase(loginAPI.rejected, (state, action) => {
         state.loading = false;
@@ -99,19 +106,19 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(verifyLoginOtpAPI.fulfilled, (state, action) => {
-        console.log('Verify OTP successful:', action.payload);
         const payloadData = action.payload || {};
         const data = payloadData.data || payloadData;
 
         state.loading = false;
-        state.user = data.user?.level || data.user || null;
-        state.token = data.accessToken || data.tokens?.accessToken || data.token || null;
-        state.isAuthenticated = !!state.user && !!state.token;
+        state.loginOtp = null;
+        state.user = data.user?.level || null;
+        state.token = data.accessToken || null;
+        state.isAuthenticated = !!data.user && !!data.accessToken;
 
         persistAuthCredentials({
-          user: data.user || state.user,
+          user: data.user?.level || null,
           token: state.token,
-          refreshToken: data.refreshToken || data.tokens?.refreshToken || null,
+          refreshToken: data.refreshToken || null,
         });
       })
       .addCase(verifyLoginOtpAPI.rejected, (state, action) => {
@@ -187,5 +194,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setUser, resetAuthError, hydrateAuth } = authSlice.actions;
+export const { logout, setUser, resetAuthError, clearLoginOtp, hydrateAuth } =
+  authSlice.actions;
 export default authSlice.reducer;

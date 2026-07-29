@@ -10,6 +10,7 @@ import '../api/reviewApi';
 import '../api/staffApi';
 import '../api/licenseUserApi';
 import '../api/coursePackageApi';
+import '../api/inquiryApi';
 
 export const store = configureStore({
   reducer: rootReducer,

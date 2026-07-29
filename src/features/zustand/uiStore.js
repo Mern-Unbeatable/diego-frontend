@@ -4,8 +4,10 @@ import { persist } from 'zustand/middleware';
 export const useUIStore = create(
   persist(
     (set) => ({
-      isOpen: true,
+      isOpen: false,
       activeLink: '',
+      openSidebar: () => set({ isOpen: true }),
+      closeSidebar: () => set({ isOpen: false }),
       isToggle: () => set((state) => ({ isOpen: !state.isOpen })),
       setActiveLink: (path) => set({ activeLink: path }),
     }),

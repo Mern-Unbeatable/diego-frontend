@@ -12,7 +12,6 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { ENV_CONFIG } from '../../config/env.config';
 import { formatEuro } from '../../utils/courseMedia';
-
 const stripeElementStyle = {
   base: {
     fontSize: '16px',
@@ -41,7 +40,6 @@ const StripeField = ({ label, children }) => (
     </div>
   </div>
 );
-
 const CheckoutPaymentFields = ({
   clientSecret,
   amount,
@@ -66,7 +64,6 @@ const CheckoutPaymentFields = ({
       toast.error(t('paymentPages.section2.nameRequired'));
       return;
     }
-
     const cardNumberElement = elements.getElement(CardNumberElement);
     if (!cardNumberElement) {
       toast.error(t('paymentPages.section2.paymentError'));
@@ -87,17 +84,14 @@ const CheckoutPaymentFields = ({
           },
         },
       );
-
       if (error) {
         toast.error(error.message || t('paymentPages.section2.paymentError'));
         return;
       }
-
       if (paymentIntent?.status === 'succeeded') {
         await onSuccess?.(paymentIntent);
         return;
       }
-
       if (paymentIntent?.status === 'processing') {
         toast.success(t('paymentPages.section2.processing'));
         await onSuccess?.(paymentIntent);
@@ -109,7 +103,6 @@ const CheckoutPaymentFields = ({
       setProcessing(false);
     }
   };
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <StripeField label={t('paymentPages.section2.nameOnCard')}>
@@ -130,12 +123,10 @@ const CheckoutPaymentFields = ({
         <StripeField label={t('paymentPages.section2.expiryDate')}>
           <CardExpiryElement options={stripeElementOptions} />
         </StripeField>
-
         <StripeField label={t('paymentPages.section2.cvv')}>
           <CardCvcElement options={stripeElementOptions} />
         </StripeField>
       </div>
-
       <button
         type="submit"
         disabled={!stripe || processing || verifying}
@@ -152,7 +143,6 @@ const CheckoutPaymentFields = ({
     </form>
   );
 };
-
 export default function CheckoutStripeForm({
   clientSecret,
   publishableKey,

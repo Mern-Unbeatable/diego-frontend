@@ -12,4 +12,7 @@ export const tagTypesList = [
   'LicenseUserDashboard',
   'CoursePackage',
   'Enrollment',
+  'ServiceRequest',
+  'Contact',
+  'Collaboration',
 ];
