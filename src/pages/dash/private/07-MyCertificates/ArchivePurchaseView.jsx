@@ -1,19 +1,24 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { FaChevronLeft } from 'react-icons/fa';
 import CheckoutStripeForm from '../../../../components/payment/CheckoutStripeForm';
 import Loading from '../../../../components/ui/Utilities/Loading';
-import { ROUTES } from '../../../../config/routes';
 import {
   createArchivePaymentIntentService,
   getArchivePlanService,
   verifyArchivePaymentIntentService,
 } from '../../../../features/archive/archiveService';
+import { resolveArchiveRoutes } from '../../../../features/archive/archiveRoutes';
 import { formatEuro } from '../../../../utils/courseMedia';
 
 const ArchivePurchaseView = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { certificates: certificatesRoute, archive: archiveRoute } = useMemo(
+    () => resolveArchiveRoutes(location.pathname),
+    [location.pathname],
+  );
   const [planData, setPlanData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [paymentIntent, setPaymentIntent] = useState(null);
@@ -73,7 +78,7 @@ const ArchivePurchaseView = () => {
       const paymentIntentId = paymentIntent?.id || paymentIntent;
       await verifyArchivePaymentIntentService(paymentIntentId);
       toast.success('Archivio cloud attivato con successo');
-      navigate(`${ROUTES.PRIVATE_USER.CERTIFICATES}?archive=activated`);
+      navigate(`${certificatesRoute}?archive=activated`);
     } catch (error) {
       toast.error(error?.message || 'Verifica pagamento non riuscita');
     } finally {
@@ -114,7 +119,7 @@ const ArchivePurchaseView = () => {
                 : '—'}
             </p>
             <Link
-              to={ROUTES.PRIVATE_USER.CERTIFICATES}
+              to={certificatesRoute}
               className="mt-4 inline-block rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white"
             >
               Vai ai certificati

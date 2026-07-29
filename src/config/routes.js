@@ -15,6 +15,8 @@ export const ROUTES = Object.freeze({
     FIGURES: '/dashboard/super-admin/figures',
     REPORTS: '/dashboard/super-admin/report',
     COURSE_PACKAGES: '/dashboard/super-admin/course-packages',
+    COURSES: '/dashboard/super-admin/course-list',
+    STUDENTS: '/dashboard/super-admin/enrolled-students',
     INQUIRIES: '/dashboard/super-admin/inquiries',
   },
 
@@ -23,6 +25,7 @@ export const ROUTES = Object.freeze({
     TRAINING: '/dashboard/company-admin/training',
     PURCHASES: '/dashboard/company-admin/purchases',
     CERTIFICATES: '/dashboard/company-admin/certificates',
+    ARCHIVE: '/dashboard/company-admin/archive',
     TICKETS: '/dashboard/company-admin/ticket',
     COURSES: '/dashboard/company-admin/my-courses',
     PRIVACY: '/dashboard/company-admin/privacy-policy',

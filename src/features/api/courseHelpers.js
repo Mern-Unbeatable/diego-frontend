@@ -30,6 +30,16 @@ export const buildCourseFormData = (formValues, files = {}, tenantId) => {
   return formData;
 };
 
+/** Resolves tenantId from auth user — sent silently, never shown in the form UI. */
+export const resolveCourseTenantId = (user) => {
+  if (!user?.tenantId) return undefined;
+  const level = String(user.level || user.role || '').toUpperCase();
+  if (level === 'PLATFORM_ADMIN' || level === 'LICENSE_USER') {
+    return user.tenantId;
+  }
+  return undefined;
+};
+
 export const buildLessonFormData = (lesson, index, options = {}) => {
   const mapped = mapLessonFormToPayload(lesson, index, options);
   if (!mapped) return null;

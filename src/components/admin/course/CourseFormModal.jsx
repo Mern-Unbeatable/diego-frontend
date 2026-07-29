@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
+import { useSelector } from 'react-redux';
 import { Form } from '../../../Forms';
 import { Modal } from '../../../components/ui';
 import Loading from '../../../components/ui/Utilities/Loading';
@@ -8,7 +9,7 @@ import {
   useUpdateCourseMutation,
   useGetCourseByIdQuery,
 } from '../../../features/api/courseApi';
-import { buildCourseFormData, getCreatedCourseId } from '../../../features/api/courseHelpers';
+import { buildCourseFormData, getCreatedCourseId, resolveCourseTenantId } from '../../../features/api/courseHelpers';
 import {
   buildCourseFormDefaults,
   getEmptyCourseFormValues,
@@ -49,6 +50,8 @@ export default function CourseFormModal({
 }) {
   const isEdit = mode === 'edit' && Boolean(courseId);
   const [savedCourseId, setSavedCourseId] = useState(null);
+  const authUser = useSelector((state) => state.auth.user);
+  const courseTenantId = useMemo(() => resolveCourseTenantId(authUser), [authUser]);
 
   const {
     data: courseResponse,
@@ -101,13 +104,13 @@ export default function CourseFormModal({
     if (currentCourseId) {
       const response = await updateCourse({
         courseId: currentCourseId,
-        formData: buildCourseFormData(courseFields, files),
+        formData: buildCourseFormData(courseFields, files, courseTenantId),
       }).unwrap();
       return getCreatedCourseId(response) || currentCourseId;
     }
 
     const response = await createCourse(
-      buildCourseFormData(courseFields, files),
+      buildCourseFormData(courseFields, files, courseTenantId),
     ).unwrap();
     const newCourseId = getCreatedCourseId(response);
     if (!newCourseId) throw new Error('Corso creato ma ID non ricevuto dal server');

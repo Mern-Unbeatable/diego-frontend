@@ -39,9 +39,19 @@ export const mapCompanyCertificate = (certificate = {}) => {
     issuedAt: certificate.issuedAt || null,
     issuedAtFormatted: formatCertificateDate(certificate.issuedAt),
     downloadableUntil: certificate.downloadableUntil || null,
+    archived: certificate.archived ?? false,
+    archivedAt: certificate.archivedAt || null,
     isExpired: certificate.isExpired ?? false,
+    canCompanyAdminDownload: certificate.status === 'ISSUED',
   };
 };
+
+export const mapCompanyCertificatesArchive = (archive = {}) => ({
+  hasActiveSubscription: archive.hasActiveSubscription ?? false,
+  expiresAt: archive.expiresAt ?? null,
+  freeDownloadDays: archive.freeDownloadDays ?? 30,
+  plan: archive.plan ?? null,
+});
 
 export const mapCompanyCertificatesResponse = (payload = {}) => {
   const data = payload?.data ?? payload ?? {};
@@ -58,5 +68,6 @@ export const mapCompanyCertificatesResponse = (payload = {}) => {
       total: meta.total ?? 0,
       totalPages: meta.totalPages ?? 1,
     },
+    archive: mapCompanyCertificatesArchive(data?.archive),
   };
 };

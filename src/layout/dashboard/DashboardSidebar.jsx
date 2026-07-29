@@ -63,6 +63,16 @@ const linksByRole = {
       icon: <BsUpload className="text-[18px]" />,
     },
     {
+      path: '/dashboard/super-admin/enrolled-students',
+      label: 'Studenti iscritti',
+      icon: <IoAlbumsOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/super-admin/course-list',
+      label: 'Corsi e pacchetti',
+      icon: <IoDocumentTextOutline className="text-[19px]" />,
+    },
+    {
       path: '/dashboard/super-admin/course-packages',
       label: 'Pacchetti corso',
       icon: <IoAlbumsOutline className="text-[19px]" />,
