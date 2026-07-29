@@ -2,21 +2,23 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GrClose } from 'react-icons/gr';
-import { Heading, InputField, Label, Toast } from '../../components/ui';
+import { Check, Copy } from 'lucide-react';
+import { Heading, InputField, Label } from '../../components/ui';
 import { useAuth } from '../../features/auth/authHooks';
+import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
 import { getDashboardPath } from '../../utils/auth/authUtils';
 import toast from 'react-hot-toast';
-
 const LoginView = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(new Array(6).fill(''));
   const [step, setStep] = useState(1);
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [copiedOtp, setCopiedOtp] = useState(false);
 
   const otpRefs = useRef([]);
 
-  const { login, loading, error, isAuthenticated, verifyLoginOtp } = useAuth();
+  const { login, loading, verifyLoginOtp, loginOtp, resetLoginOtp } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const redirectPath = searchParams.get('redirect');
@@ -152,6 +154,31 @@ const LoginView = () => {
     setStep(1);
     setOtp(new Array(6).fill(''));
     setActiveIndex(0);
+    setCopiedOtp(false);
+    resetLoginOtp();
+  };
+
+  const handleCopyOtp = async () => {
+    if (!loginOtp) return;
+
+    try {
+      await navigator.clipboard.writeText(String(loginOtp));
+      setCopiedOtp(true);
+      toast.success('OTP copied to clipboard');
+      setTimeout(() => setCopiedOtp(false), 2000);
+    } catch {
+      toast.error('Failed to copy OTP');
+    }
+  };
+
+  const handleResendOtp = async () => {
+    try {
+      await login({ email });
+      toast.success('OTP resent to your email');
+    } catch (error) {
+      toast.error('Failed to resend OTP. Please try again.');
+      console.error('Resend OTP error:', error);
+    }
   };
 
   // OTP VERIFY
@@ -170,7 +197,11 @@ const LoginView = () => {
         otp: otpString,
       });
 
-      const userRole = response?.data?.user?.level;
+      COOKIE_STORAGE.clearAll();
+      COOKIE_STORAGE.setUser(response.data.user.level);
+      COOKIE_STORAGE.setToken(response.data.accessToken);
+
+      const userRole = response.data.user.level;
       const targetPath =
         redirectPath || getDashboardPath(userRole) || '/login';
 
@@ -294,7 +325,7 @@ const LoginView = () => {
                         onChange={(e) => handleOtpChange(e, index)}
                         onKeyDown={(e) => handleKeyDown(e, index)}
                         onFocus={() => handleFocus(index)}
-                        className={`h-14 w-14 rounded-xl border-2 bg-white text-center text-xl font-medium transition-all duration-200 focus:outline-none ${digit ? 'border-[#73BFA1] bg-green-50' : 'border-gray-200'} ${activeIndex === index ? 'ring-opacity-20 scale-105 border-[#73BFA1] ring-2 ring-[#73BFA1]' : 'hover:border-gray-300'} `}
+                        className={`md:h-14 md:w-14 h-10 w-10 rounded-xl border-2 bg-white text-center text-xl font-medium transition-all duration-200 focus:outline-none ${digit ? 'border-[#73BFA1] bg-green-50' : 'border-gray-200'} ${activeIndex === index ? 'ring-opacity-20 scale-105 border-[#73BFA1] ring-2 ring-[#73BFA1]' : 'hover:border-gray-300'} `}
                         autoComplete="one-time-code"
                         inputMode="numeric"
                         pattern="\d*"
@@ -306,11 +337,9 @@ const LoginView = () => {
                   <div className="mt-4 text-center">
                     <button
                       type="button"
-                      onClick={() => {
-                        toast.success('OTP resent to your email');
-                        // Add resend logic here
-                      }}
-                      className="text-sm"
+                      onClick={handleResendOtp}
+                      disabled={loading}
+                      className="text-sm disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       Didn't receive OTP?{' '}
                       <strong className="text-[#73BFA1] hover:underline">
@@ -338,6 +367,24 @@ const LoginView = () => {
                       {loading ? 'Verifying...' : 'Verify OTP'}
                     </button>
                   </div>
+
+                  {loginOtp && (
+                    <div className="mt-4 flex items-center justify-center gap-2">
+                      <button
+                        type="button"
+                        onClick={handleCopyOtp}
+                        className="inline-flex items-center gap-2 rounded-xl border border-[#73BFA1]/30 bg-white px-4 py-2 font-mono text-lg tracking-[0.3em] text-gray-900 transition-colors hover:bg-[#F1F9F6]"
+                        title="Click to copy OTP"
+                      >
+                        <span>{loginOtp}</span>
+                        {copiedOtp ? (
+                          <Check className="h-4 w-4 text-[#73BFA1]" />
+                        ) : (
+                          <Copy className="h-4 w-4 text-gray-400" />
+                        )}
+                      </button>
+                    </div>
+                  )}
                 </form>
               )}
             </div>
