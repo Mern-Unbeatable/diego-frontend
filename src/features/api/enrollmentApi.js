@@ -5,6 +5,7 @@ import {
   mapLicenseeStudentDetailResponse,
   mapLicenseeStudentsResponse,
 } from './enrollmentMappers';
+import { axiosInstance } from '../../config/api/client';
 
 const enrollmentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -45,6 +46,41 @@ const enrollmentApi = baseApi.injectEndpoints({
         { type: 'Enrollment', id: `STUDENT-${studentId}` },
       ],
     }),
+
+    uploadParticipantSignature: builder.mutation({
+      queryFn: async ({ enrollmentId, file }, _api, _extraOptions, baseQuery) => {
+        try {
+          const formData = new FormData();
+          formData.append('signature', file);
+          const response = await axiosInstance.post(
+            endpoints.enrollment.PARTICIPANT_SIGNATURE(enrollmentId),
+            formData,
+            { headers: { 'Content-Type': 'multipart/form-data' } },
+          );
+          if (response.status >= 400) {
+            return {
+              error: transformErrorResponse(response, 'Signature upload failed'),
+            };
+          }
+          return { data: unwrapApiData(response.data) };
+        } catch (error) {
+          return { error: transformErrorResponse(error, 'Signature upload failed') };
+        }
+      },
+      invalidatesTags: (_result, _error, { studentId }) =>
+        studentId ? [{ type: 'Enrollment', id: `STUDENT-${studentId}` }] : [],
+    }),
+
+    confirmTrainingReport: builder.mutation({
+      query: ({ enrollmentId }) => ({
+        url: endpoints.enrollment.CONFIRM_TRAINING_REPORT(enrollmentId),
+        method: 'PATCH',
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      invalidatesTags: (_result, _error, { studentId }) =>
+        studentId ? [{ type: 'Enrollment', id: `STUDENT-${studentId}` }] : [],
+    }),
   }),
 });
 
@@ -52,6 +88,8 @@ export const {
   useGetLicenseeStudentsQuery,
   useGetLicenseeStudentDetailQuery,
   useLazyGetLicenseeStudentDetailQuery,
+  useUploadParticipantSignatureMutation,
+  useConfirmTrainingReportMutation,
 } = enrollmentApi;
 
 export default enrollmentApi;

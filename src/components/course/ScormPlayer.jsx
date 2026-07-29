@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { SCORM_POLL_INTERVAL_MS } from '../../features/learning/trackingConstants';
+import SafeEmbeddedViewer from './SafeEmbeddedViewer';
 
 const buildScormUrl = (session) => {
   if (session?.playerUrl) return session.playerUrl;
@@ -11,8 +12,11 @@ const ScormPlayer = ({
   enrollmentId,
   lessonId,
   onComplete,
+  onFinish,
   onPollProgress,
   finishing = false,
+  hasNext = false,
+  onGoNext,
 }) => {
   const iframeSrc = buildScormUrl(session);
   const [runtimeStatus, setRuntimeStatus] = useState(session?.lastStatus ?? 'NOT_ATTEMPTED');
@@ -95,11 +99,11 @@ const ScormPlayer = ({
         className="w-full overflow-hidden rounded-2xl bg-white shadow-lg"
         style={{ minHeight: '560px', height: '70vh' }}
       >
-        <iframe
+        <SafeEmbeddedViewer
+          contentUrl={iframeSrc}
           title="SCORM lesson"
-          src={iframeSrc}
           className="h-full w-full border-0 bg-white"
-          allow="fullscreen"
+          containerClassName="h-full w-full"
         />
       </div>
       <div className="rounded-xl border border-[#cbe8dd] bg-[#f2faf7] px-4 py-3">
@@ -114,15 +118,36 @@ const ScormPlayer = ({
               Il progresso viene salvato automaticamente durante la fruizione del contenuto.
             </p>
           </div>
-          {isDone ? (
-            <span className="rounded-full bg-[#55B18D] px-4 py-2 text-xs font-semibold text-white">
-              Completato
-            </span>
-          ) : (
-            <span className="rounded-full bg-amber-100 px-4 py-2 text-xs font-semibold text-amber-800">
-              {finishing ? 'Salvataggio...' : 'In corso'}
-            </span>
-          )}
+          <div className="flex flex-wrap items-center gap-2">
+            {isDone ? (
+              <span className="rounded-full bg-[#55B18D] px-4 py-2 text-xs font-semibold text-white">
+                Completato
+              </span>
+            ) : (
+              <span className="rounded-full bg-amber-100 px-4 py-2 text-xs font-semibold text-amber-800">
+                {finishing ? 'Salvataggio...' : 'In corso'}
+              </span>
+            )}
+            {!isDone && onFinish && session?.sessionId ? (
+              <button
+                type="button"
+                onClick={() => onFinish(session.sessionId)}
+                disabled={finishing}
+                className="rounded-full bg-[#55B18D] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#439678] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {finishing ? 'Salvataggio...' : 'Completa e continua'}
+              </button>
+            ) : null}
+            {isDone && hasNext && onGoNext ? (
+              <button
+                type="button"
+                onClick={onGoNext}
+                className="rounded-full border border-[#55B18D] bg-white px-4 py-2 text-xs font-semibold text-[#55B18D] transition-colors hover:bg-[#f2faf7]"
+              >
+                Lezione successiva
+              </button>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

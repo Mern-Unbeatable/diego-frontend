@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Search, Plus, Eye, X } from 'lucide-react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { RiEdit2Line } from 'react-icons/ri';
-import CourseFormModal from '../../components/CourseFormModal';
+import { CourseFormModal } from '../../../../../components/admin/course';
 import { useGetLicenseUserCoursesQuery } from '../../../../../features/api/licenseUserApi';
 import { useDeleteCourseMutation } from '../../../../../features/api/courseApi';
 import { getRtkErrorMessage } from '../../../../../features/api/utils';

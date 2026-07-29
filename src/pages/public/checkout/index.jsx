@@ -13,6 +13,7 @@ import {
   mapCourseFromApi,
 } from '../../../features/public/course/courseMappers';
 import { formatEuro, toEuroAmount } from '../../../utils/courseMedia';
+import { ROUTES } from '../../../config/routes';
 import {
   getPaymentErrorMessage,
   isEnrollmentConflictError,
@@ -206,7 +207,7 @@ const Checkout = () => {
         toast.success(t('paymentPages.section3.title'));
 
         if (isCompanyPlan) {
-          navigate('/');
+          navigate(ROUTES.COMPANY_ADMIN.PURCHASES);
           return;
         }
 

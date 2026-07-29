@@ -289,5 +289,16 @@ export const mapEnrollmentTrainingReport = ({ student, enrollment }, locale = 'i
     totalLearningTime: formatDurationFromSeconds(progressDetail.totalTimeSpentSecs),
     lessons: mapLessonProgressRows(progressDetail.lessons),
     antiCheat: enrollment?.raw?.antiCheat || enrollment?.antiCheat || null,
+    signature: (() => {
+      const sig = enrollment?.raw?.signature || enrollment?.signature;
+      if (!sig) {
+        return { url: null, uploadedAt: null, confirmedAt: null };
+      }
+      return {
+        url: sig.url || null,
+        uploadedAt: formatEnrollmentDateTime(sig.uploadedAt),
+        confirmedAt: formatEnrollmentDateTime(sig.confirmedAt),
+      };
+    })(),
   };
 };

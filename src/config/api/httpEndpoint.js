@@ -59,6 +59,12 @@ export const endpoints = {
       `/employees/${userId}/certificates/${certificateId}/download`,
     ASSIGNABLE_COURSES: '/employees/assignable-courses',
     MY_PROFILE: '/users/me',
+    PURCHASES: '/company-purchases/my-purchases',
+    PURCHASE_BY_ID: (id) => `/company-purchases/${id}`,
+    ASSIGN_SEAT: '/company-purchases/assign-seat',
+    INVITE_EMPLOYEE: '/company-purchases/invite-employee',
+    SEND_ACCESS_LINK: '/company-purchases/send-access-link',
+    REVOKE_SEAT: (enrollmentId) => `/company-purchases/revoke/${enrollmentId}`,
   },
   licenseUser: {
     DASHBOARD: '/incomes/dashboard/license-user',
@@ -77,9 +83,23 @@ export const endpoints = {
   enrollment: {
     LICENSEE_STUDENTS: '/enrollments/licensee/students',
     LICENSEE_STUDENT_DETAIL: (studentId) => `/enrollments/licensee/students/${studentId}`,
+    PARTICIPANT_SIGNATURE: (enrollmentId) => `/enrollments/${enrollmentId}/participant-signature`,
+    CONFIRM_TRAINING_REPORT: (enrollmentId) => `/enrollments/${enrollmentId}/training-report/confirm`,
   },
   certificate: {
+    MY_CERTIFICATES: '/certificates/my',
+    ARCHIVE_PLAN: '/certificates/archive/plan',
     DOWNLOAD: (certificateId) => `/certificates/${certificateId}/download`,
+  },
+  archive: {
+    PAYMENT_INTENT: '/payments/intent/archive',
+    PAYMENT_INTENT_VERIFY: '/payments/intent/archive/verify',
+    CHECKOUT: '/payments/checkout/archive',
+    VERIFY_CHECKOUT: '/payments/verify/archive',
+  },
+  enrollmentAccess: {
+    INFO: (token) => `/enrollments/access/${token}`,
+    REDEEM: (token) => `/enrollments/access/${token}/redeem`,
   },
   private: {
     MY_ENROLLMENTS: '/enrollments/my',

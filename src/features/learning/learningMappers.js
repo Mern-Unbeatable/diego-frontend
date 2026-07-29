@@ -25,11 +25,18 @@ const formatDuration = (durationSecs) => {
 const isLessonCompleted = (lesson) => {
   if (!lesson) return false;
   if (lesson.isCompleted === true) return true;
+  if (lesson.completed === true) return true;
   if ((lesson.watchPercent ?? 0) >= 90) return true;
   if (['SCORM', 'SCORM_12'].includes(lesson.contentType)) {
     return ['COMPLETED', 'PASSED'].includes(lesson.scormStatus);
   }
-  return lesson.completed === true;
+  const timeSpentSecs = lesson.timeSpentSecs ?? 0;
+  const durationSecs = lesson.durationSecs ?? null;
+  const effectiveMinSecs = durationSecs && durationSecs > 0 ? durationSecs : 120;
+  if (['PDF', 'FILE', 'WORD', 'EXCEL'].includes(lesson.contentType)) {
+    return timeSpentSecs >= Math.ceil(effectiveMinSecs * 0.9);
+  }
+  return false;
 };
 
 export const isModuleAccessible = (module) =>

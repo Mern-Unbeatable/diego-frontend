@@ -9,6 +9,9 @@ import MainLayout from '../layout/public/MainLayout.jsx';
 import AuthLayout from '../layout/auth/AuthLayout.jsx';
 import SetupLayout from '../layout/auth/SetupLayout.jsx';
 import DashboardLayout from '../layout/dashboard/DashboardLayout.jsx';
+import AccessLinkRedemptionView from '../pages/public/AccessLinkRedemptionView.jsx';
+import ArchiveSuccessView from '../pages/public/archive/ArchiveSuccessView.jsx';
+import ArchiveCancelView from '../pages/public/archive/ArchiveCancelView.jsx';
 
 // ✅ Guards
 import RoleGuard from './guards/RoleGuard.jsx';
@@ -43,6 +46,10 @@ const router = createBrowserRouter(
             <Route key={r.path} path={r.path} element={r.element} />
           ))}
         </Route>
+
+        <Route path="/enrollments/access/:token" element={<AccessLinkRedemptionView />} />
+        <Route path="/certificates/archive/success" element={<ArchiveSuccessView />} />
+        <Route path="/certificates/archive/cancel" element={<ArchiveCancelView />} />
 
         {/* ✅ AUTH */}
         <Route element={<PublicGuard />}>

@@ -16,35 +16,57 @@ export const useVideoProgress = ({
   const activeTimeRef = useRef(0);
   const completedRef = useRef(initialWatchPercent >= MIN_WATCH_PERCENT);
   const watchPercentRef = useRef(initialWatchPercent);
+  const savingRef = useRef(false);
+  const mountedRef = useRef(true);
+  const onSaveProgressRef = useRef(onSaveProgress);
 
-  const persistProgress = useCallback(
-    async (payload) => {
-      if (!enabled || !onSaveProgress) return;
-      await onSaveProgress(payload);
-      if (payload?.completed) {
-        completedRef.current = true;
+  useEffect(() => {
+    onSaveProgressRef.current = onSaveProgress;
+  }, [onSaveProgress]);
+
+  const persistProgress = useCallback(async (payload) => {
+    if (!enabled || !mountedRef.current || !onSaveProgressRef.current || completedRef.current) {
+      return;
+    }
+    if (savingRef.current) return;
+
+    if (payload?.completed) {
+      completedRef.current = true;
+    }
+
+    savingRef.current = true;
+    try {
+      await onSaveProgressRef.current(payload);
+    } catch (error) {
+      if (!payload?.completed) {
+        console.warn('Video progress save failed:', error?.message || error);
       }
-    },
-    [enabled, onSaveProgress],
-  );
+    } finally {
+      savingRef.current = false;
+    }
+  }, [enabled]);
 
   useEffect(() => {
     completedRef.current = initialWatchPercent >= MIN_WATCH_PERCENT;
     watchPercentRef.current = initialWatchPercent;
     setWatchPercent(initialWatchPercent);
     setLastPositionSecs(initialLastPositionSecs);
-    if (initialLastPositionSecs > 0) {
-      activeTimeRef.current = initialLastPositionSecs;
-    }
+    activeTimeRef.current = Math.max(activeTimeRef.current, initialLastPositionSecs);
   }, [initialWatchPercent, initialLastPositionSecs]);
 
   useEffect(() => {
-    if (!enabled || !videoRef?.current) return undefined;
+    mountedRef.current = true;
+
+    if (!enabled || !videoRef?.current) {
+      return () => {
+        mountedRef.current = false;
+      };
+    }
 
     const video = videoRef.current;
 
     const handleTimeUpdate = () => {
-      if (!video.duration || video.duration <= 0) return;
+      if (!mountedRef.current || !video.duration || video.duration <= 0) return;
       const current = Math.floor(video.currentTime);
       const percent = Math.min(100, Math.round((video.currentTime / video.duration) * 100));
       setLastPositionSecs(current);
@@ -66,7 +88,9 @@ export const useVideoProgress = ({
     };
 
     const savePeriodic = () => {
-      if (!video.duration || video.duration <= 0 || completedRef.current) return;
+      if (!mountedRef.current || !video.duration || video.duration <= 0 || completedRef.current) {
+        return;
+      }
       const current = Math.floor(video.currentTime);
       const percent = Math.min(100, Math.round((video.currentTime / video.duration) * 100));
       activeTimeRef.current = Math.max(activeTimeRef.current, current);
@@ -90,16 +114,14 @@ export const useVideoProgress = ({
     const saveTimer = setInterval(savePeriodic, VIDEO_PROGRESS_SAVE_INTERVAL_MS);
 
     return () => {
+      mountedRef.current = false;
       video.removeEventListener('timeupdate', handleTimeUpdate);
       video.removeEventListener('loadedmetadata', handleLoaded);
       clearInterval(saveTimer);
-      if (activeTimeRef.current > 0 || video.currentTime > 0) {
-        persistProgress({
-          watchPercent: watchPercentRef.current,
-          lastPositionSecs: Math.floor(video.currentTime || 0),
-          timeSpentSecs: activeTimeRef.current,
-          completed: completedRef.current,
-        });
+      try {
+        video.pause();
+      } catch {
+        // ignore
       }
     };
   }, [enabled, videoRef, initialLastPositionSecs, persistProgress]);

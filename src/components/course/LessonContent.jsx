@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ScormPlayer from './ScormPlayer';
+import CoursePlayerErrorBoundary from './CoursePlayerErrorBoundary';
 import AntiCheatOverlay from './AntiCheatOverlay';
 import YoutubePlayer from './YoutubePlayer';
 import DocumentViewer from './DocumentViewer';
@@ -17,9 +18,12 @@ const LessonContent = ({
   onTrackVideoProgress,
   onLaunchScorm,
   onScormComplete,
+  onFinishScorm,
   onPollScormProgress,
   onLogAntiCheat,
   finishingScorm = false,
+  scormHasNext = false,
+  onScormGoNext,
 }) => {
   const videoRef = useRef(null);
   const isLessonComplete = Boolean(moduleItem?.status === 'done');
@@ -41,13 +45,18 @@ const LessonContent = ({
     setYoutubeWatchPercent(initialWatchPercent);
   }, [lesson?.id, initialWatchPercent]);
 
-  const handleTrackedProgress = async (payload) => {
-    if (!lesson?.id) return null;
+  const handleTrackedProgress = useCallback(async (trackingLessonId, payload) => {
+    if (!trackingLessonId) return null;
     if (payload?.watchPercent != null) {
       setYoutubeWatchPercent((prev) => Math.max(prev, payload.watchPercent));
     }
-    return onTrackVideoProgress?.(lesson.id, payload);
-  };
+    return onTrackVideoProgress?.(trackingLessonId, payload);
+  }, [onTrackVideoProgress]);
+
+  const saveLessonProgress = useCallback(
+    (payload) => handleTrackedProgress(lesson?.id, payload),
+    [handleTrackedProgress, lesson?.id],
+  );
 
   const { watchPercent: uploadWatchPercent, minWatchPercent } = useVideoProgress({
     enabled: Boolean(
@@ -59,11 +68,12 @@ const LessonContent = ({
     videoRef,
     initialWatchPercent,
     initialLastPositionSecs,
-    onSaveProgress: handleTrackedProgress,
+    onSaveProgress: saveLessonProgress,
   });
 
   const {
     watchPercent: documentWatchPercent,
+    elapsedSecs: documentElapsedSecs,
     minWatchPercent: documentMinPercent,
     requiredSecs: documentRequiredSecs,
   } = useDocumentProgress({
@@ -73,9 +83,11 @@ const LessonContent = ({
       && !isLessonComplete
       && DOCUMENT_CONTENT_TYPES.includes(lesson?.contentType),
     ),
+    lessonId: lesson?.id ?? null,
     durationSecs,
     initialWatchPercent,
     initialLastPositionSecs,
+    paused: blocked,
     onSaveProgress: handleTrackedProgress,
   });
 
@@ -128,17 +140,23 @@ const LessonContent = ({
   if (isScormLesson) {
     body = (
       <ScormPlayer
+        key={`scorm-${lesson.id}`}
         session={scormSession}
         enrollmentId={enrollmentId}
         lessonId={lesson.id}
         finishing={finishingScorm}
+        hasNext={scormHasNext}
         onComplete={onScormComplete}
+        onFinish={onFinishScorm}
+        onGoNext={onScormGoNext}
         onPollProgress={onPollScormProgress}
       />
     );
   } else if (contentType === 'VIDEO_YOUTUBE') {
     body = (
       <YoutubePlayer
+        key={`youtube-${lesson.id}`}
+        lessonId={lesson.id}
         youtubeUrl={lesson.youtubeUrl}
         title={title}
         initialLastPositionSecs={initialLastPositionSecs}
@@ -147,7 +165,7 @@ const LessonContent = ({
     );
   } else if (contentType === 'VIDEO_UPLOAD') {
     body = (
-      <div className="space-y-3">
+      <div key={`video-${lesson.id}`} className="space-y-3">
         <div className="aspect-video overflow-hidden rounded-2xl bg-black shadow-lg">
           <video
             ref={videoRef}
@@ -178,10 +196,12 @@ const LessonContent = ({
   } else if (isDocumentLesson) {
     body = (
       <DocumentViewer
+        key={`document-${lesson.id}`}
         title={title}
         contentUrl={lesson.contentUrl}
         contentType={contentType}
         watchPercent={documentWatchPercent}
+        elapsedSecs={documentElapsedSecs}
         minWatchPercent={documentMinPercent}
         requiredSecs={documentRequiredSecs}
       />
@@ -198,18 +218,20 @@ const LessonContent = ({
     <>
       <AntiCheatOverlay visible={blocked} message={blockReason} onResume={resume} />
 
-      <div className="space-y-6">
-        {body}
+      <CoursePlayerErrorBoundary resetKey={lesson?.id ?? 'empty'}>
+        <div className="space-y-6">
+          {body}
 
-        <div>
-          <h2 className="text-[22px] font-semibold text-[#1d1d1d]">{title}</h2>
-          {course?.description ? (
-            <p className="mt-3 text-base leading-relaxed text-[#5a5a5a]">
-              {course.description}
-            </p>
-          ) : null}
+          <div>
+            <h2 className="text-[22px] font-semibold text-[#1d1d1d]">{title}</h2>
+            {course?.description ? (
+              <p className="mt-3 text-base leading-relaxed text-[#5a5a5a]">
+                {course.description}
+              </p>
+            ) : null}
+          </div>
         </div>
-      </div>
+      </CoursePlayerErrorBoundary>
     </>
   );
 };

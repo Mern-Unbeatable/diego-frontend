@@ -101,6 +101,11 @@ const linksByRole = {
       icon: <IoAlbumsOutline className="text-[19px]" />,
     },
     {
+      path: '/dashboard/company-admin/purchases',
+      label: 'Pacchetti acquistati',
+      icon: <IoBusinessOutline className="text-[19px]" />,
+    },
+    {
       path: '/dashboard/company-admin/privacy-policy',
       label: 'Privacy & policy',
       icon: <IoDocumentTextOutline className="text-[19px]" />,

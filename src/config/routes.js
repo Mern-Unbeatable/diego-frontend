@@ -21,6 +21,7 @@ export const ROUTES = Object.freeze({
   COMPANY_ADMIN: {
     DASHBOARD: '/dashboard/company-admin',
     TRAINING: '/dashboard/company-admin/training',
+    PURCHASES: '/dashboard/company-admin/purchases',
     CERTIFICATES: '/dashboard/company-admin/certificates',
     TICKETS: '/dashboard/company-admin/ticket',
     COURSES: '/dashboard/company-admin/my-courses',
@@ -31,6 +32,7 @@ export const ROUTES = Object.freeze({
     DASHBOARD: '/dashboard/company-employee',
     COURSE: '/dashboard/company-employee/course',
     CERTIFICATES: '/dashboard/company-employee/certificates',
+    ARCHIVE: '/dashboard/company-employee/archive',
     CREDENTIALS: '/dashboard/company-employee/credentials',
   },
 
@@ -49,6 +51,7 @@ export const ROUTES = Object.freeze({
     PROFILE: '/dashboard/private-user/profile',
     COURSE: '/dashboard/private-user/course',
     CERTIFICATES: '/dashboard/private-user/certificates',
+    ARCHIVE: '/dashboard/private-user/archive',
     CREDENTIALS: '/dashboard/private-user/credentials',
     NOTIFICATIONS: '/dashboard/private-user/notifications',
     FEEDBACK: '/dashboard/private-user/feedback',

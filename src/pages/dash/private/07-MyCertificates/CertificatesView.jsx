@@ -1,18 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CertificateCard from './components/CertificateCard';
 import EmptyCertificateState from './components/EmptyCertificateState';
 import { Container } from '../../../../components/ui';
 import Loading from '../../../../components/ui/Utilities/Loading';
+import { ROUTES } from '../../../../config/routes';
 import { usePrivate } from '../../../../features/private/privateHooks';
 
 const CertificatesView = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const archiveRoute = useMemo(
+    () =>
+      location.pathname.includes('company-employee')
+        ? ROUTES.COMPANY_EMPLOYEE.ARCHIVE
+        : ROUTES.PRIVATE_USER.ARCHIVE,
+    [location.pathname],
+  );
   const {
     fetchMyCertificates,
     certificates,
     certificatesMeta,
+    certificatesArchive,
     certificatesLoading,
     certificatesLoadingMore,
     certificatesError,
@@ -58,10 +69,46 @@ const CertificatesView = () => {
           </div>
         )}
 
+        {!certificatesArchive?.hasActiveSubscription && certificates.length > 0 && (
+          <div className="mb-6 rounded-xl border border-[#9fd9c1] bg-[#f3f7f5] px-5 py-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="font-semibold text-[#1f1f1f]">Archivio attestati cloud</p>
+                <p className="mt-1 text-sm text-[#666]">
+                  Scarica i tuoi attestati oltre i {certificatesArchive?.freeDownloadDays || 30} giorni gratuiti.
+                  Conservazione legale 5 anni sui nostri server.
+                </p>
+              </div>
+              <Link
+                to={archiveRoute}
+                className="rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white"
+              >
+                Acquista archivio
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {certificatesArchive?.hasActiveSubscription && (
+          <div className="mb-6 rounded-xl bg-[#e6f6ef] px-5 py-3 text-sm text-[#2d5f49]">
+            Archivio cloud attivo
+            {certificatesArchive.expiresAt && (
+              <span>
+                {' '}
+                fino al {new Date(certificatesArchive.expiresAt).toLocaleDateString('it-IT')}
+              </span>
+            )}
+          </div>
+        )}
+
         {!certificatesError && certificates.length > 0 ? (
           <>
             {certificates.map((certificate) => (
-              <CertificateCard key={certificate.id} certificate={certificate} />
+              <CertificateCard
+                key={certificate.id}
+                certificate={certificate}
+                archiveRoute={archiveRoute}
+              />
             ))}
 
             {hasMore && (

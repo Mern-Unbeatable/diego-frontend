@@ -14,7 +14,7 @@ import {
 import KPIStateCards from './components/KPIStateCards';
 import EmergencyControlPanel from './components/EmergencyControlPanel';
 import LicenseeManagement from './components/LicenseeManagement';
-import CourseFormModal from './components/CourseFormModal';
+import { CourseFormModal } from '../../../../components/admin/course';
 
 function SuperAdminView() {
   const [isCourseModalOpen, setIsCourseModalOpen] = useState(false);

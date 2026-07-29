@@ -24,6 +24,7 @@ const CourseContentView = () => {
     activeModule,
     lessonLoading,
     scormSession,
+    finishingScorm,
     activeQuiz,
     quizLoading,
     submittingQuiz,
@@ -33,6 +34,7 @@ const CourseContentView = () => {
     pollScormProgress,
     handleScormComplete,
     launchScorm,
+    finishScorm,
     submitQuiz,
     closeQuiz,
     navigation,
@@ -202,9 +204,13 @@ const CourseContentView = () => {
             enrollmentId={playerData?.enrollment?.id}
             scormSession={scormSession}
             lessonLoading={lessonLoading}
+            finishingScorm={finishingScorm}
+            scormHasNext={navigation.hasNext}
             onTrackVideoProgress={trackVideoProgress}
             onLaunchScorm={launchScorm}
             onScormComplete={handleScormComplete}
+            onFinishScorm={finishScorm}
+            onScormGoNext={goToNextModule}
             onPollScormProgress={pollScormProgress}
             onLogAntiCheat={logAntiCheat}
           />

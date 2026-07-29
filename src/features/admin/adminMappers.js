@@ -463,8 +463,7 @@ export const mapApiLessonsToDrafts = (lessons = []) =>
   (lessons || []).map((lesson, index) => mapApiLessonToFormValues(lesson, index));
 
 export const getEmptyLessonFormValues = (orderIndex = 0) => ({
-  titleIt: '',
-  titleEn: '',
+  title: '',
   orderIndex,
   contentType: 'VIDEO_YOUTUBE',
   durationSecs: '',
@@ -475,24 +474,25 @@ export const getEmptyLessonFormValues = (orderIndex = 0) => ({
   file: null,
 });
 
+const getLessonTitleForForm = (lesson) => {
+  if (!lesson) return '';
+  if (typeof lesson.title === 'string') return lesson.title.trim();
+  if (lesson.title && typeof lesson.title === 'object') {
+    return (
+      getI18nField(lesson.title, 'it')
+      || getI18nField(lesson.title, 'en')
+      || Object.values(lesson.title).find((value) => typeof value === 'string' && value.trim())
+      || ''
+    );
+  }
+  return String(lesson.title || '').trim();
+};
+
 export const mapApiLessonToFormValues = (lesson, orderIndex = 0) => {
   if (!lesson) return getEmptyLessonFormValues(orderIndex);
 
-  let titleIt = '';
-  let titleEn = '';
-
-  if (lesson.title && typeof lesson.title === 'object') {
-    titleIt = getI18nField(lesson.title, 'it');
-    titleEn = getI18nField(lesson.title, 'en');
-  } else {
-    const titleText = String(lesson.title || '').trim();
-    titleIt = lesson.titleIt || titleText;
-    titleEn = lesson.titleEn || titleText;
-  }
-
   return {
-    titleIt,
-    titleEn,
+    title: getLessonTitleForForm(lesson),
     orderIndex: lesson.orderIndex ?? orderIndex,
     contentType: lesson.contentType || 'VIDEO_YOUTUBE',
     durationSecs: lesson.durationSecs ?? '',
@@ -510,7 +510,7 @@ export const getLessonDisplayTitle = (lesson, locale = 'it') => {
   if (lesson.title && typeof lesson.title === 'object') {
     return getI18nField(lesson.title, locale) || getI18nField(lesson.title, 'en') || 'Lezione';
   }
-  return lesson.titleIt || lesson.titleEn || 'Lezione';
+  return 'Lezione';
 };
 
 export const extractLessonId = (payload) => {
@@ -581,16 +581,12 @@ export const mapCourseFormToPayload = (formData, { tenantId } = {}) => {
 };
 
 export const mapLessonFormToPayload = (lesson, index, { isUpdate = false } = {}) => {
-  const titleIt = String(lesson?.titleIt || lesson?.title || '').trim();
-  const titleEn = String(lesson?.titleEn || lesson?.title || titleIt).trim();
-  if (!titleIt && !titleEn) return null;
+  const title = String(lesson?.title || '').trim();
+  if (!title) return null;
 
   const contentType = lesson.contentType || 'VIDEO_YOUTUBE';
   const payload = {
-    title: {
-      it: titleIt || titleEn,
-      en: titleEn || titleIt,
-    },
+    title: toI18n(title),
     orderIndex: Number.isFinite(Number(lesson.orderIndex)) ? Number(lesson.orderIndex) : index,
     contentType,
     durationSecs: Number(lesson.durationSecs) || undefined,
@@ -611,9 +607,8 @@ export const mapLessonFormToPayload = (lesson, index, { isUpdate = false } = {})
     if (lesson.file) {
       files.scormPackageUrl = lesson.file;
     }
-    payload.contentType = 'SCORM_12';
     payload.scormEntryPoint = String(lesson.scormEntryPoint || 'shared/launchpage.html').trim();
-    payload.scormVersion = '1.2';
+    payload.scormVersion = contentType === 'SCORM' ? '2004' : '1.2';
     return { payload, files };
   }
 
@@ -726,6 +721,15 @@ const buildQuestionOptions = (question, questionId, questionType) => {
   return options;
 };
 
+export const resolveQuizIsPublished = (quizData) => {
+  if (quizData?.publish === true) return true;
+  if (quizData?.publish === false) return false;
+  if (quizData?.publishStatus === 'DRAFT') return false;
+  if (quizData?.publishStatus === 'PUBLISHED') return true;
+  if (quizData?.isPublished === false) return false;
+  return true;
+};
+
 export const mapApiQuizToFormData = (quiz) => {
   if (!quiz) return null;
 
@@ -770,6 +774,7 @@ export const mapApiQuizToFormData = (quiz) => {
     savedQuizId: quiz.id,
     questionsCount: questions.length || 1,
     isPublished: Boolean(quiz.isPublished),
+    publishStatus: quiz.isPublished ? 'PUBLISHED' : 'DRAFT',
   };
 };
 
@@ -858,6 +863,7 @@ export const mapQuizFormToPayload = (quizData) => {
     minimumScorePercent: 0,
     failScorePercent: 0,
     isActive: true,
+    isPublished: resolveQuizIsPublished(quizData),
     questions,
     feedback: quizData?.feedback?.passed
       ? { it: quizData.feedback.passed, en: quizData.feedback.passed }

@@ -37,6 +37,9 @@ const mapQuizResultForUi = (apiResult, fallbackPassScore = 70) => ({
   alreadySubmitted: apiResult?.alreadySubmitted ?? false,
 });
 
+const LESSON_ADVANCE_DELAY_MS = 450;
+const LESSON_UNMOUNT_DELAY_MS = 150;
+
 export const useCoursePlayer = (courseId) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -45,6 +48,7 @@ export const useCoursePlayer = (courseId) => {
   const [activeLesson, setActiveLesson] = useState(null);
   const [lessonLoading, setLessonLoading] = useState(false);
   const [scormSession, setScormSession] = useState(null);
+  const [finishingScorm, setFinishingScorm] = useState(false);
   const [activeQuiz, setActiveQuiz] = useState(null);
   const [quizLoading, setQuizLoading] = useState(false);
   const [submittingQuiz, setSubmittingQuiz] = useState(false);
@@ -171,30 +175,38 @@ export const useCoursePlayer = (courseId) => {
     });
   }, [playerData?.modules]);
 
-  const loadLessonDetail = useCallback(
-    async (lessonId) => {
-      if (!courseId || !lessonId) return null;
-
-      setLessonLoading(true);
-      try {
-        const response = await getLessonByIdService(courseId, lessonId);
-        const lesson = response?.data?.lesson ?? null;
-        setActiveLesson(lesson);
-        return lesson;
-      } catch (err) {
-        toast.error(normalizeApiError(err).message || 'Impossibile caricare la lezione');
-        return null;
-      } finally {
-        setLessonLoading(false);
-      }
-    },
-    [courseId],
-  );
-
   useEffect(() => {
-    if (!activeLessonId || !playerData) return;
-    loadLessonDetail(activeLessonId);
-  }, [activeLessonId, loadLessonDetail, playerData]);
+    if (!activeLessonId || !courseId) {
+      setActiveLesson(null);
+      return undefined;
+    }
+
+    let cancelled = false;
+    setLessonLoading(true);
+    setActiveLesson(null);
+
+    getLessonByIdService(courseId, activeLessonId)
+      .then((response) => {
+        if (!cancelled) {
+          setActiveLesson(response?.data?.lesson ?? null);
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          toast.error(normalizeApiError(err).message || 'Impossibile caricare la lezione');
+          setActiveLesson(null);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLessonLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeLessonId, courseId]);
 
   const selectModule = useCallback(
     async (moduleId, snapshot = null) => {
@@ -278,44 +290,36 @@ export const useCoursePlayer = (courseId) => {
   );
 
   const advanceAfterCompletion = useCallback(
-    async (completedModuleId) => {
-      try {
-        const result = await loadPlayer({ advanceFromModuleId: completedModuleId });
-        if (result?.nextModule) {
-          if (result.nextModule.type === 'quiz') {
-            await selectModule(result.nextModule.id, result.mapped);
-          }
-          return result.nextModule;
-        }
-      } catch {
-        // loadPlayer handles errors internally; fall through to local navigation
-      }
+    (completedModuleId) => new Promise((resolve) => {
+      window.setTimeout(async () => {
+        setActiveLesson(null);
 
-      return advanceToNextModuleLocal(completedModuleId);
-    },
+        await new Promise((waitResolve) => {
+          window.setTimeout(waitResolve, LESSON_UNMOUNT_DELAY_MS);
+        });
+
+        try {
+          const result = await loadPlayer({ advanceFromModuleId: completedModuleId });
+          if (result?.nextModule) {
+            if (result.nextModule.type === 'quiz') {
+              await selectModule(result.nextModule.id, result.mapped);
+            }
+            resolve(result.nextModule);
+            return;
+          }
+        } catch {
+          // loadPlayer handles errors internally; fall through to local navigation
+        }
+
+        resolve(advanceToNextModuleLocal(completedModuleId));
+      }, LESSON_ADVANCE_DELAY_MS);
+    }),
     [advanceToNextModuleLocal, loadPlayer, selectModule],
   );
 
   const completeLesson = useCallback(
     async (lessonId, timeSpentSecs = 0, extra = {}) => {
       if (!courseId || !lessonId) return;
-
-      let optimisticSnapshot = null;
-      setPlayerData((prev) => {
-        if (!prev) return prev;
-        const modules = applyLessonCompletionToModules(
-          prev.modules,
-          lessonId,
-          prev.course?.navigationMode ?? 'SEQUENTIAL',
-          {
-            watchPercent: extra.watchPercent ?? 100,
-            lastPositionSecs: extra.lastPositionSecs,
-          },
-        );
-        optimisticSnapshot = { ...prev, modules };
-        return optimisticSnapshot;
-      });
-      advanceToNextModuleLocal(lessonId, optimisticSnapshot);
 
       try {
         await trackLessonProgressService(courseId, lessonId, {
@@ -324,17 +328,43 @@ export const useCoursePlayer = (courseId) => {
           watchPercent: extra.watchPercent ?? 100,
           lastPositionSecs: extra.lastPositionSecs,
         });
+
+        advancedLessonsRef.current.add(lessonId);
+        setPlayerData((prev) => {
+          if (!prev) return prev;
+          const modules = applyLessonCompletionToModules(
+            prev.modules,
+            lessonId,
+            prev.course?.navigationMode ?? 'SEQUENTIAL',
+            {
+              watchPercent: extra.watchPercent ?? 100,
+              lastPositionSecs: extra.lastPositionSecs,
+            },
+          );
+          const completedLessons = modules.filter(
+            (m) => m.type !== 'quiz' && m.isCompleted,
+          ).length;
+          const totalLessons = modules.filter((m) => m.type !== 'quiz').length;
+          return {
+            ...prev,
+            modules,
+            progress: totalLessons > 0
+              ? Math.round((completedLessons / totalLessons) * 100)
+              : prev.progress,
+          };
+        });
+
         toast.success('Lezione completata');
         await advanceAfterCompletion(lessonId);
       } catch (err) {
         toast.error(
           err?.response?.data?.message
             || err?.message
-            || 'Progresso salvato solo in locale. Controlla la connessione al server.',
+            || 'Impossibile completare la lezione.',
         );
       }
     },
-    [courseId, advanceAfterCompletion, advanceToNextModuleLocal],
+    [courseId, advanceAfterCompletion],
   );
 
   const trackVideoProgress = useCallback(
@@ -344,24 +374,46 @@ export const useCoursePlayer = (courseId) => {
       const reachedThreshold =
         payload?.completed === true || (payload?.watchPercent ?? 0) >= MIN_WATCH_PERCENT;
       const alreadyAdvanced = advancedLessonsRef.current.has(lessonId);
-      const shouldFinalize = reachedThreshold && !alreadyAdvanced;
+      const isActiveLesson = lessonId === activeLessonIdRef.current;
+      const shouldFinalize = reachedThreshold && !alreadyAdvanced && isActiveLesson;
+
+      const savePayload = reachedThreshold
+        ? {
+            ...payload,
+            completed: true,
+            watchPercent: Math.max(payload?.watchPercent ?? 0, MIN_WATCH_PERCENT),
+          }
+        : payload;
 
       try {
-        const savePayload = reachedThreshold
-          ? {
-              ...payload,
-              completed: true,
-              watchPercent: Math.max(payload?.watchPercent ?? 0, MIN_WATCH_PERCENT),
-            }
-          : payload;
+        const response = await trackLessonProgressService(courseId, lessonId, savePayload);
 
         if (shouldFinalize) {
           advancedLessonsRef.current.add(lessonId);
-          let optimisticSnapshot = null;
+
           setPlayerData((prev) => {
             if (!prev) return prev;
+            const modulesWithProgress = prev.modules.map((module) =>
+              module.id === lessonId
+                ? {
+                    ...module,
+                    watchPercent: Math.max(
+                      module.watchPercent ?? 0,
+                      savePayload.watchPercent ?? 0,
+                    ),
+                    lastPositionSecs: Math.max(
+                      module.lastPositionSecs ?? 0,
+                      savePayload.lastPositionSecs ?? savePayload.timeSpentSecs ?? 0,
+                    ),
+                    timeSpentSecs: Math.max(
+                      module.timeSpentSecs ?? 0,
+                      savePayload.timeSpentSecs ?? 0,
+                    ),
+                  }
+                : module,
+            );
             const modules = applyLessonCompletionToModules(
-              prev.modules,
+              modulesWithProgress,
               lessonId,
               prev.course?.navigationMode ?? 'SEQUENTIAL',
               savePayload,
@@ -370,45 +422,57 @@ export const useCoursePlayer = (courseId) => {
               (m) => m.type !== 'quiz' && m.isCompleted,
             ).length;
             const totalLessons = modules.filter((m) => m.type !== 'quiz').length;
-            optimisticSnapshot = {
+            return {
               ...prev,
               modules,
               progress: totalLessons > 0
                 ? Math.round((completedLessons / totalLessons) * 100)
                 : prev.progress,
             };
-            return optimisticSnapshot;
           });
 
-          window.setTimeout(() => {
-            advanceToNextModuleLocal(lessonId, optimisticSnapshot);
-          }, 400);
-        }
-
-        try {
-          const response = await trackLessonProgressService(courseId, lessonId, savePayload);
-
-          if (shouldFinalize) {
-            toast.success('Lezione completata — passaggio alla lezione successiva');
-            await advanceAfterCompletion(lessonId);
-          }
-
-          return response?.data?.progress ?? response?.data ?? null;
-        } catch (apiErr) {
-          console.error('Video progress save failed:', apiErr?.message);
-          if (shouldFinalize) {
-            toast.error(
-              'Progresso salvato in locale. Controlla la connessione al server.',
+          toast.success('Lezione completata — passaggio alla lezione successiva');
+          advanceAfterCompletion(lessonId);
+        } else {
+          setPlayerData((prev) => {
+            if (!prev) return prev;
+            const modules = prev.modules.map((module) =>
+              module.id === lessonId
+                ? {
+                    ...module,
+                    watchPercent: Math.max(
+                      module.watchPercent ?? 0,
+                      savePayload.watchPercent ?? 0,
+                    ),
+                    lastPositionSecs: Math.max(
+                      module.lastPositionSecs ?? 0,
+                      savePayload.lastPositionSecs ?? savePayload.timeSpentSecs ?? 0,
+                    ),
+                    timeSpentSecs: Math.max(
+                      module.timeSpentSecs ?? 0,
+                      savePayload.timeSpentSecs ?? 0,
+                    ),
+                  }
+                : module,
             );
-          }
-          return null;
+            return { ...prev, modules };
+          });
         }
-      } catch (err) {
-        console.error('Video progress handler failed:', err?.message);
+
+        return response?.data?.progress ?? response?.data ?? null;
+      } catch (apiErr) {
+        console.error('Video progress save failed:', apiErr?.message);
+        if (shouldFinalize) {
+          toast.error(
+            apiErr?.response?.data?.message
+              || apiErr?.message
+              || 'Impossibile salvare il progresso. Completa le lezioni precedenti.',
+          );
+        }
         return null;
       }
     },
-    [courseId, advanceAfterCompletion, advanceToNextModuleLocal],
+    [courseId, advanceAfterCompletion],
   );
 
   const logAntiCheat = useCallback(async (payload) => {
@@ -448,16 +512,34 @@ export const useCoursePlayer = (courseId) => {
     [],
   );
 
+  const finalizeScormLesson = useCallback(
+    async (completedLessonId) => {
+      setScormSession(null);
+      if (completedLessonId) {
+        setPlayerData((prev) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            modules: applyLessonCompletionToModules(
+              prev.modules,
+              completedLessonId,
+              prev.course?.navigationMode ?? 'SEQUENTIAL',
+            ),
+          };
+        });
+        await advanceAfterCompletion(completedLessonId);
+      } else {
+        await loadPlayer({ preserveSelection: true });
+      }
+    },
+    [advanceAfterCompletion, loadPlayer],
+  );
+
   const handleScormComplete = useCallback(async () => {
     const completedLessonId = activeLessonIdRef.current;
     toast.success('Lezione SCORM completata');
-    setScormSession(null);
-    if (completedLessonId) {
-      await advanceAfterCompletion(completedLessonId);
-    } else {
-      await loadPlayer({ preserveSelection: true });
-    }
-  }, [advanceAfterCompletion, loadPlayer]);
+    await finalizeScormLesson(completedLessonId);
+  }, [finalizeScormLesson]);
 
   const launchScorm = useCallback(
     async (lessonId) => {
@@ -486,6 +568,7 @@ export const useCoursePlayer = (courseId) => {
   const finishScorm = useCallback(
     async (sessionId, status = 'completed') => {
       const completedLessonId = activeLessonIdRef.current;
+      setFinishingScorm(true);
       try {
         await scormFinishService({
           sessionId,
@@ -495,17 +578,14 @@ export const useCoursePlayer = (courseId) => {
           },
         });
         toast.success('Lezione SCORM completata');
-        setScormSession(null);
-        if (completedLessonId) {
-          await advanceAfterCompletion(completedLessonId);
-        } else {
-          await loadPlayer({ preserveSelection: true });
-        }
+        await finalizeScormLesson(completedLessonId);
       } catch (err) {
         toast.error(normalizeApiError(err).message || 'Errore chiusura SCORM');
+      } finally {
+        setFinishingScorm(false);
       }
     },
-    [advanceAfterCompletion, loadPlayer],
+    [finalizeScormLesson],
   );
 
   const submitQuiz = useCallback(
@@ -635,6 +715,7 @@ export const useCoursePlayer = (courseId) => {
     activeModule,
     lessonLoading,
     scormSession,
+    finishingScorm,
     activeQuiz,
     quizLoading,
     submittingQuiz,

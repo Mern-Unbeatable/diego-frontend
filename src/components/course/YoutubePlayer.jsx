@@ -15,6 +15,7 @@ const YT_STATE = {
 };
 
 const YoutubePlayer = ({
+  lessonId,
   youtubeUrl,
   title,
   initialLastPositionSecs = 0,
@@ -76,7 +77,7 @@ const YoutubePlayer = ({
         : 0,
     );
 
-    onProgressUpdateRef.current?.({
+    onProgressUpdateRef.current?.(lessonId, {
       watchPercent: percent,
       lastPositionSecs: current,
       timeSpentSecs: effectiveTimeSpent,
@@ -158,7 +159,6 @@ const YoutubePlayer = ({
       destroyed = true;
       if (playingTimer) clearInterval(playingTimer);
       if (saveTimerRef.current) clearInterval(saveTimerRef.current);
-      emitProgress();
       try {
         playerRef.current?.destroy?.();
       } catch {
@@ -166,7 +166,7 @@ const YoutubePlayer = ({
       }
       playerRef.current = null;
     };
-  }, [videoId, initialLastPositionSecs]);
+  }, [lessonId, videoId, initialLastPositionSecs]);
 
   if (!videoId) {
     return (

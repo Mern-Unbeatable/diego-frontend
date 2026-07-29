@@ -2,6 +2,7 @@ import {
   mapCourseFormToPayload,
   mapLessonFormToPayload,
   mapQuizFormToPayload,
+  resolveQuizIsPublished,
   extractCreatedCourseId,
   extractCreatedQuizId,
 } from '../admin/adminMappers';
@@ -106,11 +107,11 @@ export const saveQuizForCourse = async ({
     : await createQuiz({ courseId, data: quizPayload }).unwrap();
 
   const quizId = getCreatedQuizId(quizResult, existingQuizId);
-  let published = false;
+  const isPublished = resolveQuizIsPublished(quizData);
+  let published = isPublished;
 
-  if (quizId && quizData.publish) {
-    await publishQuiz({ quizId, isPublished: true }).unwrap();
-    published = true;
+  if (quizId) {
+    await publishQuiz({ quizId, isPublished }).unwrap();
   }
 
   return {

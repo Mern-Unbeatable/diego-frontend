@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ANTI_CHEAT_EVENTS, MOUSE_IDLE_MS } from '../features/learning/trackingConstants';
-
-const BLOCK_MESSAGES = {
-  [ANTI_CHEAT_EVENTS.MOUSE_IDLE]: 'La sessione è stata sospesa perché non è stato rilevato movimento del mouse per 5 minuti.',
-  [ANTI_CHEAT_EVENTS.TAB_CHANGE]: 'La sessione è stata sospesa perché hai cambiato scheda o applicazione.',
-  [ANTI_CHEAT_EVENTS.WINDOW_BLUR]: 'La sessione è stata sospesa perché hai lasciato la piattaforma.',
-  [ANTI_CHEAT_EVENTS.FULLSCREEN_EXIT]: 'La sessione è stata sospesa perché hai chiuso la modalità schermo intero.',
-};
+import {
+  ANTI_CHEAT_EVENTS,
+  MOUSE_IDLE_MS,
+  getAntiCheatBlockMessage,
+} from '../features/learning/trackingConstants';
 
 export const useAntiCheatGuard = ({
   enabled = true,
@@ -19,18 +16,22 @@ export const useAntiCheatGuard = ({
   const lastActivityRef = useRef(Date.now());
   const idleTimerRef = useRef(null);
   const blockedRef = useRef(false);
+  const lessonIdRef = useRef(lessonId);
 
   const triggerBlock = useCallback(
     (eventType, metadata = {}) => {
       if (!enabled || blockedRef.current) return;
       blockedRef.current = true;
-      setBlocked(true);
-      setBlockReason(BLOCK_MESSAGES[eventType] ?? 'La sessione è stata sospesa.');
+
+      window.requestAnimationFrame(() => {
+        setBlocked(true);
+        setBlockReason(getAntiCheatBlockMessage(eventType));
+      });
 
       if (enrollmentId && onLogEvent) {
         onLogEvent({
           enrollmentId,
-          lessonId,
+          lessonId: lessonIdRef.current,
           eventType,
           metadata: {
             ...metadata,
@@ -39,7 +40,7 @@ export const useAntiCheatGuard = ({
         }).catch(() => {});
       }
     },
-    [enabled, enrollmentId, lessonId, onLogEvent],
+    [enabled, enrollmentId, onLogEvent],
   );
 
   const resume = useCallback(() => {
@@ -52,6 +53,14 @@ export const useAntiCheatGuard = ({
   useEffect(() => {
     blockedRef.current = blocked;
   }, [blocked]);
+
+  useEffect(() => {
+    lessonIdRef.current = lessonId;
+    blockedRef.current = false;
+    setBlocked(false);
+    setBlockReason(null);
+    lastActivityRef.current = Date.now();
+  }, [lessonId]);
 
   useEffect(() => {
     if (!enabled) return undefined;
@@ -74,7 +83,11 @@ export const useAntiCheatGuard = ({
 
     const handleVisibility = () => {
       if (document.hidden) {
-        triggerBlock(ANTI_CHEAT_EVENTS.TAB_CHANGE, { hidden: true });
+        window.setTimeout(() => {
+          if (document.hidden) {
+            triggerBlock(ANTI_CHEAT_EVENTS.TAB_CHANGE, { hidden: true });
+          }
+        }, 0);
       } else {
         lastActivityRef.current = Date.now();
       }
