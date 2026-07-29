@@ -12,6 +12,7 @@ import { saveQuizForCourse } from '../../../features/api/courseHelpers';
 import {
   mapApiQuizToFormData,
   validateQuizFormData,
+  canAddQuizType,
 } from '../../../features/admin/adminMappers';
 import {
   QUIZ_TYPE_OPTIONS,
@@ -64,9 +65,15 @@ const buildDefaultQuestion = (index = 1, questionType = 'SINGLE') => ({
   },
 });
 
-const buildDefaultQuiz = () => ({
-  title: 'Valutazione del Modulo 1',
-  type: 'POST_TEST',
+const QUIZ_DEFAULT_TITLES = {
+  PRE_TEST: 'Test Iniziale',
+  POST_TEST: 'Test Intermedio',
+  FINAL_TEST: 'Test Finale',
+};
+
+const buildDefaultQuiz = (quizType = 'POST_TEST') => ({
+  title: QUIZ_DEFAULT_TITLES[quizType] || 'Quiz',
+  type: quizType,
   minScore: 70,
   questions: [buildDefaultQuestion(1, 'SINGLE')],
   feedback: {
@@ -86,9 +93,11 @@ export default function QuizBuilderModal({
   initialData,
   courseId = null,
   savedQuizId = null,
+  defaultQuizType = 'POST_TEST',
+  existingQuizzes = [],
   onQuizSaved,
 }) {
-  const [quizData, setQuizData] = useState(buildDefaultQuiz());
+  const [quizData, setQuizData] = useState(() => buildDefaultQuiz(defaultQuizType));
   const [createQuiz] = useCreateQuizMutation();
   const [updateQuiz] = useUpdateQuizMutation();
   const [publishQuiz] = usePublishQuizMutation();
@@ -119,9 +128,17 @@ export default function QuizBuilderModal({
     }
 
     if (!savedQuizId) {
-      setQuizData(buildDefaultQuiz());
+      setQuizData(buildDefaultQuiz(defaultQuizType));
     }
-  }, [isOpen, initialData, apiQuiz, savedQuizId]);
+  }, [isOpen, initialData, apiQuiz, savedQuizId, defaultQuizType]);
+
+  const availableQuizTypes = useMemo(() => {
+    const currentType = quizData?.type;
+    return QUIZ_TYPE_OPTIONS.filter((option) => {
+      if (option.value === currentType) return true;
+      return canAddQuizType(existingQuizzes, option.value);
+    });
+  }, [existingQuizzes, quizData?.type]);
 
   const updateQuizField = (field, value) => {
     setQuizData((prev) => ({
@@ -251,6 +268,11 @@ export default function QuizBuilderModal({
         ? 'DRAFT'
         : quizData.publishStatus || 'PUBLISHED';
 
+    if (!savedQuizId && !canAddQuizType(existingQuizzes, quizData.type)) {
+      showErrorToast('Esiste già un Test Finale per questo corso');
+      return;
+    }
+
     const payload = {
       ...quizData,
       publishStatus,
@@ -366,15 +388,25 @@ export default function QuizBuilderModal({
                 </label>
                 <select
                   value={quizData.type}
-                  onChange={(e) => updateQuizField('type', e.target.value)}
+                  onChange={(e) => {
+                    const nextType = e.target.value;
+                    updateQuizField('type', nextType);
+                    if (!savedQuizId && QUIZ_DEFAULT_TITLES[nextType]) {
+                      updateQuizField('title', QUIZ_DEFAULT_TITLES[nextType]);
+                    }
+                  }}
                   className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none"
                 >
-                  {QUIZ_TYPE_OPTIONS.map((option) => (
+                  {availableQuizTypes.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
                   ))}
                 </select>
+                <p className="mt-1 text-xs text-gray-500">
+                  Test Iniziale → all&apos;inizio · Intermedio → durante il corso · Finale → dopo
+                  tutte le lezioni (blocca attestato se non superato)
+                </p>
               </div>
 
               <div>

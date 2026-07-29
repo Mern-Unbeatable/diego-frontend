@@ -330,7 +330,7 @@ export const mapLicenseFormToUpdatePayload = (formData, planTier) => ({
 
 export const getEmptyCourseFormValues = () => ({
   category: 'CATALOG',
-  format: 'SCORM',
+  format: 'FILE',
   modalitaNavigazione: 'SEQUENTIAL',
   titoloPianoFormativo: '',
   idPianoFormativo: '',
@@ -347,7 +347,6 @@ export const getEmptyCourseFormValues = () => ({
   cip: '',
   tipologia: '',
   durata: '',
-  durataOre: '',
   validityDays: '90',
   passScorePercent: '80',
   sedeCorso: '',
@@ -420,7 +419,6 @@ export const mapCourseDetailToFormValues = (course) => {
     cip: course.cip || '',
     tipologia: getI18nField(course.type),
     durata: course.durationMinutes ? String(course.durationMinutes) : '',
-    durataOre: course.duration ? String(course.duration) : '',
     validityDays:
       course.validityDays !== undefined && course.validityDays !== null
         ? String(course.validityDays)
@@ -442,7 +440,7 @@ export const mapCourseDetailToFormValues = (course) => {
     soloB2B: Boolean(course.isB2BOnly),
     inManutenzione: course.isActive === false,
     category: course.category || 'CATALOG',
-    format: course.format || 'SCORM',
+    format: course.format || 'FILE',
     modalitaNavigazione: course.navigationMode || 'SEQUENTIAL',
     singleUserPackageId: course.singleUserPackageId || course.singleUserPackage?.id || '',
     companyPackageId: course.companyPackageId || course.companyPackage?.id || '',
@@ -532,10 +530,12 @@ export const mapCourseFormToPayload = (formData, { tenantId } = {}) => {
     courseStartDate: formData.dataInizio || undefined,
     courseEndDate: formData.dataFine || undefined,
     category: formData.category || 'CATALOG',
-    format: formData.format || 'SCORM',
+    format: formData.format || 'FILE',
     navigationMode: formData.modalitaNavigazione || 'SEQUENTIAL',
     durationMinutes: Number(formData.durata) || undefined,
-    duration: Number(formData.durataOre) || undefined,
+    duration: Number(formData.durata)
+      ? Math.max(1, Math.ceil(Number(formData.durata) / 60))
+      : undefined,
     validityDays: Number(formData.validityDays) || 90,
     passScorePercent:
       formData.passScorePercent !== '' && formData.passScorePercent !== undefined
@@ -627,6 +627,28 @@ export const mapTenantsFromLicenses = (licenses = []) =>
       name: license.azienda,
       subdomain: license.subdomain,
     }));
+
+export const getQuizDisplayTitle = (quiz) => {
+  if (!quiz) return 'Quiz';
+  if (typeof quiz.quizTitle === 'string') return quiz.quizTitle;
+  if (typeof quiz.title === 'string') return quiz.title;
+  return getI18nField(quiz.quizTitle || quiz.title) || 'Quiz';
+};
+
+export const courseHasQuizType = (quizzes = [], quizType) =>
+  quizzes.some((quiz) => quiz.quizType === quizType || quiz.type === quizType);
+
+export const getSuggestedQuizType = (quizzes = []) => {
+  if (!courseHasQuizType(quizzes, 'PRE_TEST')) return 'PRE_TEST';
+  if (!courseHasQuizType(quizzes, 'POST_TEST')) return 'POST_TEST';
+  if (!courseHasQuizType(quizzes, 'FINAL_TEST')) return 'FINAL_TEST';
+  return 'POST_TEST';
+};
+
+export const canAddQuizType = (quizzes = [], quizType) => {
+  if (quizType !== 'FINAL_TEST') return true;
+  return !courseHasQuizType(quizzes, 'FINAL_TEST');
+};
 
 const QUIZ_TYPE_MAP = {
   PRE_TEST: 'PRE_TEST',

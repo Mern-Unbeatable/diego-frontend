@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { ImagePlus, Plus } from 'lucide-react';
+import { ImagePlus } from 'lucide-react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Input, TextArea, FileInput, Select, Checkbox } from '../../../Forms';
 import {
@@ -7,8 +7,8 @@ import {
   COURSE_FORMAT_OPTIONS,
   NAVIGATION_MODE_OPTIONS,
 } from '../../../features/course/courseFormOptions';
-import { showErrorToast } from '../../../utils/toast/toastAlerts';
 import CourseLessonsSection from './CourseLessonsSection';
+import CourseQuizzesSection from './CourseQuizzesSection';
 import CoursePackagesSection from './CoursePackagesSection';
 import CoursePricingSection from './CoursePricingSection';
 
@@ -58,9 +58,7 @@ function CourseFileField({ name, label, required, accept, icon: Icon, buttonLabe
 }
 
 export default function CourseForm({
-  quizData,
   savedCourseId,
-  setShowQuizBuilder,
   onSaveCourse,
   onSaveAll,
   savingCourse,
@@ -129,17 +127,11 @@ export default function CourseForm({
         variant="course"
       />
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Select
           name="category"
           label="CATEGORIA"
           options={COURSE_CATEGORY_OPTIONS}
-          variant="course"
-        />
-        <Select
-          name="format"
-          label="FORMATO"
-          options={COURSE_FORMAT_OPTIONS}
           variant="course"
         />
         <Select
@@ -149,6 +141,36 @@ export default function CourseForm({
           variant="course"
         />
       </div>
+
+      <div className="rounded-xl border border-[#d6e5de] bg-[#f7fbf9] px-4 py-3 text-xs text-[#5a6a64]">
+        <p className="font-medium text-[#2f4f42]">Durata e formato — livello corso</p>
+        <p className="mt-1">
+          La durata ufficiale e il formato servono per catalogo, attestato e report (Accordo
+          Stato-Regioni). Il tipo di contenuto e il tempo minimo di fruizione si impostano su
+          ogni singola lezione.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Select
+          name="format"
+          label="FORMATO CATALOGO"
+          options={COURSE_FORMAT_OPTIONS}
+          variant="course"
+        />
+        <Input
+          name="durata"
+          label="DURATA UFFICIALE (minuti)"
+          type="number"
+          min={1}
+          placeholder="Es. 480 (8 ore)"
+          variant="course"
+        />
+      </div>
+      <p className="-mt-2 text-xs text-[#6b7471]">
+        Ore per attestato/catalogo. Se lasci vuoto, puoi usare la somma calcolata dalle lezioni
+        come riferimento (vedi sezione Lezioni).
+      </p>
 
       <Input
         name="aziendaFormazione"
@@ -173,26 +195,10 @@ export default function CourseForm({
       <Input name="cup" label="CUP" variant="course" />
       <Input name="cip" label="CIP" variant="course" />
       <Input name="tipologia" label="TIPOLOGIA" variant="course" />
-      <Input
-        name="durata"
-        label="DURATA (minuti)"
-        type="number"
-        min={1}
-        placeholder="60"
-        variant="course"
-      />
-      <Input
-        name="durataOre"
-        label="DURATA (ore)"
-        type="number"
-        min={1}
-        placeholder="8"
-        variant="course"
-      />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Input
           name="validityDays"
-          label="VALIDITÀ (giorni)"
+          label="VALIDITÀ ACCESSO (giorni)"
           type="number"
           min={1}
           placeholder="90"
@@ -200,7 +206,7 @@ export default function CourseForm({
         />
         <Input
           name="passScorePercent"
-          label="PUNTEGGIO MINIMO (%)"
+          label="PUNTEGGIO MINIMO CORSO (%)"
           type="number"
           min={0}
           max={100}
@@ -208,6 +214,10 @@ export default function CourseForm({
           variant="course"
         />
       </div>
+      <p className="-mt-2 text-xs text-[#6b7471]">
+        Validità = giorni di accesso dopo iscrizione. Il punteggio minimo del singolo quiz si
+        imposta nel builder quiz.
+      </p>
       <Input name="sedeCorso" label="SEDE DEL CORSO" variant="course" />
       <Input name="selezionaTipologia" label="SELEZIONA TIPOLOGIA" variant="course" />
       <Input
@@ -256,34 +266,7 @@ export default function CourseForm({
 
       <CourseLessonsSection courseId={savedCourseId} />
 
-      <div className="rounded-xl bg-[#e8efec] p-4">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <label className="text-[13px] font-medium text-[#222]">Quiz del corso</label>
-            {quizData ? (
-              <p className="mt-1 text-sm text-[#5a6a64]">
-                {quizData.title} ({quizData.questions?.length || 0} domande)
-              </p>
-            ) : (
-              <p className="mt-1 text-sm text-[#6b7471]">Nessun quiz configurato</p>
-            )}
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              if (!savedCourseId) {
-                showErrorToast('Salva prima il corso per configurare il quiz');
-                return;
-              }
-              setShowQuizBuilder(true);
-            }}
-            className="inline-flex h-9 items-center gap-2 rounded-full bg-[#71c2a3] px-4 text-sm font-medium text-white"
-          >
-            <Plus size={14} />
-            {quizData ? 'Modifica quiz' : 'Aggiungi quiz'}
-          </button>
-        </div>
-      </div>
+      <CourseQuizzesSection courseId={savedCourseId} />
 
       <div className="mt-6 flex flex-wrap items-center justify-end gap-3 pb-1">
         <button

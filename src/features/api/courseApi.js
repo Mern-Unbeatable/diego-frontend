@@ -141,7 +141,11 @@ const courseApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response) => unwrapApiData(response),
       transformErrorResponse,
-      invalidatesTags: ['Quiz', 'Course'],
+      invalidatesTags: (result, error, { courseId }) => [
+        'Quiz',
+        'Course',
+        { type: 'Course', id: courseId },
+      ],
     }),
 
     updateQuiz: builder.mutation({
@@ -152,7 +156,7 @@ const courseApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response) => unwrapApiData(response),
       transformErrorResponse,
-      invalidatesTags: ['Quiz'],
+      invalidatesTags: (result, error, { quizId }) => ['Quiz', 'Course', { type: 'Quiz', id: quizId }],
     }),
 
     publishQuiz: builder.mutation({
@@ -163,7 +167,7 @@ const courseApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response) => unwrapApiData(response),
       transformErrorResponse,
-      invalidatesTags: ['Quiz'],
+      invalidatesTags: ['Quiz', 'Course'],
     }),
 
     getQuizById: builder.query({
@@ -177,6 +181,16 @@ const courseApi = baseApi.injectEndpoints({
       },
       transformErrorResponse,
       providesTags: (_result, _error, quizId) => [{ type: 'Quiz', id: quizId }],
+    }),
+
+    deleteQuiz: builder.mutation({
+      query: (quizId) => ({
+        url: `/quizzes/${quizId}`,
+        method: 'DELETE',
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      invalidatesTags: ['Quiz', 'Course'],
     }),
   }),
 });
@@ -197,6 +211,7 @@ export const {
   useUpdateQuizMutation,
   usePublishQuizMutation,
   useGetQuizByIdQuery,
+  useDeleteQuizMutation,
 } = courseApi;
 
 export default courseApi;

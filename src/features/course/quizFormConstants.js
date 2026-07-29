@@ -1,3 +1,9 @@
+export const QUIZ_TYPE_DESCRIPTIONS = {
+  PRE_TEST: 'Valutazione iniziale — lo studente lo vede dopo le prime lezioni.',
+  POST_TEST: 'Test intermedio — verifica parziale durante il corso.',
+  FINAL_TEST: 'Test finale — richiede tutte le lezioni completate. Necessario per attestato.',
+};
+
 export const QUIZ_TYPE_OPTIONS = [
   { value: 'PRE_TEST', label: 'Test Iniziale' },
   { value: 'POST_TEST', label: 'Test Intermedio' },

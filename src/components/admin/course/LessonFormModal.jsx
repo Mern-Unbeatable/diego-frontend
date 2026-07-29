@@ -96,10 +96,10 @@ function LessonFormFields({ isEdit, onClose, onSubmit, saving }) {
         />
         <Input
           name="durationSecs"
-          label="DURATA (SECONDI)"
+          label="TEMPO MINIMO FRUIZIONE (sec)"
           type="number"
           min={1}
-          placeholder="600"
+          placeholder="120"
           variant="course"
         />
         <Input
@@ -110,6 +110,10 @@ function LessonFormFields({ isEdit, onClose, onSubmit, saving }) {
           variant="course"
         />
       </div>
+      <p className="-mt-2 text-xs text-[#6b7471]">
+        Secondi minimi sulla pagina per PDF/Word/Excel e tempo di riferimento per video. Default
+        consigliato: 120s (2 minuti).
+      </p>
 
       {contentType === 'VIDEO_YOUTUBE' ? (
         <Input

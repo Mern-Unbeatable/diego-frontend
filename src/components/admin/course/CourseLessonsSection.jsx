@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Plus, Pencil, Trash2 } from 'lucide-react';
 import {
   useGetCourseLessonsQuery,
@@ -6,6 +6,11 @@ import {
 } from '../../../features/api/courseApi';
 import { getLessonDisplayTitle } from '../../../features/admin/adminMappers';
 import { LESSON_CONTENT_TYPE_LABELS } from '../../../features/admin/lessonConstants';
+import {
+  formatSecondsAsDuration,
+  secondsToRoundedMinutes,
+  sumLessonDurationSecs,
+} from '../../../utils/courseDurationUtils';
 import {
   showSuccessToast,
   showErrorToast,
@@ -30,6 +35,11 @@ export default function CourseLessonsSection({ courseId }) {
   const [deleteLesson, { isLoading: deleting }] = useDeleteLessonMutation();
 
   const lessons = data?.lessons ?? [];
+  const totalTrackingSecs = useMemo(() => sumLessonDurationSecs(lessons), [lessons]);
+  const suggestedOfficialMinutes = useMemo(
+    () => secondsToRoundedMinutes(totalTrackingSecs),
+    [totalTrackingSecs],
+  );
 
   const openCreateModal = () => {
     if (!courseId) {
@@ -75,7 +85,7 @@ export default function CourseLessonsSection({ courseId }) {
             <label className="text-[13px] font-medium text-[#222]">Lezioni del corso</label>
             {courseId ? (
               <p className="mt-1 text-xs text-[#5a8f74]">
-                Gestisci le lezioni del corso
+                Tipo contenuto e tempo minimo di fruizione per ogni modulo
               </p>
             ) : (
               <p className="mt-1 text-xs text-[#b35a3c]">
@@ -150,6 +160,19 @@ export default function CourseLessonsSection({ courseId }) {
             ))}
           </div>
         )}
+
+        {lessons.length > 0 ? (
+          <div className="mt-3 rounded-lg border border-[#d6e5de] bg-[#f7fbf9] px-3 py-2 text-xs text-[#5a6a64]">
+            <span className="font-medium text-[#2f4f42]">Durata calcolata dalle lezioni: </span>
+            {formatSecondsAsDuration(totalTrackingSecs)}
+            {suggestedOfficialMinutes > 0 ? (
+              <span>
+                {' '}
+                (~{suggestedOfficialMinutes} minuti ufficiali suggeriti per attestato)
+              </span>
+            ) : null}
+          </div>
+        ) : null}
       </div>
 
       {isLessonModalOpen && (
