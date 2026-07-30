@@ -67,7 +67,7 @@ const CollaborationRequestForm = () => {
   };
 
   return (
-    <div className="bg-cyan-10 px-4 py-14 md:py-16">
+    <div className="bg-cyan-10  py-14 md:py-16">
       <div className="bg-cyan-10  ">
         <div className="mx-auto max-w-3xl">
           {/* Header */}
