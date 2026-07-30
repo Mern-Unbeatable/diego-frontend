@@ -5,11 +5,15 @@ import LicenReports from './components/LicenReports';
 
 const LicenseReportView = () => {
   return (
-    <>
+    <div className="space-y-6">
       <Henrey />
-      <LicenReports />
-      <CoursesTable variant="report" />
-    </>
+      <div>
+        <LicenReports />
+        <div className="mt-8">
+          <CoursesTable variant="report" />
+        </div>
+      </div>
+    </div>
   );
 };
 
