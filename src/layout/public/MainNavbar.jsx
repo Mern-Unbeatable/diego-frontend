@@ -222,7 +222,7 @@ const MainNavbar = () => {
                         />
                       </Link>
 
-                      {/* ✅ Desktop dropdown (wider) */}
+                      {/*  Desktop dropdown (wider) */}
                       <div className="invisible absolute top-full z-50 mt-2 w-64 rounded-lg bg-white py-2 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
                         {item.dropdown.map((sub, i) => (
                           <div key={i} className="group/sub relative">
@@ -240,12 +240,12 @@ const MainNavbar = () => {
                             ) : (
                               <Link
                                 to={sub.path}
-                                className="flex items-center justify-between px-4 py-2 text-base font-semibold text-gray-700 hover:bg-[#EAF5F1] hover:text-[#568F79]"
+                                className="flex items-center justify-between px-4 py-2 md:text-base font-semibold text-gray-700 hover:bg-[#EAF5F1] hover:text-[#568F79] text-sm"
                               >
                                 {sub.label}
                               </Link>
                             )}
-                            {/* --- END DESKTOP LINK/SPAN LOGIC --- */}
+                        
 
                             {sub.dropdown && (
                               <div className="invisible absolute top-0 left-full z-50 ml-1 w-64 rounded-lg bg-white py-2 opacity-0 shadow-lg transition-all duration-200 group-hover/sub:visible group-hover/sub:opacity-100">
@@ -303,7 +303,7 @@ const MainNavbar = () => {
 
         {/* --- MOBILE MENU --- */}
         {isMenuOpen && (
-          <div className="shadow-5xl absolute top-full right-0 left-0 z-99 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white xl:hidden">
+          <div className="shadow-5xl absolute top-full right-0 left-0 z-99 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white xl:hidden px-4">
             <nav>
               <div className="flex flex-col space-y-3 px-1 pt-6 pb-6 sm:px-6">
                 {navItems.map((item, index) => (
@@ -373,12 +373,12 @@ const MainNavbar = () => {
                                 {/* --- END MOBILE LINK/SPAN LOGIC --- */}
 
                                 {sub.dropdown && (
-                                  <div className="mt-1 space-y-2 pl-4">
+                                  <div className="mt-1 space-y-1 pl-2">
                                     {sub.dropdown.map((deep, j) => (
                                       <Link
                                         key={j}
                                         to={deep.path}
-                                        className="block rounded-sm py-1 pl-4 text-base font-semibold break-words duration-200 hover:bg-[#EAF5F1] hover:text-[#568F79]"
+                                        className="block rounded-sm py-1 pl-4 text-sm font-semibold break-words duration-200 hover:bg-[#EAF5F1] hover:text-[#568F79]"
                                         onClick={() => setIsMenuOpen(false)}
                                       >
                                         {deep.label}
