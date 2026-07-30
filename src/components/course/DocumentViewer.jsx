@@ -4,10 +4,12 @@ import {
 import SafeEmbeddedViewer from './SafeEmbeddedViewer';
 import ExcelViewer from './ExcelViewer';
 import WordViewer from './WordViewer';
+import PdfViewer from './PdfViewer';
 import OfficeDocumentViewer from './OfficeDocumentViewer';
 import {
   getFileExtension,
   isExcelDocumentUrl,
+  isPdfContent,
   isWordDocumentUrl,
   resolveAbsoluteContentUrl,
 } from '../../utils/documentViewerUtils';
@@ -37,15 +39,8 @@ const DocumentContent = ({ title, contentUrl, contentType }) => {
     return <WordViewer contentUrl={contentUrl} title={title} />;
   }
 
-  if (contentType === 'PDF' || getFileExtension(contentUrl) === 'pdf') {
-    return (
-      <SafeEmbeddedViewer
-        contentUrl={resolveAbsoluteContentUrl(contentUrl)}
-        title={title}
-        className="h-full w-full border-0"
-        containerClassName="h-full w-full"
-      />
-    );
+  if (isPdfContent(contentType, contentUrl) || contentType === 'FILE') {
+    return <PdfViewer contentUrl={contentUrl} title={title} />;
   }
 
   const extension = getFileExtension(contentUrl);
@@ -83,7 +78,7 @@ const DocumentViewer = ({
 
   return (
     <div className="space-y-3">
-      <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-white shadow-lg">
+      <div className="min-h-[480px] overflow-hidden rounded-2xl bg-white shadow-lg">
         <DocumentContent title={title} contentUrl={contentUrl} contentType={contentType} />
       </div>
       <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600">

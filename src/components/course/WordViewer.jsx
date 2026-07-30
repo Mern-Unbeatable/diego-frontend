@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ExternalLink, FileText } from 'lucide-react';
 import mammoth from 'mammoth';
-import { getFileExtension, resolveAbsoluteContentUrl } from '../../utils/documentViewerUtils';
+import { fetchAuthenticatedBlob, getFileExtension, resolveAbsoluteContentUrl } from '../../utils/documentViewerUtils';
 
 const WordViewer = ({ contentUrl, title }) => {
   const [html, setHtml] = useState('');
@@ -33,12 +33,8 @@ const WordViewer = ({ contentUrl, title }) => {
       setHtml('');
 
       try {
-        const response = await fetch(absoluteUrl);
-        if (!response.ok) {
-          throw new Error('Impossibile caricare il file Word');
-        }
-
-        const buffer = await response.arrayBuffer();
+        const { blob } = await fetchAuthenticatedBlob(contentUrl);
+        const buffer = await blob.arrayBuffer();
         const result = await mammoth.convertToHtml(
           { arrayBuffer: buffer },
           {

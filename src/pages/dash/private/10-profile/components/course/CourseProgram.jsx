@@ -7,18 +7,18 @@ const CourseProgram = ({
   loading = false,
 }) => {
   return (
-    <aside className="w-full">
-      <div className="overflow-hidden rounded-2xl bg-[#f2faf7] shadow-sm">
-        <div className="px-6 py-5">
+    <aside className="w-full lg:sticky lg:top-6 lg:z-10 lg:max-h-[calc(100vh-6rem)] lg:self-start">
+      <div className="flex max-h-[calc(100vh-6rem)] flex-col overflow-hidden rounded-2xl bg-[#f2faf7] shadow-sm">
+        <div className="shrink-0 px-6 py-5">
           <h3 className="text-xl font-bold text-[#1d1d1d]">Corso</h3>
         </div>
 
-        <div className="flex items-center justify-between bg-[#22423b] px-6 py-4 text-white">
+        <div className="flex shrink-0 items-center justify-between bg-[#22423b] px-6 py-4 text-white">
           <span className="text-[17px] font-semibold">Programma del corso</span>
           <span className="text-sm font-medium text-white/90">{progress}% avanzamento</span>
         </div>
 
-        <div className="divide-y divide-[#e2ede8]">
+        <div className="min-h-0 flex-1 divide-y divide-[#e2ede8] overflow-y-auto">
           {modules.map((item) => {
             const isDone = item.status === 'done';
             const isCurrent = item.status === 'current';

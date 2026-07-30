@@ -25,6 +25,7 @@ import {
   isModuleAccessible,
 } from './learningMappers';
 import { MIN_WATCH_PERCENT } from './trackingConstants';
+import { unwrapApiData } from '../api/utils';
 
 const mapQuizResultForUi = (apiResult, fallbackPassScore = 70) => ({
   score: apiResult?.scorePercent ?? 0,
@@ -550,7 +551,7 @@ export const useCoursePlayer = (courseId) => {
           enrollmentId: playerData.enrollment.id,
           lessonId,
         });
-        const session = response?.data ?? response;
+        const session = unwrapApiData(response);
         if (!session?.playerUrl) {
           toast.error('Sessione SCORM non avviata correttamente dal server.');
           return null;

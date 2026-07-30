@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ExternalLink, FileSpreadsheet } from 'lucide-react';
 import * as XLSX from 'xlsx';
-import { resolveAbsoluteContentUrl } from '../../utils/documentViewerUtils';
+import { fetchAuthenticatedBlob, resolveAbsoluteContentUrl } from '../../utils/documentViewerUtils';
 
 const ExcelViewer = ({ contentUrl, title }) => {
   const [sheets, setSheets] = useState([]);
@@ -27,12 +27,8 @@ const ExcelViewer = ({ contentUrl, title }) => {
       setActiveSheet(0);
 
       try {
-        const response = await fetch(absoluteUrl);
-        if (!response.ok) {
-          throw new Error('Impossibile caricare il file Excel');
-        }
-
-        const buffer = await response.arrayBuffer();
+        const { blob } = await fetchAuthenticatedBlob(contentUrl, { signal: undefined });
+        const buffer = await blob.arrayBuffer();
         const workbook = XLSX.read(buffer, { type: 'array' });
         const parsedSheets = workbook.SheetNames.map((name) => ({
           name,

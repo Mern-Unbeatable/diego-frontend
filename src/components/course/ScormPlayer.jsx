@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { SCORM_POLL_INTERVAL_MS } from '../../features/learning/trackingConstants';
-import SafeEmbeddedViewer from './SafeEmbeddedViewer';
+import { resolveSameOriginApiUrl } from '../../utils/documentViewerUtils';
 
 const buildScormUrl = (session) => {
-  if (session?.playerUrl) return session.playerUrl;
+  if (session?.playerUrl) return resolveSameOriginApiUrl(session.playerUrl);
   return '';
 };
 
@@ -21,6 +21,7 @@ const ScormPlayer = ({
   const iframeSrc = buildScormUrl(session);
   const [runtimeStatus, setRuntimeStatus] = useState(session?.lastStatus ?? 'NOT_ATTEMPTED');
   const [runtimeScore, setRuntimeScore] = useState(null);
+  const [iframeLoading, setIframeLoading] = useState(Boolean(iframeSrc));
   const completedRef = useRef(false);
 
   const handleCompletion = useCallback(() => {
@@ -33,7 +34,8 @@ const ScormPlayer = ({
     completedRef.current = false;
     setRuntimeStatus(session?.lastStatus ?? 'NOT_ATTEMPTED');
     setRuntimeScore(null);
-  }, [session?.sessionId, session?.lastStatus]);
+    setIframeLoading(Boolean(iframeSrc));
+  }, [session?.sessionId, session?.lastStatus, iframeSrc]);
 
   useEffect(() => {
     if (!session?.sessionId) return undefined;
@@ -48,6 +50,10 @@ const ScormPlayer = ({
       }
       if (data.score != null) {
         setRuntimeScore(data.score);
+      }
+
+      if (data.type === 'scorm-launched') {
+        setIframeLoading(false);
       }
 
       if (data.type === 'scorm-complete' || data.completed) {
@@ -83,7 +89,7 @@ const ScormPlayer = ({
 
   if (!iframeSrc) {
     return (
-      <div className="flex aspect-video items-center justify-center rounded-2xl bg-gray-100 text-gray-500">
+      <div className="flex min-h-[560px] items-center justify-center rounded-2xl bg-gray-100 text-gray-500">
         {session?.sessionId
           ? 'Avvio player SCORM in corso...'
           : 'Pacchetto SCORM non disponibile. Ricarica la pagina o contatta il supporto.'}
@@ -95,15 +101,20 @@ const ScormPlayer = ({
 
   return (
     <div className="space-y-4">
-      <div
-        className="w-full overflow-hidden rounded-2xl bg-white shadow-lg"
-        style={{ minHeight: '560px', height: '70vh' }}
-      >
-        <SafeEmbeddedViewer
-          contentUrl={iframeSrc}
+      <div className="relative min-h-[560px] w-full overflow-hidden rounded-2xl bg-white shadow-lg lg:h-[70vh]">
+        {iframeLoading ? (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-white text-sm text-gray-500">
+            Caricamento contenuto SCORM...
+          </div>
+        ) : null}
+        <iframe
+          key={session?.sessionId || iframeSrc}
+          src={iframeSrc}
           title="SCORM lesson"
-          className="h-full w-full border-0 bg-white"
-          containerClassName="h-full w-full"
+          className="h-full min-h-[560px] w-full border-0 bg-white lg:min-h-0"
+          allow="fullscreen; autoplay"
+          referrerPolicy="no-referrer-when-downgrade"
+          onLoad={() => setIframeLoading(false)}
         />
       </div>
       <div className="rounded-xl border border-[#cbe8dd] bg-[#f2faf7] px-4 py-3">

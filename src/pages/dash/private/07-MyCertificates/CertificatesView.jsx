@@ -6,17 +6,14 @@ import CertificateCard from './components/CertificateCard';
 import EmptyCertificateState from './components/EmptyCertificateState';
 import { Container } from '../../../../components/ui';
 import Loading from '../../../../components/ui/Utilities/Loading';
-import { ROUTES } from '../../../../config/routes';
+import { resolveArchiveRoutes } from '../../../../features/archive/archiveRoutes';
 import { usePrivate } from '../../../../features/private/privateHooks';
 
 const CertificatesView = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const archiveRoute = useMemo(
-    () =>
-      location.pathname.includes('company-employee')
-        ? ROUTES.COMPANY_EMPLOYEE.ARCHIVE
-        : ROUTES.PRIVATE_USER.ARCHIVE,
+  const { archive: archiveRoute } = useMemo(
+    () => resolveArchiveRoutes(location.pathname),
     [location.pathname],
   );
   const {

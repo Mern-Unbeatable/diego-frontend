@@ -160,6 +160,8 @@ export const dashboardRoutes = [
       { path: ROUTES.PLATFORM_ADMIN.FEEDBACK, element: <FeedbackView /> },
       { path: ROUTES.PLATFORM_ADMIN.FIGURES, element: <FiguresView /> },
       { path: ROUTES.PLATFORM_ADMIN.REPORTS, element: <AdminReportView /> },
+      { path: ROUTES.PLATFORM_ADMIN.COURSES, element: <CourseListView /> },
+      { path: ROUTES.PLATFORM_ADMIN.STUDENTS, element: <EnrolledView /> },
       { path: ROUTES.PLATFORM_ADMIN.COURSE_PACKAGES, element: <CoursePackagesView /> },
       { path: ROUTES.PLATFORM_ADMIN.INQUIRIES, element: <InquiriesView /> },
     ],
@@ -191,6 +193,10 @@ export const dashboardRoutes = [
       {
         path: ROUTES.COMPANY_ADMIN.CERTIFICATES,
         element: <CompanyCertificatesView />,
+      },
+      {
+        path: ROUTES.COMPANY_ADMIN.ARCHIVE,
+        element: <ArchivePurchaseView />,
       },
       {
         path: ROUTES.COMPANY_ADMIN.PRIVACY,

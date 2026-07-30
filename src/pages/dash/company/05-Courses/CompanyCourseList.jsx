@@ -104,7 +104,7 @@ const StudentTrackingModal = ({
   const to = Math.min(meta.page * PAGE_SIZE, meta.total);
 
   return (
-    <div className="fixed inset-0 z-40 overflow-y-auto bg-[#12382b]/65 p-3 sm:p-6">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-[#12382b]/65 p-3 sm:p-6">
       <section className="mx-auto max-w-[1460px] rounded-2xl bg-white p-5 sm:p-8">
         <button type="button" onClick={onClose} className="inline-flex text-[#2c2c2c]">
           <ArrowLeft size={20} />
@@ -362,11 +362,11 @@ const CompanyCourseList = () => {
           employee={
             selectedCourse
               ? {
-                  name: '',
-                  email: '',
-                  phone: '',
-                  courseName: selectedCourse.courseTitle,
-                }
+                name: '',
+                email: '',
+                phone: '',
+                courseName: selectedCourse.courseTitle,
+              }
               : null
           }
           onSubmit={handleAssignEmployee}
@@ -384,3 +384,4 @@ const CompanyCourseList = () => {
 };
 
 export default CompanyCourseList;
+
