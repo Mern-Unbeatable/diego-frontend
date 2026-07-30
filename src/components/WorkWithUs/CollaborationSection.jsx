@@ -7,25 +7,29 @@ const CollaborationSection = ({ title, subText, description, bottomText, bulletP
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
-        <Container>
-            <div className="max-w-7xl mx-auto px-5 py-14 md:py-16">
+            <div className='container mx-auto px-4'>
+
+
+
+                     <Container>
+            <div className=" px-5 py-14 md:py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     {/* Left Content */}
                     <div>
-                        <h2 className="text-xl font-bold text-gray-900 mb-6">{title}</h2>
-                        <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">
+                        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">{title}</h2>
+                        <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-8">
                             {description}
                         </p>
                         <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">{subText}</p>
-                        <ul className="space-y-3 mb-8">
+                        <ul className="space-y-6 mb-8">
                             {bulletPoints.map((point, index) => (
                                 <li key={index} className="flex items-start gap-3">
-                                    <span className="text-[#73BFA1] mt-1">•</span>
+                                    <span className="text-[#6B6B6B] mt-1">•</span>
                                     <span className="text-gray-700 text-sm md:text-base">{point}</span>
                                 </li>
                             ))}
                         </ul>
-                        <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-6">
+                        <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-10">
                             {bottomText}
                         </p>
                         <button
@@ -50,6 +54,8 @@ const CollaborationSection = ({ title, subText, description, bottomText, bulletP
                 onClose={() => setIsModalOpen(false)}
             />
         </Container>
+            </div>
+
     );
 };
 

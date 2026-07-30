@@ -11,12 +11,13 @@ const TrainingCoursesSevView = () => {
 
   return (
     <Container className=" ">
-      <Banner
+         <div className='container mx-auto px-4'>      <Banner
         image={bannerData.image ?? '/images/course/course3.png'}
         title={t('trainingPages.section2.bannerTitle', {
           defaultValue: bannerData.title ?? 'Scopri i nostri corsi SEVESO',
         })}
-      />
+      /></div>
+
       <CourseCard />
     </Container>
   );

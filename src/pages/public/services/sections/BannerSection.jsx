@@ -6,12 +6,14 @@ const BannerSection = () => {
   const { t } = useTranslation();
 
   return (
-    <Container size="full">
-      <Banner
+    <Container size="">
+<div className='container mx-auto px-4 '>
+        <Banner
         description={t('servicesPages.section2.bannerDescription')}
         image={'/image/home/banner/image.jpg'}
         title={t('servicesPages.section2.bannerTitle')}
       />
+</div>
     </Container>
   );
 };

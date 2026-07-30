@@ -14,8 +14,9 @@ const SafetyEmergencyView = () => {
 
   return (
     <Container className=" ">
-      <Banner image={banner} title={t('servicesPages.section6.bannerTitle')} />
-      <div className="container mx-auto  py-12 sm:px-6 lg:px-8">
+      <div className='container mx-auto px-4'><Banner image={banner} title={t('servicesPages.section6.bannerTitle')} /></div>
+
+      <div className="container mx-auto px-4  py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
           <div className="lg:sticky lg:top-24">
             <Heading level={3}>

@@ -74,7 +74,7 @@
 // </div>
 //         </div>
 
-//         <div className="container mx-auto px-4 text-center">
+//         <div className="container mx-auto px-4 px-4 text-center">
 //           <h2 className="mb-6 text-3xl font-bold text-gray-900">
 //             {t('chiSiamo.section1.missionTitle')}
 //           </h2>
@@ -85,7 +85,7 @@
 //           <MissionCards />
 //         </div>
 
-//         <div className="container mx-auto px-4 py-16">
+//         <div className="container mx-auto px-4 px-4 py-16">
 //           <h2 className="mb-10 text-center text-3xl font-bold text-gray-900">
 //             {t('chiSiamo.section1.pillarsTitle')}
 //           </h2>
@@ -117,7 +117,7 @@ const ChiSiamo = () => {
         <Banner image={banner} title={t('chiSiamo.section1.bannerTitle')} />
 
         {/* Header Section */}
-        <div className="mx-auto max-w-7xl lg:px-4 py-8 sm:py-12 md:py-16">
+        <div className="mx-auto container lg:px-4 py-8 sm:py-12 md:py-16">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
             {/* Left Content */}
             <div className="flex-1 order-2 md:order-1 w-full">
@@ -181,7 +181,7 @@ const ChiSiamo = () => {
         </div>
 
         {/* Mission Section */}
-        <div className="container mx-auto lg:px-4 text-center">
+        <div className="container mx-auto px-4 lg:px-4 text-center">
           <h2 className="mb-4 sm:mb-6 text-2xl sm:text-3xl font-bold text-gray-900">
             {t('chiSiamo.section1.missionTitle')}
           </h2>
@@ -193,7 +193,7 @@ const ChiSiamo = () => {
         </div>
 
         {/* Pillars Section */}
-        <div className="container mx-auto px-4 py-10 sm:py-12 md:py-16">
+        <div className="container mx-auto px-4 px-4 py-10 sm:py-12 md:py-16">
           <h2 className="mb-6 sm:mb-8 md:mb-10 text-center text-2xl sm:text-3xl font-bold text-gray-900">
             {t('chiSiamo.section1.pillarsTitle')}
           </h2>

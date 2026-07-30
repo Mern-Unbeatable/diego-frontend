@@ -62,7 +62,9 @@ const TrainingCoursesSevView = () => {
 
   return (
     <Container className=" ">
-      <Banner image="/images/course/course4.png" title={'Catalogo'} />
+         <div className='container mx-auto px-4'>
+
+                <Banner image="/images/course/course4.png" title={'Catalogo'} />
       <CourseFilters
         searchTerm={searchTerm}
         category={category}
@@ -74,6 +76,8 @@ const TrainingCoursesSevView = () => {
         onDurationChange={setDuration}
         onReset={handleReset}
       />
+
+         </div>
 
       <CatalogCard courses={filteredCourses} loading={loading} />
     </Container>

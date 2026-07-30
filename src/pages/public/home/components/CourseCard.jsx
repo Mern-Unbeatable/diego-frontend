@@ -67,18 +67,18 @@ const CourseCard = ({ course, isDragging = false }) => {
           </div>
         </div>
 
-        <div className="mt-2 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-2 flex flex-rpw gap-3 sm:flex-row">
           <Button
             label={t('homeView.section4.enrollNow')}
             onClick={handleEnroll}
-            className="flex-1 rounded-full bg-[#3FC89E] px-3 py-3 font-semibold text-white hover:bg-[#35b88f]"
+            className="flex-1 rounded-full bg-[#3FC89E] px-2  md:px-3 py-2 md:py-3 font-semibold text-white hover:bg-[#35b88f]"
           />
 
           <Button
             label={t('homeView.section4.details')}
             variant="outline"
             onClick={handleButtonAction}
-            className="flex-1 rounded-full border border-gray-300 px-3 py-3 font-semibold text-gray-700 hover:border-gray-400 hover:bg-gray-50"
+            className="flex-1 rounded-full border border-gray-300 px-2  md:px-3 py-2 md:py-3 font-semibold text-gray-700 hover:border-gray-400 hover:bg-gray-50"
           />
         </div>
       </div>

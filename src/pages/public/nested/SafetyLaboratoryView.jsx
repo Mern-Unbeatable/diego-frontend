@@ -14,13 +14,16 @@ const SafetyLaboratoryView = () => {
 
   return (
     <Container className=" ">
-      <Banner
-        description={t('servicesPages.section11.bannerDescription')}
-        image={banner}
-        title={t('servicesPages.section11.bannerTitle')}
-      />
+      <div className="container mx-auto px-4">
+     
+        <Banner
+          description={t('servicesPages.section11.bannerDescription')}
+          image={banner}
+          title={t('servicesPages.section11.bannerTitle')}
+        />
+      </div>
 
-      <div className="container mx-auto  py-12 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
           <div className="bg-white px-6 py-8 lg:sticky lg:top-24">
             <div className="mx-auto max-w-2xl">

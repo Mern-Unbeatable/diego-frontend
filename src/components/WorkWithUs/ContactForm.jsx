@@ -85,7 +85,7 @@ const ContactFormDesign = ({ title }) => {
         {/* Form Container */}
         <div className="rounded-lg border border-gray-300 p-5">
           {/* Title */}
-          <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">
+          <h2 className="mb-6 text-center text-2xl font-bold text-gray-900">
             {title || t('workWithUs.section6.contactTitle')}
           </h2>
 

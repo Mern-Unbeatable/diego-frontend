@@ -12,11 +12,14 @@ const HeroSection = () => {
   const { t } = useTranslation();
 
   return (
+
+    <div className="bg-[#1b534205]">
     <Container
-      size="full"
-      className="grid grid-cols-1 items-center gap-10 bg-[#1b534205] px-6 py-12 sm:px-12 sm:py-16 md:grid-cols-2 md:gap-16 lg:px-20"
+      size=""
+      className=" container mx-auto px-4 "
     >
-      <div className="flex justify-center md:justify-start">
+<div className='   grid grid-cols-1 items-center gap-10  py-12 sm:px-12 sm:py-16 md:grid-cols-2 md:gap-16 lg:px-20'>
+        <div className="flex justify-center md:justify-start">
         <Image
           src="/images/icons/HomeIcon.png"
           className="w-full max-w-[280px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[550px]"
@@ -58,7 +61,10 @@ const HeroSection = () => {
           </Link>
         </div>
       </div>
+</div>
     </Container>
+
+    </div>
   );
 };
 

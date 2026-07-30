@@ -60,7 +60,9 @@ const ReviewSection = () => {
   };
 
   return (
-    <Container className="mb-14 flex flex-col items-center gap-12 overflow-hidden md:mb-20 lg:flex-row lg:items-center lg:gap-16">
+   <div className=' container mx-auto px-4'>
+
+ <Container className="mb-14 flex flex-col items-center gap-12   overflow-hidden md:mb-20 lg:flex-row lg:items-center lg:gap-16">
       <div className="w-full lg:w-1/2">
         <div className="space-y-6">
           <Heading
@@ -173,6 +175,8 @@ const ReviewSection = () => {
         </div>
       </div>
     </Container>
+
+   </div>
   );
 };
 

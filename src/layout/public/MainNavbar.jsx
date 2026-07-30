@@ -176,7 +176,7 @@ const MainNavbar = () => {
     <Container>
       <nav className="relative flex items-center py-4 sm:py-5 lg:py-6">
         {/* Logo */}
-        <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-6 lg:gap-10">
+        <div className="flex container mx-auto px-4 flex-1 items-center gap-3 sm:gap-6 lg:gap-10">
           <Link to="/" className="min-w-0 shrink">
             <div className="flex min-w-0 items-center gap-2 sm:gap-3">
               <img

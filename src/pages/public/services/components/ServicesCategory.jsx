@@ -7,7 +7,7 @@ const ServicesCategory = ({ categories, loading }) => {
 
   return (
     <section className="bg-white py-8 md:py-12">
-      <Container className="container mx-auto">
+      <Container className="container mx-auto px-4 px-4">
         {loading ? (
           <p className="text-lg font-semibold text-[#2B2B2B]">
             {t('servicesPages.section2.loading')}

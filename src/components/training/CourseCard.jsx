@@ -20,7 +20,7 @@ export default function CoursesSection() {
 
   return (
     <section className="bg-[#f6f6f6] py-10">
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="mx-auto container px-4">
         <h2 className="mb-8 text-[30px] font-semibold text-[#333]">
           {t('trainingPages.section7.title')}
         </h2>

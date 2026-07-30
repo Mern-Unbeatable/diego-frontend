@@ -52,17 +52,18 @@ const WorkWithUsView = () => {
     <Container>
       <div className="w-full bg-[#fff]">
         {/* Banner */}
-        <Banner image={banner} title={t('workWithUs.section5.bannerTitle')} />
+         <div className='container mx-auto px-4'>        <Banner image={banner} title={t('workWithUs.section5.bannerTitle')} />
+</div>
 
         {/* Hero */}
         <div className="mx-auto max-w-4xl  py-12 text-center">
-          <span className="rounded-full bg-[#E4F0E8] p-3 text-sm text-[#5C9981]">
+          <span className="rounded-full bg-[#E4F0E8] px-3  py-2 text-sm text-[#5C9981]">
             {t('workWithUs.section5.badge')}
           </span>
-          <h1 className="mt-5 mb-4 text-2xl font-bold text-gray-900">
+          <h1 className="mt-5 mb-4 text-2xl md:text-3xl  font-bold text-gray-900">
             {t('workWithUs.section5.heroTitle')}
           </h1>
-          <p className="mx-auto max-w-2xl text-sm leading-relaxed text-gray-600">
+          <p className="mx-auto max-w-xl text-sm md:text-base leading-relaxed text-gray-600">
             {t('workWithUs.section5.heroDescription')}
           </p>
         </div>

@@ -23,7 +23,9 @@ export default function CoursesOur() {
   // });
 
   return (
-    <Container className="py-10 md:py-14">
+           <div className='container mx-auto px-4'>
+
+  <Container className="py-10 md:py-14">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(280px,420px)_1fr] lg:gap-30 xl:gap-36">
         {/* Left: sticky image */}
         <div className="lg:sticky lg:top-24 lg:self-start">
@@ -105,5 +107,10 @@ export default function CoursesOur() {
         </div>
       </div>
     </Container>
+
+
+
+           </div>
+
   );
 }

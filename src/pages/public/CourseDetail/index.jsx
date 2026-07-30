@@ -63,7 +63,7 @@ const CourseDetails = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="mx-auto max-w-6xl px-6 py-14">
+      <div className="mx-auto container px-4 md:px-6 py-14">
         {loading ? (
           <p className="mb-6 text-sm text-gray-500">
             {t('trainingPages.section7.loadingCourses')}
@@ -145,7 +145,7 @@ const CourseDetails = () => {
             ) : null}
           </div>
 
-          <div className="h-fit rounded-lg bg-green-50 p-6">
+          <div className="sticky top-26 h-fit self-start rounded-lg bg-green-50 p-6">
             <div className="mb-6 flex flex-col items-baseline gap-1">
               <span className="text-2xl font-bold text-gray-800">
                 {formatEuro(course?.basePrice)}

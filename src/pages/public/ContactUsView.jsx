@@ -312,7 +312,13 @@ export default function ContactUsView() {
   return (
     <Container size="full">
       <div className="min-h-screen bg-white">
+         <div className='container mx-auto px-4'>
+
         <Banner image={banner} title={t('contactUs.section1.bannerTitle')} />
+
+
+         </div>
+
         <div className="mx-auto max-w-4xl px-6 py-16 text-center">
           <h1 className="mb-4 text-4xl font-bold text-gray-900">
             {t('contactUs.section1.heroTitle')}
