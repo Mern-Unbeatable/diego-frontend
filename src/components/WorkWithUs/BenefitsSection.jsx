@@ -172,7 +172,11 @@ export default function CollaborationBenefits() {
 
   return (
     <div className="w-full bg-gradient-to-b from-white to-slate-50 pb-14 md:pb-16 sm:px-6 lg:px-8">
+<<<<<<< HEAD
       <div className="mx-auto container">
+=======
+      <div className="mx-auto max-w-7xl">
+>>>>>>> 427ccfa (update API base URL and adjust styles in BenefitsSection and CollaborationRequestForm components)
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           {/* Left Column - Benefits */}
           <div className="lg:col-span-2">
