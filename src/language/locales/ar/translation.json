@@ -330,6 +330,9 @@
     "section7": {
       "title": "الدورات الإلزامية",
       "loadingCourses": "جارٍ تحميل الدورات...",
+      "errorLoadingCourses": "خطأ في تحميل الدورات",
+      "errorMessage": "حدث خطأ أثناء تحميل الدورات. يرجى المحاولة مرة أخرى.",
+      "retry": "إعادة المحاولة",
       "courseNotFound": "لم يتم العثور على بيانات الدورة.",
       "courseImageAlt": "صورة الدورة",
       "courses": [

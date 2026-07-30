@@ -322,6 +322,9 @@
     "section7": {
       "title": "必修课程",
       "loadingCourses": "正在加载课程...",
+      "errorLoadingCourses": "加载课程时出错",
+      "errorMessage": "加载课程时发生错误，请重试。",
+      "retry": "重试",
       "courseNotFound": "未找到课程数据。",
       "courseImageAlt": "课程图片",
       "courses": [
