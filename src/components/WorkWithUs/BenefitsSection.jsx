@@ -172,7 +172,7 @@ export default function CollaborationBenefits() {
 
   return (
     <div className="w-full bg-gradient-to-b from-white to-slate-50 pb-14 md:pb-16 sm:px-6 lg:px-8">
-      <div className="mx-auto container">
+      <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           {/* Left Column - Benefits */}
           <div className="lg:col-span-2">

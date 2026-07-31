@@ -334,6 +334,9 @@
     "section7": {
       "title": "Mandatory courses",
       "loadingCourses": "Loading courses...",
+      "errorLoadingCourses": "Error loading courses",
+      "errorMessage": "We encountered an error while loading courses. Please try again.",
+      "retry": "Retry",
       "courseNotFound": "Course data not found.",
       "courseImageAlt": "Course image",
       "courses": [

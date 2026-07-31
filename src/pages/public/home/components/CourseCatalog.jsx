@@ -295,10 +295,10 @@ const CourseCatalog = () => {
                 <RefreshCw className="h-6 w-6 text-red-600" />
               </div>
               <h3 className="mb-2 text-lg font-semibold text-red-900">
-                {t('trainingPages.section7.errorLoadingCourses') || 'Error Loading Courses'}
+                {t('trainingPages.section7.errorLoadingCourses')}
               </h3>
               <p className="mb-4 text-sm text-red-700">
-                {t('trainingPages.section7.errorMessage') || 'We encountered an error while loading courses. Please try again.'}
+                {t('trainingPages.section7.errorMessage')}
               </p>
               <Button
                 onClick={handleRetry}
@@ -307,7 +307,7 @@ const CourseCatalog = () => {
                 className="flex items-center gap-2 border-red-300 bg-white text-red-700 hover:bg-red-100"
               >
                 <RefreshCw className="h-4 w-4" />
-                {t('common.retry') || 'Retry'}
+                {t('trainingPages.section7.retry')}
               </Button>
             </div>
           ) : null}

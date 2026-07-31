@@ -1,21 +1,27 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { LiaThumbsUp } from 'react-icons/lia';
-import { BsUpload } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { X } from 'lucide-react';
 import {
   IoAlbumsOutline,
+  IoBarChartOutline,
+  IoBookOutline,
   IoBusinessOutline,
   IoCardOutline,
+  IoCartOutline,
   IoChatbubbleOutline,
   IoDocumentTextOutline,
   IoHomeOutline,
-  IoMailOutline,
+  IoKeyOutline,
+  IoLayersOutline,
   IoLockClosedOutline,
+  IoMailOutline,
   IoNotificationsOutline,
+  IoPeopleOutline,
   IoPersonOutline,
   IoRibbonOutline,
+  IoSchoolOutline,
   IoSettingsOutline,
   IoTicketOutline,
 } from 'react-icons/io5';
@@ -35,7 +41,7 @@ const linksByRole = {
     {
       path: '/dashboard/super-admin/license-management',
       label: 'Gestione licenze',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
+      icon: <IoKeyOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/super-admin/settings',
@@ -60,27 +66,27 @@ const linksByRole = {
     {
       path: '/dashboard/super-admin/figures',
       label: 'Figura previste LMS CSR 59',
-      icon: <BsUpload className="text-[18px]" />,
+      icon: <IoPeopleOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/super-admin/enrolled-students',
       label: 'Studenti iscritti',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoSchoolOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/super-admin/course-list',
       label: 'Corsi e pacchetti',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
+      icon: <IoBookOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/super-admin/course-packages',
       label: 'Pacchetti corso',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoLayersOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/super-admin/report',
       label: 'Report',
-      icon: <BsUpload className="text-[18px]" />,
+      icon: <IoBarChartOutline className="text-[19px]" />,
     },
   ],
 
@@ -93,7 +99,7 @@ const linksByRole = {
     {
       path: '/dashboard/company-admin/training',
       label: 'Gestisci la formazione',
-      icon: <IoBusinessOutline className="text-[19px]" />,
+      icon: <IoSchoolOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/company-admin/certificates',
@@ -108,17 +114,17 @@ const linksByRole = {
     {
       path: '/dashboard/company-admin/my-courses',
       label: 'I tuoi corsi',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoBookOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/company-admin/purchases',
       label: 'Pacchetti acquistati',
-      icon: <IoBusinessOutline className="text-[19px]" />,
+      icon: <IoCartOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/company-admin/privacy-policy',
       label: 'Privacy & policy',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
+      icon: <IoLockClosedOutline className="text-[19px]" />,
     },
   ],
 
@@ -147,34 +153,34 @@ const linksByRole = {
       icon: <IoHomeOutline className="text-[19px]" />,
     },
     {
+      path: '/dashboard/license-user/report',
+      label: 'Report',
+      icon: <IoBarChartOutline className="text-[19px]" />,
+    },
+    {
       path: '/dashboard/license-user/license',
       label: 'Licenze',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoKeyOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/license-user/enrolled-students',
       label: 'Studenti iscritti',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoPeopleOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/license-user/course-list',
       label: 'Corsi e pacchetti',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
+      icon: <IoBookOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/license-user/ticket',
       label: 'Ticket',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
-    },
-    {
-      path: '/dashboard/license-user/report',
-      label: 'Report',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoTicketOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/license-user/privacy-policy',
       label: 'Privacy & policy',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoLockClosedOutline className="text-[19px]" />,
     },
   ],
 
@@ -213,7 +219,7 @@ const linksByRole = {
     {
       path: '/dashboard/private-user/certificates',
       label: 'My Certificates',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
+      icon: <IoRibbonOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/private-user/privacy-policy',

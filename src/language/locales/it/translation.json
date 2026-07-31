@@ -334,6 +334,9 @@
     "section7": {
       "title": "Corsi obbligatori",
       "loadingCourses": "Caricamento corsi...",
+      "errorLoadingCourses": "Errore nel caricamento dei corsi",
+      "errorMessage": "Si è verificato un errore durante il caricamento dei corsi. Riprova.",
+      "retry": "Riprova",
       "courseNotFound": "Dati del corso non trovati.",
       "courseImageAlt": "Immagine del corso",
       "courses": [
