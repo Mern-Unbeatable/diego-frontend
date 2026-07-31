@@ -91,7 +91,7 @@ const ArchivePurchaseView = () => {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className="max-w-2xl ">
       <button
         type="button"
         onClick={() => navigate(-1)}
@@ -100,8 +100,8 @@ const ArchivePurchaseView = () => {
         <FaChevronLeft className="text-gray-600" />
       </button>
 
-      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
-        <h1 className="text-2xl font-bold text-[#1f1f1f] md:text-3xl">
+      <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
+        <h1 className="text-xl font-bold text-[#1f1f1f] md:text-2xl">
           Archivio attestati cloud
         </h1>
         <p className="mt-2 text-sm text-[#666]">
