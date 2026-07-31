@@ -16,7 +16,7 @@ const TicketDetailsModal = ({ open, ticketId, onClose }) => {
       onClose={onClose}
       title="Area ticket"
       size="xl"
-      panelClassName="max-w-[1280px]"
+      panelClassName="max-w-xl"
       zIndex={50}
     >
       {isLoading ? (

@@ -143,7 +143,7 @@ const AddTicketModal = ({ open, onClose, onSuccess }) => {
       ))}
 
       <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#111111]/35 p-4 sm:p-8">
-        <section className="w-full max-w-[980px] rounded-xl border border-[#e7e7e7] bg-white p-5 sm:p-8">
+        <section className="w-full max-w-lg rounded-xl border border-[#e7e7e7] bg-white p-5 sm:p-8">
           <button
             type="button"
             onClick={handleClose}

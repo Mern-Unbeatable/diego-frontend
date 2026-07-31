@@ -130,15 +130,23 @@ export const mapAdminTicketRow = (ticket, locale = 'it') => ({
 
 export const mapAdminTicketsResponse = (payload, locale = 'it') => {
   const data = getPayloadData(payload);
-  const tickets = data?.tickets ?? [];
+  const rawTickets = Array.isArray(data)
+    ? data
+    : Array.isArray(data?.tickets)
+      ? data.tickets
+      : Array.isArray(data?.items)
+        ? data.items
+        : Array.isArray(data?.results)
+          ? data.results
+          : [];
   const meta = data?.meta ?? {};
 
   return {
-    tickets: Array.isArray(tickets) ? tickets.map((t) => mapAdminTicketRow(t, locale)) : [],
+    tickets: rawTickets.map((t) => mapAdminTicketRow(t, locale)),
     meta: {
       page: meta.page ?? 1,
       limit: meta.limit ?? 20,
-      total: meta.total ?? 0,
+      total: meta.total ?? rawTickets.length,
       totalPages: meta.totalPages ?? 1,
     },
   };
