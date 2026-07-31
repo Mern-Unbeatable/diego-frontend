@@ -1,4 +1,5 @@
 import i18n from '../../language/i18n';
+import { MIN_WATCH_PERCENT } from './trackingConstants';
 
 const getLang = () => (i18n.language || 'it').split('-')[0];
 
@@ -22,19 +23,23 @@ const formatDuration = (durationSecs) => {
   return `${mins} min`;
 };
 
+/**
+ * Completed only when backend marks it OR real watch/read threshold is met.
+ * Partial watchPercent below threshold stays unplayed.
+ */
 const isLessonCompleted = (lesson) => {
   if (!lesson) return false;
   if (lesson.isCompleted === true) return true;
   if (lesson.completed === true) return true;
-  if ((lesson.watchPercent ?? 0) >= 90) return true;
   if (['SCORM', 'SCORM_12'].includes(lesson.contentType)) {
     return ['COMPLETED', 'PASSED'].includes(lesson.scormStatus);
   }
+  if ((lesson.watchPercent ?? 0) >= MIN_WATCH_PERCENT) return true;
   const timeSpentSecs = lesson.timeSpentSecs ?? 0;
   const durationSecs = lesson.durationSecs ?? null;
   const effectiveMinSecs = durationSecs && durationSecs > 0 ? durationSecs : 120;
   if (['PDF', 'FILE', 'WORD', 'EXCEL'].includes(lesson.contentType)) {
-    return timeSpentSecs >= Math.ceil(effectiveMinSecs * 0.9);
+    return timeSpentSecs >= Math.ceil(effectiveMinSecs * (MIN_WATCH_PERCENT / 100));
   }
   return false;
 };
@@ -120,7 +125,7 @@ export const applyLessonCompletionToModules = (
       ? {
           ...module,
           isCompleted: true,
-          watchPercent: Math.max(module.watchPercent ?? 0, extra.watchPercent ?? 90),
+          watchPercent: Math.max(module.watchPercent ?? 0, extra.watchPercent ?? MIN_WATCH_PERCENT),
           lastPositionSecs: extra.lastPositionSecs ?? module.lastPositionSecs ?? 0,
         }
       : module,

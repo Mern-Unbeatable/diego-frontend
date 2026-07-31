@@ -160,6 +160,7 @@ const LessonContent = ({
         youtubeUrl={lesson.youtubeUrl}
         title={title}
         initialLastPositionSecs={initialLastPositionSecs}
+        initialWatchPercent={initialWatchPercent}
         onProgressUpdate={handleTrackedProgress}
       />
     );
@@ -188,7 +189,8 @@ const LessonContent = ({
             />
           </div>
           <p className="mt-2 text-xs text-gray-500">
-            Completa almeno {minWatchPercent}% del video per segnare la lezione come completata.
+            Guarda almeno il {minWatchPercent}% del video (senza saltare avanti) per
+            completare la lezione. Se non completi la visione resta non vista.
           </p>
         </div>
       </div>

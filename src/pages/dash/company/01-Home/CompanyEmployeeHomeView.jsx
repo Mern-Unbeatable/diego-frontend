@@ -33,7 +33,7 @@ const CompanyEmployeeHomeView = () => {
     setLoading(true);
     try {
       const [enrollmentsData, profileData] = await Promise.all([
-        getMyEnrollmentsService({ limit: 50 }),
+        getMyEnrollmentsService(),
         getMyProfileService().catch(() => null),
       ]);
 

@@ -373,7 +373,8 @@ export const useCoursePlayer = (courseId) => {
       if (!courseId || !lessonId) return null;
 
       const reachedThreshold =
-        payload?.completed === true || (payload?.watchPercent ?? 0) >= MIN_WATCH_PERCENT;
+        payload?.completed === true
+        && (payload?.watchPercent ?? 0) >= MIN_WATCH_PERCENT;
       const alreadyAdvanced = advancedLessonsRef.current.has(lessonId);
       const isActiveLesson = lessonId === activeLessonIdRef.current;
       const shouldFinalize = reachedThreshold && !alreadyAdvanced && isActiveLesson;

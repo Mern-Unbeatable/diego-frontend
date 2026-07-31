@@ -195,8 +195,8 @@ const CourseContentView = () => {
         </div>
       ) : null}
 
-      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2">
-        <div className="space-y-6">
+      <div className="grid grid-cols-1 items-start gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)] lg:gap-8">
+        <div className="min-w-0 space-y-4 sm:space-y-6">
           <LessonContent
             course={course}
             lesson={activeLesson}

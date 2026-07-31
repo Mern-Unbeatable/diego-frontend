@@ -15,9 +15,9 @@ import {
 
 export const getMyEnrollmentsAPI = createAsyncThunk(
   'private/getMyEnrollments',
-  async (_, { rejectWithValue, signal }) => {
+  async (params = {}, { rejectWithValue, signal }) => {
     try {
-      return await getMyEnrollmentsService({ signal });
+      return await getMyEnrollmentsService(params, { signal });
     } catch (error) {
       return rejectWithValue(handleApiError(error));
     }
@@ -59,9 +59,9 @@ export const getTicketByIdAPI = createAsyncThunk(
 
 export const getNotificationsAPI = createAsyncThunk(
   'private/getNotifications',
-  async (_, { rejectWithValue, signal }) => {
+  async (params = {}, { rejectWithValue, signal }) => {
     try {
-      return await getNotificationsService({ signal });
+      return await getNotificationsService(params, { signal });
     } catch (error) {
       return rejectWithValue(handleApiError(error));
     }
@@ -92,9 +92,12 @@ export const markAllNotificationsReadAPI = createAsyncThunk(
 
 export const getMyCertificatesAPI = createAsyncThunk(
   'private/getMyCertificates',
-  async ({ page = 1, limit = 20 } = {}, { rejectWithValue, signal }) => {
+  async ({ page = 1, limit = 20, ...rest } = {}, { rejectWithValue, signal }) => {
     try {
-      return await getMyCertificatesService({ page, limit, signal });
+      return await getMyCertificatesService(
+        { page, limit, ...rest },
+        { signal },
+      );
     } catch (error) {
       return rejectWithValue(handleApiError(error));
     }

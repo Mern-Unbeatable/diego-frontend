@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import {
+  computePlayedWatchPercent,
+  MAX_CONTINUOUS_PLAY_DELTA_SECS,
   MIN_WATCH_PERCENT,
   VIDEO_PROGRESS_SAVE_INTERVAL_MS,
 } from '../../features/learning/trackingConstants';
@@ -14,76 +16,100 @@ const YT_STATE = {
   CUED: 5,
 };
 
+/**
+ * YouTube progress uses real play time only.
+ * Seeking ahead does not mark the lesson complete.
+ */
 const YoutubePlayer = ({
   lessonId,
   youtubeUrl,
   title,
   initialLastPositionSecs = 0,
+  initialWatchPercent = 0,
   onProgressUpdate,
 }) => {
   const containerRef = useRef(null);
   const playerRef = useRef(null);
   const saveTimerRef = useRef(null);
   const maxPositionRef = useRef(initialLastPositionSecs);
-  const playingTimeRef = useRef(0);
+  const playedSecsRef = useRef(0);
+  const lastMediaTimeRef = useRef(initialLastPositionSecs);
   const lastPlayingTickRef = useRef(Date.now());
   const isPlayingRef = useRef(false);
-  const completedRef = useRef(false);
+  const completedRef = useRef(initialWatchPercent >= MIN_WATCH_PERCENT);
+  const durationRef = useRef(0);
+  const seededRef = useRef(false);
   const onProgressUpdateRef = useRef(onProgressUpdate);
 
   useEffect(() => {
     onProgressUpdateRef.current = onProgressUpdate;
   }, [onProgressUpdate]);
-  const [watchPercent, setWatchPercent] = useState(0);
+
+  const [watchPercent, setWatchPercent] = useState(initialWatchPercent);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState(null);
 
   const videoId = extractYoutubeVideoId(youtubeUrl);
 
-  const emitProgress = (forceComplete = false) => {
+  const emitProgress = (forceCheckComplete = false) => {
     const player = playerRef.current;
-    let duration = 0;
+    let duration = durationRef.current;
     let current = maxPositionRef.current;
 
     try {
-      if (player?.getDuration) duration = player.getDuration() || 0;
+      if (player?.getDuration) {
+        duration = player.getDuration() || duration;
+        durationRef.current = duration;
+      }
       if (player?.getCurrentTime) {
-        current = Math.max(maxPositionRef.current, Math.floor(player.getCurrentTime() || 0));
-        maxPositionRef.current = current;
+        current = Math.max(0, player.getCurrentTime() || 0);
+        maxPositionRef.current = Math.max(maxPositionRef.current, Math.floor(current));
       }
     } catch {
       // player may be destroyed
     }
 
+    if (duration > 0 && !seededRef.current && initialWatchPercent > 0) {
+      playedSecsRef.current = Math.max(
+        playedSecsRef.current,
+        (initialWatchPercent / 100) * duration,
+      );
+      seededRef.current = true;
+    }
+
     const percent = duration > 0
-      ? Math.min(100, Math.round((current / duration) * 100))
-      : Math.min(100, Math.round(playingTimeRef.current));
+      ? Math.max(
+        initialWatchPercent,
+        computePlayedWatchPercent(playedSecsRef.current, duration),
+      )
+      : Math.min(100, Math.round(playedSecsRef.current));
 
     setWatchPercent((prev) => Math.max(prev, percent));
 
-    const shouldComplete =
-      !completedRef.current && (forceComplete || percent >= MIN_WATCH_PERCENT);
-    if (shouldComplete || (forceComplete && percent >= MIN_WATCH_PERCENT)) {
+    const reached = percent >= MIN_WATCH_PERCENT;
+    if (reached) {
       completedRef.current = true;
     }
 
-    const isCompletePayload = completedRef.current && percent >= MIN_WATCH_PERCENT;
-
-    const effectiveTimeSpent = Math.max(
-      Math.round(playingTimeRef.current),
-      current,
-      duration > 0 && percent >= MIN_WATCH_PERCENT
-        ? Math.ceil(duration * (percent / 100))
-        : 0,
-    );
+    // Only send completed:true when real watch threshold is met (never on seek/end alone).
+    const isCompletePayload = reached && (forceCheckComplete || completedRef.current);
 
     onProgressUpdateRef.current?.(lessonId, {
       watchPercent: percent,
-      lastPositionSecs: current,
-      timeSpentSecs: effectiveTimeSpent,
-      completed: isCompletePayload,
+      lastPositionSecs: Math.floor(current),
+      timeSpentSecs: Math.round(playedSecsRef.current),
+      completed: Boolean(isCompletePayload && reached),
     });
   };
+
+  useEffect(() => {
+    completedRef.current = initialWatchPercent >= MIN_WATCH_PERCENT;
+    setWatchPercent(initialWatchPercent);
+    playedSecsRef.current = 0;
+    seededRef.current = false;
+    maxPositionRef.current = initialLastPositionSecs;
+    lastMediaTimeRef.current = initialLastPositionSecs;
+  }, [lessonId, initialWatchPercent, initialLastPositionSecs]);
 
   useEffect(() => {
     if (!videoId || !containerRef.current) return undefined;
@@ -110,10 +136,16 @@ const YoutubePlayer = ({
             onReady: (event) => {
               if (destroyed) return;
               setReady(true);
+              try {
+                durationRef.current = event.target.getDuration() || 0;
+              } catch {
+                // ignore
+              }
               if (initialLastPositionSecs > 0) {
                 try {
                   event.target.seekTo(initialLastPositionSecs, true);
                   maxPositionRef.current = initialLastPositionSecs;
+                  lastMediaTimeRef.current = initialLastPositionSecs;
                 } catch {
                   // ignore seek errors
                 }
@@ -124,6 +156,14 @@ const YoutubePlayer = ({
               const state = event.data;
               isPlayingRef.current = state === YT_STATE.PLAYING;
               lastPlayingTickRef.current = Date.now();
+
+              if (state === YT_STATE.PLAYING) {
+                try {
+                  lastMediaTimeRef.current = playerRef.current?.getCurrentTime?.() || lastMediaTimeRef.current;
+                } catch {
+                  // ignore
+                }
+              }
 
               if (state === YT_STATE.ENDED) {
                 emitProgress(true);
@@ -142,11 +182,28 @@ const YoutubePlayer = ({
 
     playingTimer = setInterval(() => {
       if (!isPlayingRef.current || completedRef.current) return;
+
       const now = Date.now();
-      const delta = (now - lastPlayingTickRef.current) / 1000;
+      const wallDelta = (now - lastPlayingTickRef.current) / 1000;
       lastPlayingTickRef.current = now;
-      if (delta > 0 && delta < 3) {
-        playingTimeRef.current += delta;
+
+      let mediaDelta = wallDelta;
+      try {
+        const current = playerRef.current?.getCurrentTime?.() || 0;
+        const jump = current - lastMediaTimeRef.current;
+        // Prefer media timeline; ignore seek jumps.
+        if (jump > 0 && jump <= MAX_CONTINUOUS_PLAY_DELTA_SECS) {
+          mediaDelta = jump;
+        } else if (jump > MAX_CONTINUOUS_PLAY_DELTA_SECS) {
+          mediaDelta = 0;
+        }
+        lastMediaTimeRef.current = current;
+      } catch {
+        // fall back to wall clock while playing
+      }
+
+      if (mediaDelta > 0 && mediaDelta < 3) {
+        playedSecsRef.current += mediaDelta;
       }
       emitProgress();
     }, 1000);
@@ -206,7 +263,8 @@ const YoutubePlayer = ({
           />
         </div>
         <p className="mt-2 text-xs text-gray-500">
-          Tracciamento preciso via YouTube API. Completa almeno {MIN_WATCH_PERCENT}% del video.
+          Guarda almeno il {MIN_WATCH_PERCENT}% del video (senza saltare avanti) per completare
+          la lezione. Se non completi la visione resta non vista.
         </p>
       </div>
     </div>

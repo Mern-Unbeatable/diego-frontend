@@ -18,7 +18,7 @@ const StudentHomeView = () => {
     setLoading(true);
     try {
       const [enrollmentsData, profileData] = await Promise.all([
-        getMyEnrollmentsService({ limit: 50 }),
+        getMyEnrollmentsService(),
         getMyProfileService().catch(() => null),
       ]);
 
@@ -45,19 +45,18 @@ const StudentHomeView = () => {
   }
 
   return (
-    <div className="bg-gray-50">
-      <div className="grid grid-cols-1 items-stretch gap-8 2xl:grid-cols-4">
-        <div className="flex h-full flex-col space-y-6 2xl:col-span-3">
+    <div className="min-w-0 bg-gray-50">
+      <div className="grid grid-cols-1 items-start gap-4 sm:gap-6 xl:grid-cols-4 xl:gap-8">
+        <div className="order-2 flex min-w-0 flex-col space-y-5 sm:space-y-6 xl:order-1 xl:col-span-3">
           <LeftContent courses={courses} />
         </div>
 
-        <div className="h-full 2xl:col-span-1">
+        <div className="order-1 min-w-0 xl:order-2 xl:col-span-1 xl:sticky xl:top-6">
           <ProfileSidebar userName={userName} />
         </div>
       </div>
     </div>
   );
 };
-
 
 export default StudentHomeView;
