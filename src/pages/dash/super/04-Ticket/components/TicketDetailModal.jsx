@@ -105,18 +105,19 @@ export default function TicketDetailModal({ isOpen, onClose, ticketId }) {
           ? `Ticket ${formatTicketDisplayId(ticket)} · ${ticket.createdAtFormatted}`
           : undefined
       }
-      size="md"
+      size="xl"
       zIndex={60}
       accentColor="bg-emerald-500"
+      panelClassName="max-w-[min(100%,40rem)] sm:max-w-2xl"
     >
       {isLoading ? (
         <Loading size="md" className="min-h-40" />
       ) : isError || !ticket ? (
-        <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700">
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 sm:px-5 sm:py-4">
           Impossibile caricare il ticket.
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-4 sm:space-y-6">
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800">
               {ticket.status}
@@ -132,17 +133,19 @@ export default function TicketDetailModal({ isOpen, onClose, ticketId }) {
           </div>
 
           <div>
-            <div className="mb-3 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 font-semibold text-white">
+            <div className="mb-3 flex min-w-0 items-center gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 font-semibold text-white">
                 {ticket.userName.charAt(0).toUpperCase()}
               </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">{ticket.userName}</h3>
-                <p className="text-sm text-gray-500">{ticket.userEmail}</p>
+              <div className="min-w-0">
+                <h3 className="truncate font-semibold text-gray-900">{ticket.userName}</h3>
+                <p className="truncate text-sm text-gray-500">{ticket.userEmail}</p>
               </div>
             </div>
-            <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-              <p className="leading-relaxed text-gray-800">{ticket.message}</p>
+            <div className="rounded-xl border border-gray-200 bg-gray-50 p-3 sm:p-4">
+              <p className="text-sm leading-relaxed break-words text-gray-800 sm:text-base">
+                {ticket.message}
+              </p>
               <p className="mt-3 text-right text-xs text-gray-500">
                 {ticket.createdAtFormatted}
               </p>
@@ -150,11 +153,11 @@ export default function TicketDetailModal({ isOpen, onClose, ticketId }) {
           </div>
 
           {ticket.answer && (
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 sm:p-4">
               <p className="mb-2 text-sm font-semibold text-emerald-800">
                 Risposta precedente
               </p>
-              <p className="text-sm text-gray-800">{ticket.answer}</p>
+              <p className="text-sm break-words text-gray-800">{ticket.answer}</p>
             </div>
           )}
 
@@ -169,15 +172,15 @@ export default function TicketDetailModal({ isOpen, onClose, ticketId }) {
                 placeholder="Scrivi la tua risposta dettagliata qui..."
                 rows={4}
                 maxLength={500}
-                className="w-full resize-none rounded-xl border-2 border-gray-200 px-4 py-3 text-sm focus:border-emerald-500 focus:outline-none"
+                className="w-full resize-none rounded-xl border-2 border-gray-200 px-3 py-2.5 text-sm focus:border-emerald-500 focus:outline-none sm:px-4 sm:py-3"
               />
             </div>
 
-            <div className="flex flex-wrap justify-end gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-end">
               <button
                 type="button"
                 onClick={() => setResponse('')}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50"
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 sm:w-auto sm:py-2"
               >
                 Cancella
               </button>
@@ -185,14 +188,14 @@ export default function TicketDetailModal({ isOpen, onClose, ticketId }) {
                 type="button"
                 onClick={handleMarkInProgress}
                 disabled={saving || ticket.rawStatus === 'IN_PROGRESS'}
-                className="rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700 disabled:opacity-50"
+                className="w-full rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2.5 text-sm font-medium text-emerald-700 disabled:opacity-50 sm:w-auto sm:py-2"
               >
                 Segna in corso
               </button>
               <button
                 type="submit"
                 disabled={saving || !response.trim()}
-                className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+                className="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50 sm:w-auto sm:py-2"
               >
                 {savingReply ? 'Invio...' : 'Invia risposta'}
               </button>
@@ -200,7 +203,7 @@ export default function TicketDetailModal({ isOpen, onClose, ticketId }) {
                 type="button"
                 onClick={handleResolve}
                 disabled={saving}
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+                className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50 sm:w-auto sm:py-2"
               >
                 Risolvi
               </button>
@@ -208,7 +211,7 @@ export default function TicketDetailModal({ isOpen, onClose, ticketId }) {
                 type="button"
                 onClick={handleCloseTicket}
                 disabled={saving}
-                className="rounded-lg bg-gray-700 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+                className="w-full rounded-lg bg-gray-700 px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50 sm:w-auto sm:py-2"
               >
                 Chiudi ticket
               </button>

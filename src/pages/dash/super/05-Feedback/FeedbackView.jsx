@@ -1,5 +1,9 @@
 import FeedbackSection from './components/FeedbackSection';
 
 export default function FeedbackView() {
-  return <FeedbackSection />;
+  return (
+    <div className="min-w-0">
+      <FeedbackSection />
+    </div>
+  );
 }
