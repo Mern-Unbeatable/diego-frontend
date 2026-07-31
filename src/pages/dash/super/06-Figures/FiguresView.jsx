@@ -5,7 +5,7 @@ import { STAFF_FIGURE_SECTIONS } from '../../../../features/api/staffMappers';
 
 export default function FiguresView() {
   return (
-    <div className="space-y-6 rounded-3xl">
+    <div className="min-w-0 space-y-4 sm:space-y-5 lg:space-y-6">
       <FigurePrevisteDashboard />
 
       {STAFF_FIGURE_SECTIONS.map((section) => (

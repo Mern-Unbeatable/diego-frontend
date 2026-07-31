@@ -272,7 +272,7 @@ export default function StaffRoleSection({
 
   if (isLoading || isFetching) {
     return (
-      <section className="overflow-hidden rounded-3xl bg-[#f7f7f7] p-8 shadow-[0_8px_20px_rgba(0,0,0,0.04)] ring-1 ring-[#ececec]">
+      <section className="min-w-0 overflow-hidden rounded-2xl bg-[#f7f7f7] p-4 shadow-[0_8px_20px_rgba(0,0,0,0.04)] ring-1 ring-[#ececec] sm:rounded-3xl sm:p-6 lg:p-8">
         <Loading size="md" className="min-h-32" />
       </section>
     );
