@@ -914,6 +914,7 @@
       },
       "detail": {
         "title": "请求详情",
+        "close": "关闭",
         "closeModal": "关闭弹窗",
         "emptyValue": "—"
       },

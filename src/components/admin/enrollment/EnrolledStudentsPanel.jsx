@@ -147,7 +147,7 @@ const EnrolledStudentsPanel = ({
                     onClick={() => openDetails(student)}
                     className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full bg-[#73bfa1] text-xs font-medium text-white hover:bg-[#5fa889]"
                   >
-                    <Eye size={14} />
+                    <Eye size={12} />
                     Dettagli
                   </button>
                 </div>
@@ -222,7 +222,7 @@ const EnrolledStudentsPanel = ({
                             !canDownloadCertificate(student.certificate) ||
                             isDownloading
                           }
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#ececec] text-[#363636] disabled:opacity-40"
+                          className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ececec] text-[#363636] disabled:opacity-40"
                           aria-label="Download certificato"
                         >
                           <Download size={16} />
@@ -230,7 +230,7 @@ const EnrolledStudentsPanel = ({
                         <button
                           type="button"
                           onClick={() => openDetails(student)}
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#73bfa1] text-white hover:bg-[#5fa889]"
+                          className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#73bfa1] text-white hover:bg-[#5fa889]"
                           aria-label="Dettagli studente"
                         >
                           <Eye size={16} />

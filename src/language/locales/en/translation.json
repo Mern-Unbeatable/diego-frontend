@@ -926,6 +926,7 @@
       },
       "detail": {
         "title": "Request details",
+        "close": "Close",
         "closeModal": "Close modal",
         "emptyValue": "—"
       },

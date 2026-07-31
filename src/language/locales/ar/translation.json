@@ -922,6 +922,7 @@
       },
       "detail": {
         "title": "تفاصيل الطلب",
+        "close": "إغلاق",
         "closeModal": "إغلاق النافذة",
         "emptyValue": "—"
       },
