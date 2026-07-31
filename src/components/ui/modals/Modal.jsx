@@ -2,10 +2,10 @@ import React from 'react';
 import { X } from 'lucide-react';
 
 const SIZE_CLASSES = {
-  sm: 'max-w-md',
-  md: 'max-w-3xl',
-  lg: 'max-w-4xl',
-  xl: 'max-w-5xl',
+  sm: 'max-w-sm',
+  md: 'max-w-md',
+  lg: 'max-w-lg',
+  xl: 'max-w-4xl',
 };
 
 export default function Modal({
@@ -32,7 +32,7 @@ export default function Modal({
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm ${className}`}
+      className={`fixed inset-0 flex items-center justify-center bg-black/10 p-4 backdrop-blur-sm ${className}`}
       style={{ zIndex }}
       onClick={handleBackdropClick}
       role="dialog"
@@ -40,7 +40,7 @@ export default function Modal({
       aria-labelledby={title ? 'modal-title' : undefined}
     >
       <div
-        className={`w-full ${SIZE_CLASSES[size] || SIZE_CLASSES.md} max-h-[92vh] overflow-y-auto rounded-xl border border-gray-100 bg-white p-6 shadow-2xl md:p-8 ${panelClassName}`}
+        className={`w-full ${SIZE_CLASSES[size] || SIZE_CLASSES.md} max-h-[92vh] overflow-y-auto rounded-xl border border-gray-100 bg-white p-4 shadow-2xl md:p-6 ${panelClassName}`}
         onClick={(event) => event.stopPropagation()}
       >
         {(title || description || showCloseButton || headerIcon || accentColor) && (
