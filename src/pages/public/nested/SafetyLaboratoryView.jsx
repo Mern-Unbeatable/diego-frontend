@@ -31,7 +31,7 @@ const SafetyLaboratoryView = () => {
                 {t('servicesPages.section1.serviceDetailsTitle')}
               </h1>
 
-              <p className="mb-8 text-base leading-relaxed text-gray-700">
+              <p className="mb-8 text-sm md:text-base leading-relaxed text-gray-700">
                 {t('servicesPages.section11.intro')}
               </p>
 

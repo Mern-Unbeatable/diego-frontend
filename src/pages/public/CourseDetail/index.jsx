@@ -150,7 +150,7 @@ const CourseDetails = () => {
               <span className="text-2xl font-bold text-gray-800">
                 {formatEuro(course?.basePrice)}
               </span>
-              <span className="text-base font-semibold line-through text-[#73BFA1]">
+              <span className="text-sm md:text-base font-semibold line-through text-[#73BFA1]">
                 {formatEuro(course?.price)}
               </span>
               <span className="text-sm text-gray-600">

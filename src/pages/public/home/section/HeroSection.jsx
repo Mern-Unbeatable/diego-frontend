@@ -45,7 +45,7 @@ const HeroSection = () => {
           {t('homeView.section1.subtitle')}
         </Heading>
 
-        <div className="space-y-2 text-base text-[#555555] md:text-lg">
+        <div className="space-y-2 text-sm text-[#555555] md:text-base lg:text-lg">
           <Paragraph>{t('homeView.section1.descriptionLineOne')}</Paragraph>
           <Paragraph>{t('homeView.section1.descriptionLineTwo')}</Paragraph>
         </div>

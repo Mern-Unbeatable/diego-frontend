@@ -323,7 +323,7 @@ export default function ContactUsView() {
           <h1 className="mb-4 text-4xl font-bold text-gray-900">
             {t('contactUs.section1.heroTitle')}
           </h1>
-          <p className="text-base leading-relaxed text-gray-700">
+          <p className="text-sm md:text-base leading-relaxed text-gray-700">
             {t('contactUs.section1.heroDescription')}
           </p>
         </div>

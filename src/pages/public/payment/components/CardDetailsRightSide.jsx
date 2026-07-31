@@ -92,18 +92,18 @@ const CardDetailsRightSide = () => {
         </div>
         <hr className="my-6 text-[#5F65C3]" />
         <div className="flex items-center justify-between text-[#505050]">
-          <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
+          <p className="font-[#646464] text-sm md:text-base leading-6 font-bold text-[#505050]">
             {t('paymentPages.section2.subtotal')}
           </p>
-          <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
+          <p className="font-[#646464] text-sm md:text-base leading-6 font-bold text-[#505050]">
             €90.00
           </p>
         </div>
         <div className="my-6 flex items-center justify-between text-[#505050]">
-          <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
+          <p className="font-[#646464] text-sm md:text-base leading-6 font-bold text-[#505050]">
             {t('paymentPages.section2.total')}
           </p>
-          <p className="font-[#646464] text-base leading-6 font-bold text-[#505050]">
+          <p className="font-[#646464] text-sm md:text-base leading-6 font-bold text-[#505050]">
             €86.00
           </p>
         </div>

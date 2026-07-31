@@ -81,7 +81,7 @@ export default function CoursesOur() {
                       />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-base font-bold text-[#333333] md:text-lg">
+                      <h3 className="text-sm font-bold text-[#333333] md:text-base lg:text-lg">
                         {step.title}
                       </h3>
                       <p className="mt-1 text-sm leading-6 text-[#666666] md:text-[15px]">

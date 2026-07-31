@@ -32,7 +32,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route element={<ScrollToTop />}>
-        {/* ✅ PUBLIC */}
+
         <Route path="/" element={<MainLayout />}>
           {publicRoutes.map((r) => (
             <Route
@@ -51,7 +51,7 @@ const router = createBrowserRouter(
         <Route path="/certificates/archive/success" element={<ArchiveSuccessView />} />
         <Route path="/certificates/archive/cancel" element={<ArchiveCancelView />} />
 
-        {/* ✅ AUTH */}
+
         <Route element={<PublicGuard />}>
           <Route path="/auth" element={<AuthLayout />}>
             {/* Auth routes (no sidebar) */}

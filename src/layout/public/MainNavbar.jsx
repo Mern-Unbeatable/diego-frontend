@@ -297,7 +297,7 @@ const MainNavbar = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="relative z-50 p-2 text-gray-700"
           >
-            {isMenuOpen ? <GrClose size={28} /> : <IoMenu size={28} />}
+            {isMenuOpen ? <GrClose size={20} /> : <IoMenu size={20} />}
           </button>
         </div>
 
@@ -352,7 +352,6 @@ const MainNavbar = () => {
                           <div className="mt-1 space-y-2 pl-4">
                             {item.dropdown.map((sub, i) => (
                               <div key={i}>
-                                {/* --- MOBILE LINK/SPAN LOGIC --- */}
                                 {sub.dropdown ? (
                                   <div className="flex items-center justify-between">
                                     <span
@@ -370,7 +369,6 @@ const MainNavbar = () => {
                                     {sub.label}
                                   </Link>
                                 )}
-                                {/* --- END MOBILE LINK/SPAN LOGIC --- */}
 
                                 {sub.dropdown && (
                                   <div className="mt-1 space-y-1 pl-2">

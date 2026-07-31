@@ -38,7 +38,7 @@ const ServicesCategory = ({ categories, loading }) => {
                         alt={category.title}
                       />
                     </div>
-                    <p className="mt-3 text-center text-base leading-[1.2] font-bold text-[#1F1F1F]">
+                    <p className="mt-3 text-center text-sm md:text-base leading-[1.2] font-bold text-[#1F1F1F]">
                       {category.title}
                     </p>
                   </>

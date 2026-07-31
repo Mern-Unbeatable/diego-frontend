@@ -60,7 +60,7 @@ function ServicesTable({ rows, onView, onDelete, deleting, t, translateRowStatus
           <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
             {t('platformAdmin.inquiries.columns.date')}
           </th>
-          <th className="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase">
+          <th className="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase ">
             {t('platformAdmin.inquiries.columns.actions')}
           </th>
         </tr>
@@ -73,7 +73,7 @@ function ServicesTable({ rows, onView, onDelete, deleting, t, translateRowStatus
               <div>{row.fullName}</div>
               <div className="text-xs text-gray-500">{row.email}</div>
             </td>
-            <td className="px-6 py-4 text-sm text-gray-700">{row.companyName}</td>
+            <td className="px-6 py-4 text-sm md:text-base text-gray-700">{row.companyName}</td>
             <td className="px-6 py-4 whitespace-nowrap">
               <span
                 className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${getStatusBadgeClass(row.rawStatus)}`}

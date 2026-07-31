@@ -117,7 +117,7 @@ const ChiSiamo = () => {
         <Banner image={banner} title={t('chiSiamo.section1.bannerTitle')} />
 
         {/* Header Section */}
-        <div className="mx-auto container lg:px-4 py-8 sm:py-12 md:py-16">
+        <div className="mx-auto container px-4 py-8 sm:py-12 md:py-16">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
             {/* Left Content */}
             <div className="flex-1 order-2 md:order-1 w-full">
@@ -129,39 +129,39 @@ const ChiSiamo = () => {
                     className="h-7 w-7 sm:h-8 sm:w-8"
                   />
                 </div>
-                <p className="text-justify text-sm leading-relaxed text-gray-700">
+                <p className="text-justify text-sm md:text-base leading-relaxed text-gray-700">
                   {t('chiSiamo.section1.intro')}
                 </p>
               </div>
 
               <div className="space-y-4 text-justify text-sm leading-relaxed text-gray-700">
                 <div>
-                  <p className="mb-2 font-semibold">
+                  <p className="mb-2 font-semibold  text-sm md:text-base ">
                     {t('chiSiamo.section1.objectiveLabel')}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="mb-2 font-semibold text-gray-900">
+                  <h3 className="mb-2 font-semibold text-gray-900 text-sm md:text-base">
                     {t('chiSiamo.section1.whatWeDoLabel')}
                   </h3>
-                  <p>
+                  <p className="text-sm md:text-base">
                     <strong>{t('chiSiamo.section1.formazione')}</strong>{' '}
                     {t('chiSiamo.section1.formazioneDesc')}
                   </p>
                 </div>
 
-                <p>
+                <p className="text-sm md:text-base">
                   <strong>{t('chiSiamo.section1.sicurezza')}</strong>{' '}
                   {t('chiSiamo.section1.sicurezzaDesc')}
                 </p>
 
-                <p>
+                <p className="text-sm md:text-base">
                   <strong>{t('chiSiamo.section1.salute')}</strong>{' '}
                   {t('chiSiamo.section1.saluteDesc')}
                 </p>
 
-                <p className="italic text-gray-600">
+                <p className="italic text-gray-600 text-sm md:text-base">
                   {t('chiSiamo.section1.tagline')}
                 </p>
               </div>
@@ -193,7 +193,7 @@ const ChiSiamo = () => {
         </div>
 
         {/* Pillars Section */}
-        <div className="container mx-auto px-4 px-4 py-10 sm:py-12 md:py-16">
+        <div className="container mx-auto  px-4 py-10 sm:py-12 md:py-16">
           <h2 className="mb-6 sm:mb-8 md:mb-10 text-center text-2xl sm:text-3xl font-bold text-gray-900">
             {t('chiSiamo.section1.pillarsTitle')}
           </h2>
