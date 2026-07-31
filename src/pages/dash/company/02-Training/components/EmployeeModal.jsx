@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, X } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { ArrowLeft } from 'lucide-react';
 import Form from '../../../../../Forms/Form';
 import Input from '../../../../../Forms/Input';
 import Select from '../../../../../Forms/Select';
@@ -40,8 +41,14 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
       if (event.key === 'Escape') onClose();
     };
 
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleEscape);
+    };
   }, [onClose]);
 
   useEffect(() => {
@@ -125,72 +132,60 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
   const title = titles[mode] || titles.add;
   const buttonLabel = buttonLabels[mode] || buttonLabels.add;
 
-  return (
-    <>
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 p-0 backdrop-blur-sm sm:items-center sm:p-4"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="employee-modal-title"
+    >
       <div
-        className="fixed inset-0 z-40 bg-[#113b2b]/40 backdrop-blur-sm"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      <div
-        className="fixed inset-0 z-40 flex items-center justify-center p-4"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
+        ref={modalRef}
+        className="flex max-h-[95vh] w-full max-w-xl flex-col overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:max-h-[90vh] sm:rounded-2xl"
+        onClick={(event) => event.stopPropagation()}
       >
-        <div
-          ref={modalRef}
-          className="animate-in fade-in zoom-in relative max-h-[95vh] w-full max-w-[740px] overflow-y-auto rounded-2xl bg-white shadow-2xl transition-all duration-300 ease-in-out"
-        >
+        <div className="flex shrink-0 items-center gap-3 border-b border-gray-100 px-4 py-3 sm:px-5 sm:py-4">
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-4 right-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 focus:ring-2 focus:ring-[#73bfa1] focus:ring-offset-2 focus:outline-none"
-            aria-label="Close modal"
+            className="rounded-lg p-2 text-[#404040] hover:bg-gray-100"
+            aria-label="Indietro"
           >
-            <X size={20} />
+            <ArrowLeft size={18} />
           </button>
-
-          <div className="border-b border-gray-100 px-8 py-6 sm:px-14">
-            <button
-              type="button"
-              onClick={onClose}
-              className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium text-[#404040] transition-colors hover:text-[#73bfa1] focus:ring-2 focus:ring-[#73bfa1] focus:ring-offset-2 focus:outline-none"
-            >
-              <ArrowLeft size={18} />
-              Indietro
-            </button>
-
+          <div className="min-w-0 flex-1 text-center">
             <h3
-              id="modal-title"
-              className="text-center text-2xl font-semibold text-[#1f1f1f] md:text-3xl"
+              id="employee-modal-title"
+              className="text-base font-semibold text-[#1f1f1f] sm:text-lg"
             >
               {title}
             </h3>
-
-            {(isEditMode || isViewMode) && initialData && (
-              <p className="mt-1 text-center text-sm text-gray-500">
+            {(isEditMode || isViewMode) && initialData ? (
+              <p className="truncate text-xs text-gray-500 sm:text-sm">
                 {isViewMode ? 'Stai visualizzando' : 'Stai modificando'}{' '}
                 {initialData.firstName} {initialData.lastName}
               </p>
-            )}
+            ) : null}
           </div>
+          <div className="w-9" />
+        </div>
 
-          <Form
-            key={`${mode}-${initialData?.userId || 'new'}`}
-            resolver={resolver}
-            defaultValues={defaultValues}
-            onSubmit={handleFormSubmit}
-            className="space-y-5 px-8 py-7 sm:px-14 sm:py-10"
-          >
-            {submitError && (
-              <p className="rounded-lg bg-[#fbe9e7] px-4 py-2 text-sm text-[#dd6b5f]">
+        <Form
+          key={`${mode}-${initialData?.userId || 'new'}`}
+          resolver={resolver}
+          defaultValues={defaultValues}
+          onSubmit={handleFormSubmit}
+          className="flex min-h-0 flex-1 flex-col"
+        >
+          <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4 sm:space-y-5 sm:px-6 sm:py-5">
+            {submitError ? (
+              <p className="rounded-lg bg-[#fbe9e7] px-3 py-2 text-sm text-[#dd6b5f]">
                 {submitError}
               </p>
-            )}
+            ) : null}
 
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
               <Input
                 name="firstName"
                 label="Nome"
@@ -207,7 +202,7 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
                 disabled={isSubmitting || isViewMode}
                 variant="employee"
               />
-              <div className="md:col-span-2">
+              <div className="sm:col-span-2">
                 <Input
                   name="email"
                   label="E-mail dipendente"
@@ -218,7 +213,7 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
                   variant="employee"
                 />
               </div>
-              <div className="md:col-span-2">
+              <div className="sm:col-span-2">
                 <Input
                   name="phone"
                   label="Numero di contatto"
@@ -241,7 +236,7 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
                   ...POSITION_OPTIONS,
                 ]}
               />
-              <div>
+              <div className="min-w-0">
                 <label className="mb-1.5 block text-sm font-medium text-[#222222]">
                   Data di assunzione <span className="text-[#e34f4f]">*</span>
                 </label>
@@ -269,8 +264,8 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
                 options={courseSelectOptions}
               />
 
-              {!isViewMode && (
-                <div className="md:col-span-2">
+              {!isViewMode ? (
+                <div className="sm:col-span-2">
                   <Input
                     name="password"
                     label={isEditMode ? 'Nuova password (opzionale)' : 'Password'}
@@ -286,57 +281,59 @@ const EmployeeModal = ({ mode = 'add', initialData = null, onSubmit, onClose }) 
                     variant="employee"
                   />
                 </div>
-              )}
+              ) : null}
             </div>
+          </div>
 
-            <div className="flex flex-col-reverse gap-3 pt-4 sm:flex-row sm:justify-end">
+          <div className="flex shrink-0 flex-col-reverse gap-2 border-t border-gray-100 px-4 py-3 sm:flex-row sm:justify-end sm:gap-3 sm:px-5 sm:py-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="inline-flex h-10 w-full items-center justify-center rounded-full border border-gray-300 px-5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60 sm:w-auto"
+              disabled={isSubmitting}
+            >
+              {isViewMode ? 'Chiudi' : 'Annulla'}
+            </button>
+            {!isViewMode ? (
               <button
-                type="button"
-                onClick={onClose}
-                className="w-full rounded-full border border-gray-300 px-7 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:ring-2 focus:ring-[#73bfa1] focus:ring-offset-2 focus:outline-none sm:w-auto"
+                type="submit"
+                className="relative inline-flex h-10 w-full items-center justify-center rounded-full bg-[#73bfa1] px-6 text-sm font-medium text-white hover:bg-[#63a88c] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
                 disabled={isSubmitting}
               >
-                {isViewMode ? 'Chiudi' : 'Annulla'}
+                {isSubmitting ? (
+                  <>
+                    <span className="opacity-0">{buttonLabel}</span>
+                    <span className="absolute inset-0 flex items-center justify-center">
+                      <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24">
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          fill="none"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                    </span>
+                  </>
+                ) : (
+                  buttonLabel
+                )}
               </button>
-              {!isViewMode && (
-                <button
-                  type="submit"
-                  className="relative w-full rounded-full bg-[#73bfa1] px-7 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#63a88c] focus:ring-2 focus:ring-[#73bfa1] focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <span className="opacity-0">{buttonLabel}</span>
-                      <span className="absolute inset-0 flex items-center justify-center">
-                        <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24">
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                            fill="none"
-                          />
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          />
-                        </svg>
-                      </span>
-                    </>
-                  ) : (
-                    buttonLabel
-                  )}
-                </button>
-              )}
-            </div>
-          </Form>
-        </div>
+            ) : null}
+          </div>
+        </Form>
       </div>
-    </>
+    </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
 
 export default EmployeeModal;
