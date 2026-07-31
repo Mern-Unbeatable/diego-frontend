@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import rightDownSideBg from '/image/student/ciao.png';
@@ -93,7 +93,7 @@ const ProfileBanner = ({ profile, onEditClick }) => {
   const showAvatarImage = Boolean(avatarPreviewUrl) && !avatarError;
 
   return (
-    <div className="relative mb-10 h-44 w-full overflow-hidden rounded-2xl bg-[#73BFA1] text-white md:h-48">
+    <div className="relative mb-4 h-auto min-h-36 w-full overflow-hidden rounded-xl bg-[#73BFA1] text-white sm:mb-6 sm:min-h-40 sm:rounded-2xl md:mb-8 md:min-h-44">
       <input
         type="file"
         ref={fileInputRef}
@@ -102,48 +102,52 @@ const ProfileBanner = ({ profile, onEditClick }) => {
         className="hidden"
       />
 
-      <div className="flex h-full items-center gap-6 px-6 md:px-10">
-        <div className="flex items-center gap-6">
-          <div className="relative flex">
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              className="group relative flex h-28 w-28 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-white/30 bg-[#73BFA1] transition-all duration-300 hover:scale-102 md:h-36 md:w-36"
-            >
-              {showAvatarImage ? (
-                <img
-                  src={avatarPreviewUrl}
-                  alt={profile?.fullName ?? 'Profile avatar'}
-                  className="h-full w-full rounded-full object-cover"
-                  onError={() => setAvatarError(true)}
-                />
-              ) : (
-                <div className="flex h-20 w-20 items-center justify-center rounded-full md:h-24 md:w-24">
-                  <FaUser className="h-12 w-12 text-white md:h-16 md:w-16" />
-                </div>
-              )}
-            </div>
-          </div>
+      <div className="relative z-10 flex h-full items-center gap-3 px-3 py-4 sm:gap-5 sm:px-6 sm:py-5 md:gap-6 md:px-10 md:py-6">
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          className="group relative flex h-16 w-16 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-white/30 bg-[#5fad91] transition hover:scale-[1.02] sm:h-24 sm:w-24 md:h-32 md:w-32"
+          aria-label="Cambia avatar"
+        >
+          {showAvatarImage ? (
+            <img
+              src={avatarPreviewUrl}
+              alt={profile?.fullName ?? 'Profile avatar'}
+              className="h-full w-full rounded-full object-cover"
+              onError={() => setAvatarError(true)}
+            />
+          ) : (
+            <FaUser className="h-7 w-7 text-white sm:h-10 sm:w-10 md:h-14 md:w-14" />
+          )}
+        </button>
 
-          <div className="ml-4">
-            <h2 className="mb-0 text-2xl font-semibold text-white md:text-4xl">
-              {profile?.fullName}
-            </h2>
-            <p className="text-sm text-white md:text-xl">{profile?.email}</p>
-          </div>
+        <div className="min-w-0 flex-1 pr-8 sm:pr-10">
+          <h2 className="truncate text-base font-semibold text-white sm:text-xl md:text-2xl lg:text-3xl">
+            {profile?.fullName || 'Profilo'}
+          </h2>
+          <p className="mt-0.5 truncate text-xs text-white/90 sm:text-sm md:text-base">
+            {profile?.email || ''}
+          </p>
         </div>
       </div>
 
       <button
+        type="button"
         onClick={onEditClick}
-        aria-label="Edit profile"
-        title="Edit profile"
-        className="absolute top-4 right-8 z-10 flex h-8 w-8 items-center justify-center md:top-6 md:right-38 md:h-9 md:w-9"
+        aria-label="Modifica profilo"
+        title="Modifica profilo"
+        className="absolute top-3 right-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition hover:bg-white/25 sm:top-4 sm:right-4 sm:h-9 sm:w-9 md:right-6"
       >
-        <FiEdit className="text-3xl text-white" />
+        <FiEdit className="text-base sm:text-lg" />
       </button>
 
-      <div className="absolute top-9 -right-20 z-0">
-        <img src={rightDownSideBg} alt="circleBg" />
+      <div className="pointer-events-none absolute top-6 -right-16 z-0 hidden opacity-80 sm:block md:-right-12 lg:right-0">
+        <img
+          src={rightDownSideBg}
+          alt=""
+          className="h-28 w-auto md:h-36"
+          aria-hidden="true"
+        />
       </div>
     </div>
   );

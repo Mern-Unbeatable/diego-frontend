@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -107,71 +107,72 @@ const StudentProfileView = () => {
   }
 
   return (
-    <div className="">
-      <div className="mb-6">
+    <div className="min-w-0 space-y-4 sm:space-y-5">
+      <div>
         <button
+          type="button"
           onClick={handleBack}
-          aria-label="Go back"
-          title="Go back"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#F1F9F6] shadow-sm hover:bg-gray-50"
+          aria-label="Torna indietro"
+          title="Torna indietro"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#F1F9F6] text-gray-600 shadow-sm hover:bg-[#e5f3ed]"
         >
-          <FaChevronLeft className="text-gray-600" />
+          <FaChevronLeft className="text-sm" />
         </button>
       </div>
 
-      {profileError && (
-        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+      {profileError ? (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {profileError}
         </div>
-      )}
+      ) : null}
 
       <ProfileBanner
         profile={profile}
         onEditClick={() => setShowInfoModal(true)}
       />
 
-      <div className="rounded-xl border border-[#E6E6E6] bg-white p-4 shadow md:p-6">
-        <div className="space-y-3">
+      <div className="overflow-hidden rounded-xl border border-[#E6E6E6] bg-white p-3 shadow-sm sm:p-4 md:p-6">
+        <div className="space-y-2 sm:space-y-2.5">
           {menu.map((item) => (
             <button
               key={item.id}
               type="button"
               onClick={() => handleMenuClick(item)}
-              className="flex w-full items-center justify-between rounded-lg border border-[#E6E6E6] px-4 py-3 transition hover:shadow-sm"
+              className="flex w-full items-center justify-between gap-3 rounded-lg border border-[#E6E6E6] px-3 py-2.5 text-left transition hover:bg-gray-50 hover:shadow-sm sm:px-4 sm:py-3"
               aria-label={item.label}
             >
-              <div className="flex items-center gap-3 text-gray-700">
-                <div className="flex h-6 w-6 items-center justify-center text-lg text-gray-600">
+              <div className="flex min-w-0 items-center gap-2.5 text-gray-700 sm:gap-3">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F1F9F6] text-sm text-[#55B18D] sm:h-9 sm:w-9 sm:text-base">
                   {item.icon}
                 </div>
-                <span className="text-base font-medium text-[#252525]">
+                <span className="truncate text-sm font-medium text-[#252525] sm:text-base">
                   {item.label}
                 </span>
               </div>
 
-              <FaChevronRight className="text-sm text-[#1A1A1A]" />
+              <FaChevronRight className="shrink-0 text-xs text-[#1A1A1A] sm:text-sm" />
             </button>
           ))}
 
-          <div className="mt-4">
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="flex w-full items-center rounded-lg border border-[#E6E6E6] px-5 py-2 text-left text-lg text-red-600 transition hover:bg-red-50"
-            >
-              <IoIosLogOut className="mr-3 inline-block h-5 w-5" />
-              Esci
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="mt-2 flex w-full items-center gap-2.5 rounded-lg border border-red-100 px-3 py-2.5 text-left text-sm font-medium text-red-600 transition hover:bg-red-50 sm:mt-3 sm:gap-3 sm:px-4 sm:py-3 sm:text-base"
+          >
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-50 sm:h-9 sm:w-9">
+              <IoIosLogOut className="h-4 w-4 sm:h-5 sm:w-5" />
+            </span>
+            Esci
+          </button>
         </div>
       </div>
 
-      {showInfoModal && (
+      {showInfoModal ? (
         <StudentInfoModal
           profile={profile}
           onClose={() => setShowInfoModal(false)}
         />
-      )}
+      ) : null}
     </div>
   );
 };
