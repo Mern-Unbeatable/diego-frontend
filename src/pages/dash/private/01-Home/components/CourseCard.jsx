@@ -4,13 +4,12 @@ import { FaRegHeart, FaHeart } from 'react-icons/fa';
 const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
   const [isLiked, setIsLiked] = useState(false);
 
-
   return (
     <div
-      className="group flex cursor-pointer flex-col gap-4 overflow-hidden rounded-xl bg-white p-4 shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-300 hover:shadow-[0_15px_35px_rgba(0,0,0,0.07)]"
+      className="group flex min-w-0 cursor-pointer flex-col gap-3 overflow-hidden rounded-xl bg-white p-3 shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-300 hover:shadow-[0_15px_35px_rgba(0,0,0,0.07)] sm:gap-4 sm:p-4"
       onClick={onCardClick}
     >
-      <div className="relative h-48 w-full overflow-hidden rounded-xl bg-gray-100">
+      <div className="relative h-40 w-full overflow-hidden rounded-xl bg-gray-100 sm:h-48">
         {course.thumbnailUrl ? (
           <img
             src={course.thumbnailUrl}
@@ -39,23 +38,23 @@ const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
         </button>
       </div>
 
-      <div className="flex flex-col gap-2 px-1">
+      <div className="flex min-w-0 flex-col gap-2 px-0.5 sm:px-1">
         <div className="flex">
           <span
-            className={`rounded-full px-3.5 py-1 text-[11px] font-semibold tracking-wide uppercase ${getCategoryClasses(course.category)}`}
+            className={`rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide uppercase ${getCategoryClasses(course.category)}`}
           >
             {course.category}
           </span>
         </div>
 
-        <h3 className="text-lg leading-snug font-medium tracking-tight text-gray-800">
+        <h3 className="line-clamp-2 text-base leading-snug font-medium tracking-tight text-gray-800 sm:text-lg">
           {course.title}
         </h3>
 
         <div className="my-0.5">
-          <div className="h-2 w-full rounded-full bg-[#F1F9F6]">
+          <div className="h-1.5 w-full rounded-full bg-[#F1F9F6] sm:h-2">
             <div
-              className="h-2 rounded-full bg-[#73BFA1] transition-all"
+              className="h-full rounded-full bg-[#73BFA1] transition-all"
               style={{ width: `${course.progress}%` }}
             />
           </div>
@@ -66,21 +65,21 @@ const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
           )}
         </div>
 
-        <div className="mt-2 flex flex-col gap-2.5">
+        <div className="mt-1 flex flex-col gap-2 sm:mt-2 sm:gap-2.5">
           <button
             type="button"
             onClick={(event) => {
               event.stopPropagation();
               onCardClick?.();
             }}
-            className="w-full rounded-full bg-[#73BFA1] py-3.5 font-semibold text-white transition hover:bg-[#5daf8f]"
+            className="inline-flex h-10 w-full items-center justify-center rounded-full bg-[#73BFA1] text-sm font-semibold text-white transition hover:bg-[#5daf8f] sm:h-11"
           >
             {course.buttonText}
           </button>
 
           <button
             type="button"
-            className="w-full rounded-full border border-[#73BFA1] bg-transparent py-3.5 font-semibold text-[#73BFA1] transition hover:bg-[#70C1A3]/5"
+            className="inline-flex h-10 w-full items-center justify-center rounded-full border border-[#73BFA1] bg-transparent text-sm font-semibold text-[#73BFA1] transition hover:bg-[#70C1A3]/5 sm:h-11"
           >
             download del report
           </button>

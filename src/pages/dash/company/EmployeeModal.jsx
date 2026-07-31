@@ -4,16 +4,40 @@ import { useEffect, useState } from 'react';
 const formFields = [
   { name: 'name', label: 'Nome', placeholder: 'Inserisci il tuo nome...' },
   { name: 'surname', label: 'Cognome', placeholder: 'Inserisci il tuo cognome...' },
-  { name: 'email', label: 'E-mail dipendente', placeholder: 'franco.rossi@mototo.com' },
-  { name: 'phone', label: 'Numero di contatto', placeholder: '+39 340 00 00000' },
+  {
+    name: 'email',
+    label: 'E-mail dipendente',
+    placeholder: 'franco.rossi@mototo.com',
+  },
+  {
+    name: 'phone',
+    label: 'Numero di contatto',
+    placeholder: '+39 340 00 00000',
+  },
   { name: 'birthDate', label: 'Data di nascita', placeholder: 'GG/MM/AAAA' },
-  { name: 'birthPlace', label: 'Luogo', placeholder: 'Inserisci il luogo di nascita' },
-  { name: 'taxCode', label: 'Codice Fiscale', placeholder: 'Inserisci il tuo codice fiscale' },
+  {
+    name: 'birthPlace',
+    label: 'Luogo',
+    placeholder: 'Inserisci il luogo di nascita',
+  },
+  {
+    name: 'taxCode',
+    label: 'Codice Fiscale',
+    placeholder: 'Inserisci il tuo codice fiscale',
+  },
 ];
 
 const extraFields = [
-  { name: 'courseName', label: 'Nome del corso', placeholder: 'Inserisci il nome del corso' },
-  { name: 'password', label: 'Password', placeholder: 'Crea una password per il tuo lavoratore' },
+  {
+    name: 'courseName',
+    label: 'Nome del corso',
+    placeholder: 'Inserisci il nome del corso',
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    placeholder: 'Crea una password per il tuo lavoratore',
+  },
 ];
 
 const emptyForm = {
@@ -29,7 +53,7 @@ const emptyForm = {
 };
 
 const Field = ({ label, placeholder, value, onChange, name }) => (
-  <label className="block">
+  <label className="block min-w-0">
     <span className="mb-1.5 block text-sm font-medium text-[#222222]">
       {label}
       <span className="text-[#e34f4f]">*</span>
@@ -38,7 +62,7 @@ const Field = ({ label, placeholder, value, onChange, name }) => (
       name={name}
       value={value}
       onChange={onChange}
-      className="h-12 w-full rounded-lg border border-transparent bg-[#edf5f2] px-4 text-sm text-[#2f2f2f] outline-none placeholder:text-[#9da8a4] focus:border-[#73bfa1]"
+      className="h-11 w-full rounded-lg border border-transparent bg-[#edf5f2] px-3 text-sm text-[#2f2f2f] outline-none placeholder:text-[#9da8a4] focus:border-[#73bfa1] sm:h-12 sm:px-4"
       placeholder={placeholder}
     />
   </label>
@@ -80,46 +104,90 @@ const EmployeeModal = ({ mode, employee, onClose, onSubmit, saving = false }) =>
   };
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-[#113b2b]/60 p-4">
-      <div className="max-h-[95vh] w-full max-w-[740px] overflow-y-auto rounded-2xl bg-white px-8 py-7 sm:px-14 sm:py-10">
-        <button type="button" onClick={onClose} className="mb-4 inline-flex text-[#404040]">
-          <ArrowLeft size={20} />
-        </button>
+    <div
+      className="fixed inset-0 z-40 flex items-end justify-center bg-black/50 p-0 backdrop-blur-sm sm:items-center sm:p-4"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+    >
+      <div
+        className="flex max-h-[95vh] w-full max-w-xl flex-col overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:max-h-[90vh] sm:rounded-2xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="flex shrink-0 items-center gap-3 border-b border-gray-100 px-4 py-3 sm:px-5 sm:py-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-lg p-2 text-[#404040] hover:bg-gray-100"
+            aria-label="Indietro"
+          >
+            <ArrowLeft size={18} />
+          </button>
+          <h3 className="min-w-0 flex-1 text-center text-base font-semibold text-[#1f1f1f] sm:text-lg">
+            {title}
+          </h3>
+          <div className="w-9" />
+        </div>
 
-        <h3 className="mb-8 text-center text-2xl font-semibold text-[#1f1f1f] md:text-3xl">
-          {title}
-        </h3>
-
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          {formFields.map((field) => (
-            <Field
-              key={field.name}
-              label={field.label}
-              placeholder={field.placeholder}
-              name={field.name}
-              value={form[field.name]}
-              onChange={handleChange}
-            />
-          ))}
-
-          {mode === 'add'
-            ? extraFields.map((field) => (
-                <Field
+        <form
+          className="flex min-h-0 flex-1 flex-col"
+          onSubmit={handleSubmit}
+        >
+          <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4 sm:space-y-5 sm:px-6 sm:py-5">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {formFields.map((field) => (
+                <div
                   key={field.name}
-                  label={field.label}
-                  placeholder={field.placeholder}
-                  name={field.name}
-                  value={form[field.name]}
-                  onChange={handleChange}
-                />
-              ))
-            : null}
+                  className={
+                    field.name === 'email' || field.name === 'taxCode'
+                      ? 'sm:col-span-2'
+                      : ''
+                  }
+                >
+                  <Field
+                    label={field.label}
+                    placeholder={field.placeholder}
+                    name={field.name}
+                    value={form[field.name]}
+                    onChange={handleChange}
+                  />
+                </div>
+              ))}
+            </div>
 
-          <div className="flex justify-end pt-2">
+            {mode === 'add' ? (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {extraFields.map((field) => (
+                  <div
+                    key={field.name}
+                    className={field.name === 'courseName' ? 'sm:col-span-2' : ''}
+                  >
+                    <Field
+                      label={field.label}
+                      placeholder={field.placeholder}
+                      name={field.name}
+                      value={form[field.name]}
+                      onChange={handleChange}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
+          <div className="flex shrink-0 flex-col-reverse gap-2 border-t border-gray-100 px-4 py-3 sm:flex-row sm:justify-end sm:gap-3 sm:px-5 sm:py-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="inline-flex h-10 items-center justify-center rounded-full border border-gray-300 px-5 text-sm font-medium text-[#4f4f4f]"
+            >
+              Annulla
+            </button>
             <button
               type="submit"
               disabled={saving}
-              className="rounded-full bg-[#73bfa1] px-7 py-2.5 text-sm font-semibold text-white hover:bg-[#63a88c] disabled:opacity-60"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-[#73bfa1] px-6 text-sm font-medium text-white hover:bg-[#63a88c] disabled:opacity-60"
             >
               {saving ? 'Salvataggio...' : buttonLabel}
             </button>

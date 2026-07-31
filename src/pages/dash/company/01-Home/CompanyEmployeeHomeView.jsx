@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import CourseCard from '../../private/01-Home/components/CourseCard';
-import HeroBanner from '../../private/01-Home/components/HeroBanner';
 import Loading from '../../../../components/ui/Utilities/Loading';
 import {
   getMyEnrollmentsService,
@@ -61,26 +60,26 @@ const CompanyEmployeeHomeView = () => {
   }
 
   return (
-    <div className="space-y-7">
-      <section className="relative overflow-hidden rounded-lg bg-[#73bfa1] px-6 py-8 text-white">
+    <div className="min-w-0 space-y-5 sm:space-y-7">
+      <section className="overflow-hidden rounded-lg bg-[#73bfa1] px-4 py-5 text-white sm:px-6 sm:py-8">
         <p className="mb-1 text-sm text-[#ecfff7]">Ciao!</p>
-        <h1 className="text-[38px] font-semibold text-white">
+        <h1 className="truncate text-xl font-semibold text-white sm:text-2xl md:text-3xl">
           {employeeName || 'Corsista'}
         </h1>
       </section>
 
-      <div>
-        <h2 className="mb-4 text-xl font-semibold text-gray-800">
+      <div className="min-w-0">
+        <h2 className="mb-3 text-base font-semibold text-gray-800 sm:mb-4 sm:text-lg md:text-xl">
           I tuoi corsi assegnati
         </h2>
 
         {courses.length === 0 ? (
-          <p className="rounded-xl border border-[#ececec] bg-white p-6 text-sm text-gray-600">
+          <p className="rounded-xl border border-[#ececec] bg-white p-4 text-sm text-gray-600 sm:p-6">
             Nessun corso assegnato. L&apos;amministratore della tua azienda deve
             assegnarti un corso prima di poter iniziare la formazione.
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
             {courses.map((course) => (
               <CourseCard
                 key={course.id}
