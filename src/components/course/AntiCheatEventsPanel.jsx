@@ -19,23 +19,23 @@ const AntiCheatEventsPanel = ({ antiCheat }) => {
   const recentEvents = antiCheat?.recent ?? [];
 
   return (
-    <section className="mt-6 rounded-2xl border border-[#f0d9d9] bg-[#fff8f8] p-5">
+    <section className="rounded-xl border border-[#f0d9d9] bg-[#fff8f8] p-4 sm:rounded-2xl sm:p-5">
       <div className="flex items-start gap-3">
-        <ShieldAlert className="mt-1 shrink-0 text-[#c24141]" size={22} />
+        <ShieldAlert className="mt-0.5 shrink-0 text-[#c24141]" size={18} />
         <div className="min-w-0 flex-1">
-          <h3 className="text-xl font-semibold text-[#252525] md:text-2xl">
+          <h3 className="text-base font-semibold text-[#252525] sm:text-lg">
             Monitoraggio anti-cheating
           </h3>
-          <p className="mt-1 text-sm text-[#6b4f4f]">
+          <p className="mt-1 text-xs text-[#6b4f4f] sm:text-sm">
             Eventi registrati durante la fruizione del corso (conservati fino a 5 anni).
           </p>
         </div>
       </div>
 
-      <div className="mt-4 rounded-xl bg-white px-4 py-3">
+      <div className="mt-3 rounded-xl bg-white px-3 py-3 sm:mt-4 sm:px-4">
         <p className="text-sm text-[#5a5a5a]">
           Totale eventi sospetti:{' '}
-          <span className="text-lg font-semibold text-[#1f1f1f]">{totalEvents}</span>
+          <span className="font-semibold text-[#1f1f1f]">{totalEvents}</span>
         </p>
         {totalEvents === 0 ? (
           <p className="mt-2 text-sm text-[#55B18D]">
