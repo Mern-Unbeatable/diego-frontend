@@ -36,8 +36,8 @@ export default function CoursesWithPackagesTabs() {
   };
 
   return (
-    <div>
-      <div className="mb-6 flex flex-wrap gap-2 border-b border-[#e3ece8] pb-1">
+    <div className="min-w-0">
+      <div className="-mx-1 mb-4 flex gap-1 overflow-x-auto border-b border-[#e3ece8] px-1 pb-px sm:mb-6 sm:gap-2">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -47,7 +47,7 @@ export default function CoursesWithPackagesTabs() {
               key={tab.id}
               type="button"
               onClick={() => switchTab(tab.id)}
-              className={`inline-flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+              className={`inline-flex shrink-0 items-center gap-2 border-b-2 px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors sm:px-4 sm:py-3 ${
                 isActive
                   ? 'border-[#73BFA1] text-[#2f5f4a]'
                   : 'border-transparent text-[#6b7471] hover:text-[#2f3d37]'
@@ -61,13 +61,19 @@ export default function CoursesWithPackagesTabs() {
       </div>
 
       {mountedTabs.courses ? (
-        <div className={activeTab === 'courses' ? '' : 'hidden'} aria-hidden={activeTab !== 'courses'}>
+        <div
+          className={activeTab === 'courses' ? '' : 'hidden'}
+          aria-hidden={activeTab !== 'courses'}
+        >
           <CoursesTable />
         </div>
       ) : null}
 
       {mountedTabs.packages ? (
-        <div className={activeTab === 'packages' ? '' : 'hidden'} aria-hidden={activeTab !== 'packages'}>
+        <div
+          className={activeTab === 'packages' ? '' : 'hidden'}
+          aria-hidden={activeTab !== 'packages'}
+        >
           <CoursePackagesPanel />
         </div>
       ) : null}

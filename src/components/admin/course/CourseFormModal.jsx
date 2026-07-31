@@ -396,16 +396,16 @@ export default function CourseFormModal({
       panelClassName="max-w-xl w-full rounded-2xl bg-[#f3f3f3] p-4 sm:p-6 md:p-8 max-h-[90vh] overflow-y-auto"
       className="bg-[#33584d]/78 p-2 sm:p-4 md:p-6 flex items-center justify-center"
     >
-      <div className="relative flex items-center justify-center w-full min-h-[40px]">
-        <button 
-          type="button" 
-          onClick={onClose} 
-          className="absolute left-0 top-1/2 -translate-y-1/2 p-1.5 rounded-full hover:bg-black/5 text-[#2a2a2a] transition" 
+      <div className="relative flex min-h-10 w-full items-center justify-center">
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute top-1/2 left-0 -translate-y-1/2 rounded-lg p-1.5 text-[#2a2a2a] transition hover:bg-black/5"
           aria-label="Back"
         >
           <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
-        <h2 className="text-center text-xl sm:text-3xl md:text-[40px] font-semibold text-[#141414] leading-tight px-6 sm:px-10">
+        <h2 className="px-10 text-center text-base leading-tight font-semibold text-[#141414] sm:text-lg md:text-xl">
           {title}
         </h2>
       </div>
