@@ -9,6 +9,7 @@ const TAB_CONFIG = [
   {
     key: 'active',
     label: 'Licenze attive',
+    shortLabel: 'Attive',
     activeClass: 'bg-[#73BFA1] text-white',
     dotClass: 'bg-[#73BFA1]',
     btnClass: null,
@@ -18,6 +19,7 @@ const TAB_CONFIG = [
   {
     key: 'expiring',
     label: 'Licenze in scadenza',
+    shortLabel: 'In scadenza',
     activeClass: 'bg-[#FFA756] text-white',
     dotClass: 'bg-[#FFA756]',
     btnClass: 'bg-[#FFA756] hover:bg-[#f59942]',
@@ -27,6 +29,7 @@ const TAB_CONFIG = [
   {
     key: 'expired',
     label: 'Licenze scadute',
+    shortLabel: 'Scadute',
     activeClass: 'bg-[#D9381E] text-white',
     dotClass: 'bg-[#D9381E]',
     btnClass: 'bg-[#D9381E] hover:bg-[#b82e17]',
@@ -65,7 +68,7 @@ const LicenseComponent = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full p-6">
+      <div className="min-w-0 w-full p-4 sm:p-6">
         <Loading size="md" className="min-h-40" />
       </div>
     );
@@ -73,8 +76,8 @@ const LicenseComponent = () => {
 
   return (
     <>
-      <div className="mt-8 w-full rounded-2xl border border-gray-100 bg-white p-6 shadow-sm sm:p-8">
-        <h2 className="mb-6 text-xl font-bold text-gray-900 sm:text-2xl">
+      <div className="mt-4 min-w-0 w-full rounded-xl border border-gray-100 bg-white p-4 shadow-sm sm:mt-6 sm:rounded-2xl sm:p-6 md:mt-8 md:p-8">
+        <h2 className="mb-4 text-base font-semibold text-gray-900 sm:mb-6 sm:text-lg md:text-xl">
           Le tue licenze
         </h2>
 
@@ -91,32 +94,38 @@ const LicenseComponent = () => {
           </div>
         )}
 
-        {/* Filter Tabs */}
-        <div className="mb-6 flex flex-wrap gap-3">
-          {TAB_CONFIG.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all ${
-                activeTab === tab.key
-                  ? tab.activeClass
-                  : 'bg-[#EFEFEF] text-gray-700 hover:bg-gray-200'
-              }`}
-              type="button"
-            >
-              {tab.label}
-            </button>
-          ))}
+        {/* Filter Tabs — scrollable on mobile */}
+        <div className="-mx-1 mb-5 overflow-x-auto px-1 sm:mb-6">
+          <div className="flex w-max min-w-full gap-2 sm:w-auto sm:flex-wrap sm:gap-3">
+            {TAB_CONFIG.map((tab) => {
+              const isActive = activeTab === tab.key;
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
+                  className={`inline-flex h-9 shrink-0 items-center justify-center rounded-full px-3 text-xs font-medium whitespace-nowrap transition-all sm:h-10 sm:px-5 sm:text-sm ${
+                    isActive
+                      ? tab.activeClass
+                      : 'bg-[#EFEFEF] text-gray-700 hover:bg-gray-200'
+                  }`}
+                  type="button"
+                >
+                  <span className="sm:hidden">{tab.shortLabel}</span>
+                  <span className="hidden sm:inline">{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3 sm:gap-4">
           {displayItems.map((item) => (
-            <div
+            <article
               key={item.id || activeTab}
-              className="w-full max-w-md rounded-2xl border border-gray-200/80 bg-white p-6 shadow-xs"
+              className="w-full rounded-xl border border-gray-200/80 bg-white p-4 shadow-sm sm:max-w-md sm:rounded-2xl sm:p-5 md:p-6"
             >
-              <div className="flex items-baseline gap-1.5">
-                <h3 className="text-base font-bold text-gray-900 sm:text-lg">
+              <div className="flex min-w-0 flex-wrap items-baseline gap-1.5">
+                <h3 className="truncate text-sm font-semibold text-gray-900 sm:text-base">
                   {item.name || 'Henry, Arthur'}
                 </h3>
                 {currentTab.showSuffix ? (
@@ -126,29 +135,29 @@ const LicenseComponent = () => {
                 ) : null}
               </div>
 
-              <p className="mt-2 text-sm font-medium text-gray-700">
+              <p className="mt-1.5 text-sm font-medium text-gray-700 sm:mt-2">
                 {item.role || 'Freelancer'}
               </p>
 
-              <div className="mt-2.5 flex items-center text-xs text-gray-600 sm:text-sm">
+              <div className="mt-2 flex items-center text-xs text-gray-600 sm:mt-2.5 sm:text-sm">
                 <span>
                   Scadenza: {item.expiryDate || currentTab.defaultExpiry}
                 </span>
                 <span
-                  className={`ml-1.5 inline-block h-2.5 w-2.5 rounded-full ${currentTab.dotClass}`}
+                  className={`ml-1.5 inline-block h-2 w-2 shrink-0 rounded-full sm:h-2.5 sm:w-2.5 ${currentTab.dotClass}`}
                 />
               </div>
 
               {currentTab.btnClass ? (
                 <button
-                  className={`mt-4 inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium text-white transition-colors ${currentTab.btnClass}`}
+                  className={`mt-4 inline-flex h-10 w-full items-center justify-center rounded-full px-5 text-sm font-medium text-white transition-colors sm:w-auto sm:px-6 ${currentTab.btnClass}`}
                   type="button"
                   onClick={() => setRenewModalOpen(true)}
                 >
                   Rinnova licenza
                 </button>
               ) : null}
-            </div>
+            </article>
           ))}
         </div>
       </div>
