@@ -15,7 +15,7 @@ import { formatEuro } from '../../../../utils/courseMedia';
 const ArchivePurchaseView = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { certificates: certificatesRoute, archive: archiveRoute } = useMemo(
+  const { certificates: certificatesRoute } = useMemo(
     () => resolveArchiveRoutes(location.pathname),
     [location.pathname],
   );
@@ -44,7 +44,8 @@ const ArchivePurchaseView = () => {
 
   const plan = planData?.plan;
   const subscription = planData?.subscription;
-  const hasActiveSubscription = planData?.hasArchiveAccess || subscription?.isActive;
+  const hasActiveSubscription =
+    planData?.hasArchiveAccess || subscription?.isActive;
 
   const amountLabel = useMemo(
     () => formatEuro(Number(plan?.priceEur || 0)),
@@ -52,7 +53,12 @@ const ArchivePurchaseView = () => {
   );
 
   useEffect(() => {
-    if (loading || hasActiveSubscription || !plan?.enabled || intentRequestRef.current) {
+    if (
+      loading ||
+      hasActiveSubscription ||
+      !plan?.enabled ||
+      intentRequestRef.current
+    ) {
       return;
     }
 
@@ -63,7 +69,8 @@ const ArchivePurchaseView = () => {
       .then((result) => {
         const payload = result?.data ?? result;
         setPaymentIntent({
-          clientSecret: payload?.clientSecret || payload?.paymentIntent?.client_secret,
+          clientSecret:
+            payload?.clientSecret || payload?.paymentIntent?.client_secret,
         });
       })
       .catch((error) => {
@@ -72,10 +79,10 @@ const ArchivePurchaseView = () => {
       .finally(() => setCreatingIntent(false));
   }, [loading, hasActiveSubscription, plan?.enabled]);
 
-  const handlePaymentSuccess = async (paymentIntent) => {
+  const handlePaymentSuccess = async (intent) => {
     setVerifying(true);
     try {
-      const paymentIntentId = paymentIntent?.id || paymentIntent;
+      const paymentIntentId = intent?.id || intent;
       await verifyArchivePaymentIntentService(paymentIntentId);
       toast.success('Archivio cloud attivato con successo');
       navigate(`${certificatesRoute}?archive=activated`);
@@ -91,27 +98,29 @@ const ArchivePurchaseView = () => {
   }
 
   return (
-    <div className="max-w-2xl ">
+    <div className="mx-auto min-w-0 w-full max-w-2xl space-y-4 sm:space-y-5">
       <button
         type="button"
         onClick={() => navigate(-1)}
-        className="mb-6 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#F1F9F6]"
+        aria-label="Torna indietro"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#F1F9F6] hover:bg-[#e5f3ed]"
       >
-        <FaChevronLeft className="text-gray-600" />
+        <FaChevronLeft className="text-sm text-gray-600" />
       </button>
 
-      <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
-        <h1 className="text-xl font-bold text-[#1f1f1f] md:text-2xl">
+      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:rounded-2xl sm:p-5 md:p-6">
+        <h1 className="text-base font-semibold text-[#1f1f1f] sm:text-lg md:text-xl">
           Archivio attestati cloud
         </h1>
-        <p className="mt-2 text-sm text-[#666]">
-          Conserva e scarica i tuoi attestati oltre i 30 giorni gratuiti.
-          I documenti restano archiviati sui nostri server per 5 anni (conformità normativa).
+        <p className="mt-2 text-sm leading-relaxed text-[#666]">
+          Conserva e scarica i tuoi attestati oltre i 30 giorni gratuiti. I
+          documenti restano archiviati sui nostri server per 5 anni (conformità
+          normativa).
         </p>
 
         {hasActiveSubscription ? (
-          <div className="mt-6 rounded-xl bg-[#e6f6ef] px-5 py-4 text-[#2d5f49]">
-            <p className="font-semibold">Archivio attivo</p>
+          <div className="mt-5 rounded-xl bg-[#e6f6ef] px-4 py-4 text-[#2d5f49] sm:mt-6 sm:px-5">
+            <p className="text-sm font-semibold sm:text-base">Archivio attivo</p>
             <p className="mt-1 text-sm">
               Il tuo abbonamento è valido fino al{' '}
               {subscription?.expiresAt
@@ -120,31 +129,34 @@ const ArchivePurchaseView = () => {
             </p>
             <Link
               to={certificatesRoute}
-              className="mt-4 inline-block rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white"
+              className="mt-4 inline-flex h-10 w-full items-center justify-center rounded-full bg-[#73bfa1] px-5 text-sm font-semibold text-white hover:bg-[#63a88c] sm:w-auto"
             >
               Vai ai certificati
             </Link>
           </div>
         ) : (
           <>
-            <div className="mt-6 rounded-xl bg-[#f3f7f5] p-5">
-              <h2 className="text-lg font-semibold text-[#222]">
+            <div className="mt-5 rounded-xl bg-[#f3f7f5] p-4 sm:mt-6 sm:p-5">
+              <h2 className="text-sm font-semibold text-[#222] sm:text-base">
                 {plan?.name || 'Piano archivio annuale'}
               </h2>
               <p className="mt-2 text-sm text-[#555]">
                 {plan?.description ||
                   `Accesso illimitato al download degli attestati per ${plan?.durationDays || 365} giorni.`}
               </p>
-              <p className="mt-4 text-3xl font-bold text-[#73bfa1]">{amountLabel}</p>
-              <p className="text-sm text-[#888]">
-                Spazio: {plan?.storageMb || 1024} MB · Durata: {plan?.durationDays || 365} giorni
+              <p className="mt-4 text-2xl font-bold text-[#73bfa1] sm:text-3xl">
+                {amountLabel}
+              </p>
+              <p className="mt-1 text-xs text-[#888] sm:text-sm">
+                Spazio: {plan?.storageMb || 1024} MB · Durata:{' '}
+                {plan?.durationDays || 365} giorni
               </p>
             </div>
 
             {creatingIntent ? (
               <Loading size="sm" className="mt-6 min-h-24" />
             ) : paymentIntent?.clientSecret ? (
-              <div className="mt-6">
+              <div className="mt-5 min-w-0 sm:mt-6">
                 <CheckoutStripeForm
                   clientSecret={paymentIntent.clientSecret}
                   amount={Number(plan?.priceEur || 0)}
@@ -154,7 +166,7 @@ const ArchivePurchaseView = () => {
                 />
               </div>
             ) : (
-              <p className="mt-6 text-sm text-red-600">
+              <p className="mt-5 text-sm text-red-600 sm:mt-6">
                 Pagamento non disponibile al momento.
               </p>
             )}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../../../components/ui/buttons/Buttons';
 
@@ -6,13 +5,10 @@ const EmptyCertificateState = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="mx-auto max-w-md rounded-xl border border-gray-200 bg-white p-12 shadow-sm">
-      {/* Empty state illustration */}
-      <div className="mb-6 flex justify-center">
-        <div className="relative h-48 w-48">
-          {/* Document with magnifying glass illustration */}
-          <svg viewBox="0 0 200 200" className="h-full w-full">
-            {/* Document background */}
+    <div className="mx-auto w-full max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 md:p-10">
+      <div className="mb-5 flex justify-center sm:mb-6">
+        <div className="relative h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48">
+          <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden="true">
             <rect
               x="60"
               y="40"
@@ -22,8 +18,6 @@ const EmptyCertificateState = () => {
               fill="#E8EFFE"
               opacity="0.5"
             />
-
-            {/* Document lines */}
             <line
               x1="75"
               y1="60"
@@ -51,8 +45,6 @@ const EmptyCertificateState = () => {
               strokeWidth="3"
               strokeLinecap="round"
             />
-
-            {/* Magnifying glass */}
             <circle
               cx="120"
               cy="110"
@@ -62,8 +54,6 @@ const EmptyCertificateState = () => {
               strokeWidth="6"
             />
             <circle cx="120" cy="110" r="20" fill="white" />
-
-            {/* Sad face */}
             <circle cx="113" cy="105" r="2" fill="#5B6FFF" />
             <circle cx="127" cy="105" r="2" fill="#5B6FFF" />
             <path
@@ -73,8 +63,6 @@ const EmptyCertificateState = () => {
               fill="none"
               strokeLinecap="round"
             />
-
-            {/* Magnifying glass handle */}
             <line
               x1="138"
               y1="128"
@@ -84,8 +72,6 @@ const EmptyCertificateState = () => {
               strokeWidth="6"
               strokeLinecap="round"
             />
-
-            {/* Decorative dots */}
             <circle cx="45" cy="80" r="2" fill="#C5CEFF" opacity="0.6" />
             <circle cx="50" cy="120" r="2" fill="#C5CEFF" opacity="0.6" />
             <circle cx="155" cy="70" r="2" fill="#C5CEFF" opacity="0.6" />
@@ -94,20 +80,18 @@ const EmptyCertificateState = () => {
         </div>
       </div>
 
-      {/* Empty state message */}
-      <p className="mb-6 text-center text-sm leading-relaxed text-[#252525]">
+      <p className="mb-5 text-center text-sm leading-relaxed text-[#252525] sm:mb-6">
         Nessun corso attivo. Vai al catalogo e inizia il tuo percorso oggi
         stesso!
       </p>
 
-      {/* Action button */}
-      <div className="flex justify-end">
+      <div className="flex justify-center sm:justify-end">
         <Button
           onClick={() => navigate('/training/courses/catalog')}
           label="Catalogo corsi"
           variant="primary"
           size="sm"
-          className="text-sm"
+          className="h-10 w-full justify-center text-sm sm:h-auto sm:w-auto"
         />
       </div>
     </div>

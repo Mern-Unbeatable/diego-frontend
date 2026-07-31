@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { LuPrinter, LuDownload } from 'react-icons/lu';
@@ -10,7 +10,7 @@ import { resolveAssetUrl } from '../../../../../features/api/certificateHelpers'
 import { getRtkErrorMessage } from '../../../../../features/api/utils';
 
 const NoImageState = () => (
-  <div className="flex h-full min-h-[250px] w-full items-center justify-center bg-gray-100 text-sm text-gray-400">
+  <div className="flex h-full min-h-48 w-full items-center justify-center bg-gray-100 px-4 text-center text-sm text-gray-400 sm:min-h-[250px]">
     Anteprima non disponibile
   </div>
 );
@@ -25,11 +25,15 @@ const fetchPdfBlobUrl = async (pdfUrl) => {
   return URL.createObjectURL(blob);
 };
 
-const CertificateCard = ({ certificate, archiveRoute = ROUTES.PRIVATE_USER.ARCHIVE }) => {
+const CertificateCard = ({
+  certificate,
+  archiveRoute = ROUTES.PRIVATE_USER.ARCHIVE,
+}) => {
   const previewBlobUrlRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [previewLoading, setPreviewLoading] = useState(false);
-  const [downloadCertificate, { isLoading: isDownloading }] = useDownloadCertificateMutation();
+  const [downloadCertificate, { isLoading: isDownloading }] =
+    useDownloadCertificateMutation();
 
   const canDownload = certificate.canDownload;
   const needsArchive = certificate.needsArchivePurchase;
@@ -100,7 +104,9 @@ const CertificateCard = ({ certificate, archiveRoute = ROUTES.PRIVATE_USER.ARCHI
       document.body.removeChild(link);
       URL.revokeObjectURL(blobUrl);
     } catch (error) {
-      toast.error(getRtkErrorMessage(error) || 'Impossibile scaricare il certificato');
+      toast.error(
+        getRtkErrorMessage(error) || 'Impossibile scaricare il certificato',
+      );
     }
   };
 
@@ -110,7 +116,11 @@ const CertificateCard = ({ certificate, archiveRoute = ROUTES.PRIVATE_USER.ARCHI
       return;
     }
     if (previewBlobUrlRef.current) {
-      const printWindow = window.open(previewBlobUrlRef.current, '_blank', 'noopener,noreferrer');
+      const printWindow = window.open(
+        previewBlobUrlRef.current,
+        '_blank',
+        'noopener,noreferrer',
+      );
       printWindow?.focus();
       printWindow?.print();
       return;
@@ -119,54 +129,61 @@ const CertificateCard = ({ certificate, archiveRoute = ROUTES.PRIVATE_USER.ARCHI
   };
 
   return (
-    <div className="mb-6 space-y-5 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-      <h3 className="text-2xl font-bold text-gray-900">{certificate.courseTitle}</h3>
+    <article className="space-y-3 rounded-xl border border-gray-200 bg-white p-3 shadow-sm sm:space-y-4 sm:p-4 md:space-y-5 md:p-6">
+      <h3 className="text-sm font-semibold leading-snug text-gray-900 sm:text-base md:text-lg">
+        {certificate.courseTitle}
+      </h3>
 
-      <div className="mx-auto max-w-xl overflow-hidden rounded-xl border border-amber-100 bg-gray-100">
+      <div className="mx-auto w-full max-w-xl overflow-hidden rounded-xl border border-amber-100 bg-gray-100">
         {needsArchive ? (
-          <div className="flex min-h-[250px] flex-col items-center justify-center gap-3 p-6 text-center">
+          <div className="flex min-h-48 flex-col items-center justify-center gap-3 p-4 text-center sm:min-h-[250px] sm:p-6">
             <p className="text-sm text-[#666]">
-              L&apos;anteprima gratuita è scaduta. Attiva l&apos;archivio cloud per scaricare di nuovo.
+              L&apos;anteprima gratuita è scaduta. Attiva l&apos;archivio cloud
+              per scaricare di nuovo.
             </p>
             <Link
               to={archiveRoute}
-              className="rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white"
+              className="inline-flex h-10 w-full max-w-xs items-center justify-center rounded-full bg-[#73bfa1] px-5 text-sm font-semibold text-white hover:bg-[#63a88c] sm:w-auto"
             >
               Acquista archivio
             </Link>
           </div>
         ) : previewLoading ? (
-          <div className="flex min-h-[250px] items-center justify-center text-sm text-gray-400">
+          <div className="flex min-h-48 items-center justify-center text-sm text-gray-400 sm:min-h-[250px]">
             Caricamento PDF...
           </div>
         ) : previewUrl ? (
           <iframe
             src={`${previewUrl}#toolbar=0&navpanes=0`}
             title={`Certificate for ${certificate.courseTitle}`}
-            className="h-80 w-full bg-white"
+            className="h-56 w-full bg-white sm:h-72 md:h-80"
           />
         ) : (
           <NoImageState />
         )}
       </div>
 
-      {certificate.message && (
-        <p className={`text-xl font-semibold ${canDownload ? 'text-gray-500' : 'text-amber-600'}`}>
+      {certificate.message ? (
+        <p
+          className={`text-sm font-medium sm:text-base ${
+            canDownload ? 'text-gray-500' : 'text-amber-600'
+          }`}
+        >
           {certificate.message}
         </p>
-      )}
+      ) : null}
 
-      {certificate.daysRemaining > 0 && canDownload && (
-        <p className="text-sm font-medium text-[#d48c21]">
+      {certificate.daysRemaining > 0 && canDownload ? (
+        <p className="text-xs font-medium text-[#d48c21] sm:text-sm">
           Disponibile per {certificate.daysRemaining} giorni
         </p>
-      )}
+      ) : null}
 
-      <div className="flex flex-wrap items-center justify-end gap-2">
+      <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
         {needsArchive ? (
           <Link
             to={archiveRoute}
-            className="rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white"
+            className="inline-flex h-10 w-full items-center justify-center rounded-full bg-[#73bfa1] px-5 text-sm font-semibold text-white hover:bg-[#63a88c] sm:w-auto"
           >
             Acquista archivio cloud
           </Link>
@@ -179,7 +196,7 @@ const CertificateCard = ({ certificate, archiveRoute = ROUTES.PRIVATE_USER.ARCHI
               label="Stampa"
               variant="primary"
               size="sm"
-              className="cursor-pointer px-3 py-1.5 text-sm font-semibold disabled:opacity-40"
+              className="h-10 w-full cursor-pointer justify-center px-4 py-2 text-sm font-semibold disabled:opacity-40 sm:h-auto sm:w-auto"
               aria-label="Print certificate"
             />
             <Button
@@ -189,13 +206,13 @@ const CertificateCard = ({ certificate, archiveRoute = ROUTES.PRIVATE_USER.ARCHI
               label={isDownloading ? 'Download...' : 'Scarica'}
               variant="primary"
               size="sm"
-              className="cursor-pointer px-3 py-1.5 text-sm font-semibold disabled:opacity-40"
+              className="h-10 w-full cursor-pointer justify-center px-4 py-2 text-sm font-semibold disabled:opacity-40 sm:h-auto sm:w-auto"
               aria-label="Download certificate"
             />
           </>
         )}
       </div>
-    </div>
+    </article>
   );
 };
 
