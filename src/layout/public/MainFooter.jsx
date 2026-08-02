@@ -6,7 +6,7 @@ const MainFooter = () => {
 
   return (
     <footer className="bg-[#000000] px-6 py-12 text-white">
-      <div className="mx-auto max-w-7xl px-[32px]">
+      <div className="mx-auto max-w-7xl lg:px-[32px]">
         <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-5">
           {/* Logo Section */}
           <div className="">
@@ -18,9 +18,9 @@ const MainFooter = () => {
           </div>
 
           {/* Main Links Grid */}
-          <div className="col-span-4 grid grid-cols-2 gap-10 md:grid-cols-4">
+          <div className="col-span-4 grid grid-cols-2 gap-6 lg:gap-10 md:grid-cols-4">
             {/* Prodotto Column */}
-            <div className="col-span-1 gap-[32px] text-white">
+            <div className="col-span-1 gap-4 lg:gap-[32px] text-white">
               <h3 className="mb-4 text-base font-semibold text-white">
                 {t('footer.product', { defaultValue: 'Prodotto' })}
               </h3>
