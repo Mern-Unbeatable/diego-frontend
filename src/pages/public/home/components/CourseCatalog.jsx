@@ -163,7 +163,7 @@ import { RefreshCw } from 'lucide-react'; // Error icon
 const CourseCatalog = () => {
   const { t } = useTranslation();
   const carouselRef = useRef(null);
-  const { getPublicCourses, courses, loading, error } = useCourse(); // error যোগ করা
+  const { getPublicCourses, courses, loading, error } = useCourse();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {

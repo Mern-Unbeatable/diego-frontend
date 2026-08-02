@@ -33,6 +33,11 @@ export const STORAGE = {
   },
   clearUser: () => removeItem(storageKeys.USER),
 
+  // === PROFILE ===
+  getProfile: () => getJSON(storageKeys.PROFILE),
+  setProfile: (profile) => setJSON(storageKeys.PROFILE, profile),
+  clearProfile: () => removeItem(storageKeys.PROFILE),
+
   // === TOKEN ===
   getToken: () => getItem(storageKeys.TOKEN),
   setToken: (token) => setItem(storageKeys.TOKEN, token),

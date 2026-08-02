@@ -24,91 +24,7 @@ const CourseHomeView = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Sample course data
-  const courses = [
-    {
-      id: 1,
-      title: 'Advanced React Development',
-      instructor: 'Sarah Johnson',
-      rating: 4.8,
-      students: 1234,
-      duration: '12 weeks',
-      level: 'Advanced',
-      category: 'Development',
-      image:
-        'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400',
-      progress: 75,
-      color: 'from-blue-500 to-blue-600',
-    },
-    {
-      id: 2,
-      title: 'Python for Data Science',
-      instructor: 'Michael Chen',
-      rating: 4.9,
-      students: 2156,
-      duration: '10 weeks',
-      level: 'Intermediate',
-      category: 'Data Science',
-      image:
-        'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400',
-      progress: 45,
-      color: 'from-green-500 to-green-600',
-    },
-    {
-      id: 3,
-      title: 'UI/UX Design Fundamentals',
-      instructor: 'Emily Rodriguez',
-      rating: 4.7,
-      students: 987,
-      duration: '8 weeks',
-      level: 'Beginner',
-      category: 'Design',
-      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400',
-      progress: 90,
-      color: 'from-purple-500 to-purple-600',
-    },
-    {
-      id: 4,
-      title: 'Machine Learning A-Z',
-      instructor: 'David Kim',
-      rating: 4.9,
-      students: 3456,
-      duration: '16 weeks',
-      level: 'Advanced',
-      category: 'AI & ML',
-      image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400',
-      progress: 20,
-      color: 'from-red-500 to-red-600',
-    },
-    {
-      id: 5,
-      title: 'JavaScript Mastery',
-      instructor: 'Lisa Park',
-      rating: 4.6,
-      students: 5678,
-      duration: '14 weeks',
-      level: 'All Levels',
-      category: 'Development',
-      image:
-        'https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=400',
-      progress: 60,
-      color: 'from-yellow-500 to-yellow-600',
-    },
-    {
-      id: 6,
-      title: 'Cloud Computing with AWS',
-      instructor: 'Robert Taylor',
-      rating: 4.8,
-      students: 876,
-      duration: '9 weeks',
-      level: 'Intermediate',
-      category: 'Cloud',
-      image:
-        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400',
-      progress: 0,
-      color: 'from-indigo-500 to-indigo-600',
-    },
-  ];
+  const courses = [];
 
   // Filter courses based on active tab and search
   const filteredCourses = courses.filter((course) => {
@@ -125,28 +41,7 @@ const CourseHomeView = () => {
     return matchesSearch && matchesTab;
   });
 
-  // Stats data
-  const stats = [
-    {
-      label: 'Courses Enrolled',
-      value: '8',
-      icon: BookOpen,
-      color: 'text-blue-500',
-    },
-    { label: 'Hours Spent', value: '47', icon: Clock, color: 'text-green-500' },
-    {
-      label: 'Certificates',
-      value: '3',
-      icon: Award,
-      color: 'text-purple-500',
-    },
-    {
-      label: 'Average Score',
-      value: '92%',
-      icon: TrendingUp,
-      color: 'text-orange-500',
-    },
-  ];
+  const stats = [];
 
   return (
     <div className="">

@@ -6,6 +6,7 @@ import { Check, Copy } from 'lucide-react';
 import { Heading, InputField, Label } from '../../components/ui';
 import { useAuth } from '../../features/auth/authHooks';
 import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
+import { STORAGE } from '../../utils/storage/authStorage';
 import { getDashboardPath } from '../../utils/auth/authUtils';
 import toast from 'react-hot-toast';
 const LoginView = () => {
@@ -198,7 +199,10 @@ const LoginView = () => {
       });
 
       COOKIE_STORAGE.clearAll();
+      const userProfile = response?.data?.user || null;
       COOKIE_STORAGE.setUser(response.data.user.level);
+      COOKIE_STORAGE.setProfile(userProfile);
+      STORAGE.setProfile(userProfile);
       COOKIE_STORAGE.setToken(response.data.accessToken);
 
       const userRole = response.data.user.level;

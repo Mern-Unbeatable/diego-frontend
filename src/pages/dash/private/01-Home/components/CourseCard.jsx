@@ -12,7 +12,10 @@ const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
       <div className="relative h-36 w-full overflow-hidden rounded-xl bg-gray-100 sm:h-44 md:h-48">
         {course.thumbnailUrl ? (
           <img
-            src={course.thumbnailUrl}
+            src={
+              course.thumbnailUrl ||
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRdy7X0K-tiZrcgxcNp2BhRjDH6MX6XaCpJyGXfHh6-jrw1Ga2tP3tEH8&s=10'
+            }
             alt={course.title}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />

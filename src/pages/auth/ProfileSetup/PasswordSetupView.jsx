@@ -7,7 +7,6 @@ import { BiArrowBack, BiShow, BiHide } from 'react-icons/bi';
 import { Heading, Paragraph, InputField, Label } from '../../../components/ui';
 import { STORAGE } from '../../../utils/storage/authStorage';
 import COOKIE_STORAGE from '../../../utils/cookies/cookieStorage';
-import { getDashboardPath } from '../../../utils/auth/authUtils';
 import { useAuth } from '../../../features/auth/authHooks';
 import {
   buildRegisterCompletePayload,
@@ -33,9 +32,12 @@ const PasswordSetupView = () => {
 
     try {
       const response = await registerComplete(draft);
+      const userProfile = response?.data?.user || null;
       COOKIE_STORAGE.setUser(response.data.user.level);
+      COOKIE_STORAGE.setProfile(userProfile);
+      STORAGE.setProfile(userProfile);
       toast.success('Registration completed successfully');
-      STORAGE.clearAll();
+      STORAGE.clearUser();
     } catch (error) {
       const message =
         typeof error === 'string'

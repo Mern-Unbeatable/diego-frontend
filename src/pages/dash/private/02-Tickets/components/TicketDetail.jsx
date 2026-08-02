@@ -118,7 +118,7 @@ const TicketDetail = () => {
               {ticketDetail.message}
             </p>
 
-            {ticketDetail.attachments ? (
+            {/* {ticketDetail.attachments ? (
               <div className="mt-4">
                 <p className="mb-2 text-sm font-semibold text-[#262626]">
                   Allegato
@@ -129,7 +129,20 @@ const TicketDetail = () => {
                   className="max-h-72 w-full rounded-lg border border-[#e4e4e4] object-cover sm:max-h-80"
                 />
               </div>
-            ) : null}
+            ) : null} */}
+
+            {ticketDetail.attachments ? (
+  <div className="mt-4">
+    <p className="mb-2 text-sm font-semibold text-[#262626]">
+      Allegato
+    </p>
+    <img
+      src={ticketDetail.attachments}
+      alt="Ticket attachment"
+      className="max-h-72 w-full rounded-lg border border-[#e4e4e4] object-contain sm:max-h-80 bg-gray-50"
+    />
+  </div>
+) : null}
           </section>
 
           <section className="rounded-xl border border-[#e4e4e4] bg-white p-4 sm:p-5 md:p-6">

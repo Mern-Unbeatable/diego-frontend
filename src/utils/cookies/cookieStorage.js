@@ -83,6 +83,29 @@ export const COOKIE_STORAGE = {
     Cookies.remove('user_data', { path: '/' });
   },
 
+  setProfile: (profile) => {
+    try {
+      const profileString = JSON.stringify(profile);
+      Cookies.set('profile_data', profileString, COOKIE_OPTIONS.session);
+    } catch (error) {
+      console.error('Error storing profile data:', error);
+    }
+  },
+
+  getProfile: () => {
+    try {
+      const profileString = Cookies.get('profile_data');
+      return profileString ? JSON.parse(profileString) : null;
+    } catch (error) {
+      console.error('Error parsing profile data:', error);
+      return null;
+    }
+  },
+
+  clearProfile: () => {
+    Cookies.remove('profile_data', { path: '/' });
+  },
+
   setTempData: (key, value, expiresInHours = 1) => {
     try {
       const options = {
@@ -113,6 +136,7 @@ export const COOKIE_STORAGE = {
     Cookies.remove('auth_token', { path: '/' });
     Cookies.remove('refresh_token', { path: '/' });
     Cookies.remove('user_data', { path: '/' });
+    Cookies.remove('profile_data', { path: '/' });
 
     const allCookies = Cookies.get();
     Object.keys(allCookies).forEach((cookieName) => {

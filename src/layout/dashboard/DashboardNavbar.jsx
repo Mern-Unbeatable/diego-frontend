@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   Bell,
   Search,
@@ -11,15 +12,72 @@ import {
   ChevronDown,
   Menu,
 } from 'lucide-react';
+import { ROLES } from '../../config/roles';
+import { ROUTES } from '../../config/routes';
+import { canAccess } from '../../config/permissions';
 import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
+import { STORAGE } from '../../utils/storage/authStorage';
+import { getUserRole } from '../../utils/auth/authUtils';
 import { useUIStore } from '../../features/zustand';
+
+const helpRouteByRole = {
+  [ROLES.PLATFORM_ADMIN]: ROUTES.PLATFORM_ADMIN.TICKETS,
+  [ROLES.COMPANY_ADMIN]: ROUTES.COMPANY_ADMIN.TICKETS,
+  [ROLES.COMPANY_EMPLOYEE]: null,
+  [ROLES.LICENSE_USER]: ROUTES.LICENSE_USER.TICKETS,
+  [ROLES.PRIVATE_USER]: ROUTES.PRIVATE_USER.TICKETS,
+};
+
+const getDisplayName = (profile, fallbackRole) => {
+  const firstName = profile?.firstName || profile?.givenName || '';
+  const lastName = profile?.lastName || profile?.familyName || '';
+  const fullName = [firstName, lastName].filter(Boolean).join(' ').trim();
+
+  return (
+    fullName ||
+    profile?.name ||
+    profile?.fullName ||
+    profile?.displayName ||
+    profile?.email ||
+    fallbackRole ||
+    'Account'
+  );
+};
+
+const getDisplayEmail = (profile) =>
+  profile?.email || profile?.username || profile?.mail || '';
 
 const DashboardNavbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { openSidebar } = useUIStore();
+  const { user } = useSelector((state) => state.auth);
+
+  const role = getUserRole(user);
+  const profile = COOKIE_STORAGE.getProfile() || STORAGE.getProfile() || null;
+  const displayName = getDisplayName(profile, role);
+  const displayEmail = getDisplayEmail(profile);
+
+  const menuItems = [
+    canAccess(role, ROUTES.PRIVATE_USER.PROFILE) && {
+      label: 'Profile',
+      to: ROUTES.PRIVATE_USER.PROFILE,
+      icon: User,
+    },
+    canAccess(role, ROUTES.PLATFORM_ADMIN.SETTINGS) && {
+      label: 'Settings',
+      to: ROUTES.PLATFORM_ADMIN.SETTINGS,
+      icon: Settings,
+    },
+    helpRouteByRole[role] && canAccess(role, helpRouteByRole[role]) && {
+      label: 'Help & Support',
+      to: helpRouteByRole[role],
+      icon: HelpCircle,
+    },
+  ].filter(Boolean);
 
   const handleLogout = () => {
     COOKIE_STORAGE.clearAll();
+    STORAGE.clearAll();
     window.location.reload(); // Reload the page to reset the state
   };
 
@@ -93,44 +151,37 @@ const DashboardNavbar = () => {
 
                 {/* Dropdown */}
                 <div
-                  className="absolute right-0 z-[100] mt-2 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-gray-300"
+                  className="absolute right-0 z-100 mt-2 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-gray-300"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="py-1">
                     {/* User Info */}
                     <div className="border-b border-gray-100 px-4 py-3">
                       <p className="text-sm font-medium text-[#2a2a2a]">
-                        John Doe
+                        {displayName}
                       </p>
-                      <p className="truncate text-xs text-gray-500">
-                        john.doe@email.com
-                      </p>
+                      {displayEmail ? (
+                        <p className="truncate text-xs text-gray-500">
+                          {displayEmail}
+                        </p>
+                      ) : null}
                     </div>
 
-                    {/* Menu Items - Static buttons */}
-                    <button
-                      className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#2a2a2a] transition-colors hover:bg-[#f7f7f7]"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      <User size={18} />
-                      Profile
-                    </button>
+                    {menuItems.map((item) => {
+                      const Icon = item.icon;
 
-                    <button
-                      className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#2a2a2a] transition-colors hover:bg-[#f7f7f7]"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      <Settings size={18} />
-                      Settings
-                    </button>
-
-                    <button
-                      className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#2a2a2a] transition-colors hover:bg-[#f7f7f7]"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      <HelpCircle size={18} />
-                      Help & Support
-                    </button>
+                      return (
+                        <Link
+                          key={item.to}
+                          to={item.to}
+                          className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[#2a2a2a] transition-colors hover:bg-[#f7f7f7]"
+                          onClick={() => setIsDropdownOpen(false)}
+                        >
+                          <Icon size={18} />
+                          {item.label}
+                        </Link>
+                      );
+                    })}
 
                     <div className="border-t border-gray-100">
                       <button

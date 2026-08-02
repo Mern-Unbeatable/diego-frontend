@@ -1,21 +1,47 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ChevronLeft, CheckCircle, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import PricingCardsModal from '../../../components/training/PricingCardsModal';
 import CourseMedia from '../../../components/training/CourseMedia';
+import { ROUTES } from '../../../config/routes';
 import { useCourse } from '../../../features/public/course/courseHooks';
 import {
   getLocalizedValue,
   mapCourseFromApi,
 } from '../../../features/public/course/courseMappers';
+import { usePrivate } from '../../../features/private/privateHooks';
 import { formatEuro } from '../../../utils/courseMedia';
+
+const getEnrollmentCourseId = (enrollment) =>
+  String(enrollment?.courseId ?? enrollment?.course?.id ?? '').trim();
+
+const getEnrollmentCourseSlug = (enrollment) =>
+  String(enrollment?.slug ?? enrollment?.course?.slug ?? '').trim();
+
+const hasMatchingEnrollment = (enrollment, courseId, courseSlug) => {
+  if (!enrollment) return false;
+
+  const enrollmentCourseId = getEnrollmentCourseId(enrollment);
+  const enrollmentCourseSlug = getEnrollmentCourseSlug(enrollment);
+
+  return (
+    [enrollmentCourseId, enrollmentCourseSlug].includes(courseId) ||
+    [enrollmentCourseId, enrollmentCourseSlug].includes(courseSlug)
+  );
+};
 
 const CourseDetails = () => {
   const { t, i18n } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isResolvingEnrollment, setIsResolvingEnrollment] = useState(false);
+  const hasLoadedEnrollmentsRef = useRef(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { enrollments, enrollmentsLoading, fetchMyEnrollments } = usePrivate();
   const { getCourseDetails, selectedCourse, loading } = useCourse();
   const courseIdentifier = decodeURIComponent(
     (searchParams.get('slug') || searchParams.get('id') || '').trim(),
@@ -60,6 +86,88 @@ const CourseDetails = () => {
   }, [selectedCourse, language, t, searchParams]);
 
   const filledStars = Math.max(0, Math.min(5, Math.round(course?.rating ?? 0)));
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      hasLoadedEnrollmentsRef.current = false;
+      return;
+    }
+
+    if (hasLoadedEnrollmentsRef.current || enrollmentsLoading) return;
+
+    hasLoadedEnrollmentsRef.current = true;
+
+    fetchMyEnrollments().catch(() => {});
+  }, [
+    enrollmentsLoading,
+    fetchMyEnrollments,
+    isAuthenticated,
+  ]);
+
+  const resolvedCourseId = String(course?.id || courseIdentifier || '').trim();
+  const resolvedCourseSlug = String(course?.slug || courseIdentifier || '').trim();
+
+  const purchasedEnrollment = useMemo(
+    () =>
+      enrollments.find((enrollment) =>
+        hasMatchingEnrollment(enrollment, resolvedCourseId, resolvedCourseSlug),
+      ) || null,
+    [enrollments, resolvedCourseId, resolvedCourseSlug],
+  );
+
+  const handleEnrollNow = async () => {
+    const loginRedirect = `${location.pathname}${location.search}`;
+
+    if (!isAuthenticated) {
+      navigate(`/auth/login?redirect=${encodeURIComponent(loginRedirect)}`);
+      return;
+    }
+
+    setIsResolvingEnrollment(true);
+
+    try {
+      let currentEnrollments = enrollments;
+
+      if (!currentEnrollments.length) {
+        const response = await fetchMyEnrollments().catch(() => null);
+        currentEnrollments = Array.isArray(response?.enrollments)
+          ? response.enrollments
+          : Array.isArray(response?.data?.enrollments)
+            ? response.data.enrollments
+            : Array.isArray(response?.data?.data?.enrollments)
+              ? response.data.data.enrollments
+              : [];
+      }
+
+      const isPurchased =
+        purchasedEnrollment ||
+        currentEnrollments.some((enrollment) =>
+          hasMatchingEnrollment(enrollment, resolvedCourseId, resolvedCourseSlug),
+        );
+
+      if (isPurchased) {
+        navigate(
+          `${ROUTES.PRIVATE_USER.COURSE}/${resolvedCourseId || courseIdentifier}`,
+        );
+        return;
+      }
+
+      const checkoutParams = new URLSearchParams();
+      checkoutParams.set(
+        resolvedCourseSlug && resolvedCourseSlug !== resolvedCourseId
+          ? 'slug'
+          : 'id',
+        resolvedCourseSlug && resolvedCourseSlug !== resolvedCourseId
+          ? resolvedCourseSlug
+          : resolvedCourseId || courseIdentifier,
+      );
+      checkoutParams.set('plan', 'single');
+
+      navigate(`/training/course/checkout?${checkoutParams.toString()}`);
+    } finally {
+      setIsResolvingEnrollment(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -148,10 +256,11 @@ const CourseDetails = () => {
           <div className="sticky top-26 h-fit self-start rounded-lg bg-green-50 p-6">
             <div className="mb-6 flex flex-col items-baseline gap-1">
               <span className="text-2xl font-bold text-gray-800">
-                {formatEuro(course?.basePrice)}
+                {formatEuro(course?.price)}
               </span>
               <span className="text-sm md:text-base font-semibold line-through text-[#73BFA1]">
-                {formatEuro(course?.price)}
+              {formatEuro(course?.basePrice)}
+
               </span>
               <span className="text-sm text-gray-600">
                 {t('trainingPages.section11.specialPrice')}
@@ -175,8 +284,9 @@ const CourseDetails = () => {
             </div>
 
             <button
-              onClick={() => setIsModalOpen(true)}
-              className="mb-6 w-full rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition hover:bg-[#73BFA1]"
+              onClick={handleEnrollNow}
+              disabled={isResolvingEnrollment}
+              className="mb-6 w-full rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition hover:bg-[#73BFA1] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {t('trainingPages.section11.enrollNow')}
             </button>
