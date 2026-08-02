@@ -21,7 +21,7 @@ const PillarsCards = () => {
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
       {pillarsData.map((item, index) => (
-        <div key={index} className="rounded-lg border border-gray-200 p-8">
+        <div key={index} className="rounded-lg border border-gray-200 p-4 md:p-8">
           <h3 className="mb-4 text-lg font-bold text-gray-900">{item.title}</h3>
           <p className="text-sm leading-relaxed text-gray-600">
             {item.description}

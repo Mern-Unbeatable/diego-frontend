@@ -329,7 +329,7 @@ export default function ContactUsView() {
         </div>
 
         {/* Form Section */}
-        <div className="mx-auto max-w-4xl  pb-15">
+        <div className="mx-auto max-w-4xl  pb-15 px-4">
           <div className="rounded-lg border border-gray-200 p-4 md:p-10">
             <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">
               {t('contactUs.section1.formTitle')}
@@ -468,8 +468,8 @@ export default function ContactUsView() {
         </div>
 
         {/* Contact Info Cards */}
-        <div className="mx-auto max-w-4xl  pb-14">
-          <div className="grid grid-cols-2 gap-8">
+        <div className="mx-auto max-w-4xl px-4 pb-14">
+          <div className="flex flex-col gap-8 sm:flex-row">
             {/* Email Card */}
             <div className="rounded-lg border border-gray-200 p-4 md:p-8 text-center">
               <div className="mb-4 flex justify-center">

@@ -70,12 +70,12 @@ const WorkWithUsView = () => {
 
         {/* Section 1 — Formation Entities */}
         <div className="bg-[#FAFAFA]">
-          {/* <CollaborationSection {...formationData} /> */}
+          <CollaborationSection {...formationData} />
         </div>
 
         {/* Section 2 — Professionals */}
         <div className="bg-[#fff]">
-          {/* <CollaborationSection {...professionalsData} /> */}
+          <CollaborationSection {...professionalsData} />
         </div>
 
         {/* Section 3 — Collaboration Benefits */}
