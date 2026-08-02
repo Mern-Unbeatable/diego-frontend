@@ -12,7 +12,7 @@ const CollaborationSection = ({ title, subText, description, bottomText, bulletP
 
 
                      <Container>
-            <div className=" px-4 py-14 md:py-16">
+            <div className="  py-14 md:py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     {/* Left Content */}
                     <div>
