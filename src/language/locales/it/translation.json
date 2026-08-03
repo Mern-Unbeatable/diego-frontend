@@ -66,9 +66,15 @@
       "feedbackTitle": "Feedback sulla sessione",
       "leaveComment": "Lascia un commento",
       "rateExperience": "Valuta la tua esperienza qui sotto",
-      "ratingText": "4/5 stars",
+      "ratingText": "Seleziona una valutazione",
+      "ratingTextSelected": "{{rating}}/5 stelle",
+      "selectRating": "Valuta {{rating}} su 5",
       "textAreaPlaceholder": "Scrivi qualcosa sulla tua esperienza...",
-      "submitButton": "Invia"
+      "submitButton": "Invia",
+      "nameRequired": "Inserisci il tuo nome",
+      "ratingRequired": "Seleziona una valutazione",
+      "successAlert": "Recensione inviata con successo!",
+      "errorAlert": "Errore durante l'invio della recensione"
     },
     "section3": {
       "exploreCatalog": "Esplora il nostro catalogo corsi",
@@ -327,6 +333,12 @@
     },
     "section7": {
       "title": "Corsi obbligatori",
+      "loadingCourses": "Caricamento corsi...",
+      "errorLoadingCourses": "Errore nel caricamento dei corsi",
+      "errorMessage": "Si è verificato un errore durante il caricamento dei corsi. Riprova.",
+      "retry": "Riprova",
+      "courseNotFound": "Dati del corso non trovati.",
+      "courseImageAlt": "Immagine del corso",
       "courses": [
         {
           "title": "Formazione SEVESO - pacchetto annuale",
@@ -451,15 +463,16 @@
         }
       ],
       "howItWorksTitle": "Come funziona",
+      "howItWorksImage": "/image/course/level2.png",
       "howItWorksSteps": [
-        "Contatto con il team UnoSicurezza",
-        "Scelta del prodotto: corso singolo o pacchetto",
-        "Raccolta esigenze tramite form o sopralluogo tecnico",
-        "Realizzazione corso personalizzato con logo, riferimenti e procedure",
-        "Caricamento sulla piattaforma LMS con automazione",
-        "Erogazione e-learning da PC e mobile",
+        "Contatto con il team di UnoSicurezza",
+        "Scegli il prodotto che fa per te (corso singolo o pacchetto) per formazione trimestrale",
+        "Raccolta esigenze tramite form, oppure sopralluogo dei nostri tecnici",
+        "Realizzazione del corso/corsi personalizzati con logo e riferimenti aziendali, foto video procedure operative manuali interni",
+        "Caricamento sulla nostra piattaforma LMS che permette di automatizzare l'erogazione e il monitoraggio attività formativa",
+        "Erogazione in e-learning ai lavoratori, anche da cellulare e tablet",
         "Test finale",
-        "Rilascio attestato a fine corso"
+        "Rilascio attestato al termine del corso"
       ]
     },
     "section9": {
@@ -486,7 +499,7 @@
         },
         {
           "title": "Erogazione corso",
-          "desc": "in e-learning da PC, tablet e smartphone"
+          "desc": "in e-learning ai lavoratori da PC, tablet o smartphone"
         }
       ]
     },
@@ -559,6 +572,9 @@
         "title": "Pacchetto Aziendale",
         "description": "Soluzione per supportare le aziende nel monitoraggio delle scadenze normative",
         "subtitle": "Formazione: la taglia perfetta per te",
+        "selectTier": "Seleziona un piano",
+        "selectedTier": "Selezionato: {{label}} — {{price}}",
+        "selectTierFirst": "Seleziona un piano per continuare",
         "item1": "1-20 utenti - €150/utente",
         "item2": "21-50 utenti - €420/utente",
         "item3": "51-200 utenti - €1000/utente",
@@ -592,7 +608,16 @@
       "cvv": "CVV",
       "subtotal": "Subtotale",
       "total": "Totale",
-      "payNow": "Paga ora"
+      "payNow": "Paga ora",
+      "processing": "Elaborazione...",
+      "preparingPayment": "Preparazione pagamento sicuro...",
+      "paymentUnavailable": "Pagamento non disponibile. Riprova.",
+      "paymentError": "Pagamento non riuscito. Controlla i dati della carta e riprova.",
+      "alreadyEnrolled": "Sei già iscritto a questo corso.",
+      "alreadyCompleted": "Hai già completato questo corso.",
+      "alreadyPurchased": "La tua azienda ha già acquistato questo corso.",
+      "nameRequired": "Inserisci il nome sulla carta",
+      "discount": "Sconto"
     },
     "section3": {
       "close": "Chiudi",
@@ -708,7 +733,7 @@
       "bannerTitle": "Collabora con UnoSicurezza",
       "badge": "Partnership",
       "heroTitle": "Unisciti alla rete di UnoSicurezza",
-      "heroDescription": "La piattaforma è disponibile in modalità cloud secondo gli standard di sicurezza, affidabilità e protezione dei dati. Scopri come collaborare con noi per formazione, sicurezza e professionisti."
+      "heroDescription": "La sicurezza e la formazione sono valori che si costruiscono insieme. Con UnoSicurezza puoi entrare in un modello di collaborazione pensato per enti di formazione, aziende e professionisti che vogliono offrire ai propri clienti soluzioni semplici e affidabili."
     },
     "section6": {
       "contactTitle": "Clicca qui per contattarci"
@@ -872,6 +897,91 @@
         "buyButton": "Acquista sottodominio",
         "tipTitle": "Suggerimento:",
         "tipText": "dopo l'acquisto, forniscici il dominio e lo collegheremo automaticamente."
+      }
+    }
+  },
+  "platformAdmin": {
+    "inquiries": {
+      "tabs": {
+        "services": "Servizi",
+        "contacts": "Contattaci",
+        "collaborations": "Lavora con noi"
+      },
+      "searchPlaceholder": "Cerca...",
+      "columns": {
+        "service": "Servizio",
+        "contact": "Contatto",
+        "company": "Azienda",
+        "name": "Nome",
+        "agency": "Agenzia",
+        "contacts": "Contatti",
+        "type": "Tipo",
+        "status": "Stato",
+        "date": "Data",
+        "actions": "Azioni"
+      },
+      "actions": {
+        "view": "Visualizza",
+        "delete": "Elimina"
+      },
+      "detail": {
+        "title": "Dettaglio richiesta",
+        "close": "Chiudi",
+        "closeModal": "Chiudi modale",
+        "emptyValue": "—"
+      },
+      "fields": {
+        "service": "Servizio",
+        "name": "Nome",
+        "company": "Azienda",
+        "vatNumber": "Partita IVA",
+        "phone": "Telefono",
+        "email": "Email",
+        "status": "Stato",
+        "message": "Messaggio",
+        "date": "Data",
+        "agency": "Agenzia",
+        "contact": "Contatto",
+        "collaborationType": "Tipo collaborazione",
+        "companySize": "Dimensione azienda",
+        "description": "Descrizione",
+        "goals": "Obiettivi",
+        "notes": "Note"
+      },
+      "delete": {
+        "confirm": "Elimina",
+        "cancel": "Annulla",
+        "message": "Eliminare {{label}}? L'operazione non può essere annullata.",
+        "fallbackLabel": "questo elemento"
+      },
+      "services": {
+        "title": "Richieste servizi",
+        "emptyTitle": "Nessuna richiesta servizio trovata",
+        "emptyDescription": "Le richieste inviate dal modulo Services del sito appariranno qui.",
+        "deleteTitle": "Elimina richiesta servizio",
+        "deleteSuccess": "Richiesta servizio eliminata"
+      },
+      "contacts": {
+        "title": "Richieste contatto",
+        "emptyTitle": "Nessun contatto trovato",
+        "emptyDescription": "I messaggi inviati dal modulo Contact us del sito appariranno qui.",
+        "deleteTitle": "Elimina contatto",
+        "deleteSuccess": "Contatto eliminato"
+      },
+      "collaborations": {
+        "title": "Richieste collaborazione",
+        "emptyTitle": "Nessuna collaborazione trovata",
+        "emptyDescription": "Le candidature inviate dal modulo Work with us appariranno qui.",
+        "deleteTitle": "Elimina collaborazione",
+        "deleteSuccess": "Collaborazione eliminata"
+      },
+      "status": {
+        "NEW": "Nuovo",
+        "PENDING": "In attesa",
+        "CONTACTED": "Contattato",
+        "RESOLVED": "Risolto",
+        "IN_PROGRESS": "In lavorazione",
+        "HANDLED": "Gestito"
       }
     }
   },

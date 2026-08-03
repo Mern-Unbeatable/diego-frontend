@@ -14,7 +14,7 @@ const ContactSection = () => {
           <MdOutlineEmail className="h-6 w-6" />
         </div>
         <Heading className={'font-bold'}>{t('contactUs.section1.emailCardTitle')}</Heading>
-        <Heading className="text-base font-bold text-[#73BFA1] md:text-lg">
+        <Heading className="text-sm font-bold text-[#73BFA1] md:text-base lg:text-lg">
           info@unosicurezza.it
         </Heading>
         <Paragraph>{t('contactUs.section1.emailCardSub')}</Paragraph>
@@ -24,7 +24,7 @@ const ContactSection = () => {
           <MdAddCall className="h-6 w-6" />
         </div>
         <Heading className={'font-bold'} h4={t('contactUs.section1.phoneCardTitle')}></Heading>
-        <Heading className="text-base font-bold text-[#73BFA1] md:text-lg">
+        <Heading className="text-sm font-bold text-[#73BFA1] md:text-base lg:text-lg">
           +39 02 1234 5678
         </Heading>
         <Paragraph>{t('contactUs.section1.phoneCardSub')}</Paragraph>

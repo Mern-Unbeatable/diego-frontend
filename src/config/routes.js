@@ -14,12 +14,18 @@ export const ROUTES = Object.freeze({
     FEEDBACK: '/dashboard/super-admin/feedback',
     FIGURES: '/dashboard/super-admin/figures',
     REPORTS: '/dashboard/super-admin/report',
+    COURSE_PACKAGES: '/dashboard/super-admin/course-packages',
+    COURSES: '/dashboard/super-admin/course-list',
+    STUDENTS: '/dashboard/super-admin/enrolled-students',
+    INQUIRIES: '/dashboard/super-admin/inquiries',
   },
 
   COMPANY_ADMIN: {
     DASHBOARD: '/dashboard/company-admin',
     TRAINING: '/dashboard/company-admin/training',
+    PURCHASES: '/dashboard/company-admin/purchases',
     CERTIFICATES: '/dashboard/company-admin/certificates',
+    ARCHIVE: '/dashboard/company-admin/archive',
     TICKETS: '/dashboard/company-admin/ticket',
     COURSES: '/dashboard/company-admin/my-courses',
     PRIVACY: '/dashboard/company-admin/privacy-policy',
@@ -27,6 +33,10 @@ export const ROUTES = Object.freeze({
 
   COMPANY_EMPLOYEE: {
     DASHBOARD: '/dashboard/company-employee',
+    COURSE: '/dashboard/company-employee/course',
+    CERTIFICATES: '/dashboard/company-employee/certificates',
+    ARCHIVE: '/dashboard/company-employee/archive',
+    CREDENTIALS: '/dashboard/company-employee/credentials',
   },
 
   LICENSE_USER: {
@@ -44,6 +54,7 @@ export const ROUTES = Object.freeze({
     PROFILE: '/dashboard/private-user/profile',
     COURSE: '/dashboard/private-user/course',
     CERTIFICATES: '/dashboard/private-user/certificates',
+    ARCHIVE: '/dashboard/private-user/archive',
     CREDENTIALS: '/dashboard/private-user/credentials',
     NOTIFICATIONS: '/dashboard/private-user/notifications',
     FEEDBACK: '/dashboard/private-user/feedback',

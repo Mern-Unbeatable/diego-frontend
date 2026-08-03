@@ -13,12 +13,17 @@ Object.entries(requiredEnvVars).forEach(([key, label]) => {
   }
 });
 
+const trimEnv = (value) => (typeof value === 'string' ? value.trim() : value);
+
 const rawConfig = Object.freeze({
   MODE: env.MODE,
   IS_DEV: env.DEV,
   IS_PROD: env.PROD,
-  API_BASE_URL: env.VITE_API_BASE_URL ?? env.API_BASE_URL,
-  APP_NAME: env.VITE_APP_NAME ?? env.APP_NAME,
+  API_BASE_URL: trimEnv(env.VITE_API_BASE_URL ?? env.API_BASE_URL) || '/api/v1',
+  APP_NAME: trimEnv(env.VITE_APP_NAME ?? env.APP_NAME),
+  STRIPE_PUBLISHABLE_KEY: trimEnv(
+    env.VITE_STRIPE_PUBLISHABLE_KEY ?? env.STRIPE_PUBLISHABLE_KEY ?? '',
+  ),
 });
 
 export const ENV_CONFIG = rawConfig;

@@ -6,26 +6,26 @@ export default function TicketView() {
 
   const tabs = [
     { id: 'panoramica', label: 'Panoramica' },
-    { id: 'aperti', label: 'Tickets aperti' },
-    { id: 'chiusi', label: 'Tickets chiusi' },
-    { id: 'attesa', label: 'In attesa di approvazione' },
+    { id: 'aperti', label: 'Ticket aperti' },
+    { id: 'attesa', label: 'In lavorazione' },
+    { id: 'chiusi', label: 'Ticket chiusi' },
   ];
 
   return (
-    <div className="">
+    <div className="min-w-0">
       <div className="h-full">
-        {/* Tabs */}
         <div className="border-b border-gray-200 bg-white">
-          <nav className="flex">
+          <nav className="-mx-1 flex gap-1 overflow-x-auto px-1 sm:gap-0 sm:px-0">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
+                type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`border-b-2 px-6 py-4 text-sm font-medium whitespace-nowrap ${
+                className={`shrink-0 border-b-2 px-3 py-3 text-sm font-medium whitespace-nowrap sm:px-6 sm:py-4 ${
                   activeTab === tab.id
                     ? 'border-teal-500 bg-gray-50 text-teal-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
-                } `}
+                }`}
               >
                 {tab.label}
               </button>
@@ -33,8 +33,7 @@ export default function TicketView() {
           </nav>
         </div>
 
-        {/* Content */}
-        <section className="">
+        <section className="pt-3 sm:pt-4">
           <TicketSection activeTab={activeTab} />
         </section>
       </div>

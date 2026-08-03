@@ -3,6 +3,7 @@ export { default as Breadcrumb } from './Utilities/Breadcrumb';
 export { default as Collapse } from './Utilities/Collapse';
 export { default as Divider } from './Utilities/Divider';
 export { default as Loading } from './Utilities/Loading';
+export { default as Pagination } from './Utilities/Pagination';
 export { default as Pill } from './Utilities/Pill';
 export { default as ScrollToTop } from './Utilities/ScrollToTop';
 export { default as Skeleton } from './Utilities/Skeleton';
@@ -20,6 +21,7 @@ export { default as Toast } from './notifications/Toast';
 export { useToast } from './notifications/useToast';
 
 export { default as ConfirmModal } from './modals/ConfirmModal';
+export { default as Modal } from './modals/Modal';
 export { default as FormModal } from './modals/FormModal';
 export { default as InfoModal } from './modals/InfoModal';
 

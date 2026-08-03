@@ -37,9 +37,9 @@ export const createEmployeeAPI = createAsyncThunk(
 
 export const updateEmployeeAPI = createAsyncThunk(
   'employee/update',
-  async ({ id, payload }, { rejectWithValue, signal }) => {
+  async ({ userId, payload }, { rejectWithValue, signal }) => {
     try {
-      return await employeeService.updateEmployee(id, payload, { signal });
+      return await employeeService.updateEmployee(userId, payload, { signal });
     } catch (error) {
       return rejectWithValue(handleApiError(error));
     }
@@ -48,9 +48,9 @@ export const updateEmployeeAPI = createAsyncThunk(
 
 export const deleteEmployeeAPI = createAsyncThunk(
   'employee/delete',
-  async (id, { rejectWithValue, signal }) => {
+  async (userId, { rejectWithValue, signal }) => {
     try {
-      return await employeeService.deleteEmployee(id, { signal });
+      return await employeeService.deleteEmployee(userId, { signal });
     } catch (error) {
       return rejectWithValue(handleApiError(error));
     }

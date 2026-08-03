@@ -14,12 +14,17 @@ const SafetyDrinkingWater = () => {
 
   return (
     <Container className=" ">
+      <div className='container mx-auto px-4'>
+
       <Banner
         description={t('servicesPages.section10.bannerDescription')}
         image={banner}
         title={t('servicesPages.section10.bannerTitle')}
       />
-      <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+
+      </div>
+
+      <div className="container mx-auto px-4  py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
           <div className="lg:sticky lg:top-24">
             <h1 className="mb-6 text-4xl font-bold text-gray-900">

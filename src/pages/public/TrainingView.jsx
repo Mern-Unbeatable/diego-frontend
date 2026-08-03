@@ -7,7 +7,7 @@ const TrainingView = () => {
 
   return (
     <section className="bg-white py-10 sm:py-14 lg:py-20">
-      <Container className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <Container className="container mx-auto px-4 px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14">
           <div className="max-w-2xl">
             <h1 className="l max-w-xl text-3xl leading-tight font-semibold text-[#555b5d] sm:text-4xl">

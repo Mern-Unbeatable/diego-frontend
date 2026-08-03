@@ -1,26 +1,46 @@
 import Button from '../buttons/Buttons';
+import Modal from './Modal';
 
 const ConfirmModal = ({
   isOpen,
   onClose,
   onConfirm,
-  title = 'Confirm',
-  message = 'Are you sure?',
-}) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black">
-      <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
-        <h2 className="mb-4 text-lg font-semibold">{title}</h2>
-        <p className="mb-6">{message}</p>
-        <div className="flex justify-end gap-3">
-          <Button onClick={onClose}>Cancel</Button>
-          <Button onClick={onConfirm}>Confirm</Button>
-        </div>
+  title = 'Conferma',
+  message = 'Sei sicuro?',
+  confirmLabel = 'Conferma',
+  cancelLabel = 'Annulla',
+  variant = 'default',
+  zIndex = 50,
+}) => (
+  <Modal
+    isOpen={isOpen}
+    onClose={onClose}
+    title={title}
+    size="sm"
+    showCloseButton={false}
+    closeOnBackdrop
+    zIndex={zIndex}
+    footer={
+      <div className="flex justify-end gap-3">
+        <Button type="button" onClick={onClose}>
+          {cancelLabel}
+        </Button>
+        <Button
+          type="button"
+          onClick={onConfirm}
+          className={
+            variant === 'danger'
+              ? 'bg-red-600 text-white hover:bg-red-700'
+              : undefined
+          }
+        >
+          {confirmLabel}
+        </Button>
       </div>
-    </div>
-  );
-};
+    }
+  >
+    <p className="text-sm text-gray-600">{message}</p>
+  </Modal>
+);
 
 export default ConfirmModal;

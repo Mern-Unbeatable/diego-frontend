@@ -56,7 +56,7 @@ export default function KPIStateCards({
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {/* Card: Fatturato piattaforma */}
-        <div className="w-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
+        <div className="w-full rounded-2xl bg-white p-4 md:p-6 shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
           <div className="flex items-start gap-4">
             <div className="grid h-12 w-12 place-items-center rounded-xl bg-emerald-200 text-emerald-700">
               <DollarSign className="h-6 w-6" />
@@ -68,9 +68,9 @@ export default function KPIStateCards({
               <div className="text-2xl font-semibold text-gray-900">
                 {euro.format(revenue30d)}
               </div>
-              <p className="mt-1 text-sm text-gray-500">30 giorni</p>
+              <p className="mt-1 text-xs md:text-sm text-gray-500">30 giorni</p>
             </div>
-            <div className="mt-4 flex items-center justify-end gap-1 text-sm text-gray-600">
+            <div className="mt-4 hidden md:flex  items-center justify-end gap-1 text-sm text-gray-600">
               <span className="font-medium">+{revenueTrend}%</span>
               <TrendingUp className="h-4 w-4" />
             </div>
@@ -78,7 +78,7 @@ export default function KPIStateCards({
         </div>
 
         {/* Card: Totale utenti attivi */}
-        <div className="w-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
+        <div className="w-full rounded-2xl bg-white p-4 md:p-6shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
           <div className="flex items-start gap-4">
             <div className="grid h-12 w-12 place-items-center rounded-xl bg-emerald-200 text-emerald-700">
               <Users className="h-6 w-6" />
@@ -90,9 +90,9 @@ export default function KPIStateCards({
               <div className="text-2xl font-semibold text-gray-900">
                 {fmt.format(activeUsers)}
               </div>
-              <p className="mt-1 text-sm text-gray-500">In tutto</p>
+              <p className="mt-1 text-xs md:text-sm text-gray-500">In tutto</p>
             </div>
-            <div className="mt-4 flex items-center justify-end gap-1 text-sm text-gray-600">
+            <div className="mt-4 hidden md:flex  items-center justify-end gap-1 text-sm text-gray-600">
               <span className="font-medium">+{usersTrend}%</span>
               <TrendingUp className="h-4 w-4" />
             </div>
@@ -100,7 +100,7 @@ export default function KPIStateCards({
         </div>
 
         {/* Card: Totale licenze */}
-        <div className="w-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
+        <div className="w-full rounded-2xl bg-white p-4 md:p-6 shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
           <div className="flex items-start gap-4">
             <div className="grid h-12 w-12 place-items-center rounded-xl bg-emerald-200 text-emerald-700">
               <FileText className="h-6 w-6" />
@@ -112,12 +112,12 @@ export default function KPIStateCards({
               <div className="text-2xl font-semibold text-gray-900">
                 {fmt.format(licenses.total)}
               </div>
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-xs md:text-sm text-gray-500">
                 {fmt.format(licenses.active)} attivi,{' '}
                 {fmt.format(licenses.trial)} in prova
               </p>
             </div>
-            <div className="mt-4 flex items-center justify-end gap-1 text-sm text-gray-600">
+            <div className="mt-4 hidden md:flex  items-center justify-end gap-1 text-sm text-gray-600">
               <span className="font-medium">+{licenses.trend}%</span>
               <TrendingUp className="h-4 w-4" />
             </div>
@@ -125,7 +125,7 @@ export default function KPIStateCards({
         </div>
 
         {/* Card: Stato di salute */}
-        <div className="w-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
+        <div className="w-full rounded-2xl bg-white p-4 md:p-6 shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
           <div className="flex items-start gap-4">
             <div className="grid h-12 w-12 place-items-center rounded-xl bg-emerald-200 text-emerald-700">
               <Activity className="h-6 w-6" />
@@ -137,17 +137,17 @@ export default function KPIStateCards({
               <div className="text-2xl font-semibold text-gray-900">
                 {health.toFixed(2)}%
               </div>
-              <p className="mt-1 text-sm text-gray-500">Tempo di attività</p>
+              <p className="mt-1 text-xs md:text-sm text-gray-500">Tempo di attività</p>
             </div>
-            <div className="mt-4 flex items-center justify-end gap-1 text-sm text-gray-600">
-              <span className="font-medium">{uptime.toFixed(2)}%</span>
-              <ArrowUpRight className="h-4 w-4" />
+            <div className="mt-4 hidden md:flex items-center justify-end gap-1 text-xs md:text-sm text-gray-600">
+              <span className="font-medium text-xs md:text-sm">{uptime.toFixed(2)}%</span>
+              <ArrowUpRight className="h-4 w-4 md:text-sm" />
             </div>
           </div>
         </div>
 
         {/* Card: Corso totale che carichi */}
-        <div className="w-full rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
+        <div className="w-full rounded-2xl bg-white p-4 md:p-6 shadow-sm ring-1 ring-black/5 transition hover:shadow-md">
           <h4 className="mb-1 text-base font-medium text-gray-700">
             Corso totale che carichi
           </h4>

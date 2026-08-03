@@ -22,7 +22,7 @@ const HowWorks = () => {
 
   return (
     <div className="min-h-screen bg-white px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto container">
         <section className="container mb-6 lg:mb-10">
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             {t('trainingPages.section10.headerTitle')}
@@ -94,11 +94,11 @@ const HowWorks = () => {
 
             const imageBlock = (
               <div className={`flex-1 ${isReverse ? 'lg:order-1' : ''}`}>
-                <div className="mx-auto">
+                <div className=" ">
                   <img
                     src={section.image}
                     alt={sectionText.title || section.title}
-                    className="h-auto w-full object-contain"
+                    className="h-100 w-full object-contain"
                   />
                 </div>
               </div>

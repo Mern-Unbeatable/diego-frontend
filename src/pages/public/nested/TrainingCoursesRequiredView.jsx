@@ -7,10 +7,14 @@ const TrainingOurPlatformView = () => {
 
   return (
     <Container className=" ">
-      <Banner
-        image="/images/course/course3.png"
-        title={'UnoSicurezza - Piattaforma LMS'}
-      />
+      <div className="container mx-auto px-4">
+        {' '}
+        <Banner
+          image="/images/course/course3.png"
+          title={'UnoSicurezza - Piattaforma LMS'}
+        />
+      </div>
+
       <HowWorks />
     </Container>
   );

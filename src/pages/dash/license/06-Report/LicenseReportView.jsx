@@ -1,35 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Henrey from '../01-Home/components/Henrey';
-import CoursesTableV2 from './components/CoursesTableV2';
+import CoursesTable from '../01-Home/components/CoursesTable';
 import LicenReports from './components/LicenReports';
 
 const LicenseReportView = () => {
-  const [coursesData, setCoursesData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchFreelancerData();
-  }, []);
-
-  const fetchFreelancerData = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/fakeData/freelancer.json');
-      const data = await response.json();
-      setCoursesData(data.courses);
-    } catch (error) {
-      console.error('Error fetching freelancer data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <>
+    <div className="space-y-6">
       <Henrey />
-      <LicenReports />
-      <CoursesTableV2 courses={coursesData} loading={loading} />
-    </>
+      <div>
+        <LicenReports />
+        <div className="mt-8">
+          <CoursesTable variant="report" />
+        </div>
+      </div>
+    </div>
   );
 };
 

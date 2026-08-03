@@ -66,9 +66,15 @@
       "feedbackTitle": "Session feedback",
       "leaveComment": "Leave a comment",
       "rateExperience": "Rate your experience below",
-      "ratingText": "4/5 stars",
+      "ratingText": "Select a rating",
+      "ratingTextSelected": "{{rating}}/5 stars",
+      "selectRating": "Rate {{rating}} out of 5",
       "textAreaPlaceholder": "Write something about your experience...",
-      "submitButton": "Submit"
+      "submitButton": "Submit",
+      "nameRequired": "Please enter your name",
+      "ratingRequired": "Please select a rating",
+      "successAlert": "Review submitted successfully!",
+      "errorAlert": "Error while submitting review"
     },
     "section3": {
       "exploreCatalog": "Explore our service catalog",
@@ -327,6 +333,12 @@
     },
     "section7": {
       "title": "Mandatory courses",
+      "loadingCourses": "Loading courses...",
+      "errorLoadingCourses": "Error loading courses",
+      "errorMessage": "We encountered an error while loading courses. Please try again.",
+      "retry": "Retry",
+      "courseNotFound": "Course data not found.",
+      "courseImageAlt": "Course image",
       "courses": [
         {
           "title": "SEVESO Training - annual package",
@@ -451,15 +463,16 @@
         }
       ],
       "howItWorksTitle": "How it works",
+      "howItWorksImage": "/image/course/level2.png",
       "howItWorksSteps": [
-        "Contact UnoSicurezza teams",
-        "Choose the product: single course or training package",
-        "Collect requirements through form or technical inspection",
-        "Create the customized course with logo, references, media and procedures",
-        "Upload to LMS platform with delivery and monitoring automation",
-        "Asynchronous e-learning delivery from desktop and mobile",
+        "Contact with the UnoSicurezza team",
+        "Choose the product that suits you (single course or package) for quarterly training",
+        "Requirements collection via form or on-site inspection by our technicians",
+        "Custom course creation with logo, company references, photos, videos, operating procedures and internal manuals",
+        "Upload to our LMS platform to automate delivery and training activity monitoring",
+        "E-learning delivery to workers, also from mobile and tablet",
         "Final test",
-        "Certificate release at the end of the course"
+        "Certificate issued at the end of the course"
       ]
     },
     "section9": {
@@ -486,7 +499,7 @@
         },
         {
           "title": "Course delivery",
-          "desc": "e-learning access from PC, tablet and smartphone"
+          "desc": "e-learning for workers from PC, tablet and smartphone"
         }
       ]
     },
@@ -559,6 +572,9 @@
         "title": "Company package",
         "description": "Solution to support companies in monitoring regulatory deadlines, ensuring timely assistance and compliance",
         "subtitle": "Training: the right size for you",
+        "selectTier": "Select a plan",
+        "selectedTier": "Selected: {{label}} — {{price}}",
+        "selectTierFirst": "Select a plan to continue",
         "item1": "1-20 users - €150/user",
         "item2": "21-50 users - €420/user",
         "item3": "51-200 users - €1000/user",
@@ -592,7 +608,16 @@
       "cvv": "CVV",
       "subtotal": "Subtotal",
       "total": "Total",
-      "payNow": "Pay now"
+      "payNow": "Pay now",
+      "processing": "Processing...",
+      "preparingPayment": "Preparing secure payment...",
+      "paymentUnavailable": "Payment is currently unavailable. Please try again.",
+      "paymentError": "Payment failed. Please check your card details and try again.",
+      "alreadyEnrolled": "You are already enrolled in this course.",
+      "alreadyCompleted": "You have already completed this course.",
+      "alreadyPurchased": "Your company has already purchased this course.",
+      "nameRequired": "Please enter the name on card",
+      "discount": "Discount"
     },
     "section3": {
       "close": "Close",
@@ -872,6 +897,91 @@
         "buyButton": "Buy subdomain",
         "tipTitle": "Tip:",
         "tipText": "after purchase, provide the domain and we will connect it automatically."
+      }
+    }
+  },
+  "platformAdmin": {
+    "inquiries": {
+      "tabs": {
+        "services": "Services",
+        "contacts": "Contact us",
+        "collaborations": "Work with us"
+      },
+      "searchPlaceholder": "Search...",
+      "columns": {
+        "service": "Service",
+        "contact": "Contact",
+        "company": "Company",
+        "name": "Name",
+        "agency": "Agency",
+        "contacts": "Contacts",
+        "type": "Type",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View",
+        "delete": "Delete"
+      },
+      "detail": {
+        "title": "Request details",
+        "close": "Close",
+        "closeModal": "Close modal",
+        "emptyValue": "—"
+      },
+      "fields": {
+        "service": "Service",
+        "name": "Name",
+        "company": "Company",
+        "vatNumber": "VAT number",
+        "phone": "Phone",
+        "email": "Email",
+        "status": "Status",
+        "message": "Message",
+        "date": "Date",
+        "agency": "Agency",
+        "contact": "Contact",
+        "collaborationType": "Collaboration type",
+        "companySize": "Company size",
+        "description": "Description",
+        "goals": "Goals",
+        "notes": "Notes"
+      },
+      "delete": {
+        "confirm": "Delete",
+        "cancel": "Cancel",
+        "message": "Delete {{label}}? This action cannot be undone.",
+        "fallbackLabel": "this item"
+      },
+      "services": {
+        "title": "Service requests",
+        "emptyTitle": "No service requests found",
+        "emptyDescription": "Requests submitted from the Services form on the website will appear here.",
+        "deleteTitle": "Delete service request",
+        "deleteSuccess": "Service request deleted"
+      },
+      "contacts": {
+        "title": "Contact requests",
+        "emptyTitle": "No contacts found",
+        "emptyDescription": "Messages submitted from the Contact us form on the website will appear here.",
+        "deleteTitle": "Delete contact",
+        "deleteSuccess": "Contact deleted"
+      },
+      "collaborations": {
+        "title": "Collaboration requests",
+        "emptyTitle": "No collaborations found",
+        "emptyDescription": "Applications submitted from the Work with us form on the website will appear here.",
+        "deleteTitle": "Delete collaboration",
+        "deleteSuccess": "Collaboration deleted"
+      },
+      "status": {
+        "NEW": "New",
+        "PENDING": "Pending",
+        "CONTACTED": "Contacted",
+        "RESOLVED": "Resolved",
+        "IN_PROGRESS": "In progress",
+        "HANDLED": "Handled"
       }
     }
   },

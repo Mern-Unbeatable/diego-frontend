@@ -1,48 +1,80 @@
-import React, { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Toast, useToast } from '../../../../components/ui';
+import Loading from '../../../../components/ui/Utilities/Loading';
+import { usePrivate } from '../../../../features/private/privateHooks';
 import TicketTable from './components/TicketTable';
 import CreateTicketModal from './components/CreateTicketModal';
 
-const ticketsSeed = [
-  {
-    id: 1001,
-    subject: 'Problema di accesso alla piattaforma',
-    createdAt: '08 Lug 2026 14:32',
-    status: 'Aperto',
-    description: 'Non riesco ad accedere con le mie credenziali standard, ricevo errore 500.',
-  },
-  {
-    id: 1002,
-    subject: 'Fattura non ricevuta',
-    createdAt: '06 Lug 2026 10:15',
-    status: 'In lavorazione',
-    description: 'Ho effettuato il pagamento ma non ho ancora ricevuto la fattura via email.',
-  },
-  {
-    id: 1003,
-    subject: 'Richiesta informazioni piano Premium',
-    createdAt: '04 Lug 2026 09:00',
-    status: 'Chiuso',
-    description: 'Vorrei maggiori informazioni sulle funzionalità incluse nel piano Premium.',
-  },
-];
+const normalizeSearchText = (value) =>
+  String(value ?? '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[#_\-./\\]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const matchesTicketSearch = (ticket, rawQuery) => {
+  const query = normalizeSearchText(rawQuery);
+  if (!query) return true;
+
+  const haystack = normalizeSearchText(
+    [
+      ticket.displayId,
+      ticket.ticketNumber,
+      ticket.subject,
+      ticket.message,
+      ticket.status,
+      ticket.rawStatus,
+    ]
+      .filter((value) => value != null && value !== '')
+      .join(' '),
+  );
+
+  const tokens = query.split(' ').filter(Boolean);
+  return tokens.every((token) => haystack.includes(token));
+};
 
 const SupportTicketView = () => {
   const { toasts, addToast, removeToast } = useToast();
   const navigate = useNavigate();
-  const [tickets, setTickets] = useState(ticketsSeed);
+  const {
+    fetchMyTickets,
+    createTicket,
+    tickets,
+    ticketsLoading,
+    ticketsError,
+    createTicketLoading,
+  } = usePrivate();
+
   const [search, setSearch] = useState('');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-
-  // Form states
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
   const [file, setFile] = useState(null);
 
+  useEffect(() => {
+    fetchMyTickets({ limit: 50 }).catch(() => {});
+  }, [fetchMyTickets]);
+
+  const ticketList = Array.isArray(tickets) ? tickets : [];
+
+  const filteredTickets = useMemo(
+    () => ticketList.filter((ticket) => matchesTicketSearch(ticket, search)),
+    [ticketList, search],
+  );
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    if (selectedFile && selectedFile.size <= 20 * 1024 * 1024) {
+    if (!selectedFile) return;
+
+    if (!selectedFile.type.startsWith('image/')) {
+      addToast('Sono consentiti solo file immagine', 'error');
+      return;
+    }
+
+    if (selectedFile.size <= 20 * 1024 * 1024) {
       setFile(selectedFile);
     } else {
       addToast('Il file deve essere massimo 20 MB', 'error');
@@ -56,38 +88,18 @@ const SupportTicketView = () => {
   const handleDrop = (e) => {
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile && droppedFile.size <= 20 * 1024 * 1024) {
+    if (!droppedFile) return;
+
+    if (!droppedFile.type.startsWith('image/')) {
+      addToast('Sono consentiti solo file immagine', 'error');
+      return;
+    }
+
+    if (droppedFile.size <= 20 * 1024 * 1024) {
       setFile(droppedFile);
     } else {
       addToast('Il file deve essere massimo 20 MB', 'error');
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!subject.trim() || !description.trim()) {
-      addToast('Compilare tutti i campi obbligatori', 'error');
-      return;
-    }
-
-    const newTicket = {
-      id: tickets.length > 0 ? Math.max(...tickets.map((t) => t.id)) + 1 : 1001,
-      subject,
-      createdAt: new Date().toLocaleString('it-IT', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-      status: 'Aperto',
-      description,
-      file: file ? file.name : null,
-    };
-
-    setTickets([newTicket, ...tickets]);
-    alert('Ticket inviato con successo!');
-    handleCloseCreateModal();
   };
 
   const handleCloseCreateModal = () => {
@@ -97,16 +109,34 @@ const SupportTicketView = () => {
     setIsCreateModalOpen(false);
   };
 
-  const filteredTickets = useMemo(() => {
-    if (!search.trim()) return tickets;
-    return tickets.filter((ticket) => {
-      const haystack = `${ticket.id} ${ticket.subject} ${ticket.status}`.toLowerCase();
-      return haystack.includes(search.toLowerCase());
-    });
-  }, [search, tickets]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!subject.trim() || !description.trim()) {
+      addToast('Compilare tutti i campi obbligatori', 'error');
+      return;
+    }
+
+    try {
+      await createTicket({
+        subject: subject.trim(),
+        message: description.trim(),
+        attachment: file,
+      });
+
+      addToast('Ticket inviato con successo!', 'success');
+      handleCloseCreateModal();
+      await fetchMyTickets({ limit: 50 });
+    } catch (error) {
+      addToast(error || "Errore durante l'invio del ticket", 'error');
+    }
+  };
+
+  if (ticketsLoading && ticketList.length === 0) {
+    return <Loading size="md" className="min-h-60" />;
+  }
 
   return (
-    <>
+    <div className="min-w-0">
       {toasts.map((toast) => (
         <Toast
           key={toast.id}
@@ -117,11 +147,19 @@ const SupportTicketView = () => {
         />
       ))}
 
+      {ticketsError ? (
+        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {ticketsError}
+        </div>
+      ) : null}
+
       <TicketTable
         filteredTickets={filteredTickets}
         search={search}
         setSearch={setSearch}
-        onViewTicket={(ticket) => navigate(`/dashboard/private-user/ticket/${ticket.id}`)}
+        onViewTicket={(ticket) =>
+          navigate(`/dashboard/private-user/ticket/${ticket.id}`)
+        }
         onCreateClick={() => setIsCreateModalOpen(true)}
       />
 
@@ -138,12 +176,10 @@ const SupportTicketView = () => {
         handleFileChange={handleFileChange}
         handleDragOver={handleDragOver}
         handleDrop={handleDrop}
+        isSubmitting={createTicketLoading}
       />
-    </>
+    </div>
   );
 };
 
 export default SupportTicketView;
-
-
-

@@ -26,6 +26,12 @@ const FiguresView = lazy(
 const AdminReportView = lazy(
   () => import('../pages/dash/super/07-Report/AdminReportView.jsx'),
 );
+const CoursePackagesView = lazy(
+  () => import('../pages/dash/super/08-CoursePackages/CoursePackagesView.jsx'),
+);
+const InquiriesView = lazy(
+  () => import('../pages/dash/super/09-Inquiries/InquiriesView.jsx'),
+);
 
 //==========================================================================
 // COMPANY_ADMIN
@@ -49,11 +55,17 @@ const CompanyOpenTicketView = lazy(
 const CompanyTicketDetailView = lazy(
   () => import('../pages/dash/company/04-Ticket/CompanyTicketDetailView.jsx'),
 );
+const CompanyEmployeeHomeView = lazy(
+  () => import('../pages/dash/company/01-Home/CompanyEmployeeHomeView.jsx'),
+);
 const CompanyCourseList = lazy(
   () => import('../pages/dash/company/05-Courses/CompanyCourseList.jsx'),
 );
 const CompanyCourseRosterView = lazy(
   () => import('../pages/dash/company/05-Courses/CompanyCourseRosterView.jsx'),
+);
+const CompanyPurchasesView = lazy(
+  () => import('../pages/dash/company/06-Purchases/CompanyPurchasesView.jsx'),
 );
 const CompanyPrivacyPolicyView = lazy(
   () => import('../pages/dash/company/06-Privacy/CompanyPrivacyPolicyView.jsx'),
@@ -95,6 +107,9 @@ const StudentProfileView = lazy(
 );
 const CertificatesView = lazy(
   () => import('../pages/dash/private/07-MyCertificates/CertificatesView.jsx'),
+);
+const ArchivePurchaseView = lazy(
+  () => import('../pages/dash/private/07-MyCertificates/ArchivePurchaseView.jsx'),
 );
 const CredentialsView = lazy(
   () => import('../pages/dash/private/05-Credentials/CredentialsView.jsx'),
@@ -145,6 +160,10 @@ export const dashboardRoutes = [
       { path: ROUTES.PLATFORM_ADMIN.FEEDBACK, element: <FeedbackView /> },
       { path: ROUTES.PLATFORM_ADMIN.FIGURES, element: <FiguresView /> },
       { path: ROUTES.PLATFORM_ADMIN.REPORTS, element: <AdminReportView /> },
+      { path: ROUTES.PLATFORM_ADMIN.COURSES, element: <CourseListView /> },
+      { path: ROUTES.PLATFORM_ADMIN.STUDENTS, element: <EnrolledView /> },
+      { path: ROUTES.PLATFORM_ADMIN.COURSE_PACKAGES, element: <CoursePackagesView /> },
+      { path: ROUTES.PLATFORM_ADMIN.INQUIRIES, element: <InquiriesView /> },
     ],
   },
 
@@ -176,10 +195,15 @@ export const dashboardRoutes = [
         element: <CompanyCertificatesView />,
       },
       {
+        path: ROUTES.COMPANY_ADMIN.ARCHIVE,
+        element: <ArchivePurchaseView />,
+      },
+      {
         path: ROUTES.COMPANY_ADMIN.PRIVACY,
         element: <CompanyPrivacyPolicyView />,
       },
       { path: ROUTES.COMPANY_ADMIN.COURSES, element: <CompanyCourseList /> },
+      { path: ROUTES.COMPANY_ADMIN.PURCHASES, element: <CompanyPurchasesView /> },
     ],
   },
 
@@ -190,8 +214,15 @@ export const dashboardRoutes = [
     routes: [
       {
         path: ROUTES.COMPANY_EMPLOYEE.DASHBOARD,
-        element: <CompanyCourseList />,
+        element: <CompanyEmployeeHomeView />,
       },
+      {
+        path: `${ROUTES.COMPANY_EMPLOYEE.COURSE}/:id`,
+        element: <CourseDetailsView />,
+      },
+      { path: ROUTES.COMPANY_EMPLOYEE.CREDENTIALS, element: <CredentialsView /> },
+      { path: ROUTES.COMPANY_EMPLOYEE.CERTIFICATES, element: <CertificatesView /> },
+      { path: ROUTES.COMPANY_EMPLOYEE.ARCHIVE, element: <ArchivePurchaseView /> },
     ],
   },
 
@@ -232,6 +263,7 @@ export const dashboardRoutes = [
         element: <NotificationsView />,
       },
       { path: ROUTES.PRIVATE_USER.CERTIFICATES, element: <CertificatesView /> },
+      { path: ROUTES.PRIVATE_USER.ARCHIVE, element: <ArchivePurchaseView /> },
       { path: ROUTES.PRIVATE_USER.PRIVACY, element: <PrivacyPolicyView /> },
       { path: ROUTES.PRIVATE_USER.COURSE, element: <CourseHomeView /> },
       {

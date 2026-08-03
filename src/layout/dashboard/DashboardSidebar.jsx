@@ -1,18 +1,27 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { LiaThumbsUp } from 'react-icons/lia';
-import { BsUpload } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { X } from 'lucide-react';
 import {
   IoAlbumsOutline,
+  IoBarChartOutline,
+  IoBookOutline,
   IoBusinessOutline,
   IoCardOutline,
+  IoCartOutline,
   IoChatbubbleOutline,
   IoDocumentTextOutline,
   IoHomeOutline,
+  IoKeyOutline,
+  IoLayersOutline,
   IoLockClosedOutline,
+  IoMailOutline,
   IoNotificationsOutline,
+  IoPeopleOutline,
   IoPersonOutline,
   IoRibbonOutline,
+  IoSchoolOutline,
   IoSettingsOutline,
   IoTicketOutline,
 } from 'react-icons/io5';
@@ -32,7 +41,7 @@ const linksByRole = {
     {
       path: '/dashboard/super-admin/license-management',
       label: 'Gestione licenze',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
+      icon: <IoKeyOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/super-admin/settings',
@@ -50,14 +59,34 @@ const linksByRole = {
       icon: <LiaThumbsUp className="text-[19px]" />,
     },
     {
+      path: '/dashboard/super-admin/inquiries',
+      label: 'Richieste web',
+      icon: <IoMailOutline className="text-[19px]" />,
+    },
+    {
       path: '/dashboard/super-admin/figures',
       label: 'Figura previste LMS CSR 59',
-      icon: <BsUpload className="text-[18px]" />,
+      icon: <IoPeopleOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/super-admin/enrolled-students',
+      label: 'Studenti iscritti',
+      icon: <IoSchoolOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/super-admin/course-list',
+      label: 'Corsi e pacchetti',
+      icon: <IoBookOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/super-admin/course-packages',
+      label: 'Pacchetti corso',
+      icon: <IoLayersOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/super-admin/report',
       label: 'Report',
-      icon: <BsUpload className="text-[18px]" />,
+      icon: <IoBarChartOutline className="text-[19px]" />,
     },
   ],
 
@@ -70,7 +99,7 @@ const linksByRole = {
     {
       path: '/dashboard/company-admin/training',
       label: 'Gestisci la formazione',
-      icon: <IoBusinessOutline className="text-[19px]" />,
+      icon: <IoSchoolOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/company-admin/certificates',
@@ -85,25 +114,35 @@ const linksByRole = {
     {
       path: '/dashboard/company-admin/my-courses',
       label: 'I tuoi corsi',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoBookOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/company-admin/purchases',
+      label: 'Pacchetti acquistati',
+      icon: <IoCartOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/company-admin/privacy-policy',
       label: 'Privacy & policy',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
+      icon: <IoLockClosedOutline className="text-[19px]" />,
     },
   ],
 
   [ROLES.COMPANY_EMPLOYEE]: [
     {
       path: '/dashboard/company-employee',
-      label: 'Dashboard',
+      label: 'I miei corsi',
       icon: <IoHomeOutline className="text-[19px]" />,
     },
     {
-      path: '/dashboard/company-employee/item-1',
-      label: 'Item 1',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      path: '/dashboard/company-employee/credentials',
+      label: 'Credenziali',
+      icon: <IoLockClosedOutline className="text-[19px]" />,
+    },
+    {
+      path: '/dashboard/company-employee/certificates',
+      label: 'I tuoi attestati',
+      icon: <IoRibbonOutline className="text-[19px]" />,
     },
   ],
 
@@ -114,34 +153,34 @@ const linksByRole = {
       icon: <IoHomeOutline className="text-[19px]" />,
     },
     {
+      path: '/dashboard/license-user/report',
+      label: 'Report',
+      icon: <IoBarChartOutline className="text-[19px]" />,
+    },
+    {
       path: '/dashboard/license-user/license',
       label: 'Licenze',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoKeyOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/license-user/enrolled-students',
       label: 'Studenti iscritti',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoPeopleOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/license-user/course-list',
-      label: 'Course List',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
+      label: 'Corsi e pacchetti',
+      icon: <IoBookOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/license-user/ticket',
       label: 'Ticket',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
-    },
-    {
-      path: '/dashboard/license-user/report',
-      label: 'Report',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoTicketOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/license-user/privacy-policy',
       label: 'Privacy & policy',
-      icon: <IoAlbumsOutline className="text-[19px]" />,
+      icon: <IoLockClosedOutline className="text-[19px]" />,
     },
   ],
 
@@ -180,7 +219,7 @@ const linksByRole = {
     {
       path: '/dashboard/private-user/certificates',
       label: 'My Certificates',
-      icon: <IoDocumentTextOutline className="text-[19px]" />,
+      icon: <IoRibbonOutline className="text-[19px]" />,
     },
     {
       path: '/dashboard/private-user/privacy-policy',
@@ -192,51 +231,80 @@ const linksByRole = {
 };
 
 const DashboardSidebar = () => {
-  const { setActiveLink } = useUIStore();
+  const { isOpen, setActiveLink, closeSidebar } = useUIStore();
   const { user } = useSelector((state) => state.auth);
+  const location = useLocation();
   const role = getUserRole(user);
   const links = linksByRole[role] || [];
 
-  return (
-    <aside className="fixed top-0 left-0 z-30 h-screen w-[300px] overflow-y-auto bg-white shadow-md">
-      <div className="flex justify-center py-4">
-        <div className="flex items-center">
-          <img
-            className="h-10 w-10 bg-cover object-contain"
-            src="/images/icons/title.png"
-            alt="UnoSicurezza Logo"
-          />
-          <h1 className="text-2xl font-bold text-gray-900">UnoSicurezza</h1>
-        </div>
-      </div>
+  useEffect(() => {
+    closeSidebar();
+  }, [location.pathname, closeSidebar]);
 
-      <nav className="space-y-1.5 px-2">
-        {links.map(({ path, label, icon }) => (
-          <NavLink
-            key={path}
-            to={path}
-            onClick={() => setActiveLink(path)}
-            end={
-              path === '/dashboard/company-admin' ||
-              path === '/dashboard/super-admin' ||
-              path === '/dashboard/company-employee' ||
-              path === '/dashboard/license-user' ||
-              path === '/dashboard/private-user'
-            }
-            className={({ isActive }) =>
-              `flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm font-medium ${
-                isActive
-                  ? 'bg-[#73bfa1] text-white'
-                  : 'text-[#2f2f2f] hover:bg-[#f3f5f4]'
-              }`
-            }
+  return (
+    <>
+      {isOpen && (
+        <button
+          type="button"
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+          onClick={closeSidebar}
+          aria-label="Chiudi menu"
+        />
+      )}
+
+      <aside
+        className={`fixed top-0 left-0 z-50 h-screen w-[min(300px,88vw)] overflow-y-auto bg-white shadow-md transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="relative flex justify-center py-4 pr-10">
+          <Link to="/" className="flex items-center" onClick={closeSidebar}>
+            <img
+              className="h-10 w-10 bg-cover object-contain"
+              src="/images/icons/title.png"
+              alt="UnoSicurezza Logo"
+            />
+            <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">UnoSicurezza</h1>
+          </Link>
+
+          <button
+            type="button"
+            onClick={closeSidebar}
+            className="absolute top-4 right-3 rounded-full p-2 text-gray-500 hover:bg-gray-100 lg:hidden"
+            aria-label="Chiudi menu"
           >
-            <span>{icon}</span>
-            <span>{label}</span>
-          </NavLink>
-        ))}
-      </nav>
-    </aside>
+            <X size={20} />
+          </button>
+        </div>
+
+        <nav className="space-y-1.5 px-2 pb-6">
+          {links.map(({ path, label, icon }) => (
+            <NavLink
+              key={path}
+              to={path}
+              onClick={() => setActiveLink(path)}
+              end={
+                path === '/dashboard/company-admin' ||
+                path === '/dashboard/super-admin' ||
+                path === '/dashboard/company-employee' ||
+                path === '/dashboard/license-user' ||
+                path === '/dashboard/private-user'
+              }
+              className={({ isActive }) =>
+                `flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm font-medium ${
+                  isActive
+                    ? 'bg-[#73bfa1] text-white'
+                    : 'text-[#2f2f2f] hover:bg-[#f3f5f4]'
+                }`
+              }
+            >
+              <span className="shrink-0">{icon}</span>
+              <span className="leading-snug">{label}</span>
+            </NavLink>
+          ))}
+        </nav>
+      </aside>
+    </>
   );
 };
 

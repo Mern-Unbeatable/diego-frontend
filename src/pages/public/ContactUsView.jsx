@@ -312,19 +312,25 @@ export default function ContactUsView() {
   return (
     <Container size="full">
       <div className="min-h-screen bg-white">
+         <div className='container mx-auto px-4'>
+
         <Banner image={banner} title={t('contactUs.section1.bannerTitle')} />
+
+
+         </div>
+
         <div className="mx-auto max-w-4xl px-6 py-16 text-center">
           <h1 className="mb-4 text-4xl font-bold text-gray-900">
             {t('contactUs.section1.heroTitle')}
           </h1>
-          <p className="text-base leading-relaxed text-gray-700">
+          <p className="text-sm md:text-base leading-relaxed text-gray-700">
             {t('contactUs.section1.heroDescription')}
           </p>
         </div>
 
         {/* Form Section */}
-        <div className="mx-auto max-w-4xl px-6 pb-20">
-          <div className="rounded-lg border border-gray-200 p-12">
+        <div className="mx-auto max-w-4xl  pb-15 px-4">
+          <div className="rounded-lg border border-gray-200 p-4 md:p-10">
             <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">
               {t('contactUs.section1.formTitle')}
             </h2>
@@ -462,10 +468,10 @@ export default function ContactUsView() {
         </div>
 
         {/* Contact Info Cards */}
-        <div className="mx-auto max-w-4xl px-6 pb-20">
-          <div className="grid grid-cols-2 gap-8">
+        <div className="mx-auto max-w-4xl px-4 pb-14">
+          <div className="flex flex-col gap-8 sm:flex-row">
             {/* Email Card */}
-            <div className="rounded-lg border border-gray-200 p-8 text-center">
+            <div className="rounded-lg border border-gray-200 p-4 md:p-8 text-center">
               <div className="mb-4 flex justify-center">
                 <div className="rounded-full bg-[#73BFA1] p-4">
                   <Mail className="text-white" size={28} />
@@ -483,7 +489,7 @@ export default function ContactUsView() {
             </div>
 
             {/* Phone Card */}
-            <div className="rounded-lg border border-gray-200 p-8 text-center">
+            <div className="rounded-lg border border-gray-200 p-4 md:p-8 text-center">
               <div className="mb-4 flex justify-center">
                 <div className="rounded-full bg-[#73BFA1] p-4">
                   <Phone className="text-white" size={28} />

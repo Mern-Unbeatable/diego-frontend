@@ -1,6 +1,27 @@
 import { normalizeApiError } from './client';
 
 /**
+ * Build a user-facing message from API validation errors.
+ * @param {Error|Object} error
+ * @returns {string}
+ */
+export const formatApiErrorMessage = (error) => {
+  if (typeof error === 'string') return error;
+
+  const normalized = normalizeApiError(error);
+
+  if (normalized.errors?.length) {
+    const details = normalized.errors
+      .map((item) => item.message || `${item.field}: non valido`)
+      .join('. ');
+
+    return details || normalized.message;
+  }
+
+  return normalized.message;
+};
+
+/**
  * Handle API errors in Redux thunks
  * Re-throws abort errors for RTK to handle
  * Returns normalized error message for other errors
@@ -13,9 +34,7 @@ export const handleApiError = (error) => {
     throw error;
   }
 
-  // Normalize the error and return the message
-  const normalizedError = normalizeApiError(error);
-  return normalizedError.message;
+  return formatApiErrorMessage(error);
 };
 
 /**

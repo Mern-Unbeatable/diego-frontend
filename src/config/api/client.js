@@ -34,8 +34,8 @@ import { COOKIE_STORAGE } from '../../utils/cookies/cookieStorage';
 export const axiosInstance = axios.create({
   baseURL: ENV_CONFIG.API_BASE_URL,
   timeout: 30000,
+  withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
-  // Don't throw on any status code - we handle errors in interceptor
   validateStatus: () => true,
 });
 
@@ -116,40 +116,43 @@ const performLogout = () => {
  * @throws {Error} If refresh fails or no refresh token available
  */
 const refreshAccessToken = async () => {
-  const refreshToken = STORAGE.getRefreshToken();
-
-  if (!refreshToken) {
-    throw new Error('No refresh token available');
-  }
+  const refreshToken =
+    STORAGE.getRefreshToken() || COOKIE_STORAGE.getRefreshToken();
 
   try {
-    // Use vanilla axios to avoid interceptor recursion
     const response = await axios.post(
       `${ENV_CONFIG.API_BASE_URL}${endpoints.auth.REFRESH}`,
-      { refreshToken },
+      refreshToken ? { refreshToken } : {},
       {
         headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
         timeout: 30000,
       },
     );
 
-    // Validate response
     if (response.status !== 200 && response.status !== 201) {
       throw new Error('Token refresh failed');
     }
 
-    const newAccessToken = response.data?.data?.tokens?.accessToken;
-    const newRefreshToken = response.data?.data?.tokens?.refreshToken;
+    const payload = response.data?.data ?? response.data ?? {};
+    const tokenData = payload?.data ?? payload;
+    const newAccessToken =
+      tokenData?.accessToken ||
+      tokenData?.tokens?.accessToken ||
+      tokenData?.token;
+    const newRefreshToken =
+      tokenData?.refreshToken ||
+      tokenData?.tokens?.refreshToken;
 
     if (!newAccessToken) {
       throw new Error('No access token in refresh response');
     }
 
-    // Store new tokens
     STORAGE.setToken(newAccessToken);
+    COOKIE_STORAGE.setToken(newAccessToken);
     if (newRefreshToken) {
-      // Backend may rotate refresh tokens
       STORAGE.setRefreshToken(newRefreshToken);
+      COOKIE_STORAGE.setRefreshToken(newRefreshToken);
     }
 
     return newAccessToken;
@@ -170,7 +173,7 @@ axiosInstance.interceptors.request.use(
       return config;
     }
 
-    const token = COOKIE_STORAGE.getToken();
+    const token = COOKIE_STORAGE.getToken() || STORAGE.getToken();
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -289,6 +292,16 @@ axiosInstance.interceptors.response.use(
         error.message || 'Network error. Please check your connection.';
     }
 
+    if (
+      !error.response &&
+      /socket hang up|ECONNRESET|ECONNREFUSED|ETIMEDOUT|network error/i.test(
+        error.message || '',
+      )
+    ) {
+      error.message =
+        'API connection lost (backend may be restarting). Wait a few seconds and try again. If it persists, run npm run dev:clean in the lms folder.';
+    }
+
     return Promise.reject(error);
   },
 );
@@ -317,8 +330,19 @@ function createErrorFromResponse(response) {
 export const normalizeApiError = (error) => {
   // Network error (no response from server)
   if (!error.response) {
+    const raw = error.message || '';
+    if (/socket hang up|ECONNRESET|ECONNREFUSED|ETIMEDOUT|network error/i.test(raw)) {
+      return {
+        message:
+          'Connessione al server interrotta (il backend potrebbe essere in riavvio). Attendi qualche secondo e riprova. Se persiste, nella cartella lms esegui: npm run dev:clean',
+        code: 'CONNECTION_RESET',
+        status: null,
+        errors: null,
+      };
+    }
+
     return {
-      message: error.message || 'Network error. Please check your connection.',
+      message: raw || 'Network error. Please check your connection.',
       code: 'NETWORK_ERROR',
       status: null,
       errors: null,

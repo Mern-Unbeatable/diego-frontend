@@ -1,0 +1,79 @@
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  createCompanyCourseCheckoutAPI,
+  createCompanyCoursePaymentIntentAPI,
+  createCoursePaymentIntentAPI,
+  verifyCompanyCoursePaymentIntentAPI,
+  verifyCoursePaymentIntentAPI,
+} from './paymentAPI';
+import { resetCompanyCheckout, resetPaymentIntent } from './paymentSlice';
+import { selectPayment } from './paymentSelectors';
+
+export const usePayment = () => {
+  const dispatch = useDispatch();
+  const paymentState = useSelector(selectPayment);
+
+  const createCoursePaymentIntent = useCallback(
+    async (payload) => {
+      const result = await dispatch(createCoursePaymentIntentAPI(payload)).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
+  const clearPaymentIntent = useCallback(() => {
+    dispatch(resetPaymentIntent());
+  }, [dispatch]);
+
+  const verifyCoursePaymentIntent = useCallback(
+    async (paymentIntentId) => {
+      const result = await dispatch(
+        verifyCoursePaymentIntentAPI(paymentIntentId),
+      ).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
+  const createCompanyCoursePaymentIntent = useCallback(
+    async (payload) => {
+      const result = await dispatch(createCompanyCoursePaymentIntentAPI(payload)).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
+  const verifyCompanyCoursePaymentIntent = useCallback(
+    async (paymentIntentId) => {
+      const result = await dispatch(
+        verifyCompanyCoursePaymentIntentAPI(paymentIntentId),
+      ).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
+  const createCompanyCourseCheckout = useCallback(
+    async (payload) => {
+      const result = await dispatch(createCompanyCourseCheckoutAPI(payload)).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
+  const clearCompanyCheckout = useCallback(() => {
+    dispatch(resetCompanyCheckout());
+  }, [dispatch]);
+
+  return {
+    createCoursePaymentIntent,
+    verifyCoursePaymentIntent,
+    createCompanyCoursePaymentIntent,
+    verifyCompanyCoursePaymentIntent,
+    createCompanyCourseCheckout,
+    clearPaymentIntent,
+    clearCompanyCheckout,
+    ...paymentState,
+  };
+};

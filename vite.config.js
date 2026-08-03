@@ -9,4 +9,23 @@ export default defineConfig({
             jsxRuntime: 'automatic',
         }),
     ],
+    server: {
+        port: 5173,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:5000',
+                changeOrigin: true,
+                secure: false,
+                timeout: 120000,
+                proxyTimeout: 120000,
+            },
+            '/uploads': {
+                target: 'http://localhost:5000',
+                changeOrigin: true,
+                secure: false,
+                timeout: 120000,
+                proxyTimeout: 120000,
+            },
+        },
+    },
 })

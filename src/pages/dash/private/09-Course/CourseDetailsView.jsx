@@ -1,172 +1,247 @@
-import React, { useMemo, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import CourseMain from '../10-profile/components/course/CourseMain';
+import { ArrowLeft, Download } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import CourseProgram from '../10-profile/components/course/CourseProgram';
 import QuizModal from './components/QuizModal';
-
-const quizQuestions = [
-  {
-    id: 1,
-    text: 'What is 2 + 2?',
-    options: ['1', '3', '4', '5'],
-    answer: '4',
-  },
-  {
-    id: 2,
-    text: 'Which color is the sky on a clear day?',
-    options: ['Blue', 'Red', 'Yellow', 'Pink'],
-    answer: 'Blue',
-  },
-  {
-    id: 3,
-    text: 'How many days are in one week?',
-    options: ['5', '6', '7', '8'],
-    answer: '7',
-  },
-  {
-    id: 4,
-    text: 'Which is a safety device?',
-    options: ['Helmet', 'Notebook', 'Spoon', 'Pillow'],
-    answer: 'Helmet',
-  },
-  {
-    id: 5,
-    text: 'Fire extinguisher is used to?',
-    options: ['Cook', 'Wash', 'Put out fires', 'Open doors'],
-    answer: 'Put out fires',
-  },
-  {
-    id: 6,
-    text: 'PPE means?',
-    options: [
-      'Personal Protective Equipment',
-      'Public Policy Element',
-      'Private Program Entry',
-      'Power Plant Energy',
-    ],
-    answer: 'Personal Protective Equipment',
-  },
-  {
-    id: 7,
-    text: 'Emergency number in most EU countries is?',
-    options: ['111', '112', '118', '120'],
-    answer: '112',
-  },
-  {
-    id: 8,
-    text: 'A wet floor sign helps to?',
-    options: ['Decorate room', 'Prevent slips', 'Increase heat', 'Block exits'],
-    answer: 'Prevent slips',
-  },
-  {
-    id: 9,
-    text: 'Before using equipment, you should?',
-    options: [
-      'Ignore instructions',
-      'Read instructions',
-      'Run quickly',
-      'Switch off lights',
-    ],
-    answer: 'Read instructions',
-  },
-  {
-    id: 10,
-    text: 'Best action if you see a hazard?',
-    options: ['Do nothing', 'Report it', 'Hide it', 'Wait one week'],
-    answer: 'Report it',
-  },
-];
+import { Loading } from '../../../../components/ui';
+import LessonContent from '../../../../components/course/LessonContent';
+import LessonNavigation from '../../../../components/course/LessonNavigation';
+import { useCoursePlayer } from '../../../../features/learning/useCoursePlayer';
+import { getMyCertificatesService, ensureCourseCertificateService } from '../../../../features/learning/learningService';
+import { useDashboardPaths } from '../../../../hooks/useDashboardPaths';
 
 const CourseContentView = () => {
-  const { id } = useParams();
+  const { id: courseId } = useParams();
   const navigate = useNavigate();
-  const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const paths = useDashboardPaths();
+  const [courseCertificate, setCourseCertificate] = useState(null);
 
-  // Modules stored in React State to make them interactive
-  const [modules, setModules] = useState([
-    { id: 1, title: 'Class-1', time: '3 minuti', status: 'done' },
-    { id: 2, title: 'Class-2', time: '10 minuti', status: 'done' },
-    { id: 3, title: 'Class-3', time: '20 minuti', status: 'current' },
-    { id: 4, title: 'Class-4', time: '30 minuti', status: 'upcoming' },
-    { id: 5, title: 'Class-5', time: '30 minuti', status: 'upcoming' },
-    {
-      id: 6,
-      title: 'Quiz-1',
-      time: 'Start',
-      status: 'upcoming',
-      type: 'quiz',
-    },
-    { id: 7, title: 'Class-7', time: '31 minuti', status: 'upcoming' },
-    { id: 8, title: 'Class-8', time: '28:59 minuti', status: 'upcoming' },
-  ]);
+  const {
+    loading,
+    error,
+    playerData,
+    activeLesson,
+    activeModule,
+    lessonLoading,
+    scormSession,
+    finishingScorm,
+    activeQuiz,
+    quizLoading,
+    submittingQuiz,
+    selectModule,
+    trackVideoProgress,
+    logAntiCheat,
+    pollScormProgress,
+    handleScormComplete,
+    launchScorm,
+    finishScorm,
+    submitQuiz,
+    closeQuiz,
+    navigation,
+    goToPreviousModule,
+    goToNextModule,
+  } = useCoursePlayer(courseId);
 
-  // Handle selection of a class module
-  const selectModule = (moduleId) => {
-    setModules((prevModules) => {
-      const targetIndex = prevModules.findIndex((m) => m.id === moduleId);
-      if (targetIndex === -1) return prevModules;
+  const enrollmentCompleted = playerData?.enrollment?.status === 'COMPLETED';
 
-      return prevModules.map((m, idx) => {
-        if (m.type === 'quiz') return m;
+  useEffect(() => {
+    if (playerData?.certificate?.pdfUrl) {
+      setCourseCertificate(playerData.certificate);
+    }
+  }, [playerData?.certificate]);
 
-        if (idx < targetIndex) {
-          return { ...m, status: 'done' };
-        } else if (idx === targetIndex) {
-          return { ...m, status: 'current' };
-        } else {
-          return { ...m, status: 'upcoming' };
+  useEffect(() => {
+    if (!enrollmentCompleted || !courseId) {
+      if (!playerData?.certificate?.pdfUrl) {
+        setCourseCertificate(null);
+      }
+      return;
+    }
+
+    if (playerData?.certificate?.pdfUrl) {
+      setCourseCertificate(playerData.certificate);
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadCertificate = async () => {
+      try {
+        const ensured = await ensureCourseCertificateService(courseId);
+        const certificate = ensured?.data?.certificate ?? null;
+        if (!cancelled && certificate?.pdfUrl) {
+          setCourseCertificate(certificate);
+          return;
         }
-      });
-    });
+
+        const response = await getMyCertificatesService({ courseId, limit: 1 });
+        const certificates = response?.data?.certificates ?? [];
+        if (!cancelled) {
+          setCourseCertificate(certificates[0] ?? null);
+        }
+      } catch {
+        if (!cancelled) setCourseCertificate(null);
+      }
+    };
+
+    loadCertificate();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [courseId, enrollmentCompleted, playerData?.certificate?.pdfUrl]);
+
+  const handleCloseQuiz = () => {
+    closeQuiz();
   };
 
-  // Dynamically calculate progress based on completed classes
-  const progress = useMemo(() => {
-    const nonQuizModules = modules.filter((m) => m.type !== 'quiz');
-    const doneCount = nonQuizModules.filter((m) => m.status === 'done').length;
-    return Math.round((doneCount / nonQuizModules.length) * 100);
-  }, [modules]);
+  if (loading) {
+    return <Loading size="md" className="min-h-60" />;
+  }
 
-  // TODO: fetch course details by id (use API or redux)
-  const course = {
-    id,
-    title: 'Formazione SEVESO',
-    video: '/image/mandatory_courses/image1.jpg',
-    description:
-      "Il D. lgs. 105/2015 art. 14 all'Appendice I dell'Allegato B, precisa al gestore come ottemperare in maniera organica e programmata agli obblighi di informazione, formazione, addestramento ed equipaggiamento ai fini della sicurezza, degli addetti e di coloro che accedono agli stabilimenti, tenendo conto delle dispositions dettate in materia per la tutela della salute e della sicurezza dei lavoratori sul luogo di lavoro.",
-  };
+  if (error) {
+    return (
+      <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-6 text-red-700">
+        <p className="mb-4">{error}</p>
+        <button
+          type="button"
+          onClick={() => navigate(paths.dashboard)}
+          className="rounded-full bg-[#55B18D] px-5 py-2 text-sm font-semibold text-white"
+        >
+          Torna alla dashboard
+        </button>
+      </div>
+    );
+  }
 
-  const openQuiz = () => {
-    setIsQuizOpen(true);
+  const course = playerData?.course;
+  const modules = playerData?.modules ?? [];
+  const progress = playerData?.progress ?? 0;
+  const allLessonsDone = progress >= 100;
+  const pendingFinalQuiz = allLessonsDone && !enrollmentCompleted;
+  const finalQuizModule = modules.find(
+    (module) => module.type === 'quiz' && module.quizType === 'FINAL_TEST',
+  );
+
+  const handleDownloadCertificate = async () => {
+    if (courseCertificate?.pdfUrl) {
+      window.open(courseCertificate.pdfUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    try {
+      const response = await ensureCourseCertificateService(courseId);
+      const certificate = response?.data?.certificate ?? null;
+      if (certificate?.pdfUrl) {
+        setCourseCertificate(certificate);
+        window.open(certificate.pdfUrl, '_blank', 'noopener,noreferrer');
+        return;
+      }
+    } catch {
+      // fall through to certificates page
+    }
+
+    navigate(paths.certificates);
   };
 
   return (
-    <div className="">
-      {/* Back Button */}
+    <div>
       <button
-        onClick={() => navigate(-1)}
+        type="button"
+        onClick={() => navigate(paths.dashboard)}
         className="mb-8 inline-flex cursor-pointer items-center text-gray-800 transition-colors hover:text-black"
         aria-label="Back"
       >
         <ArrowLeft size={24} strokeWidth={2.5} />
       </button>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <CourseMain course={course} />
+      {enrollmentCompleted ? (
+        <div className="mb-6 flex flex-col gap-3 rounded-xl border border-[#cbe8dd] bg-[#f2faf7] px-4 py-4 text-sm text-[#22423b] sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="font-semibold">Corso completato</p>
+            <p className="mt-1">
+              {courseCertificate?.pdfUrl
+                ? 'Il tuo attestato è pronto. Puoi scaricarlo subito (disponibile per 30 giorni).'
+                : 'Attestato in elaborazione. Se non compare subito, usa il pulsante per rigenerarlo.'}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={handleDownloadCertificate}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#55B18D] px-5 py-2 text-sm font-semibold text-white hover:bg-[#439678]"
+          >
+            <Download size={16} />
+            {courseCertificate?.pdfUrl ? 'Scarica attestato' : 'Genera attestato'}
+          </button>
+        </div>
+      ) : null}
+
+      {pendingFinalQuiz ? (
+        <div className="mb-6 flex flex-col gap-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-900 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            Tutte le lezioni sono complete. Supera il <strong>Final Test</strong> con almeno
+            70% per generare l&apos;attestato.
+          </p>
+          {finalQuizModule ? (
+            <button
+              type="button"
+              onClick={() => selectModule(finalQuizModule.id)}
+              disabled={finalQuizModule.status === 'locked' || quizLoading}
+              className="shrink-0 rounded-full bg-amber-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-amber-700 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Avvia Final Test
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+
+      <div className="grid grid-cols-1 items-start gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)] lg:gap-8">
+        <div className="min-w-0 space-y-4 sm:space-y-6">
+          <LessonContent
+            course={course}
+            lesson={activeLesson}
+            moduleItem={activeModule}
+            enrollmentId={playerData?.enrollment?.id}
+            scormSession={scormSession}
+            lessonLoading={lessonLoading}
+            finishingScorm={finishingScorm}
+            scormHasNext={navigation.hasNext}
+            onTrackVideoProgress={trackVideoProgress}
+            onLaunchScorm={launchScorm}
+            onScormComplete={handleScormComplete}
+            onFinishScorm={finishScorm}
+            onScormGoNext={goToNextModule}
+            onPollScormProgress={pollScormProgress}
+            onLogAntiCheat={logAntiCheat}
+          />
+
+          {!activeQuiz ? (
+            <LessonNavigation
+              previousTitle={navigation.previous?.title}
+              nextTitle={navigation.next?.title}
+              hasPrevious={navigation.hasPrevious}
+              hasNext={navigation.hasNext}
+              onPrevious={goToPreviousModule}
+              onNext={goToNextModule}
+              loading={lessonLoading || quizLoading}
+            />
+          ) : null}
+        </div>
 
         <CourseProgram
           modules={modules}
           progress={progress}
-          onStartQuiz={openQuiz}
           onSelectModule={selectModule}
+          loading={quizLoading}
         />
       </div>
 
       <QuizModal
-        isOpen={isQuizOpen}
-        onClose={() => setIsQuizOpen(false)}
-        quizQuestions={quizQuestions}
+        isOpen={Boolean(activeQuiz)}
+        onClose={handleCloseQuiz}
+        quiz={activeQuiz}
+        submitting={submittingQuiz}
+        onSubmit={submitQuiz}
       />
     </div>
   );

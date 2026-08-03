@@ -171,8 +171,8 @@ export default function CollaborationBenefits() {
   ];
 
   return (
-    <div className="w-full bg-gradient-to-b from-white to-slate-50 px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="w-full bg-gradient-to-b from-white to-slate-50 px-4 pb-14 md:pb-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl ">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           {/* Left Column - Benefits */}
           <div className="lg:col-span-2">
@@ -213,7 +213,7 @@ export default function CollaborationBenefits() {
 
           {/* Right Column - License Model Card */}
           <div className="lg:col-span-1">
-            <div className="sticky top-20 rounded-2xl border border-teal-100 bg-white p-8 shadow-sm">
+            <div className="sticky top-20 rounded-2xl border border-teal-100 bg-white p-4 md:p-6 lg:p-8 shadow-sm">
               <h2 className="mb-6 text-xl font-bold text-gray-900">
                 {t('workWithUs.section3.licenseTitle')}
               </h2>

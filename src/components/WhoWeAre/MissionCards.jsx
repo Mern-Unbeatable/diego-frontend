@@ -30,12 +30,12 @@ const MissionCards = () => {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       {missionData.map((item, index) => (
-        <div key={index} className="rounded-lg bg-gray-50 p-6 text-center">
+        <div key={index} className="rounded-lg bg-gray-50 p-4 md:p-6 text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#73BFA1]">
             <item.icon className="text-white" size={24} />
           </div>
           <h3 className="mb-2 font-bold text-gray-900">{item.title}</h3>
-          <p className="text-justify text-sm leading-relaxed text-gray-600">
+          <p className=" text-sm leading-relaxed text-gray-600">
             {item.description}
           </p>
         </div>

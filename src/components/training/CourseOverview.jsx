@@ -17,7 +17,10 @@ export default function CourseFilters({
   const hasActiveFilters = Boolean(searchTerm || category || duration);
 
   return (
-    <Container>
+          <div className='container mx-auto px-4'>
+
+
+               <Container>
       <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm my-10">
         <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_auto] gap-4 items-end">
           {/* Search */}
@@ -132,6 +135,8 @@ export default function CourseFilters({
         )}
       </div>
     </Container>
+          </div>
+
   );
 }
 

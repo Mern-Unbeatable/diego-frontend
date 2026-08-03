@@ -24,91 +24,7 @@ const CourseHomeView = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Sample course data
-  const courses = [
-    {
-      id: 1,
-      title: 'Advanced React Development',
-      instructor: 'Sarah Johnson',
-      rating: 4.8,
-      students: 1234,
-      duration: '12 weeks',
-      level: 'Advanced',
-      category: 'Development',
-      image:
-        'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400',
-      progress: 75,
-      color: 'from-blue-500 to-blue-600',
-    },
-    {
-      id: 2,
-      title: 'Python for Data Science',
-      instructor: 'Michael Chen',
-      rating: 4.9,
-      students: 2156,
-      duration: '10 weeks',
-      level: 'Intermediate',
-      category: 'Data Science',
-      image:
-        'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400',
-      progress: 45,
-      color: 'from-green-500 to-green-600',
-    },
-    {
-      id: 3,
-      title: 'UI/UX Design Fundamentals',
-      instructor: 'Emily Rodriguez',
-      rating: 4.7,
-      students: 987,
-      duration: '8 weeks',
-      level: 'Beginner',
-      category: 'Design',
-      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400',
-      progress: 90,
-      color: 'from-purple-500 to-purple-600',
-    },
-    {
-      id: 4,
-      title: 'Machine Learning A-Z',
-      instructor: 'David Kim',
-      rating: 4.9,
-      students: 3456,
-      duration: '16 weeks',
-      level: 'Advanced',
-      category: 'AI & ML',
-      image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400',
-      progress: 20,
-      color: 'from-red-500 to-red-600',
-    },
-    {
-      id: 5,
-      title: 'JavaScript Mastery',
-      instructor: 'Lisa Park',
-      rating: 4.6,
-      students: 5678,
-      duration: '14 weeks',
-      level: 'All Levels',
-      category: 'Development',
-      image:
-        'https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=400',
-      progress: 60,
-      color: 'from-yellow-500 to-yellow-600',
-    },
-    {
-      id: 6,
-      title: 'Cloud Computing with AWS',
-      instructor: 'Robert Taylor',
-      rating: 4.8,
-      students: 876,
-      duration: '9 weeks',
-      level: 'Intermediate',
-      category: 'Cloud',
-      image:
-        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400',
-      progress: 0,
-      color: 'from-indigo-500 to-indigo-600',
-    },
-  ];
+  const courses = [];
 
   // Filter courses based on active tab and search
   const filteredCourses = courses.filter((course) => {
@@ -125,28 +41,7 @@ const CourseHomeView = () => {
     return matchesSearch && matchesTab;
   });
 
-  // Stats data
-  const stats = [
-    {
-      label: 'Courses Enrolled',
-      value: '8',
-      icon: BookOpen,
-      color: 'text-blue-500',
-    },
-    { label: 'Hours Spent', value: '47', icon: Clock, color: 'text-green-500' },
-    {
-      label: 'Certificates',
-      value: '3',
-      icon: Award,
-      color: 'text-purple-500',
-    },
-    {
-      label: 'Average Score',
-      value: '92%',
-      icon: TrendingUp,
-      color: 'text-orange-500',
-    },
-  ];
+  const stats = [];
 
   return (
     <div className="">
@@ -193,11 +88,10 @@ const CourseHomeView = () => {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
-                  activeTab === tab
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
-                    : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-800'
-                }`}
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${activeTab === tab
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
+                  : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-800'
+                  }`}
               >
                 {tab === 'all'
                   ? 'All Courses'
@@ -207,18 +101,17 @@ const CourseHomeView = () => {
                       ? 'Completed'
                       : 'Not Started'}
                 <span
-                  className={`ml-2 rounded-full px-2 py-0.5 text-sm ${
-                    activeTab === tab
-                      ? 'bg-white/20 text-white'
-                      : 'bg-gray-100 text-gray-600'
-                  }`}
+                  className={`ml-2 rounded-full px-2 py-0.5 text-sm ${activeTab === tab
+                    ? 'bg-white/20 text-white'
+                    : 'bg-gray-100 text-gray-600'
+                    }`}
                 >
                   {tab === 'all'
                     ? courses.length
                     : tab === 'in-progress'
                       ? courses.filter(
-                          (c) => c.progress > 0 && c.progress < 100,
-                        ).length
+                        (c) => c.progress > 0 && c.progress < 100,
+                      ).length
                       : tab === 'completed'
                         ? courses.filter((c) => c.progress === 100).length
                         : courses.filter((c) => c.progress === 0).length}

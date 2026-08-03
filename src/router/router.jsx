@@ -9,6 +9,9 @@ import MainLayout from '../layout/public/MainLayout.jsx';
 import AuthLayout from '../layout/auth/AuthLayout.jsx';
 import SetupLayout from '../layout/auth/SetupLayout.jsx';
 import DashboardLayout from '../layout/dashboard/DashboardLayout.jsx';
+import AccessLinkRedemptionView from '../pages/public/AccessLinkRedemptionView.jsx';
+import ArchiveSuccessView from '../pages/public/archive/ArchiveSuccessView.jsx';
+import ArchiveCancelView from '../pages/public/archive/ArchiveCancelView.jsx';
 
 // ✅ Guards
 import RoleGuard from './guards/RoleGuard.jsx';
@@ -28,11 +31,8 @@ import ScrollToTop from '../components/common/ScrollToTop.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
+      <Route element={<ScrollToTop />}>
 
-
-    {/* element={<ScrollToTop />} */}
-      <Route >
-        {/* ✅ PUBLIC */}
         <Route path="/" element={<MainLayout />}>
           {publicRoutes.map((r) => (
             <Route
@@ -47,7 +47,11 @@ const router = createBrowserRouter(
           ))}
         </Route>
 
-        {/* ✅ AUTH */}
+        <Route path="/enrollments/access/:token" element={<AccessLinkRedemptionView />} />
+        <Route path="/certificates/archive/success" element={<ArchiveSuccessView />} />
+        <Route path="/certificates/archive/cancel" element={<ArchiveCancelView />} />
+
+
         <Route element={<PublicGuard />}>
           <Route path="/auth" element={<AuthLayout />}>
             {/* Auth routes (no sidebar) */}

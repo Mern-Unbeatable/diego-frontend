@@ -17,10 +17,10 @@ const CartLeftSide = () => {
     <div>
       <button
         onClick={handleGoBack}
-        className="mb-5 flex items-center gap-1 text-base font-bold text-[#73BFA1]"
+        className="mb-5 flex items-center gap-1 text-sm md:text-base font-bold text-[#73BFA1]"
       >
         <IoMdArrowRoundBack className="text-lg text-[#73BFA1]" />
-        <h4 className={`text-base font-bold text-[#73BFA1] md:text-lg`}>
+        <h4 className={`text-sm font-bold text-[#73BFA1] md:text-base lg:text-lg`}>
           {t('paymentPages.section1.continueShopping')}
         </h4>
       </button>

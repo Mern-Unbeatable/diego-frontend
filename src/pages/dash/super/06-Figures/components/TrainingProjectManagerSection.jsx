@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Check, Download, UploadCloud } from 'lucide-react';
 
 const DEFAULT_DOCS = [
@@ -8,6 +8,9 @@ const DEFAULT_DOCS = [
   'Certificati di Competenze Digitali',
 ];
 
+const inputClassName =
+  'h-10 w-full min-w-0 rounded-lg border border-[#cdcdcd] bg-transparent px-3 text-xs text-[#555] outline-none sm:h-11 sm:px-4 sm:text-sm';
+
 export default function TrainingProjectManagerSection({
   title = 'Responsabile del progetto di formazione',
   subtitle = 'Responsabile Progetto Formativo',
@@ -15,6 +18,7 @@ export default function TrainingProjectManagerSection({
   showPersonFields = true,
   companyLabel = 'Societa',
   initial,
+  onFormChange,
   onUpload,
   onDownload,
   showFooterActions = false,
@@ -35,6 +39,26 @@ export default function TrainingProjectManagerSection({
   });
 
   const [files, setFiles] = useState(safeInitial.files || {});
+
+  useEffect(() => {
+    if (!initial) return;
+    setForm({
+      nome: initial.nome ?? '',
+      cognome: initial.cognome ?? '',
+      societa: initial.societa ?? '',
+    });
+    setFiles(initial.files ?? {});
+  }, [initial]);
+
+  const updateForm = (field, value) => {
+    setForm((prev) => {
+      const next = { ...prev, [field]: value };
+      if (typeof onFormChange === 'function') {
+        onFormChange(next);
+      }
+      return next;
+    });
+  };
 
   const handleUpload = async (key, file) => {
     setFiles((prev) => ({
@@ -73,44 +97,40 @@ export default function TrainingProjectManagerSection({
   };
 
   return (
-    <section className="overflow-hidden rounded-3xl bg-[#f7f7f7] shadow-[0_8px_20px_rgba(0,0,0,0.04)] ring-1 ring-[#ececec]">
-      <div className="bg-[#73BFA1] px-5 py-4 text-white md:px-6">
-        <div className="flex items-start gap-3">
-          <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-sm bg-[#71c2a3]">
-            <Check className="h-4 w-4 text-white" strokeWidth={3} />
+    <section className="min-w-0 overflow-hidden rounded-2xl bg-[#f7f7f7] shadow-[0_8px_20px_rgba(0,0,0,0.04)] ring-1 ring-[#ececec] sm:rounded-3xl">
+      <div className="bg-[#73BFA1] px-3 py-3 text-white sm:px-5 sm:py-4 md:px-6">
+        <div className="flex items-start gap-2.5 sm:gap-3">
+          <div className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-sm bg-[#71c2a3] sm:h-6 sm:w-6">
+            <Check className="h-3.5 w-3.5 text-white sm:h-4 sm:w-4" strokeWidth={3} />
           </div>
-          <div>
-            <h2 className="text-[18px] leading-tight font-semibold md:text-[34px]">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-base leading-tight font-semibold break-words sm:text-xl lg:text-2xl ">
               {title}
             </h2>
-            <p className="mt-1 text-[12px] text-white/80 md:text-[16px]">
+            <p className="mt-1 text-xs break-words text-white/80 sm:text-sm md:text-base">
               {subtitle}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="space-y-5 p-5 md:space-y-6 md:p-6">
+      <div className="space-y-4 p-3 sm:space-y-5 sm:p-5 md:space-y-6 md:p-6">
         {showPersonFields ? (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2">
             <Field label="Cognome">
               <input
                 value={form.cognome}
-                onChange={(event) =>
-                  setForm((prev) => ({ ...prev, cognome: event.target.value }))
-                }
+                onChange={(event) => updateForm('cognome', event.target.value)}
                 placeholder="first name"
-                className="h-11 w-full rounded-lg border border-[#cdcdcd] bg-transparent px-4 text-[12px] text-[#555] outline-none"
+                className={inputClassName}
               />
             </Field>
             <Field label="Nome">
               <input
                 value={form.nome}
-                onChange={(event) =>
-                  setForm((prev) => ({ ...prev, nome: event.target.value }))
-                }
+                onChange={(event) => updateForm('nome', event.target.value)}
                 placeholder="last name"
-                className="h-11 w-full rounded-lg border border-[#cdcdcd] bg-transparent px-4 text-[12px] text-[#555] outline-none"
+                className={inputClassName}
               />
             </Field>
           </div>
@@ -118,21 +138,19 @@ export default function TrainingProjectManagerSection({
           <Field label={companyLabel}>
             <input
               value={form.societa}
-              onChange={(event) =>
-                setForm((prev) => ({ ...prev, societa: event.target.value }))
-              }
+              onChange={(event) => updateForm('societa', event.target.value)}
               placeholder={companyLabel}
-              className="h-11 w-full rounded-lg border border-[#cdcdcd] bg-transparent px-4 text-[12px] text-[#555] outline-none"
+              className={inputClassName}
             />
           </Field>
         )}
 
-        <div>
-          <h3 className="mb-3 text-[18px] font-semibold text-[#171717] md:text-[34px]">
+        <div className="min-w-0">
+          <h3 className="mb-2 text-base font-semibold break-words text-[#171717] sm:mb-3 sm:text-xl lg:text-2xl">
             Documenti richiesti
           </h3>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {documentLabels.map((label, index) => (
               <DocCard
                 key={`${title}-${label}-${index}`}
@@ -146,19 +164,19 @@ export default function TrainingProjectManagerSection({
         </div>
 
         {showFooterActions ? (
-          <div className="rounded-2xl bg-[#e6efec] p-4">
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div className="rounded-xl bg-[#e6efec] p-3 sm:rounded-2xl sm:p-4">
+            <div className="grid grid-cols-1 gap-2 sm:gap-3 md:grid-cols-2">
               <button
                 type="button"
                 onClick={onConfirm}
-                className="h-11 rounded-full bg-[#71c2a3] text-sm font-medium text-white"
+                className="h-10 w-full rounded-full bg-[#71c2a3] text-sm font-medium text-white sm:h-11"
               >
                 Conferma
               </button>
               <button
                 type="button"
                 onClick={onCancel}
-                className="h-11 rounded-full bg-[#d64545] text-sm font-medium text-white"
+                className="h-10 w-full rounded-full bg-[#d64545] text-sm font-medium text-white sm:h-11"
               >
                 Annulla
               </button>
@@ -172,8 +190,8 @@ export default function TrainingProjectManagerSection({
 
 function Field({ label, children }) {
   return (
-    <div>
-      <label className="mb-2 block text-[14px] font-medium text-[#1f1f1f] md:text-[28px]">
+    <div className="min-w-0">
+      <label className="mb-1.5 block text-sm font-medium text-[#1f1f1f] sm:mb-2 sm:text-base lg:text-2xl xl:text-[28px]">
         {label}
       </label>
       {children}
@@ -187,31 +205,34 @@ function DocCard({ label, fileMeta, onUpload, onDownload }) {
   const statusText = hasFile ? fileMeta.name : 'Nessun caricamento file';
 
   return (
-    <div className="rounded-2xl bg-[#efefef] p-4 md:p-5">
-      <p className="mb-2 text-[12px] font-medium text-[#2f2f2f] md:text-[20px]">
+    <div className="min-w-0 rounded-xl bg-[#efefef] p-3 sm:rounded-2xl sm:p-4 md:p-5">
+      <p className="mb-2 text-xs font-medium break-words text-[#2f2f2f] sm:text-sm md:text-base lg:text-xl">
         {label}
       </p>
 
-      <div className="h-10 rounded-lg border border-[#cbcbcb] bg-transparent px-4 text-center text-[12px] leading-10 text-[#3a3a3a] md:text-[16px]">
+      <div
+        className="h-10 truncate rounded-lg border border-[#cbcbcb] bg-transparent px-3 text-center text-xs leading-10 text-[#3a3a3a] sm:px-4 sm:text-sm md:text-base"
+        title={statusText}
+      >
         {statusText}
       </div>
 
-      <div className="mt-3 grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-3">
+      <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
         <button
           type="button"
           onClick={() => inputRef.current && inputRef.current.click()}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[#71c2a3] text-[12px] font-medium text-white md:h-11 md:text-[16px]"
+          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-full bg-[#71c2a3] text-xs font-medium text-white sm:h-11 sm:text-sm md:text-base"
         >
-          <UploadCloud size={14} />
-          Carica file
+          <UploadCloud size={14} className="shrink-0" />
+          <span className="truncate">Carica file</span>
         </button>
         <button
           type="button"
           onClick={onDownload}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[#71c2a3] bg-transparent text-[12px] font-medium text-[#71c2a3] md:h-11 md:text-[16px]"
+          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-full border border-[#71c2a3] bg-transparent text-xs font-medium text-[#71c2a3] sm:h-11 sm:text-sm md:text-base"
         >
-          <Download size={14} />
-          Scarica file
+          <Download size={14} className="shrink-0" />
+          <span className="truncate">Scarica file</span>
         </button>
       </div>
 
