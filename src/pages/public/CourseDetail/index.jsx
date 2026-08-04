@@ -152,18 +152,7 @@ const CourseDetails = () => {
         return;
       }
 
-      const checkoutParams = new URLSearchParams();
-      checkoutParams.set(
-        resolvedCourseSlug && resolvedCourseSlug !== resolvedCourseId
-          ? 'slug'
-          : 'id',
-        resolvedCourseSlug && resolvedCourseSlug !== resolvedCourseId
-          ? resolvedCourseSlug
-          : resolvedCourseId || courseIdentifier,
-      );
-      checkoutParams.set('plan', 'single');
-
-      navigate(`/training/course/checkout?${checkoutParams.toString()}`);
+      setIsModalOpen(true);
     } finally {
       setIsResolvingEnrollment(false);
     }
