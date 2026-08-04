@@ -45,6 +45,8 @@ const CheckoutPaymentFields = ({
   amount,
   verifying = false,
   onSuccess,
+  submitDisabled = false,
+  submitDisabledTitle = '',
 }) => {
   const { t } = useTranslation();
   const stripe = useStripe();
@@ -57,6 +59,7 @@ const CheckoutPaymentFields = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (submitDisabled) return;
     if (!stripe || !elements) return;
 
     const trimmedName = cardholderName.trim();
@@ -111,7 +114,8 @@ const CheckoutPaymentFields = ({
           value={cardholderName}
           onChange={(event) => setCardholderName(event.target.value)}
           placeholder="Franco Rossi"
-          className="w-full bg-white text-gray-800 placeholder-gray-400 outline-none"
+          disabled={submitDisabled}
+          className="w-full bg-white text-gray-800 placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:opacity-60"
         />
       </StripeField>
 
@@ -129,7 +133,8 @@ const CheckoutPaymentFields = ({
       </div>
       <button
         type="submit"
-        disabled={!stripe || processing || verifying}
+        disabled={submitDisabled || !stripe || processing || verifying}
+        title={submitDisabled ? submitDisabledTitle : undefined}
         className="flex w-full items-center justify-center gap-2 rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition hover:bg-[#5fa889] disabled:cursor-not-allowed disabled:opacity-60"
       >
         <span>{formattedPrice}</span>
@@ -143,18 +148,91 @@ const CheckoutPaymentFields = ({
     </form>
   );
 };
+
+const CheckoutPaymentFieldsReadOnly = ({
+  amount,
+  submitDisabledTitle = '',
+}) => {
+  const { t } = useTranslation();
+  const formattedPrice = formatEuro(amount);
+
+  return (
+    <div className="space-y-4">
+      <StripeField label={t('paymentPages.section2.nameOnCard')}>
+        <input
+          type="text"
+          disabled
+          placeholder="Franco Rossi"
+          className="w-full bg-white text-gray-800 placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:opacity-60"
+        />
+      </StripeField>
+
+      <StripeField label={t('paymentPages.section2.cardNumber')}>
+        <input
+          type="text"
+          disabled
+          placeholder="1234 1234 1234 1234"
+          className="w-full bg-white text-gray-800 placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:opacity-60"
+        />
+      </StripeField>
+
+      <div className="grid grid-cols-2 gap-4">
+        <StripeField label={t('paymentPages.section2.expiryDate')}>
+          <input
+            type="text"
+            disabled
+            placeholder="MM / YY"
+            className="w-full bg-white text-gray-800 placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:opacity-60"
+          />
+        </StripeField>
+        <StripeField label={t('paymentPages.section2.cvv')}>
+          <input
+            type="text"
+            disabled
+            placeholder="CVC"
+            className="w-full bg-white text-gray-800 placeholder-gray-400 outline-none disabled:cursor-not-allowed disabled:opacity-60"
+          />
+        </StripeField>
+      </div>
+
+      <button
+        type="button"
+        disabled
+        title={submitDisabledTitle}
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-[#73BFA1] py-3 font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        <span>{formattedPrice}</span>
+        <span>{t('paymentPages.section2.payNow')}</span>
+        <span>→</span>
+      </button>
+    </div>
+  );
+};
+
 export default function CheckoutStripeForm({
   clientSecret,
   publishableKey,
   amount,
   verifying = false,
   onSuccess,
+  submitDisabled = false,
+  submitDisabledTitle = '',
+  readOnly = false,
 }) {
   const stripePromise = useMemo(() => {
     const key = publishableKey || ENV_CONFIG.STRIPE_PUBLISHABLE_KEY;
     if (!key) return null;
     return loadStripe(key);
   }, [publishableKey]);
+
+  if (readOnly || (submitDisabled && !clientSecret)) {
+    return (
+      <CheckoutPaymentFieldsReadOnly
+        amount={amount}
+        submitDisabledTitle={submitDisabledTitle}
+      />
+    );
+  }
 
   if (!stripePromise || !clientSecret) return null;
 
@@ -165,6 +243,8 @@ export default function CheckoutStripeForm({
         amount={amount}
         verifying={verifying}
         onSuccess={onSuccess}
+        submitDisabled={submitDisabled}
+        submitDisabledTitle={submitDisabledTitle}
       />
     </Elements>
   );

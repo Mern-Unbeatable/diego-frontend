@@ -322,9 +322,9 @@ const CompanyCourseList = () => {
                   src={resolveAssetUrl(course.thumbnailUrl)}
                   alt={course.courseTitle}
                   className="h-[180px] w-full rounded-xl object-cover"
-                  onError={(event) => {
-                    event.currentTarget.src = '/images/course/course.png';
-                  }}
+                // onError={(event) => {
+                //   event.currentTarget.src = '/images/course/course.png';
+                // }}
                 />
                 <h3 className="mt-4 text-[30px] font-semibold text-[#1f1f1f]">
                   {course.courseTitle}

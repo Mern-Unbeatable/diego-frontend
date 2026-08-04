@@ -369,17 +369,22 @@ const Checkout = () => {
               <p className="text-sm text-gray-600">
                 {t('trainingPages.section12.companyPackage.selectTierFirst')}
               </p>
-            ) : hasEnrollmentConflict ? null : clientSecret ? (
+            ) : hasEnrollmentConflict || clientSecret ? (
               <CheckoutStripeForm
-                key={clientSecret}
+                key={clientSecret || 'enrollment-conflict'}
                 clientSecret={clientSecret}
                 publishableKey={publishableKey}
                 amount={displayAmount}
                 verifying={paymentVerifying}
                 onSuccess={handlePaymentSuccess}
+                submitDisabled={hasEnrollmentConflict}
+                submitDisabledTitle={
+                  hasEnrollmentConflict
+                    ? resolveEnrollmentConflictToast(paymentErrorMessage, t)
+                    : ''
+                }
+                readOnly={hasEnrollmentConflict && !clientSecret}
               />
-
-
             ) : (
               !paymentLoading && (
                 <p className="text-sm text-gray-600">
