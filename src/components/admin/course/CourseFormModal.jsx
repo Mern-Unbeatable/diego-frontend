@@ -393,7 +393,7 @@ export default function CourseFormModal({
       size="xl"
       zIndex={100}
       showCloseButton={false}
-      panelClassName="max-w-xl w-full rounded-2xl bg-[#f3f3f3] p-4 sm:p-6 md:p-8 max-h-[90vh] overflow-y-auto"
+      panelClassName="max-w-4xl w-full rounded-2xl bg-[#f3f3f3] p-4 sm:p-6 md:p-8 max-h-[90vh] overflow-y-auto"
       className="bg-[#33584d]/78 p-2 sm:p-4 md:p-6 flex items-center justify-center"
     >
       <div className="relative flex min-h-10 w-full items-center justify-center">
