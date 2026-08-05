@@ -6,6 +6,9 @@ import { useSelector } from 'react-redux';
 import PricingCardsModal from '../../../components/training/PricingCardsModal';
 import CourseMedia from '../../../components/training/CourseMedia';
 import { ROUTES } from '../../../config/routes';
+import { ROLES } from '../../../config/roles';
+import { getUserRole } from '../../../utils/auth/authUtils';
+import { getCompanyPurchasesService } from '../../../features/company/companyPurchaseService';
 import { useCourse } from '../../../features/public/course/courseHooks';
 import {
   getLocalizedValue,
@@ -26,10 +29,36 @@ const hasMatchingEnrollment = (enrollment, courseId, courseSlug) => {
   const enrollmentCourseId = getEnrollmentCourseId(enrollment);
   const enrollmentCourseSlug = getEnrollmentCourseSlug(enrollment);
 
-  return (
-    [enrollmentCourseId, enrollmentCourseSlug].includes(courseId) ||
-    [enrollmentCourseId, enrollmentCourseSlug].includes(courseSlug)
-  );
+  if (courseId && enrollmentCourseId && enrollmentCourseId === courseId) {
+    return true;
+  }
+
+  if (courseSlug && enrollmentCourseSlug && enrollmentCourseSlug === courseSlug) {
+    return true;
+  }
+
+  return false;
+};
+
+const hasCompanyPurchaseForCourse = (purchases = [], courseId, courseSlug) =>
+  purchases.some((purchase) => {
+    const purchaseCourseId = String(purchase?.course?.id || purchase?.courseId || '').trim();
+    const purchaseCourseSlug = String(purchase?.course?.slug || '').trim();
+
+    return (
+      (courseId && purchaseCourseId === courseId) ||
+      (courseSlug && purchaseCourseSlug === courseSlug)
+    );
+  });
+
+const resolveLearnerCoursePath = (role, courseId) => {
+  if (!courseId) return null;
+
+  if (role === ROLES.COMPANY_EMPLOYEE) {
+    return `${ROUTES.COMPANY_EMPLOYEE.COURSE}/${courseId}`;
+  }
+
+  return `${ROUTES.PRIVATE_USER.COURSE}/${courseId}`;
 };
 
 const CourseDetails = () => {
@@ -40,7 +69,8 @@ const CourseDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const userRole = getUserRole(user);
   const { enrollments, enrollmentsLoading, fetchMyEnrollments } = usePrivate();
   const { getCourseDetails, selectedCourse, loading } = useCourse();
   const courseIdentifier = decodeURIComponent(
@@ -126,6 +156,23 @@ const CourseDetails = () => {
     setIsResolvingEnrollment(true);
 
     try {
+      if (userRole === ROLES.COMPANY_ADMIN) {
+        const purchases = await getCompanyPurchasesService().catch(() => []);
+        const hasCompanyPurchase = hasCompanyPurchaseForCourse(
+          purchases,
+          resolvedCourseId,
+          resolvedCourseSlug,
+        );
+
+        if (hasCompanyPurchase) {
+          navigate(ROUTES.COMPANY_ADMIN.PURCHASES);
+          return;
+        }
+
+        setIsModalOpen(true);
+        return;
+      }
+
       let currentEnrollments = enrollments;
 
       if (!currentEnrollments.length) {
@@ -146,24 +193,19 @@ const CourseDetails = () => {
         );
 
       if (isPurchased) {
-        navigate(
-          `${ROUTES.PRIVATE_USER.COURSE}/${resolvedCourseId || courseIdentifier}`,
+        const learnerPath = resolveLearnerCoursePath(
+          userRole,
+          resolvedCourseId || course?.id,
         );
+
+        if (learnerPath) {
+          navigate(learnerPath);
+        }
+
         return;
       }
 
-      const checkoutParams = new URLSearchParams();
-      checkoutParams.set(
-        resolvedCourseSlug && resolvedCourseSlug !== resolvedCourseId
-          ? 'slug'
-          : 'id',
-        resolvedCourseSlug && resolvedCourseSlug !== resolvedCourseId
-          ? resolvedCourseSlug
-          : resolvedCourseId || courseIdentifier,
-      );
-      checkoutParams.set('plan', 'single');
-
-      navigate(`/training/course/checkout?${checkoutParams.toString()}`);
+      setIsModalOpen(true);
     } finally {
       setIsResolvingEnrollment(false);
     }

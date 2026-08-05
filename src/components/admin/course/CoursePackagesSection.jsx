@@ -3,11 +3,10 @@ import { useSelector } from 'react-redux';
 import { Edit2 } from 'lucide-react';
 import { useFormContext } from 'react-hook-form';
 import { Select } from '../../../Forms';
-import { useGetCoursePackagesQuery } from '../../../features/api/coursePackageApi';
+import { extractPackagesFromResponse, useGetCoursePackagesQuery } from '../../../features/api/coursePackageApi';
 import {
   canManageCoursePackage,
   filterActivePackages,
-  filterPackagesByType,
   findPackageById,
   getAuthUserLevel,
   mapPackagesToSelectOptions,
@@ -28,16 +27,38 @@ const PACKAGE_FIELDS = [
   },
 ];
 
+const normalizePackageType = (value) => String(value || '').trim().toUpperCase();
+
+const filterPackagesByNormalizedType = (packages = [], type) =>
+  (packages || []).filter((pkg) => normalizePackageType(pkg?.type) === type);
+
 function PackageField({ fieldConfig, packages, canEdit, onEdit }) {
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const selectedId = watch(fieldConfig.field);
   const selectedPackage = findPackageById(packages, selectedId);
   const options = mapPackagesToSelectOptions(packages, { includeEmpty: false });
+
+  useEffect(() => {
+    if (!packages.length) return;
+
+    const isValid = packages.some((pkg) => pkg.id === selectedId);
+    if (isValid) return;
+
+    const activeList = filterActivePackages(packages);
+    const defaultId = pickDefaultPackageId(activeList.length ? activeList : packages);
+    if (!defaultId) return;
+
+    setValue(fieldConfig.field, defaultId, {
+      shouldDirty: false,
+      shouldValidate: true,
+    });
+  }, [packages, selectedId, fieldConfig.field, setValue]);
 
   return (
     <div className="flex items-end gap-2">
       <div className="min-w-0 flex-1">
         <Select
+          key={`${fieldConfig.field}-${options.map((option) => option.value).join('|')}-${selectedId || 'empty'}`}
           name={fieldConfig.field}
           label={fieldConfig.label}
           required
@@ -66,13 +87,10 @@ function PackageField({ fieldConfig, packages, canEdit, onEdit }) {
 }
 
 export default function CoursePackagesSection() {
-  const { watch, setValue } = useFormContext();
+  const { setValue } = useFormContext();
   const authUser = useSelector((state) => state.auth?.user);
   const isPlatformAdmin = getAuthUserLevel(authUser) === 'PLATFORM_ADMIN';
   const canEditPackages = canManageCoursePackage(undefined, authUser);
-
-  const singleUserPackageId = watch('singleUserPackageId');
-  const companyPackageId = watch('companyPackageId');
 
   const [editingPackage, setEditingPackage] = useState(null);
 
@@ -81,41 +99,18 @@ export default function CoursePackagesSection() {
     { refetchOnMountOrArgChange: true },
   );
 
-  const packagesByType = useMemo(
-    () => ({
-      SINGLE_USER: filterPackagesByType(allPackages, 'SINGLE_USER'),
-      COMPANY: filterPackagesByType(allPackages, 'COMPANY'),
-    }),
+  const packageList = useMemo(
+    () => extractPackagesFromResponse(allPackages),
     [allPackages],
   );
 
-  useEffect(() => {
-    if (isLoading) return;
-
-    const list = packagesByType.SINGLE_USER;
-    if (!list.length) return;
-    const isValid = list.some((pkg) => pkg.id === singleUserPackageId);
-    if (isValid) return;
-    const activeList = filterActivePackages(list);
-    const defaultId = pickDefaultPackageId(activeList.length ? activeList : list);
-    if (defaultId) {
-      setValue('singleUserPackageId', defaultId, { shouldDirty: false, shouldValidate: true });
-    }
-  }, [isLoading, allPackages, packagesByType.SINGLE_USER, singleUserPackageId, setValue]);
-
-  useEffect(() => {
-    if (isLoading) return;
-
-    const list = packagesByType.COMPANY;
-    if (!list.length) return;
-    const isValid = list.some((pkg) => pkg.id === companyPackageId);
-    if (isValid) return;
-    const activeList = filterActivePackages(list);
-    const defaultId = pickDefaultPackageId(activeList.length ? activeList : list);
-    if (defaultId) {
-      setValue('companyPackageId', defaultId, { shouldDirty: false, shouldValidate: true });
-    }
-  }, [isLoading, allPackages, packagesByType.COMPANY, companyPackageId, setValue]);
+  const packagesByType = useMemo(
+    () => ({
+      SINGLE_USER: filterPackagesByNormalizedType(packageList, 'SINGLE_USER'),
+      COMPANY: filterPackagesByNormalizedType(packageList, 'COMPANY'),
+    }),
+    [packageList],
+  );
 
   const handleSaved = async (savedPackage) => {
     await refetch();
@@ -141,7 +136,7 @@ export default function CoursePackagesSection() {
             <PackageField
               key={fieldConfig.field}
               fieldConfig={fieldConfig}
-              packages={packagesByType[fieldConfig.type]}
+              packages={packagesByType[fieldConfig.type] || []}
               canEdit={canEditPackages}
               onEdit={setEditingPackage}
             />

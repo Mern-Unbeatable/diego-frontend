@@ -116,11 +116,11 @@ const linksByRole = {
       label: 'I tuoi corsi',
       icon: <IoBookOutline className="text-[19px]" />,
     },
-    {
-      path: '/dashboard/company-admin/purchases',
-      label: 'Pacchetti acquistati',
-      icon: <IoCartOutline className="text-[19px]" />,
-    },
+    // {
+    //   path: '/dashboard/company-admin/purchases',
+    //   label: 'Pacchetti acquistati',
+    //   icon: <IoCartOutline className="text-[19px]" />,
+    // },
     {
       path: '/dashboard/company-admin/privacy-policy',
       label: 'Privacy & policy',
@@ -253,9 +253,8 @@ const DashboardSidebar = () => {
       )}
 
       <aside
-        className={`fixed top-0 left-0 z-50 h-screen w-[min(300px,88vw)] overflow-y-auto bg-white shadow-md transition-transform duration-300 ease-in-out lg:translate-x-0 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`fixed top-0 left-0 z-50 h-screen w-[min(300px,88vw)] overflow-y-auto bg-white shadow-md transition-transform duration-300 ease-in-out lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
       >
         <div className="relative flex justify-center py-4 pr-10">
           <Link to="/" className="flex items-center" onClick={closeSidebar}>
@@ -291,10 +290,9 @@ const DashboardSidebar = () => {
                 path === '/dashboard/private-user'
               }
               className={({ isActive }) =>
-                `flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm font-medium ${
-                  isActive
-                    ? 'bg-[#73bfa1] text-white'
-                    : 'text-[#2f2f2f] hover:bg-[#f3f5f4]'
+                `flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm font-medium ${isActive
+                  ? 'bg-[#73bfa1] text-white'
+                  : 'text-[#2f2f2f] hover:bg-[#f3f5f4]'
                 }`
               }
             >
