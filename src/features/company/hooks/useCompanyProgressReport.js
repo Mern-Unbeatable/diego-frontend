@@ -16,7 +16,7 @@ export const useCompanyProgressReport = ({
 } = {}) => {
   const [rows, setRows] = useState([]);
   const [meta, setMeta] = useState({ page: 1, total: 0, totalPages: 1 });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(Boolean(enabled));
   const [actionId, setActionId] = useState(null);
   const [page, setPage] = useState(1);
 

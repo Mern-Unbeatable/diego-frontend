@@ -117,7 +117,8 @@ const PersonalDetailsModal = ({ open, onClose, studentId, onOpenTraining }) => {
                           type="button"
                           onClick={() => downloadById(row.certificate)}
                           disabled={
-                            !canDownloadCertificate(row.certificate) || isDownloading
+                            !canDownloadCertificate(row.certificate) ||
+                            isDownloading(row.certificate)
                           }
                           className="inline-flex h-9 w-10 items-center justify-center rounded-full bg-[#73bfa1] text-white disabled:opacity-40"
                           aria-label="Download certificato"
@@ -201,7 +202,7 @@ const PersonalDetailsModal = ({ open, onClose, studentId, onOpenTraining }) => {
                                 onClick={() => downloadById(row.certificate)}
                                 disabled={
                                   !canDownloadCertificate(row.certificate) ||
-                                  isDownloading
+                                  isDownloading(row.certificate)
                                 }
                                 className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#73bfa1] text-white disabled:opacity-40"
                                 aria-label="Download certificato"

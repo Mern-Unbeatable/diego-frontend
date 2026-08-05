@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import toast from 'react-hot-toast';
 import { ENV_CONFIG } from '../../config/env.config';
 import { useDownloadCertificateMutation } from './certificateApi';
@@ -15,7 +15,8 @@ export const canDownloadCertificate = (certificate) =>
   Boolean(certificate?.id && certificate?.status === 'ISSUED');
 
 export const useCertificateDownload = () => {
-  const [download, { isLoading }] = useDownloadCertificateMutation();
+  const [download] = useDownloadCertificateMutation();
+  const [downloadingId, setDownloadingId] = useState(null);
 
   const downloadById = useCallback(
     async (certificate) => {
@@ -24,6 +25,7 @@ export const useCertificateDownload = () => {
         return;
       }
 
+      setDownloadingId(certificate.id);
       try {
         const result = await download(certificate.id).unwrap();
         const pdfUrl = resolveAssetUrl(result?.pdfUrl);
@@ -34,10 +36,20 @@ export const useCertificateDownload = () => {
         window.open(pdfUrl, '_blank', 'noopener,noreferrer');
       } catch (error) {
         toast.error(getRtkErrorMessage(error));
+      } finally {
+        setDownloadingId(null);
       }
     },
     [download],
   );
 
-  return { downloadById, isDownloading: isLoading };
+  const isDownloading = useCallback(
+    (certificate) => {
+      if (!certificate?.id) return downloadingId !== null;
+      return downloadingId === certificate.id;
+    },
+    [downloadingId],
+  );
+
+  return { downloadById, isDownloading, downloadingId };
 };

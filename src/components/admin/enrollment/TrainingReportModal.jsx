@@ -123,6 +123,7 @@ const TrainingReportModal = ({ open, onClose, studentId, enrollment }) => {
   if (!open) return null;
 
   const certificateAvailable = canDownloadCertificate(report?.certificate);
+  const certificateDownloading = isDownloading(report?.certificate);
   const certificateDate =
     report?.certificate?.lastDownloadedAt || report?.certificate?.issuedAt || '—';
 
@@ -178,10 +179,10 @@ const TrainingReportModal = ({ open, onClose, studentId, enrollment }) => {
               <button
                 type="button"
                 onClick={handleDownload}
-                disabled={!certificateAvailable || isDownloading}
+                disabled={!certificateAvailable || certificateDownloading}
                 className="inline-flex h-9 items-center justify-center rounded-full border border-[#9fd9c1] px-4 text-sm font-medium text-[#73bfa1] disabled:cursor-not-allowed disabled:opacity-40 sm:h-10"
               >
-                {isDownloading ? 'Download...' : 'Scarica'}
+                {certificateDownloading ? 'Download...' : 'Scarica'}
               </button>
             </div>
           ) : null}
@@ -328,7 +329,7 @@ const TrainingReportModal = ({ open, onClose, studentId, enrollment }) => {
                     <button
                       type="button"
                       onClick={handleDownload}
-                      disabled={!certificateAvailable || isDownloading}
+                      disabled={!certificateAvailable || certificateDownloading}
                       className="inline-flex h-9 w-full items-center justify-center rounded-full bg-[#73bfa1] px-4 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-40 sm:h-10 sm:w-auto"
                     >
                       Download
