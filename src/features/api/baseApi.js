@@ -73,6 +73,16 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     }
   }
 
+  const licenseErrorCode = result?.error?.data?.code;
+  if (
+    result?.error?.status === 403 &&
+    ['LICENSE_EXPIRED', 'LICENSE_SUSPENDED'].includes(licenseErrorCode) &&
+    typeof window !== 'undefined' &&
+    !window.location.pathname.startsWith('/dashboard/license-user/license')
+  ) {
+    window.location.assign('/dashboard/license-user/license');
+  }
+
   return result;
 };
 

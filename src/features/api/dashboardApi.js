@@ -40,6 +40,27 @@ const dashboardApi = baseApi.injectEndpoints({
       transformErrorResponse,
       invalidatesTags: ['EmergencyControls'],
     }),
+
+    getFinancialSettings: builder.query({
+      query: () => ({
+        url: '/platform-settings/financial',
+        method: 'GET',
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      providesTags: ['FinancialSettings'],
+    }),
+
+    updateFinancialSettings: builder.mutation({
+      query: (data) => ({
+        url: '/platform-settings/financial',
+        method: 'PATCH',
+        body: data,
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      invalidatesTags: ['FinancialSettings'],
+    }),
   }),
 });
 
@@ -47,6 +68,8 @@ export const {
   useGetPlatformDashboardQuery,
   useGetEmergencyControlsQuery,
   useUpdateEmergencyControlsMutation,
+  useGetFinancialSettingsQuery,
+  useUpdateFinancialSettingsMutation,
 } = dashboardApi;
 
 export default dashboardApi;

@@ -153,7 +153,11 @@ export const dashboardRoutes = [
         element: <LicenseManagementView />,
       },
       {
-        path: ROUTES.PLATFORM_ADMIN.SETTINGS + '/*',
+        path: ROUTES.PLATFORM_ADMIN.SETTINGS,
+        element: <AdminSettingsDashboard />,
+      },
+      {
+        path: `${ROUTES.PLATFORM_ADMIN.SETTINGS}/*`,
         element: <AdminSettingsDashboard />,
       },
       { path: ROUTES.PLATFORM_ADMIN.TICKETS, element: <TicketView /> },
@@ -230,6 +234,7 @@ export const dashboardRoutes = [
     /** ✅ License user route group */
     id: 'LICENSE_USER',
     roles: [ROLES.LICENSE_USER],
+    licenseGuard: true,
     routes: [
       { path: ROUTES.LICENSE_USER.DASHBOARD, element: <LicenseHomeView /> },
       { path: ROUTES.LICENSE_USER.LICENSE, element: <LicenseView /> },

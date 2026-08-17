@@ -128,6 +128,8 @@ export const mapMyLicenseCard = (payload, locale = 'it') => {
     role: getLocalizedText(plan.name, locale) || plan.tier || 'Freelancer',
     expiryDate: formatLicenseDate(license.expiresAt),
     status: statusMap[license.computedStatus || data?.status] || 'active',
+    isExpired: Boolean(license.usage?.isExpired ?? license.computedStatus === 'EXPIRED'),
+    isSuspended: Boolean(license.isSuspended),
     companyName: license.companyName ?? '',
     vatNumber: license.vatNumber ?? '',
     billingAddress: license.billingAddress ?? '',

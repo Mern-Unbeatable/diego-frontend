@@ -1,11 +1,13 @@
 import { ChevronLeft, Trash2 } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import CourseMedia from '../../../components/training/CourseMedia';
 import CheckoutStripeForm from '../../../components/payment/CheckoutStripeForm';
+import CheckoutPayPalForm from '../../../components/payment/CheckoutPayPalForm';
+import { useGetPlatformStatusQuery } from '../../../features/api/platformApi';
 import { useCourse } from '../../../features/public/course/courseHooks';
 import { usePayment } from '../../../features/public/payment/paymentHooks';
 import {
@@ -41,6 +43,8 @@ const Checkout = () => {
 
   const paymentIntentRequestRef = useRef(null);
   const enrollmentToastShownRef = useRef(false);
+  const [paymentMethod, setPaymentMethod] = useState('stripe');
+  const { data: platformStatus } = useGetPlatformStatusQuery();
 
   const courseSlug = decodeURIComponent(
     (searchParams.get('slug') || searchParams.get('id') || '').trim(),
@@ -48,6 +52,19 @@ const Checkout = () => {
   const selectedPlan = (searchParams.get('plan') || 'single').trim();
   const selectedTierId = (searchParams.get('tier') || '').trim();
   const isCompanyPlan = selectedPlan === 'company';
+
+  const stripeEnabled = platformStatus?.stripeEnabled !== false;
+  const paypalEnabled = Boolean(platformStatus?.paypalEnabled);
+  const showPaymentMethodChoice = stripeEnabled && paypalEnabled && !isCompanyPlan;
+
+  useEffect(() => {
+    if (isCompanyPlan) {
+      setPaymentMethod('stripe');
+      return;
+    }
+    if (stripeEnabled && !paypalEnabled) setPaymentMethod('stripe');
+    if (!stripeEnabled && paypalEnabled) setPaymentMethod('paypal');
+  }, [isCompanyPlan, stripeEnabled, paypalEnabled]);
 
   const checkoutReturnPath = useMemo(() => {
     const params = new URLSearchParams();
@@ -107,6 +124,8 @@ const Checkout = () => {
     if (!isAuthenticated || !course?.id) return undefined;
     if (isCompanyPlan && !selectedTierId) return undefined;
     if (hasEnrollmentConflict) return undefined;
+    if (paymentMethod !== 'stripe') return undefined;
+    if (!stripeEnabled) return undefined;
 
     const hasIntentForSelection = isCompanyPlan
       ? paymentIntent?.courseId === course.id &&
@@ -147,6 +166,8 @@ const Checkout = () => {
     paymentIntent?.clientSecret,
     paymentIntent?.tierId,
     hasEnrollmentConflict,
+    paymentMethod,
+    stripeEnabled,
   ]);
 
   useEffect(() => {
@@ -229,6 +250,26 @@ const Checkout = () => {
       verifyCompanyCoursePaymentIntent,
       verifyCoursePaymentIntent,
     ],
+  );
+
+  const handlePayPalSuccess = useCallback(
+    (result) => {
+      const verified = result?.paid || result?.data?.paid;
+      if (!verified) {
+        toast.error(
+          result?.message || result?.data?.message || t('paymentPages.section2.paymentError'),
+        );
+        return;
+      }
+
+      toast.success(t('paymentPages.section3.title'));
+      navigate(
+        courseSlug
+          ? `/training/course/details?slug=${encodeURIComponent(courseSlug)}&purchased=true`
+          : '/training/courses/catalog?purchased=true',
+      );
+    },
+    [courseSlug, navigate, t],
   );
 
   return (
@@ -331,12 +372,45 @@ const Checkout = () => {
             </h3>
 
             <div className="mb-6">
+              {showPaymentMethodChoice ? (
+                <div className="mb-4 grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('stripe')}
+                    className={`rounded-lg border px-3 py-2 text-sm font-medium ${
+                      paymentMethod === 'stripe'
+                        ? 'border-[#73BFA1] bg-white text-[#2f5f4d]'
+                        : 'border-transparent bg-white/60 text-gray-600'
+                    }`}
+                  >
+                    Carta (Stripe)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('paypal')}
+                    className={`rounded-lg border px-3 py-2 text-sm font-medium ${
+                      paymentMethod === 'paypal'
+                        ? 'border-[#73BFA1] bg-white text-[#2f5f4d]'
+                        : 'border-transparent bg-white/60 text-gray-600'
+                    }`}
+                  >
+                    PayPal
+                  </button>
+                </div>
+              ) : null}
               <div className="flex w-full items-center justify-center gap-x-3">
-                <img src="/images/payment/payment2.png" alt="Stripe" />
+                <img
+                  src={
+                    paymentMethod === 'paypal'
+                      ? '/images/payment/payment1.png'
+                      : '/images/payment/payment2.png'
+                  }
+                  alt={paymentMethod === 'paypal' ? 'PayPal' : 'Stripe'}
+                />
               </div>
             </div>
 
-            {isAuthenticated && paymentLoading ? (
+            {isAuthenticated && paymentLoading && paymentMethod === 'stripe' ? (
               <p className="mb-4 text-sm text-gray-600">
                 {t('paymentPages.section2.preparingPayment')}
               </p>
@@ -369,6 +443,15 @@ const Checkout = () => {
               <p className="text-sm text-gray-600">
                 {t('trainingPages.section12.companyPackage.selectTierFirst')}
               </p>
+            ) : paymentMethod === 'paypal' && paypalEnabled && !isCompanyPlan ? (
+              <CheckoutPayPalForm
+                courseId={course.id}
+                amount={displayAmount}
+                currency={platformStatus?.defaultCurrency || 'EUR'}
+                disabled={hasEnrollmentConflict || paymentVerifying}
+                onSuccess={handlePayPalSuccess}
+                onError={() => toast.error(t('paymentPages.section2.paymentError'))}
+              />
             ) : hasEnrollmentConflict || clientSecret ? (
               <CheckoutStripeForm
                 key={clientSecret || 'enrollment-conflict'}

@@ -45,6 +45,9 @@ export const endpoints = {
     PAYMENTS_INTENT_COMPANY_COURSE: '/payments/intent/company-course',
     PAYMENTS_INTENT_COMPANY_COURSE_VERIFY: '/payments/intent/company-course/verify',
     PAYMENTS_CHECKOUT_COMPANY_COURSE: '/payments/checkout/company-course',
+    PAYMENTS_PAYPAL_COURSE_ORDER: '/payments/paypal/course/order',
+    PAYMENTS_PAYPAL_COURSE_CAPTURE: '/payments/paypal/course/capture',
+    PLATFORM_STATUS: '/platform-settings/status',
   },
   company: {
     DASHBOARD: '/dashboard/company-admin',

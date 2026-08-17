@@ -30,6 +30,8 @@ import { ROLES } from '../../config/roles';
 
 import { useUIStore } from '../../features/zustand';
 import { getUserRole } from '../../utils/auth/authUtils';
+import { useGetMyLicenseQuery } from '../../features/api/licenseUserApi';
+import { LICENSE_EXPIRED_ALLOWED_PATHS } from '../../router/guards/LicenseGuard';
 
 const linksByRole = {
   [ROLES.PLATFORM_ADMIN]: [
@@ -235,7 +237,16 @@ const DashboardSidebar = () => {
   const { user } = useSelector((state) => state.auth);
   const location = useLocation();
   const role = getUserRole(user);
-  const links = linksByRole[role] || [];
+  const { data: license } = useGetMyLicenseQuery({}, {
+    skip: role !== ROLES.LICENSE_USER,
+  });
+  const isLicenseBlocked =
+    role === ROLES.LICENSE_USER &&
+    (license?.status === 'expired' || license?.isExpired || license?.isSuspended);
+  const allLinks = linksByRole[role] || [];
+  const links = isLicenseBlocked
+    ? allLinks.filter((link) => LICENSE_EXPIRED_ALLOWED_PATHS.includes(link.path))
+    : allLinks;
 
   useEffect(() => {
     closeSidebar();

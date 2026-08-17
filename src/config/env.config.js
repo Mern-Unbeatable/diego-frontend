@@ -24,6 +24,9 @@ const rawConfig = Object.freeze({
   STRIPE_PUBLISHABLE_KEY: trimEnv(
     env.VITE_STRIPE_PUBLISHABLE_KEY ?? env.STRIPE_PUBLISHABLE_KEY ?? '',
   ),
+  PAYPAL_CLIENT_ID: trimEnv(
+    env.VITE_PAYPAL_CLIENT_ID ?? env.PAYPAL_CLIENT_ID ?? '',
+  ),
 });
 
 export const ENV_CONFIG = rawConfig;

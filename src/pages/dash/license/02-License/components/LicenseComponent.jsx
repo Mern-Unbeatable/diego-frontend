@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import LicenseRenewModal from './LicenseRenewModal';
 import { useGetMyLicenseQuery } from '../../../../../features/api/licenseUserApi';
 import { mapTabToStatusFilter } from '../../../../../features/api/licenseUserMappers';
@@ -39,8 +40,19 @@ const TAB_CONFIG = [
 ];
 
 const LicenseComponent = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('active');
   const [renewModalOpen, setRenewModalOpen] = useState(false);
+
+  const { data: currentLicense } = useGetMyLicenseQuery({});
+
+  useEffect(() => {
+    if (currentLicense?.status === 'expired' || currentLicense?.isExpired) {
+      setActiveTab('expired');
+    } else if (currentLicense?.status === 'expiring') {
+      setActiveTab('expiring');
+    }
+  }, [currentLicense?.isExpired, currentLicense?.status]);
 
   const statusFilter = mapTabToStatusFilter(activeTab);
   const {
@@ -76,6 +88,14 @@ const LicenseComponent = () => {
 
   return (
     <>
+      {location.state?.licenseBlocked ? (
+        <div className="mt-4 rounded-xl border border-[#f2c6bf] bg-[#fff4f2] px-4 py-3 text-sm text-[#8f2d1d] sm:mt-6">
+          {location.state?.reason === 'suspended'
+            ? 'La tua licenza è sospesa. Contatta il supporto o rinnova per riattivare l’accesso.'
+            : 'La tua licenza è scaduta. Rinnova la licenza per continuare a usare la piattaforma.'}
+        </div>
+      ) : null}
+
       <div className="mt-4 min-w-0 w-full rounded-xl border border-gray-100 bg-white p-4 shadow-sm sm:mt-6 sm:rounded-2xl sm:p-6 md:mt-8 md:p-8">
         <h2 className="mb-4 text-base font-semibold text-gray-900 sm:mb-6 sm:text-lg md:text-xl">
           Le tue licenze

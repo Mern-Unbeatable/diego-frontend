@@ -6,6 +6,7 @@ export const tagTypesList = [
   'Quiz',
   'Dashboard',
   'EmergencyControls',
+  'FinancialSettings',
   'Ticket',
   'Review',
   'Staff',

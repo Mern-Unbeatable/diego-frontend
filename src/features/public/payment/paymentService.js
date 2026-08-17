@@ -51,3 +51,21 @@ export const verifyCompanyCoursePaymentIntentService = async (
     signal,
   });
 };
+
+export const createCoursePayPalOrderService = async (payload, { signal } = {}) => {
+  return await request({
+    method: 'POST',
+    url: endpoints.public.PAYMENTS_PAYPAL_COURSE_ORDER,
+    data: payload,
+    signal,
+  });
+};
+
+export const verifyCoursePayPalOrderService = async (orderId, { signal } = {}) => {
+  return await request({
+    method: 'POST',
+    url: endpoints.public.PAYMENTS_PAYPAL_COURSE_CAPTURE,
+    data: { orderId },
+    signal,
+  });
+};

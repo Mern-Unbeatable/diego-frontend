@@ -16,6 +16,7 @@ import ArchiveCancelView from '../pages/public/archive/ArchiveCancelView.jsx';
 // ✅ Guards
 import RoleGuard from './guards/RoleGuard.jsx';
 import AuthGuard from './guards/AuthGuard.jsx';
+import LicenseGuard from './guards/LicenseGuard.jsx';
 import PublicGuard from './guards/PublicGuard.jsx';
 
 // ✅ Route Config
@@ -76,14 +77,22 @@ const router = createBrowserRouter(
         {/* ✅ DASHBOARD */}
         <Route element={<AuthGuard />}>
           <Route path="/dashboard" element={<DashboardLayout />}>
-            {dashboardRoutes.map(({ roles, routes }) => (
+            {dashboardRoutes.map(({ roles, routes, licenseGuard }) => (
               <Route
                 key={roles.join('-')}
                 element={<RoleGuard allowedRoles={roles} />}
               >
-                {routes.map((r) => (
-                  <Route key={r.path} path={r.path} element={r.element} />
-                ))}
+                {licenseGuard ? (
+                  <Route element={<LicenseGuard />}>
+                    {routes.map((r) => (
+                      <Route key={r.path} path={r.path} element={r.element} />
+                    ))}
+                  </Route>
+                ) : (
+                  routes.map((r) => (
+                    <Route key={r.path} path={r.path} element={r.element} />
+                  ))
+                )}
               </Route>
             ))}
           </Route>
