@@ -617,7 +617,9 @@
       "alreadyCompleted": "Hai già completato questo corso.",
       "alreadyPurchased": "La tua azienda ha già acquistato questo corso.",
       "nameRequired": "Inserisci il nome sulla carta",
-      "discount": "Sconto"
+      "discount": "Sconto",
+      "googlePayHint": "Google Pay è disponibile in Chrome su Windows, Mac o Android con una carta salvata in Google Pay.",
+      "applePayHint": "Apple Pay è disponibile in Safari su iPhone, iPad o Mac con una carta salvata in Apple Wallet."
     },
     "section3": {
       "close": "Chiudi",

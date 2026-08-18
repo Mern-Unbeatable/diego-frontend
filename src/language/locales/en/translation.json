@@ -617,7 +617,9 @@
       "alreadyCompleted": "You have already completed this course.",
       "alreadyPurchased": "Your company has already purchased this course.",
       "nameRequired": "Please enter the name on card",
-      "discount": "Discount"
+      "discount": "Discount",
+      "googlePayHint": "Google Pay is available in Chrome on Windows, Mac, or Android with a saved Google Pay card.",
+      "applePayHint": "Apple Pay is available in Safari on iPhone, iPad, or Mac with a card saved in Apple Wallet."
     },
     "section3": {
       "close": "Close",

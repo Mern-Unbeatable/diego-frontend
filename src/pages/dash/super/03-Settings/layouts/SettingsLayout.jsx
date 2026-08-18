@@ -30,13 +30,13 @@ const TABS = [
     icon: <Palette className="h-4 w-4" />,
     Component: BrandSettings,
   },
-  {
-    id: 'api',
-    to: `${BASE_PATH}/api`,
-    label: 'API & Integrazioni',
-    icon: <Plug className="h-4 w-4" />,
-    Component: ApiSettings,
-  },
+  // {
+  //   id: 'api',
+  //   to: `${BASE_PATH}/api`,
+  //   label: 'API & Integrazioni',
+  //   icon: <Plug className="h-4 w-4" />,
+  //   Component: ApiSettings,
+  // },
 ];
 
 const getActiveSection = (pathname) => {
@@ -72,7 +72,15 @@ export default function SettingsLayout() {
     if (activeSection === 'finance') {
       window.dispatchEvent(new CustomEvent('financial-settings:save'));
     }
+    if (activeSection === 'system') {
+      window.dispatchEvent(new CustomEvent('system-settings:save'));
+    }
+    if (activeSection === 'brand') {
+      window.dispatchEvent(new CustomEvent('brand-settings:save'));
+    }
   };
+
+  const showSaveButton = ['finance', 'system', 'brand'].includes(activeSection);
 
   if (isIndexPath) {
     return <Navigate to={`${BASE_PATH}/finance`} replace />;
@@ -82,7 +90,7 @@ export default function SettingsLayout() {
     <div className="rounded-3xl bg-white shadow-sm ring-1 ring-black/5">
       <div className="flex items-center justify-between gap-4 rounded-t-3xl bg-gray-50 px-6 py-4">
         <h1 className="text-xl font-semibold text-gray-900">{currentTitle}</h1>
-        {activeSection === 'finance' ? (
+        {showSaveButton ? (
           <button
             type="button"
             onClick={handleSave}

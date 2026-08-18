@@ -20,6 +20,8 @@ const FinancialSettings = forwardRef(function FinancialSettings(_props, ref) {
     taxRate: '0%',
     stripeEnabled: true,
     paypalEnabled: false,
+    applePayEnabled: true,
+    googlePayEnabled: true,
   });
 
   useEffect(() => {
@@ -29,6 +31,8 @@ const FinancialSettings = forwardRef(function FinancialSettings(_props, ref) {
       taxRate: `${data.taxRate ?? 0}%`,
       stripeEnabled: Boolean(data.stripeEnabled),
       paypalEnabled: Boolean(data.paypalEnabled),
+      applePayEnabled: data.applePayEnabled !== false,
+      googlePayEnabled: data.googlePayEnabled !== false,
     });
   }, [data]);
 
@@ -46,6 +50,8 @@ const FinancialSettings = forwardRef(function FinancialSettings(_props, ref) {
         taxRate: Number.parseFloat(settings.taxRate) || 0,
         stripeEnabled: settings.stripeEnabled,
         paypalEnabled: settings.paypalEnabled,
+        applePayEnabled: settings.applePayEnabled,
+        googlePayEnabled: settings.googlePayEnabled,
       }).unwrap();
       toast.success('Impostazioni finanziarie salvate');
     } catch (saveError) {
@@ -165,6 +171,60 @@ const FinancialSettings = forwardRef(function FinancialSettings(_props, ref) {
               <span
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
                   settings.paypalEnabled ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4">
+            <div>
+              <h4 className="font-medium text-gray-900">Apple Pay</h4>
+              <p className="text-sm text-gray-500">
+                Pagamenti rapidi tramite Stripe (Safari / iOS)
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleToggle('applePayEnabled')}
+              disabled={isSaving || !settings.stripeEnabled}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${
+                settings.applePayEnabled && settings.stripeEnabled
+                  ? 'bg-emerald-500'
+                  : 'bg-gray-200'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  settings.applePayEnabled && settings.stripeEnabled
+                    ? 'translate-x-6'
+                    : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-50 p-4">
+            <div>
+              <h4 className="font-medium text-gray-900">Google Pay</h4>
+              <p className="text-sm text-gray-500">
+                Pagamenti rapidi tramite Stripe (Chrome / Android)
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleToggle('googlePayEnabled')}
+              disabled={isSaving || !settings.stripeEnabled}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${
+                settings.googlePayEnabled && settings.stripeEnabled
+                  ? 'bg-emerald-500'
+                  : 'bg-gray-200'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  settings.googlePayEnabled && settings.stripeEnabled
+                    ? 'translate-x-6'
+                    : 'translate-x-1'
                 }`}
               />
             </button>

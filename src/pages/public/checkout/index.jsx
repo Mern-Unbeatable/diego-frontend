@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import CourseMedia from '../../../components/training/CourseMedia';
 import CheckoutStripeForm from '../../../components/payment/CheckoutStripeForm';
 import CheckoutPayPalForm from '../../../components/payment/CheckoutPayPalForm';
+import CheckoutPaymentMethodPicker from '../../../components/payment/CheckoutPaymentMethodPicker';
 import { useGetPlatformStatusQuery } from '../../../features/api/platformApi';
 import { useCourse } from '../../../features/public/course/courseHooks';
 import { usePayment } from '../../../features/public/payment/paymentHooks';
@@ -43,7 +44,7 @@ const Checkout = () => {
 
   const paymentIntentRequestRef = useRef(null);
   const enrollmentToastShownRef = useRef(false);
-  const [paymentMethod, setPaymentMethod] = useState('stripe');
+  const [paymentMethod, setPaymentMethod] = useState('card');
   const { data: platformStatus } = useGetPlatformStatusQuery();
 
   const courseSlug = decodeURIComponent(
@@ -55,16 +56,41 @@ const Checkout = () => {
 
   const stripeEnabled = platformStatus?.stripeEnabled !== false;
   const paypalEnabled = Boolean(platformStatus?.paypalEnabled);
-  const showPaymentMethodChoice = stripeEnabled && paypalEnabled && !isCompanyPlan;
+  const applePayEnabled =
+    stripeEnabled && platformStatus?.applePayEnabled !== false;
+  const googlePayEnabled =
+    stripeEnabled && platformStatus?.googlePayEnabled !== false;
+  const usesStripeIntent =
+    stripeEnabled && ['card', 'google_pay', 'apple_pay'].includes(paymentMethod);
+
+  const paymentMethods = useMemo(() => {
+    const methods = [];
+    if (googlePayEnabled) {
+      methods.push({ id: 'google_pay', label: 'Google Pay' });
+    }
+    if (applePayEnabled) {
+      methods.push({ id: 'apple_pay', label: 'Apple Pay' });
+    }
+    if (stripeEnabled) {
+      methods.push({ id: 'card', label: 'Stripe' });
+    }
+    if (paypalEnabled && !isCompanyPlan) {
+      methods.push({ id: 'paypal', label: 'PayPal' });
+    }
+    return methods;
+  }, [
+    applePayEnabled,
+    googlePayEnabled,
+    isCompanyPlan,
+    paypalEnabled,
+    stripeEnabled,
+  ]);
 
   useEffect(() => {
-    if (isCompanyPlan) {
-      setPaymentMethod('stripe');
-      return;
-    }
-    if (stripeEnabled && !paypalEnabled) setPaymentMethod('stripe');
-    if (!stripeEnabled && paypalEnabled) setPaymentMethod('paypal');
-  }, [isCompanyPlan, stripeEnabled, paypalEnabled]);
+    if (!paymentMethods.length) return;
+    if (paymentMethods.some((method) => method.id === paymentMethod)) return;
+    setPaymentMethod(paymentMethods[0].id);
+  }, [paymentMethod, paymentMethods]);
 
   const checkoutReturnPath = useMemo(() => {
     const params = new URLSearchParams();
@@ -79,7 +105,7 @@ const Checkout = () => {
 
   useEffect(() => {
     if (!courseSlug) return;
-    getCourseDetails(courseSlug).catch(() => {});
+    getCourseDetails(courseSlug).catch(() => { });
   }, [getCourseDetails, courseSlug]);
 
   const language = (i18n.language || 'en').split('-')[0];
@@ -124,13 +150,13 @@ const Checkout = () => {
     if (!isAuthenticated || !course?.id) return undefined;
     if (isCompanyPlan && !selectedTierId) return undefined;
     if (hasEnrollmentConflict) return undefined;
-    if (paymentMethod !== 'stripe') return undefined;
-    if (!stripeEnabled) return undefined;
+    if (paymentMethod === 'paypal') return undefined;
+    if (!usesStripeIntent) return undefined;
 
     const hasIntentForSelection = isCompanyPlan
       ? paymentIntent?.courseId === course.id &&
-        paymentIntent?.tierId === selectedTierId &&
-        paymentIntent?.clientSecret
+      paymentIntent?.tierId === selectedTierId &&
+      paymentIntent?.clientSecret
       : paymentIntent?.courseId === course.id && paymentIntent?.clientSecret;
 
     if (hasIntentForSelection) return undefined;
@@ -140,13 +166,13 @@ const Checkout = () => {
 
     const request = isCompanyPlan
       ? createCompanyCoursePaymentIntent({
-          courseId: course.id,
-          tierId: selectedTierId,
-        })
+        courseId: course.id,
+        tierId: selectedTierId,
+      })
       : createCoursePaymentIntent({ courseId: course.id });
 
     request
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => {
         if (paymentIntentRequestRef.current === paymentIntentKey) {
           paymentIntentRequestRef.current = null;
@@ -167,7 +193,7 @@ const Checkout = () => {
     paymentIntent?.tierId,
     hasEnrollmentConflict,
     paymentMethod,
-    stripeEnabled,
+    usesStripeIntent,
   ]);
 
   useEffect(() => {
@@ -273,8 +299,8 @@ const Checkout = () => {
   );
 
   return (
-    <div className="min-h-screen p-8">
-      <div className="mx-auto max-w-6xl">
+    <div className="min-h-screen w-full overflow-x-hidden px-4 py-6 sm:px-8 sm:py-8">
+      <div className="mx-auto w-full max-w-6xl">
         {courseLoading ? (
           <p className="mb-4 text-sm text-gray-500">
             {t('trainingPages.section7.loadingCourses')}
@@ -303,7 +329,7 @@ const Checkout = () => {
           </div>
         ) : null}
 
-        <div className="grid gap-8 rounded-md bg-[#F1F9F6] p-5 md:grid-cols-3">
+        <div className="grid max-w-full gap-4 rounded-md bg-[#F1F9F6] p-3 sm:gap-8 sm:p-5 md:grid-cols-3">
           <div className="md:col-span-2">
             <button
               type="button"
@@ -322,7 +348,7 @@ const Checkout = () => {
               </h2>
             </button>
 
-            <div className="rounded-lg bg-white p-6 shadow">
+            <div className="rounded-lg bg-white p-4 sm:p-6 shadow">
               <h3 className="mb-4 text-lg font-semibold text-gray-800">
                 {t('paymentPages.section1.title')}
               </h3>
@@ -366,51 +392,24 @@ const Checkout = () => {
             </div>
           </div>
 
-          <div className="rounded-lg bg-[#D4EBE2] p-6">
+          <div className="rounded-lg bg-[#D4EBE2] p-4 sm:p-6">
             <h3 className="mb-6 text-lg font-semibold text-gray-800">
               {t('paymentPages.section2.title')}
             </h3>
 
             <div className="mb-6">
-              {showPaymentMethodChoice ? (
-                <div className="mb-4 grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('stripe')}
-                    className={`rounded-lg border px-3 py-2 text-sm font-medium ${
-                      paymentMethod === 'stripe'
-                        ? 'border-[#73BFA1] bg-white text-[#2f5f4d]'
-                        : 'border-transparent bg-white/60 text-gray-600'
-                    }`}
-                  >
-                    Carta (Stripe)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('paypal')}
-                    className={`rounded-lg border px-3 py-2 text-sm font-medium ${
-                      paymentMethod === 'paypal'
-                        ? 'border-[#73BFA1] bg-white text-[#2f5f4d]'
-                        : 'border-transparent bg-white/60 text-gray-600'
-                    }`}
-                  >
-                    PayPal
-                  </button>
-                </div>
-              ) : null}
-              <div className="flex w-full items-center justify-center gap-x-3">
-                <img
-                  src={
-                    paymentMethod === 'paypal'
-                      ? '/images/payment/payment1.png'
-                      : '/images/payment/payment2.png'
-                  }
-                  alt={paymentMethod === 'paypal' ? 'PayPal' : 'Stripe'}
+              {paymentMethods.length > 0 ? (
+                <CheckoutPaymentMethodPicker
+                  methods={paymentMethods}
+                  selected={paymentMethod}
+                  onSelect={setPaymentMethod}
+                  networkLabel={t('paymentPages.section2.network')}
+                  seeAllLabel={t('paymentPages.section2.seeAll')}
                 />
-              </div>
+              ) : null}
             </div>
 
-            {isAuthenticated && paymentLoading && paymentMethod === 'stripe' ? (
+            {isAuthenticated && paymentLoading && usesStripeIntent ? (
               <p className="mb-4 text-sm text-gray-600">
                 {t('paymentPages.section2.preparingPayment')}
               </p>
@@ -454,11 +453,13 @@ const Checkout = () => {
               />
             ) : hasEnrollmentConflict || clientSecret ? (
               <CheckoutStripeForm
-                key={clientSecret || 'enrollment-conflict'}
+                key={`${clientSecret || 'enrollment-conflict'}-${paymentMethod}`}
                 clientSecret={clientSecret}
                 publishableKey={publishableKey}
                 amount={displayAmount}
+                currency={platformStatus?.defaultCurrency || 'EUR'}
                 verifying={paymentVerifying}
+                selectedMethod={paymentMethod}
                 onSuccess={handlePaymentSuccess}
                 submitDisabled={hasEnrollmentConflict}
                 submitDisabledTitle={

@@ -61,6 +61,93 @@ const dashboardApi = baseApi.injectEndpoints({
       transformErrorResponse,
       invalidatesTags: ['FinancialSettings'],
     }),
+
+    getSystemSettings: builder.query({
+      query: () => ({
+        url: '/platform-settings/system',
+        method: 'GET',
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      providesTags: ['SystemSettings'],
+    }),
+
+    updateSystemSettings: builder.mutation({
+      query: (data) => ({
+        url: '/platform-settings/system',
+        method: 'PATCH',
+        body: data,
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      invalidatesTags: ['SystemSettings'],
+    }),
+
+    testSystemSmtp: builder.mutation({
+      query: () => ({
+        url: '/platform-settings/system/test-smtp',
+        method: 'POST',
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+    }),
+
+    getBrandSettings: builder.query({
+      query: () => ({
+        url: '/platform-settings/brand',
+        method: 'GET',
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      providesTags: ['BrandSettings'],
+    }),
+
+    updateBrandSettings: builder.mutation({
+      query: (data) => ({
+        url: '/platform-settings/brand',
+        method: 'PATCH',
+        body: data,
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      invalidatesTags: ['BrandSettings'],
+    }),
+
+    uploadBrandLogo: builder.mutation({
+      query: (file) => {
+        const formData = new FormData();
+        formData.append('platformLogo', file);
+        return {
+          url: '/platform-settings/brand/logo',
+          method: 'POST',
+          body: formData,
+        };
+      },
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      invalidatesTags: ['BrandSettings'],
+    }),
+
+    getWebhookSettings: builder.query({
+      query: () => ({
+        url: '/platform-settings/webhooks',
+        method: 'GET',
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      providesTags: ['WebhookSettings'],
+    }),
+
+    updateWebhookSettings: builder.mutation({
+      query: (data) => ({
+        url: '/platform-settings/webhooks',
+        method: 'PATCH',
+        body: data,
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+      invalidatesTags: ['WebhookSettings'],
+    }),
   }),
 });
 
@@ -70,6 +157,14 @@ export const {
   useUpdateEmergencyControlsMutation,
   useGetFinancialSettingsQuery,
   useUpdateFinancialSettingsMutation,
+  useGetSystemSettingsQuery,
+  useUpdateSystemSettingsMutation,
+  useTestSystemSmtpMutation,
+  useGetBrandSettingsQuery,
+  useUpdateBrandSettingsMutation,
+  useUploadBrandLogoMutation,
+  useGetWebhookSettingsQuery,
+  useUpdateWebhookSettingsMutation,
 } = dashboardApi;
 
 export default dashboardApi;

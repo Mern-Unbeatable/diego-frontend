@@ -3,7 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { FaChevronLeft } from 'react-icons/fa';
 import CheckoutStripeForm from '../../../../components/payment/CheckoutStripeForm';
+import CheckoutPaymentMethodPicker from '../../../../components/payment/CheckoutPaymentMethodPicker';
 import Loading from '../../../../components/ui/Utilities/Loading';
+import { useGetPlatformStatusQuery } from '../../../../features/api/platformApi';
 import {
   createArchivePaymentIntentService,
   getArchivePlanService,
@@ -24,7 +26,9 @@ const ArchivePurchaseView = () => {
   const [paymentIntent, setPaymentIntent] = useState(null);
   const [creatingIntent, setCreatingIntent] = useState(false);
   const [verifying, setVerifying] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('card');
   const intentRequestRef = useRef(false);
+  const { data: platformStatus } = useGetPlatformStatusQuery();
 
   const loadPlan = useCallback(async () => {
     setLoading(true);
@@ -51,6 +55,19 @@ const ArchivePurchaseView = () => {
     () => formatEuro(Number(plan?.priceEur || 0)),
     [plan?.priceEur],
   );
+
+  const stripeEnabled = platformStatus?.stripeEnabled !== false;
+  const applePayEnabled =
+    stripeEnabled && platformStatus?.applePayEnabled !== false;
+  const googlePayEnabled =
+    stripeEnabled && platformStatus?.googlePayEnabled !== false;
+  const paymentMethods = useMemo(() => {
+    const methods = [];
+    if (googlePayEnabled) methods.push({ id: 'google_pay', label: 'Google Pay' });
+    if (applePayEnabled) methods.push({ id: 'apple_pay', label: 'Apple Pay' });
+    if (stripeEnabled) methods.push({ id: 'card', label: 'Stripe' });
+    return methods;
+  }, [applePayEnabled, googlePayEnabled, stripeEnabled]);
 
   useEffect(() => {
     if (
@@ -157,12 +174,19 @@ const ArchivePurchaseView = () => {
               <Loading size="sm" className="mt-6 min-h-24" />
             ) : paymentIntent?.clientSecret ? (
               <div className="mt-5 min-w-0 sm:mt-6">
+                <CheckoutPaymentMethodPicker
+                  methods={paymentMethods}
+                  selected={paymentMethod}
+                  onSelect={setPaymentMethod}
+                  networkLabel="Circuito carta"
+                />
                 <CheckoutStripeForm
                   clientSecret={paymentIntent.clientSecret}
                   amount={Number(plan?.priceEur || 0)}
                   currency={plan?.currency || 'EUR'}
+                  verifying={verifying}
+                  selectedMethod={paymentMethod}
                   onSuccess={handlePaymentSuccess}
-                  submitting={verifying}
                 />
               </div>
             ) : (

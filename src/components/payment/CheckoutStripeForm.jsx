@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
+import { Component, useEffect, useMemo, useState } from 'react';
 import {
   CardCvcElement,
   CardExpiryElement,
   CardNumberElement,
   Elements,
+  ExpressCheckoutElement,
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
@@ -12,6 +13,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { ENV_CONFIG } from '../../config/env.config';
 import { formatEuro } from '../../utils/courseMedia';
+
 const stripeElementStyle = {
   base: {
     fontSize: '16px',
@@ -30,6 +32,24 @@ const stripeElementOptions = {
   style: stripeElementStyle,
 };
 
+class WalletErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || null;
+    }
+    return this.props.children;
+  }
+}
+
 const StripeField = ({ label, children }) => (
   <div>
     <label className="mb-2 block text-sm font-semibold text-gray-700">
@@ -40,10 +60,12 @@ const StripeField = ({ label, children }) => (
     </div>
   </div>
 );
+
 const CheckoutPaymentFields = ({
   clientSecret,
   amount,
   verifying = false,
+  selectedMethod = 'card',
   onSuccess,
   submitDisabled = false,
   submitDisabledTitle = '',
@@ -53,10 +75,77 @@ const CheckoutPaymentFields = ({
   const elements = useElements();
   const [cardholderName, setCardholderName] = useState('');
   const [processing, setProcessing] = useState(false);
+  const [walletReady, setWalletReady] = useState(false);
 
   const formattedPrice = formatEuro(amount);
+  const isGooglePay = selectedMethod === 'google_pay';
+  const isApplePay = selectedMethod === 'apple_pay';
+  const isWallet = isGooglePay || isApplePay;
 
-  const handleSubmit = async (event) => {
+  useEffect(() => {
+    setWalletReady(false);
+  }, [selectedMethod]);
+
+  const walletOptions = useMemo(
+    () => ({
+      buttonHeight: 48,
+      buttonTheme: {
+        applePay: 'black',
+        googlePay: 'black',
+      },
+      buttonType: {
+        applePay: 'plain',
+        googlePay: 'plain',
+      },
+      paymentMethodOrder: isApplePay ? ['apple_pay'] : ['google_pay'],
+      paymentMethods: {
+        applePay: isApplePay ? 'always' : 'never',
+        googlePay: isGooglePay ? 'always' : 'never',
+        link: 'never',
+        paypal: 'never',
+        amazonPay: 'never',
+      },
+    }),
+    [isApplePay, isGooglePay],
+  );
+
+  const handleWalletConfirm = async () => {
+    if (submitDisabled || !stripe || !elements) return;
+
+    setProcessing(true);
+    try {
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams: {
+          return_url: window.location.href,
+        },
+        redirect: 'if_required',
+      });
+
+      if (error) {
+        toast.error(error.message || t('paymentPages.section2.paymentError'));
+        return;
+      }
+
+      if (
+        paymentIntent?.status === 'succeeded' ||
+        paymentIntent?.status === 'processing'
+      ) {
+        if (paymentIntent.status === 'processing') {
+          toast.success(t('paymentPages.section2.processing'));
+        }
+        await onSuccess?.(paymentIntent);
+      }
+    } catch (error) {
+      console.error('Wallet payment error:', error);
+      toast.error(t('paymentPages.section2.paymentError'));
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const handleCardSubmit = async (event) => {
     event.preventDefault();
 
     if (submitDisabled) return;
@@ -67,6 +156,7 @@ const CheckoutPaymentFields = ({
       toast.error(t('paymentPages.section2.nameRequired'));
       return;
     }
+
     const cardNumberElement = elements.getElement(CardNumberElement);
     if (!cardNumberElement) {
       toast.error(t('paymentPages.section2.paymentError'));
@@ -87,14 +177,17 @@ const CheckoutPaymentFields = ({
           },
         },
       );
+
       if (error) {
         toast.error(error.message || t('paymentPages.section2.paymentError'));
         return;
       }
+
       if (paymentIntent?.status === 'succeeded') {
         await onSuccess?.(paymentIntent);
         return;
       }
+
       if (paymentIntent?.status === 'processing') {
         toast.success(t('paymentPages.section2.processing'));
         await onSuccess?.(paymentIntent);
@@ -106,8 +199,65 @@ const CheckoutPaymentFields = ({
       setProcessing(false);
     }
   };
+
+  if (isWallet) {
+    return (
+      <div className={submitDisabled ? 'pointer-events-none opacity-60' : ''}>
+        <div className="min-h-[52px]">
+          <WalletErrorBoundary
+            fallback={
+              <p className="rounded-lg bg-white/70 px-3 py-2 text-sm text-gray-700">
+                {isApplePay
+                  ? t('paymentPages.section2.applePayHint', {
+                      defaultValue:
+                        'Apple Pay opens in Safari on iPhone, iPad, or Mac with a card in Apple Wallet.',
+                    })
+                  : t('paymentPages.section2.googlePayHint', {
+                      defaultValue:
+                        'Google Pay opens in Chrome on Windows, Mac, or Android with a saved Google Pay card.',
+                    })}
+              </p>
+            }
+          >
+            <ExpressCheckoutElement
+              key={selectedMethod}
+              options={walletOptions}
+              onReady={({ availablePaymentMethods }) => {
+                const available = Boolean(
+                  availablePaymentMethods &&
+                    ((isGooglePay && availablePaymentMethods.googlePay) ||
+                      (isApplePay && availablePaymentMethods.applePay)),
+                );
+                setWalletReady(available);
+              }}
+              onConfirm={handleWalletConfirm}
+            />
+          </WalletErrorBoundary>
+        </div>
+        {!walletReady ? (
+          <p className="mt-3 rounded-lg bg-white/70 px-3 py-2 text-sm text-gray-700">
+            {isApplePay
+              ? t('paymentPages.section2.applePayHint', {
+                  defaultValue:
+                    'Apple Pay opens in Safari on iPhone, iPad, or Mac with a card in Apple Wallet.',
+                })
+              : t('paymentPages.section2.googlePayHint', {
+                  defaultValue:
+                    'Google Pay opens in Chrome on Windows, Mac, or Android with a saved Google Pay card.',
+                })}
+          </p>
+        ) : null}
+        {processing || verifying ? (
+          <p className="mt-3 text-sm text-gray-600">
+            {t('paymentPages.section2.processing')}
+          </p>
+        ) : null}
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleCardSubmit} className="space-y-4">
       <StripeField label={t('paymentPages.section2.nameOnCard')}>
         <input
           type="text"
@@ -131,6 +281,7 @@ const CheckoutPaymentFields = ({
           <CardCvcElement options={stripeElementOptions} />
         </StripeField>
       </div>
+
       <button
         type="submit"
         disabled={submitDisabled || !stripe || processing || verifying}
@@ -213,7 +364,9 @@ export default function CheckoutStripeForm({
   clientSecret,
   publishableKey,
   amount,
+  currency = 'EUR',
   verifying = false,
+  selectedMethod = 'card',
   onSuccess,
   submitDisabled = false,
   submitDisabledTitle = '',
@@ -224,6 +377,20 @@ export default function CheckoutStripeForm({
     if (!key) return null;
     return loadStripe(key);
   }, [publishableKey]);
+
+  const elementsOptions = useMemo(
+    () => ({
+      clientSecret,
+      locale: 'auto',
+      appearance: {
+        theme: 'stripe',
+        variables: {
+          colorPrimary: '#73BFA1',
+        },
+      },
+    }),
+    [clientSecret],
+  );
 
   if (readOnly || (submitDisabled && !clientSecret)) {
     return (
@@ -237,11 +404,12 @@ export default function CheckoutStripeForm({
   if (!stripePromise || !clientSecret) return null;
 
   return (
-    <Elements stripe={stripePromise} options={{ locale: 'auto' }}>
+    <Elements stripe={stripePromise} options={elementsOptions}>
       <CheckoutPaymentFields
         clientSecret={clientSecret}
         amount={amount}
         verifying={verifying}
+        selectedMethod={selectedMethod}
         onSuccess={onSuccess}
         submitDisabled={submitDisabled}
         submitDisabledTitle={submitDisabledTitle}
