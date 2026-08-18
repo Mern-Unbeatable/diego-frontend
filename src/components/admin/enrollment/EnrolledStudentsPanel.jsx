@@ -135,7 +135,8 @@ const EnrolledStudentsPanel = ({
                     type="button"
                     onClick={() => downloadById(student.certificate)}
                     disabled={
-                      !canDownloadCertificate(student.certificate) || isDownloading
+                      !canDownloadCertificate(student.certificate) ||
+                      isDownloading(student.certificate)
                     }
                     className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full bg-[#ececec] text-xs font-medium text-[#363636] disabled:opacity-40"
                   >
@@ -220,7 +221,7 @@ const EnrolledStudentsPanel = ({
                           onClick={() => downloadById(student.certificate)}
                           disabled={
                             !canDownloadCertificate(student.certificate) ||
-                            isDownloading
+                            isDownloading(student.certificate)
                           }
                           className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ececec] text-[#363636] disabled:opacity-40"
                           aria-label="Download certificato"

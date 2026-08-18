@@ -18,6 +18,7 @@ export default function TrainingProjectManagerSection({
   showPersonFields = true,
   companyLabel = 'Societa',
   initial,
+  syncKey,
   onFormChange,
   onUpload,
   onDownload,
@@ -48,7 +49,8 @@ export default function TrainingProjectManagerSection({
       societa: initial.societa ?? '',
     });
     setFiles(initial.files ?? {});
-  }, [initial]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- reset only when syncKey (staff record) changes
+  }, [syncKey]);
 
   const updateForm = (field, value) => {
     setForm((prev) => {

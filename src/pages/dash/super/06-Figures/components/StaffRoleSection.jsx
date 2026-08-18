@@ -33,7 +33,7 @@ export default function StaffRoleSection({
   companyLabel = 'Societa',
   showFooterActions = false,
 }) {
-  const { data, isLoading, isFetching } = useGetStaffMembersQuery({
+  const { data, isLoading } = useGetStaffMembersQuery({
     role,
     page: 1,
     limit: 1,
@@ -270,7 +270,7 @@ export default function StaffRoleSection({
     }
   }, [effectiveStaffMemberId, cancelStaffMember]);
 
-  if (isLoading || isFetching) {
+  if (isLoading && !data) {
     return (
       <section className="min-w-0 overflow-hidden rounded-2xl bg-[#f7f7f7] p-4 shadow-[0_8px_20px_rgba(0,0,0,0.04)] ring-1 ring-[#ececec] sm:rounded-3xl sm:p-6 lg:p-8">
         <Loading size="md" className="min-h-32" />
@@ -280,6 +280,7 @@ export default function StaffRoleSection({
 
   return (
     <TrainingProjectManagerSection
+      key={`${role}-${effectiveStaffMemberId ?? 'new'}`}
       title={title}
       subtitle={subtitle}
       documentLabels={documentLabels}
@@ -287,6 +288,7 @@ export default function StaffRoleSection({
       companyLabel={companyLabel}
       showFooterActions={showFooterActions}
       initial={sectionInitial}
+      syncKey={effectiveStaffMemberId ?? 'new'}
       onFormChange={handleFormChange}
       onUpload={handleUpload}
       onDownload={handleDownload}

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 const SIZE_CLASSES = {
@@ -8,6 +9,8 @@ const SIZE_CLASSES = {
   xl: 'max-w-4xl',
 };
 
+const ANIMATION_MS = 220;
+
 export default function Modal({
   isOpen,
   onClose,
@@ -16,7 +19,7 @@ export default function Modal({
   children,
   footer,
   size = 'md',
-  zIndex = 50,
+  zIndex = 10000,
   accentColor,
   headerIcon,
   showCloseButton = true,
@@ -24,15 +27,44 @@ export default function Modal({
   className = '',
   panelClassName = '',
 }) {
-  if (!isOpen) return null;
+  const [mounted, setMounted] = useState(Boolean(isOpen));
+  const [visible, setVisible] = useState(false);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
+  useEffect(() => {
+    if (isOpen) {
+      setMounted(true);
+      const frame = window.requestAnimationFrame(() => setVisible(true));
+      const previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      const onKeyDown = (event) => {
+        if (event.key === 'Escape') onCloseRef.current?.();
+      };
+      window.addEventListener('keydown', onKeyDown);
+
+      return () => {
+        window.cancelAnimationFrame(frame);
+        document.body.style.overflow = previousOverflow;
+        window.removeEventListener('keydown', onKeyDown);
+      };
+    }
+
+    setVisible(false);
+    const timeoutId = window.setTimeout(() => setMounted(false), ANIMATION_MS);
+    return () => window.clearTimeout(timeoutId);
+  }, [isOpen]);
+
+  if (!mounted || typeof document === 'undefined') return null;
 
   const handleBackdropClick = () => {
     if (closeOnBackdrop) onClose?.();
   };
 
-  return (
+  return createPortal(
     <div
-      className={`fixed inset-0 flex items-center justify-center bg-black/10 p-4 backdrop-blur-sm ${className}`}
+      className={`fixed inset-0 flex items-center justify-center p-4 ${className}`}
       style={{ zIndex }}
       onClick={handleBackdropClick}
       role="dialog"
@@ -40,7 +72,16 @@ export default function Modal({
       aria-labelledby={title ? 'modal-title' : undefined}
     >
       <div
-        className={`w-full ${SIZE_CLASSES[size] || SIZE_CLASSES.md} max-h-[92vh] overflow-y-auto rounded-xl border border-gray-100 bg-white p-4 shadow-2xl md:p-6 ${panelClassName}`}
+        className={`absolute inset-0 bg-black/45 backdrop-blur-[2px] transition-opacity duration-200 ${
+          visible ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
+      <div
+        className={`relative z-10 w-full ${SIZE_CLASSES[size] || SIZE_CLASSES.md} max-h-[92vh] overflow-y-auto rounded-xl border border-gray-100 bg-white p-4 shadow-2xl transition-all duration-200 md:p-6 ${
+          visible
+            ? 'translate-y-0 scale-100 opacity-100'
+            : 'translate-y-3 scale-95 opacity-0'
+        } ${panelClassName}`}
         onClick={(event) => event.stopPropagation()}
       >
         {(title || description || showCloseButton || headerIcon || accentColor) && (
@@ -84,6 +125,7 @@ export default function Modal({
 
         {footer && <div className="mt-6 border-t border-gray-100 pt-6">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

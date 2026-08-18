@@ -21,6 +21,7 @@ export { default as Toast } from './notifications/Toast';
 export { useToast } from './notifications/useToast';
 
 export { default as ConfirmModal } from './modals/ConfirmModal';
+export { default as ConfirmDialog } from './modals/ConfirmDialog';
 export { default as Modal } from './modals/Modal';
 export { default as FormModal } from './modals/FormModal';
 export { default as InfoModal } from './modals/InfoModal';
