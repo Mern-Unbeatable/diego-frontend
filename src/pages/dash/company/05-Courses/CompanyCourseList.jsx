@@ -2,6 +2,7 @@ import { ArrowLeft, Download, Send } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { Toast, useToast } from '../../../../components/ui';
 import { ENV_CONFIG } from '../../../../config/env.config';
 import {
   addCompanyEmployeeService,
@@ -10,6 +11,7 @@ import {
   getCompanyProgressReportService,
   sendEnrollmentReminderService,
 } from '../../../../features/company/companyService';
+import { useEmployees } from '../../../../features/company/employee/employeeHooks';
 import EmployeeModal from '../EmployeeModal';
 
 const PAGE_SIZE = 6;

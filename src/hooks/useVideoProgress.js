@@ -13,6 +13,8 @@ import {
 export const useVideoProgress = ({
   enabled = true,
   videoRef,
+  resetKey = null,
+  mediaReady = false,
   initialWatchPercent = 0,
   initialLastPositionSecs = 0,
   onSaveProgress,
@@ -26,6 +28,9 @@ export const useVideoProgress = ({
   const savingRef = useRef(false);
   const mountedRef = useRef(true);
   const onSaveProgressRef = useRef(onSaveProgress);
+  const initialWatchRef = useRef(initialWatchPercent);
+  const initialPositionRef = useRef(initialLastPositionSecs);
+  const seekAppliedRef = useRef(false);
 
   useEffect(() => {
     onSaveProgressRef.current = onSaveProgress;
@@ -59,14 +64,18 @@ export const useVideoProgress = ({
   }, [enabled]);
 
   useEffect(() => {
+    initialWatchRef.current = initialWatchPercent;
+    initialPositionRef.current = initialLastPositionSecs;
     completedRef.current = initialWatchPercent >= MIN_WATCH_PERCENT;
     watchPercentRef.current = initialWatchPercent;
     setWatchPercent(initialWatchPercent);
     setLastPositionSecs(initialLastPositionSecs);
-    // Resume: estimate already-played time from saved percent (not seek position alone).
     playedSecsRef.current = 0;
     lastMediaTimeRef.current = initialLastPositionSecs;
-  }, [initialWatchPercent, initialLastPositionSecs]);
+    seekAppliedRef.current = false;
+    // Seed only when the lesson changes — progress saves must not reset playback.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetKey]);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -142,13 +151,15 @@ export const useVideoProgress = ({
     };
 
     const handleLoaded = () => {
-      if (initialLastPositionSecs > 0 && video.duration > initialLastPositionSecs) {
-        video.currentTime = initialLastPositionSecs;
-        lastMediaTimeRef.current = initialLastPositionSecs;
+      const resumeAt = initialPositionRef.current;
+      if (!seekAppliedRef.current && resumeAt > 0 && video.duration > resumeAt) {
+        video.currentTime = resumeAt;
+        lastMediaTimeRef.current = resumeAt;
+        seekAppliedRef.current = true;
       }
-      // Seed played time from restored % once we know duration.
-      if (initialWatchPercent > 0 && playedSecsRef.current === 0) {
-        playedSecsRef.current = (initialWatchPercent / 100) * video.duration;
+      const restoredPercent = initialWatchRef.current;
+      if (restoredPercent > 0 && playedSecsRef.current === 0) {
+        playedSecsRef.current = (restoredPercent / 100) * video.duration;
       }
     };
 
@@ -186,13 +197,8 @@ export const useVideoProgress = ({
       video.removeEventListener('loadedmetadata', handleLoaded);
       video.removeEventListener('ended', handleEnded);
       clearInterval(saveTimer);
-      try {
-        video.pause();
-      } catch {
-        // ignore
-      }
     };
-  }, [enabled, videoRef, initialLastPositionSecs, initialWatchPercent, persistProgress]);
+  }, [enabled, resetKey, mediaReady, persistProgress, videoRef]);
 
   return {
     watchPercent,

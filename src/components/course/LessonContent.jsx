@@ -7,6 +7,7 @@ import DocumentViewer from './DocumentViewer';
 import { useAntiCheatGuard } from '../../hooks/useAntiCheatGuard';
 import { useVideoProgress } from '../../hooks/useVideoProgress';
 import { DOCUMENT_CONTENT_TYPES, useDocumentProgress } from '../../hooks/useDocumentProgress';
+import { resolveAbsoluteContentUrl } from '../../utils/documentViewerUtils';
 
 const LessonContent = ({
   course,
@@ -26,7 +27,13 @@ const LessonContent = ({
   onScormGoNext,
 }) => {
   const videoRef = useRef(null);
+  const [videoNode, setVideoNode] = useState(null);
   const isLessonComplete = Boolean(moduleItem?.status === 'done');
+
+  const bindVideoRef = useCallback((node) => {
+    videoRef.current = node;
+    setVideoNode(node);
+  }, []);
 
   const { blocked, blockReason, resume } = useAntiCheatGuard({
     enabled: Boolean(enrollmentId && lesson?.id && !isLessonComplete),
@@ -66,6 +73,8 @@ const LessonContent = ({
       && lesson?.contentType === 'VIDEO_UPLOAD',
     ),
     videoRef,
+    resetKey: lesson?.id ?? null,
+    mediaReady: Boolean(videoNode),
     initialWatchPercent,
     initialLastPositionSecs,
     onSaveProgress: saveLessonProgress,
@@ -90,6 +99,15 @@ const LessonContent = ({
     paused: blocked,
     onSaveProgress: handleTrackedProgress,
   });
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || lesson?.contentType !== 'VIDEO_UPLOAD') return undefined;
+    if (blocked) {
+      video.pause();
+    }
+    return undefined;
+  }, [blocked, lesson?.contentType, lesson?.id]);
 
   useEffect(() => {
     if (!lesson?.id) return undefined;
@@ -169,9 +187,11 @@ const LessonContent = ({
       <div key={`video-${lesson.id}`} className="space-y-3">
         <div className="aspect-video overflow-hidden rounded-2xl bg-black shadow-lg">
           <video
-            ref={videoRef}
-            src={lesson.contentUrl}
+            ref={bindVideoRef}
+            src={resolveAbsoluteContentUrl(lesson.contentUrl)}
             controls
+            playsInline
+            preload="auto"
             className="h-full w-full bg-black"
           >
             <track kind="captions" />
