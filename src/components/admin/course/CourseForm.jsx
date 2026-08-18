@@ -142,14 +142,7 @@ export default function CourseForm({
         />
       </div>
 
-      <div className="rounded-xl border border-[#d6e5de] bg-[#f7fbf9] px-4 py-3 text-xs text-[#5a6a64]">
-        <p className="font-medium text-[#2f4f42]">Durata e formato — livello corso</p>
-        <p className="mt-1">
-          La durata ufficiale e il formato servono per catalogo, attestato e report (Accordo
-          Stato-Regioni). Il tipo di contenuto e il tempo minimo di fruizione si impostano su
-          ogni singola lezione.
-        </p>
-      </div>
+
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Select
@@ -167,10 +160,7 @@ export default function CourseForm({
           variant="course"
         />
       </div>
-      <p className="-mt-2 text-xs text-[#6b7471]">
-        Ore per attestato/catalogo. Se lasci vuoto, puoi usare la somma calcolata dalle lezioni
-        come riferimento (vedi sezione Lezioni).
-      </p>
+
 
       <Input
         name="aziendaFormazione"
@@ -279,11 +269,10 @@ export default function CourseForm({
         <button
           type="button"
           onClick={() => setValue('inManutenzione', !inManutenzione)}
-          className={`h-10 rounded-full border px-5 text-sm font-medium ${
-            inManutenzione
-              ? 'border-[#d35237] bg-[#f7e8e5] text-[#d35237]'
-              : 'border-[#7fc4ab] text-[#71c2a3]'
-          }`}
+          className={`h-10 rounded-full border px-5 text-sm font-medium ${inManutenzione
+            ? 'border-[#d35237] bg-[#f7e8e5] text-[#d35237]'
+            : 'border-[#7fc4ab] text-[#71c2a3]'
+            }`}
         >
           In manutenzione
         </button>
