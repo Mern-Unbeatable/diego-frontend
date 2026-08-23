@@ -11,6 +11,7 @@ import '../api/staffApi';
 import '../api/licenseUserApi';
 import '../api/coursePackageApi';
 import '../api/inquiryApi';
+import '../api/favoriteApi';
 
 export const store = configureStore({
   reducer: rootReducer,

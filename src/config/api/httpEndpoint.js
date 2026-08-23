@@ -104,6 +104,13 @@ export const endpoints = {
     INFO: (token) => `/enrollments/access/${token}`,
     REDEEM: (token) => `/enrollments/access/${token}/redeem`,
   },
+  favorite: {
+    LIST: '/favorite-courses',
+    IDS: '/favorite-courses/ids',
+    CHECK: (courseId) => `/favorite-courses/check/${courseId}`,
+    ADD: (courseId) => `/favorite-courses/${courseId}`,
+    REMOVE: (courseId) => `/favorite-courses/${courseId}`,
+  },
   private: {
     MY_ENROLLMENTS: '/enrollments/my',
     MY_COURSE_PROGRESS: (courseId) => `/enrollments/my-progress/${courseId}`,

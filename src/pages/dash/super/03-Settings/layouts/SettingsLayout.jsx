@@ -30,13 +30,13 @@ const TABS = [
     icon: <Palette className="h-4 w-4" />,
     Component: BrandSettings,
   },
-  // {
-  //   id: 'api',
-  //   to: `${BASE_PATH}/api`,
-  //   label: 'API & Integrazioni',
-  //   icon: <Plug className="h-4 w-4" />,
-  //   Component: ApiSettings,
-  // },
+  {
+    id: 'api',
+    to: `${BASE_PATH}/api`,
+    label: 'API & Integrazioni',
+    icon: <Plug className="h-4 w-4" />,
+    Component: ApiSettings,
+  },
 ];
 
 const getActiveSection = (pathname) => {

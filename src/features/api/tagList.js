@@ -19,4 +19,5 @@ export const tagTypesList = [
   'ServiceRequest',
   'Contact',
   'Collaboration',
+  'Favorite',
 ];

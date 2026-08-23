@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 
-const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
-  const [isLiked, setIsLiked] = useState(false);
+const CourseCard = ({
+  course,
+  onCardClick,
+  getCategoryClasses,
+  isFavorite = false,
+  onToggleFavorite,
+  isFavoriteLoading = false,
+}) => {
 
   return (
     <div
@@ -27,13 +33,15 @@ const CourseCard = ({ course, onCardClick, getCategoryClasses }) => {
 
         <button
           type="button"
-          className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#CCCCCC80] shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition hover:scale-110 sm:top-3 sm:right-3 sm:h-8 sm:w-8"
+          disabled={isFavoriteLoading || !onToggleFavorite}
+          aria-label={isFavorite ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti'}
+          className={`absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#CCCCCC80] shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition hover:scale-110 disabled:cursor-not-allowed disabled:opacity-60 sm:top-3 sm:right-3 sm:h-8 sm:w-8 ${isFavoriteLoading ? 'animate-pulse' : ''}`}
           onClick={(e) => {
             e.stopPropagation();
-            setIsLiked(!isLiked);
+            onToggleFavorite?.();
           }}
         >
-          {isLiked ? (
+          {isFavorite ? (
             <FaHeart className="text-xs text-white" />
           ) : (
             <FaRegHeart className="text-xs text-[#FFFFFF]" />

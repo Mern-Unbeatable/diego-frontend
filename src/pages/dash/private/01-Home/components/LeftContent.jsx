@@ -1,7 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { ROUTES } from '../../../../../config/routes';
+import {
+  useAddFavoriteMutation,
+  useGetMyFavoriteCourseIdsQuery,
+  useRemoveFavoriteMutation,
+} from '../../../../../features/api/favoriteApi';
+import { getRtkErrorMessage } from '../../../../../features/api/utils';
 import CourseCard from './CourseCard';
 import HeroBanner from './HeroBanner';
 
@@ -29,8 +36,44 @@ const LeftContent = ({ courses = [] }) => {
   const [visibleCount, setVisibleCount] = useState(() =>
     typeof window !== 'undefined' ? getVisibleCount(window.innerWidth) : 3,
   );
+  const [togglingCourseId, setTogglingCourseId] = useState(null);
   const total = courses.length;
   const navigate = useNavigate();
+  const { data: favoriteIdsData } = useGetMyFavoriteCourseIdsQuery();
+  const [addFavorite] = useAddFavoriteMutation();
+  const [removeFavorite] = useRemoveFavoriteMutation();
+
+  const favoriteIds = useMemo(
+    () => new Set(favoriteIdsData?.courseIds ?? []),
+    [favoriteIdsData?.courseIds],
+  );
+
+  const handleToggleFavorite = useCallback(
+    async (courseId) => {
+      if (!courseId || togglingCourseId) return;
+
+      const normalizedCourseId = String(courseId);
+      const isFavorite = favoriteIds.has(normalizedCourseId);
+
+      setTogglingCourseId(normalizedCourseId);
+      try {
+        if (isFavorite) {
+          await removeFavorite(normalizedCourseId).unwrap();
+          toast.success('Corso rimosso dai preferiti');
+        } else {
+          await addFavorite(normalizedCourseId).unwrap();
+          toast.success('Corso aggiunto ai preferiti');
+        }
+      } catch (error) {
+        toast.error(
+          getRtkErrorMessage(error) || 'Impossibile aggiornare i preferiti',
+        );
+      } finally {
+        setTogglingCourseId(null);
+      }
+    },
+    [addFavorite, favoriteIds, removeFavorite, togglingCourseId],
+  );
 
   useEffect(() => {
     const onResize = () => {
@@ -108,16 +151,25 @@ const LeftContent = ({ courses = [] }) => {
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
-            {visibleCourses.map((course) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                onCardClick={() =>
-                  navigate(`${ROUTES.PRIVATE_USER.COURSE}/${course.courseId}`)
-                }
-                getCategoryClasses={getCategoryClasses}
-              />
-            ))}
+            {visibleCourses.map((course) => {
+              const courseId = course.courseId ? String(course.courseId) : null;
+
+              return (
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  onCardClick={() =>
+                    navigate(`${ROUTES.PRIVATE_USER.COURSE}/${course.courseId}`)
+                  }
+                  getCategoryClasses={getCategoryClasses}
+                  isFavorite={courseId ? favoriteIds.has(courseId) : false}
+                  isFavoriteLoading={courseId ? togglingCourseId === courseId : false}
+                  onToggleFavorite={
+                    courseId ? () => handleToggleFavorite(courseId) : undefined
+                  }
+                />
+              );
+            })}
           </div>
         )}
       </div>

@@ -148,6 +148,16 @@ const dashboardApi = baseApi.injectEndpoints({
       transformErrorResponse,
       invalidatesTags: ['WebhookSettings'],
     }),
+
+    testSms: builder.mutation({
+      query: (body) => ({
+        url: '/platform-settings/sms/test',
+        method: 'POST',
+        body,
+      }),
+      transformResponse: (response) => unwrapApiData(response),
+      transformErrorResponse,
+    }),
   }),
 });
 
@@ -165,6 +175,7 @@ export const {
   useUploadBrandLogoMutation,
   useGetWebhookSettingsQuery,
   useUpdateWebhookSettingsMutation,
+  useTestSmsMutation,
 } = dashboardApi;
 
 export default dashboardApi;
