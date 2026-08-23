@@ -1,3 +1,11 @@
+# Diego LMS — Frontend
+
+> **Full developer documentation:** see [`docs/DEVELOPER_README.md`](docs/DEVELOPER_README.md)  
+> (Architecture, ERD, API reference, Postman, setup, deployment)  
+> **Integrations guide:** see [`docs/CLIENT_THIRD_PARTY_INTEGRATIONS_GUIDE.md`](docs/CLIENT_THIRD_PARTY_INTEGRATIONS_GUIDE.md)
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
