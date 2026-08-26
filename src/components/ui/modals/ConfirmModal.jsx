@@ -22,20 +22,17 @@ const ConfirmModal = ({
     zIndex={zIndex}
     footer={
       <div className="flex justify-end gap-3">
-        <Button type="button" onClick={onClose}>
-          {cancelLabel}
-        </Button>
+        <Button type="button" onClick={onClose} label={cancelLabel} />
         <Button
           type="button"
           onClick={onConfirm}
+          label={confirmLabel}
           className={
             variant === 'danger'
               ? 'bg-red-600 text-white hover:bg-red-700'
               : undefined
           }
-        >
-          {confirmLabel}
-        </Button>
+        />
       </div>
     }
   >
