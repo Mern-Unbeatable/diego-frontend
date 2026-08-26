@@ -46,17 +46,8 @@ const LessonContent = ({
   const initialLastPositionSecs = moduleItem?.lastPositionSecs ?? 0;
   const durationSecs = lesson?.durationSecs ?? moduleItem?.durationSecs ?? null;
 
-  const [youtubeWatchPercent, setYoutubeWatchPercent] = useState(initialWatchPercent);
-
-  useEffect(() => {
-    setYoutubeWatchPercent(initialWatchPercent);
-  }, [lesson?.id, initialWatchPercent]);
-
   const handleTrackedProgress = useCallback(async (trackingLessonId, payload) => {
     if (!trackingLessonId) return null;
-    if (payload?.watchPercent != null) {
-      setYoutubeWatchPercent((prev) => Math.max(prev, payload.watchPercent));
-    }
     return onTrackVideoProgress?.(trackingLessonId, payload);
   }, [onTrackVideoProgress]);
 
@@ -149,7 +140,6 @@ const LessonContent = ({
 
   const contentType = lesson.contentType;
   const title = lesson.title || moduleItem?.title || course?.title;
-  const isVideoLesson = ['VIDEO_UPLOAD', 'VIDEO_YOUTUBE'].includes(contentType);
   const isDocumentLesson = DOCUMENT_CONTENT_TYPES.includes(contentType);
   const isScormLesson = ['SCORM', 'SCORM_12'].includes(contentType);
 

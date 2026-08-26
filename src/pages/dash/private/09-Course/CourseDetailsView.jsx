@@ -10,6 +10,7 @@ import { useCoursePlayer } from '../../../../features/learning/useCoursePlayer';
 import { getMyCertificatesService, ensureCourseCertificateService } from '../../../../features/learning/learningService';
 import { useDashboardPaths } from '../../../../hooks/useDashboardPaths';
 
+
 const CourseContentView = () => {
   const { id: courseId } = useParams();
   const navigate = useNavigate();

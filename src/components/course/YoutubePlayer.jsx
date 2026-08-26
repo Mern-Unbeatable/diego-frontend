@@ -31,14 +31,25 @@ const YoutubePlayer = ({
   const containerRef = useRef(null);
   const playerRef = useRef(null);
   const saveTimerRef = useRef(null);
-  const maxPositionRef = useRef(initialLastPositionSecs);
+  const maxPositionRef = useRef(0);
   const playedSecsRef = useRef(0);
-  const lastMediaTimeRef = useRef(initialLastPositionSecs);
+  const lastMediaTimeRef = useRef(0);
   const lastPlayingTickRef = useRef(Date.now());
   const isPlayingRef = useRef(false);
-  const completedRef = useRef(initialWatchPercent >= MIN_WATCH_PERCENT);
+  const completedRef = useRef(false);
   const durationRef = useRef(0);
   const seededRef = useRef(false);
+  const lastPersistedRef = useRef({
+    watchPercent: 0,
+    lastPositionSecs: 0,
+    timeSpentSecs: 0,
+    completed: false,
+  });
+  const initialProgressRef = useRef({
+    watchPercent: 0,
+    lastPositionSecs: 0,
+  });
+  const lessonSeededRef = useRef(null);
   const onProgressUpdateRef = useRef(onProgressUpdate);
 
   useEffect(() => {
@@ -51,10 +62,13 @@ const YoutubePlayer = ({
 
   const videoId = extractYoutubeVideoId(youtubeUrl);
 
-  const emitProgress = (forceCheckComplete = false) => {
+  const emitProgress = ({ forceCheckComplete = false, persist = false } = {}) => {
+    if (!lessonId) return;
+
     const player = playerRef.current;
     let duration = durationRef.current;
     let current = maxPositionRef.current;
+    const initialProgress = initialProgressRef.current;
 
     try {
       if (player?.getDuration) {
@@ -69,17 +83,17 @@ const YoutubePlayer = ({
       // player may be destroyed
     }
 
-    if (duration > 0 && !seededRef.current && initialWatchPercent > 0) {
+    if (duration > 0 && !seededRef.current && initialProgress.watchPercent > 0) {
       playedSecsRef.current = Math.max(
         playedSecsRef.current,
-        (initialWatchPercent / 100) * duration,
+        (initialProgress.watchPercent / 100) * duration,
       );
       seededRef.current = true;
     }
 
     const percent = duration > 0
       ? Math.max(
-        initialWatchPercent,
+        initialProgress.watchPercent,
         computePlayedWatchPercent(playedSecsRef.current, duration),
       )
       : Math.min(100, Math.round(playedSecsRef.current));
@@ -94,21 +108,52 @@ const YoutubePlayer = ({
     // Only send completed:true when real watch threshold is met (never on seek/end alone).
     const isCompletePayload = reached && (forceCheckComplete || completedRef.current);
 
-    onProgressUpdateRef.current?.(lessonId, {
-      watchPercent: percent,
-      lastPositionSecs: Math.floor(current),
-      timeSpentSecs: Math.round(playedSecsRef.current),
-      completed: Boolean(isCompletePayload && reached),
-    });
+    if (persist || isCompletePayload) {
+      const nextPayload = {
+        watchPercent: percent,
+        lastPositionSecs: Math.floor(current),
+        timeSpentSecs: Math.round(playedSecsRef.current),
+        completed: Boolean(isCompletePayload && reached),
+      };
+
+      const previousPayload = lastPersistedRef.current;
+      const changedEnough =
+        Math.abs(nextPayload.lastPositionSecs - previousPayload.lastPositionSecs) >= 2
+        || Math.abs(nextPayload.watchPercent - previousPayload.watchPercent) >= 1
+        || nextPayload.completed !== previousPayload.completed;
+
+      if (changedEnough || nextPayload.completed) {
+        lastPersistedRef.current = nextPayload;
+        onProgressUpdateRef.current?.(lessonId, nextPayload);
+      }
+    }
   };
 
   useEffect(() => {
-    completedRef.current = initialWatchPercent >= MIN_WATCH_PERCENT;
-    setWatchPercent(initialWatchPercent);
+    if (lessonSeededRef.current === lessonId) return;
+    lessonSeededRef.current = lessonId;
+
+    const safeWatchPercent = Math.max(0, Math.min(100, Number(initialWatchPercent) || 0));
+    const safeLastPosition = Math.max(0, Number(initialLastPositionSecs) || 0);
+
+    initialProgressRef.current = {
+      watchPercent: safeWatchPercent,
+      lastPositionSecs: safeLastPosition,
+    };
+    completedRef.current = safeWatchPercent >= MIN_WATCH_PERCENT;
+    setWatchPercent(safeWatchPercent);
     playedSecsRef.current = 0;
     seededRef.current = false;
-    maxPositionRef.current = initialLastPositionSecs;
-    lastMediaTimeRef.current = initialLastPositionSecs;
+    maxPositionRef.current = safeLastPosition;
+    lastMediaTimeRef.current = safeLastPosition;
+    lastPersistedRef.current = {
+      watchPercent: safeWatchPercent,
+      lastPositionSecs: safeLastPosition,
+      timeSpentSecs: 0,
+      completed: completedRef.current,
+    };
+    setReady(false);
+    setError(null);
   }, [lessonId, initialWatchPercent, initialLastPositionSecs]);
 
   useEffect(() => {
@@ -142,11 +187,20 @@ const YoutubePlayer = ({
               } catch {
                 // ignore
               }
-              if (initialLastPositionSecs > 0) {
+
+              const resumePosition = Math.floor(initialProgressRef.current.lastPositionSecs || 0);
+              const duration = Math.floor(durationRef.current || 0);
+              const canSeekToResume =
+                resumePosition > 2
+                && duration > 0
+                && resumePosition < Math.max(3, duration - 2);
+
+              if (canSeekToResume) {
                 try {
-                  event.target.seekTo(initialLastPositionSecs, true);
-                  maxPositionRef.current = initialLastPositionSecs;
-                  lastMediaTimeRef.current = initialLastPositionSecs;
+                  // Keep allowSeekAhead false to reduce startup rebuffer bursts.
+                  event.target.seekTo(resumePosition, false);
+                  maxPositionRef.current = resumePosition;
+                  lastMediaTimeRef.current = resumePosition;
                 } catch {
                   // ignore seek errors
                 }
@@ -166,8 +220,12 @@ const YoutubePlayer = ({
                 }
               }
 
+              if (state === YT_STATE.PAUSED) {
+                emitProgress({ persist: true });
+              }
+
               if (state === YT_STATE.ENDED) {
-                emitProgress(true);
+                emitProgress({ forceCheckComplete: true, persist: true });
               }
             },
           },
@@ -182,7 +240,7 @@ const YoutubePlayer = ({
     init();
 
     playingTimer = setInterval(() => {
-      if (!isPlayingRef.current || completedRef.current) return;
+      if (!ready || !isPlayingRef.current || completedRef.current) return;
 
       const now = Date.now();
       const wallDelta = (now - lastPlayingTickRef.current) / 1000;
@@ -210,7 +268,8 @@ const YoutubePlayer = ({
     }, 1000);
 
     saveTimerRef.current = setInterval(() => {
-      emitProgress();
+      if (!ready) return;
+      emitProgress({ persist: true });
     }, VIDEO_PROGRESS_SAVE_INTERVAL_MS);
 
     return () => {
@@ -224,7 +283,7 @@ const YoutubePlayer = ({
       }
       playerRef.current = null;
     };
-  }, [lessonId, videoId, initialLastPositionSecs]);
+  }, [lessonId, videoId]);
 
   if (!videoId) {
     return (

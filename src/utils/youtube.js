@@ -47,11 +47,20 @@ export const loadYoutubeIframeApi = () => {
       }
 
       if (window.YT?.Player) {
-        resolve(window.YT);
+        onReady();
         return;
       }
 
-      window.onYouTubeIframeAPIReady = onReady;
+      const previousReadyHandler = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        try {
+          if (typeof previousReadyHandler === 'function') {
+            previousReadyHandler();
+          }
+        } finally {
+          onReady();
+        }
+      };
     });
   }
 
