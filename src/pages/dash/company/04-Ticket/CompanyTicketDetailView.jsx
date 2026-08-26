@@ -25,6 +25,7 @@ const CompanyTicketDetailView = () => {
 
       <h2 className="text-[40px] font-semibold text-[#1f1f1f]">Area ticket</h2>
 
+
       {isLoading ? (
         <Loading size="md" className="min-h-40" />
       ) : isError ? (

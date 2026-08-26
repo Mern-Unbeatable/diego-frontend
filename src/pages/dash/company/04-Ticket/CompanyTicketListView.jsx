@@ -29,6 +29,13 @@ const PRIORITY_OPTIONS = [
   { label: 'Low', value: 'LOW' },
 ];
 
+const normalizeSearchValue = (value) =>
+  String(value ?? '')
+    .toLowerCase()
+    .trim();
+
+const extractDigits = (value) => normalizeSearchValue(value).replace(/\D+/g, '');
+
 const CompanyTicketListView = () => {
   const [searchInput, setSearchInput] = useState('');
   const [search, setSearch] = useState('');
@@ -46,14 +53,13 @@ const CompanyTicketListView = () => {
   const { data, isLoading, isError, error, refetch } = useGetTicketsQuery({
     page: 1,
     limit: 50,
-    search: search || undefined,
     status: statusFilter || undefined,
     priority: priorityFilter || undefined,
     sortBy: 'updatedAt',
     sortOrder: 'desc',
   });
 
-  const tickets = useMemo(
+  const mappedTickets = useMemo(
     () =>
       (data?.tickets ?? []).map((ticket) => ({
         id: ticket.id,
@@ -67,6 +73,31 @@ const CompanyTicketListView = () => {
       })),
     [data?.tickets],
   );
+
+  const tickets = useMemo(() => {
+    if (!search) {
+      return mappedTickets;
+    }
+
+    const query = normalizeSearchValue(search);
+    const queryDigits = extractDigits(search);
+
+    return mappedTickets.filter((ticket) => {
+      const searchableText = [ticket.displayId, ticket.title, ticket.requester]
+        .map((value) => normalizeSearchValue(value))
+        .join(' ');
+
+      if (searchableText.includes(query)) {
+        return true;
+      }
+
+      if (!queryDigits) {
+        return false;
+      }
+
+      return extractDigits(ticket.displayId).includes(queryDigits);
+    });
+  }, [mappedTickets, search]);
 
   const handleReset = () => {
     setSearchInput('');
