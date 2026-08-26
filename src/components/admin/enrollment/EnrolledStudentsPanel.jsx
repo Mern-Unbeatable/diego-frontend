@@ -1,5 +1,5 @@
 import { Download, Eye, Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useGetLicenseeStudentsQuery } from '../../../features/api/enrollmentApi';
 import {
   canDownloadCertificate,
@@ -12,6 +12,16 @@ import StudentPersonalDetailsModal from './PersonalDetailsModal';
 import TrainingReportModal from './TrainingReportModal';
 
 const PAGE_SIZE = 10;
+const LOCAL_SEARCH_FETCH_LIMIT = 100;
+
+const normalizeSearchValue = (value) =>
+  String(value ?? '')
+    .toLowerCase()
+    .replace(/[^a-z0-9@._\s-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const isEmailLikeSearch = (value) => normalizeSearchValue(value).includes('@');
 
 const EnrolledStudentsPanel = ({
   title = 'Studenti iscritti',
@@ -34,17 +44,48 @@ const EnrolledStudentsPanel = ({
     return () => window.clearTimeout(timeoutId);
   }, [searchInput]);
 
+  const hasSearch = Boolean(searchTerm);
+  const useServerSearch = hasSearch && isEmailLikeSearch(searchTerm);
+  const useLocalSearch = hasSearch && !useServerSearch;
+
   const { data, isLoading, isError, error } = useGetLicenseeStudentsQuery({
-    page,
-    limit: PAGE_SIZE,
-    ...(searchTerm ? { search: searchTerm } : {}),
+    page: useLocalSearch ? 1 : page,
+    limit: useLocalSearch ? LOCAL_SEARCH_FETCH_LIMIT : PAGE_SIZE,
+    ...(useServerSearch ? { search: searchTerm } : {}),
   });
 
   const students = data?.students ?? [];
+  const matchedStudents = useMemo(() => {
+    if (!useLocalSearch) return students;
+
+    const query = normalizeSearchValue(searchTerm);
+    const queryTokens = query.split(' ').filter(Boolean);
+
+    if (queryTokens.length === 0) {
+      return students;
+    }
+
+    return students.filter((student) =>
+      queryTokens.every((token) =>
+        [student.name, student.email]
+          .map((value) => normalizeSearchValue(value))
+          .join(' ')
+          .includes(token),
+      ),
+    );
+  }, [students, searchTerm, useLocalSearch]);
+
+  const visibleStudents = useMemo(() => {
+    if (!useLocalSearch) return students;
+    const startIndex = (page - 1) * PAGE_SIZE;
+    return matchedStudents.slice(startIndex, startIndex + PAGE_SIZE);
+  }, [students, matchedStudents, page, useLocalSearch]);
+
   const meta = data?.meta ?? {};
-  const total = meta.total ?? students.length;
-  const totalPages =
-    meta.totalPages || Math.max(1, Math.ceil(total / PAGE_SIZE) || 1);
+  const total = useLocalSearch ? matchedStudents.length : (meta.total ?? students.length);
+  const totalPages = useLocalSearch
+    ? Math.max(1, Math.ceil(total / PAGE_SIZE) || 1)
+    : (meta.totalPages || Math.max(1, Math.ceil(total / PAGE_SIZE) || 1));
 
   const openDetails = (student) => {
     setSelectedStudentId(student.id);
@@ -93,12 +134,12 @@ const EnrolledStudentsPanel = ({
 
         {/* Mobile cards */}
         <div className="space-y-3 p-3 md:hidden">
-          {students.length === 0 ? (
+          {visibleStudents.length === 0 ? (
             <div className="rounded-lg border border-[#e6e6e6] bg-white p-6 text-center text-sm text-[#6b7471]">
               {emptyMessage}
             </div>
           ) : (
-            students.map((student) => (
+            visibleStudents.map((student) => (
               <div
                 key={student.id}
                 className="flex flex-col gap-3 rounded-xl border border-[#e6e6e6] bg-white p-4"
@@ -180,7 +221,7 @@ const EnrolledStudentsPanel = ({
               </tr>
             </thead>
             <tbody>
-              {students.length === 0 ? (
+              {visibleStudents.length === 0 ? (
                 <tr>
                   <td
                     colSpan={5}
@@ -190,7 +231,7 @@ const EnrolledStudentsPanel = ({
                   </td>
                 </tr>
               ) : (
-                students.map((student) => (
+                visibleStudents.map((student) => (
                   <tr key={student.id} className="border-b border-[#dddddd]">
                     <td className="max-w-[180px] truncate px-4 py-4 text-sm font-medium text-[#2e2e2e] lg:px-6">
                       {student.name}
