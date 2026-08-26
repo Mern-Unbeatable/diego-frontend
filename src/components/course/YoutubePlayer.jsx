@@ -126,11 +126,12 @@ const YoutubePlayer = ({
           videoId,
           width: '100%',
           height: '100%',
+          host: 'https://www.youtube.com',
           playerVars: {
+            enablejsapi: 1,
             rel: 0,
             modestbranding: 1,
             playsinline: 1,
-            origin: window.location.origin,
           },
           events: {
             onReady: (event) => {
