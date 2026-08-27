@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Bell,
   Search,
@@ -19,6 +20,7 @@ import COOKIE_STORAGE from '../../utils/cookies/cookieStorage';
 import { STORAGE } from '../../utils/storage/authStorage';
 import { getUserRole } from '../../utils/auth/authUtils';
 import { useUIStore } from '../../features/zustand';
+import LanguageSwitcher from '../../components/common/LanguageSwitcher';
 
 const helpRouteByRole = {
   [ROLES.PLATFORM_ADMIN]: ROUTES.PLATFORM_ADMIN.TICKETS,
@@ -48,6 +50,7 @@ const getDisplayEmail = (profile) =>
   profile?.email || profile?.username || profile?.mail || '';
 
 const DashboardNavbar = () => {
+  const { t } = useTranslation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { openSidebar } = useUIStore();
   const { user } = useSelector((state) => state.auth);
@@ -97,18 +100,19 @@ const DashboardNavbar = () => {
 
           <div className="hidden min-w-0 text-left lg:block">
             <span className="text-sm font-medium text-[#2a2a2a]">
-              Stai cercando nuovi corsi?{' '}
+              {t('privateHome.lookingForCourses')}{' '}
             </span>
             <Link
               to="/"
               className="text-sm font-medium text-[#73bfa1] hover:underline"
             >
-              Esplora ora
+              {t('privateHome.exploreNow')}
             </Link>
           </div>
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
+          <LanguageSwitcher />
           <button
             type="button"
             className="rounded-full bg-white p-2 text-[#414141] shadow-sm hover:bg-[#f0f0f0]"

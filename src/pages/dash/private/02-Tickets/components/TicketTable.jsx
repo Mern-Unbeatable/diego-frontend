@@ -55,7 +55,7 @@ const TicketTable = ({
           <div className="flex h-10 w-full items-center rounded-full border border-[#e5e5e5] bg-white px-3 sm:h-11 sm:max-w-md sm:px-4">
             <Search size={16} className="pointer-events-none shrink-0 text-[#9ca3af]" />
             <input
-              type="search"
+              type="text"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               autoComplete="off"

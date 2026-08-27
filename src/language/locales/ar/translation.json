@@ -981,6 +981,28 @@
       }
     }
   },
+  "privateHome": {
+    "heroTitle": "طوّر مهاراتك المهنية",
+    "heroCta": "ابدأ الآن",
+    "learningJourneyTitle": "تابع رحلة التعلم الخاصة بك",
+    "noCoursesFound": "لم يتم العثور على دورات. اشترِ دورة من الفهرس لبدء التدريب.",
+    "previous": "السابق",
+    "next": "التالي",
+    "profileTitle": "ملفك الشخصي",
+    "hello": "مرحبًا {{name}}",
+    "yourProfile": "ملفك الشخصي",
+    "lookingForCourses": "هل تبحث عن دورات جديدة؟",
+    "exploreNow": "استكشف الآن",
+    "sidebar": {
+      "dashboard": "لوحة التحكم",
+      "supportTickets": "تذاكر الدعم",
+      "profile": "الملف الشخصي",
+      "credentials": "بيانات الاعتماد",
+      "notifications": "الإشعارات",
+      "myCertificates": "شهاداتي",
+      "privacyPolicy": "سياسة الخصوصية"
+    }
+  },
   "footer": {
     "product": "المنتج",
     "overview": "نظرة عامة",

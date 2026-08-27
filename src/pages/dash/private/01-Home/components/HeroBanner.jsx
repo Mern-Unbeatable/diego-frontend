@@ -1,7 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IoMdStar } from 'react-icons/io';
 
 const HeroBanner = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="relative w-full overflow-hidden rounded-xl bg-[#73BFA1] px-4 py-6 sm:px-6 sm:py-8 md:p-10 lg:p-12">
       <div className="pointer-events-none absolute inset-0">
@@ -15,14 +18,14 @@ const HeroBanner = () => {
 
       <div className="relative z-10 max-w-2xl">
         <h1 className="mb-3 text-lg font-medium text-white sm:mb-4 sm:text-xl md:text-2xl">
-          Affina le tue competenze professionali
+          {t('privateHome.heroTitle')}
         </h1>
 
         <button
           type="button"
           className="rounded-full bg-[#284338] px-5 py-2 text-sm font-medium text-white transition hover:bg-[#1f352c] sm:px-8 sm:text-base"
         >
-          Inizia ora
+          {t('privateHome.heroCta')}
         </button>
       </div>
     </div>

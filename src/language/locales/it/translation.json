@@ -987,6 +987,28 @@
       }
     }
   },
+  "privateHome": {
+    "heroTitle": "Affina le tue competenze professionali",
+    "heroCta": "Inizia ora",
+    "learningJourneyTitle": "Continua il tuo viaggio di apprendimento",
+    "noCoursesFound": "Nessun corso trovato. Acquista un corso dal catalogo per iniziare la formazione.",
+    "previous": "Precedente",
+    "next": "Successivo",
+    "profileTitle": "Il tuo profilo",
+    "hello": "Ciao {{name}}",
+    "yourProfile": "Il tuo profilo",
+    "lookingForCourses": "Stai cercando nuovi corsi?",
+    "exploreNow": "Esplora ora",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "supportTickets": "Ticket di supporto",
+      "profile": "Profilo",
+      "credentials": "Credenziali",
+      "notifications": "Notifiche",
+      "myCertificates": "I miei certificati",
+      "privacyPolicy": "Privacy e policy"
+    }
+  },
   "footer": {
     "product": "Prodotto",
     "overview": "Panoramica",

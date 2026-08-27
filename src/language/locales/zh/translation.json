@@ -973,6 +973,28 @@
       }
     }
   },
+  "privateHome": {
+    "heroTitle": "提升您的专业技能",
+    "heroCta": "立即开始",
+    "learningJourneyTitle": "继续您的学习之旅",
+    "noCoursesFound": "未找到课程。请从目录购买课程以开始培训。",
+    "previous": "上一页",
+    "next": "下一页",
+    "profileTitle": "您的个人资料",
+    "hello": "你好 {{name}}",
+    "yourProfile": "您的个人资料",
+    "lookingForCourses": "正在寻找新课程？",
+    "exploreNow": "立即探索",
+    "sidebar": {
+      "dashboard": "仪表板",
+      "supportTickets": "支持工单",
+      "profile": "个人资料",
+      "credentials": "凭证",
+      "notifications": "通知",
+      "myCertificates": "我的证书",
+      "privacyPolicy": "隐私政策"
+    }
+  },
   "footer": {
     "product": "产品",
     "overview": "概览",

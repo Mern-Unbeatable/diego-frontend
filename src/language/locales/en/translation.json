@@ -987,6 +987,28 @@
       }
     }
   },
+  "privateHome": {
+    "heroTitle": "Sharpen your professional skills",
+    "heroCta": "Start now",
+    "learningJourneyTitle": "Continue your learning journey",
+    "noCoursesFound": "No courses found. Purchase a course from the catalog to start training.",
+    "previous": "Previous",
+    "next": "Next",
+    "profileTitle": "Your profile",
+    "hello": "Hello {{name}}",
+    "yourProfile": "Your profile",
+    "lookingForCourses": "Looking for new courses?",
+    "exploreNow": "Explore now",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "supportTickets": "Support Tickets",
+      "profile": "Profile",
+      "credentials": "Credentials",
+      "notifications": "Notifications",
+      "myCertificates": "My Certificates",
+      "privacyPolicy": "Privacy Policy"
+    }
+  },
   "footer": {
     "product": "Product",
     "overview": "Overview",

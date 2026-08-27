@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FaUser } from 'react-icons/fa';
 
 const ProfileSidebar = ({ userName = '' }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const displayName = userName || 'Corsista';
+  const displayName = userName || t('privateHome.profileTitle');
 
   const openProfilePage = () => {
     navigate('/dashboard/private-user/profile');
@@ -15,7 +17,7 @@ const ProfileSidebar = ({ userName = '' }) => {
       <div className="flex h-full w-full flex-col items-center rounded-xl bg-white p-4 shadow-md sm:rounded-2xl sm:p-6">
         <div className="mb-4 flex w-full justify-between gap-2 sm:mb-6">
           <h3 className="text-sm font-medium text-gray-700 sm:text-base">
-            Il tuo profilo
+            {t('privateHome.profileTitle')}
           </h3>
         </div>
 
@@ -59,7 +61,7 @@ const ProfileSidebar = ({ userName = '' }) => {
 
           <div className="flex min-w-0 flex-1 flex-col items-start sm:mt-0 sm:items-center sm:text-center">
             <p className="mb-3 truncate text-base font-semibold text-gray-800 sm:mb-4 sm:text-lg">
-              Ciao {displayName}
+              {t('privateHome.hello', { name: displayName })}
             </p>
 
             <button
@@ -67,7 +69,7 @@ const ProfileSidebar = ({ userName = '' }) => {
               onClick={openProfilePage}
               className="w-full max-w-xs rounded-full bg-[#73BFA1] px-5 py-2.5 text-sm font-medium text-white shadow-md transition hover:bg-[#5aa687] sm:px-6 sm:py-3 sm:text-base"
             >
-              Il tuo profilo
+              {t('privateHome.yourProfile')}
             </button>
           </div>
         </div>

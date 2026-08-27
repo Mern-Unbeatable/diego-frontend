@@ -1,7 +1,8 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { LiaThumbsUp } from 'react-icons/lia';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
 import {
   IoAlbumsOutline,
@@ -232,7 +233,18 @@ const linksByRole = {
   ],
 };
 
+const PRIVATE_USER_LABEL_KEYS = {
+  '/dashboard/private-user': 'privateHome.sidebar.dashboard',
+  '/dashboard/private-user/ticket': 'privateHome.sidebar.supportTickets',
+  '/dashboard/private-user/profile': 'privateHome.sidebar.profile',
+  '/dashboard/private-user/credentials': 'privateHome.sidebar.credentials',
+  '/dashboard/private-user/notifications': 'privateHome.sidebar.notifications',
+  '/dashboard/private-user/certificates': 'privateHome.sidebar.myCertificates',
+  '/dashboard/private-user/privacy-policy': 'privateHome.sidebar.privacyPolicy',
+};
+
 const DashboardSidebar = () => {
+  const { t } = useTranslation();
   const { isOpen, setActiveLink, closeSidebar } = useUIStore();
   const { user } = useSelector((state) => state.auth);
   const location = useLocation();
@@ -244,9 +256,22 @@ const DashboardSidebar = () => {
     role === ROLES.LICENSE_USER &&
     (license?.status === 'expired' || license?.isExpired || license?.isSuspended);
   const allLinks = linksByRole[role] || [];
-  const links = isLicenseBlocked
-    ? allLinks.filter((link) => LICENSE_EXPIRED_ALLOWED_PATHS.includes(link.path))
-    : allLinks;
+  const links = useMemo(() => {
+    const filteredLinks = isLicenseBlocked
+      ? allLinks.filter((link) => LICENSE_EXPIRED_ALLOWED_PATHS.includes(link.path))
+      : allLinks;
+
+    if (role !== ROLES.PRIVATE_USER) {
+      return filteredLinks;
+    }
+
+    return filteredLinks.map((link) => ({
+      ...link,
+      label: PRIVATE_USER_LABEL_KEYS[link.path]
+        ? t(PRIVATE_USER_LABEL_KEYS[link.path])
+        : link.label,
+    }));
+  }, [allLinks, isLicenseBlocked, role, t]);
 
   useEffect(() => {
     closeSidebar();

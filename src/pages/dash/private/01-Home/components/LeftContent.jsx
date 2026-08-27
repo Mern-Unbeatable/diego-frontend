@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { ROUTES } from '../../../../../config/routes';
@@ -32,6 +33,7 @@ const getVisibleCount = (width) => {
 };
 
 const LeftContent = ({ courses = [] }) => {
+  const { t } = useTranslation();
   const [startIndex, setStartIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(() =>
     typeof window !== 'undefined' ? getVisibleCount(window.innerWidth) : 3,
@@ -115,7 +117,7 @@ const LeftContent = ({ courses = [] }) => {
       <div className="min-w-0">
         <div className="mb-3 flex items-start justify-between gap-3 sm:mb-4 sm:items-center">
           <h2 className="min-w-0 text-base font-semibold text-gray-800 sm:text-lg md:text-xl">
-            Continua il tuo viaggio di apprendimento
+            {t('privateHome.learningJourneyTitle')}
           </h2>
           {total > visibleCount ? (
             <div className="flex shrink-0 gap-2">
@@ -124,7 +126,7 @@ const LeftContent = ({ courses = [] }) => {
                 onClick={handlePrev}
                 disabled={startIndex === 0}
                 aria-disabled={startIndex === 0}
-                aria-label="Precedente"
+                aria-label={t('privateHome.previous')}
                 className={`flex h-8 w-8 items-center justify-center rounded-full border border-[#9E9E9E] transition ${startIndex === 0 ? 'cursor-not-allowed opacity-40' : 'text-[#9E9E9E] hover:bg-gray-100'}`}
               >
                 <FaChevronLeft className="text-xs" />
@@ -135,7 +137,7 @@ const LeftContent = ({ courses = [] }) => {
                 onClick={handleNext}
                 disabled={startIndex + visibleCount >= total}
                 aria-disabled={startIndex + visibleCount >= total}
-                aria-label="Successivo"
+                aria-label={t('privateHome.next')}
                 className={`flex h-8 w-8 items-center justify-center rounded-full border border-[#9E9E9E] transition ${startIndex + visibleCount >= total ? 'cursor-not-allowed opacity-40' : 'text-[#9E9E9E] hover:bg-gray-100'}`}
               >
                 <FaChevronRight className="text-xs" />
@@ -146,8 +148,7 @@ const LeftContent = ({ courses = [] }) => {
 
         {courses.length === 0 ? (
           <p className="rounded-xl border border-[#ececec] bg-white p-4 text-sm text-gray-600 sm:p-6">
-            Nessun corso trovato. Acquista un corso dal catalogo per iniziare la
-            formazione.
+            {t('privateHome.noCoursesFound')}
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
