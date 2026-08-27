@@ -79,7 +79,7 @@ const CourseDetails = () => {
 
   useEffect(() => {
     if (!courseIdentifier) return;
-    getCourseDetails(courseIdentifier).catch(() => {});
+    getCourseDetails(courseIdentifier).catch(() => { });
   }, [getCourseDetails, courseIdentifier]);
 
   const language = (i18n.language || 'en').split('-')[0];
@@ -127,7 +127,7 @@ const CourseDetails = () => {
 
     hasLoadedEnrollmentsRef.current = true;
 
-    fetchMyEnrollments().catch(() => {});
+    fetchMyEnrollments().catch(() => { });
   }, [
     enrollmentsLoading,
     fetchMyEnrollments,
@@ -301,7 +301,7 @@ const CourseDetails = () => {
                 {formatEuro(course?.price)}
               </span>
               <span className="text-sm md:text-base font-semibold line-through text-[#73BFA1]">
-              {formatEuro(course?.basePrice)}
+                {formatEuro(course?.basePrice)}
 
               </span>
               <span className="text-sm text-gray-600">

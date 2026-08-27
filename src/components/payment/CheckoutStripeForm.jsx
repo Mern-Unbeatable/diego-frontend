@@ -209,13 +209,13 @@ const CheckoutPaymentFields = ({
               <p className="rounded-lg bg-white/70 px-3 py-2 text-sm text-gray-700">
                 {isApplePay
                   ? t('paymentPages.section2.applePayHint', {
-                      defaultValue:
-                        'Apple Pay opens in Safari on iPhone, iPad, or Mac with a card in Apple Wallet.',
-                    })
+                    defaultValue:
+                      'Apple Pay opens in Safari on iPhone, iPad, or Mac with a card in Apple Wallet.',
+                  })
                   : t('paymentPages.section2.googlePayHint', {
-                      defaultValue:
-                        'Google Pay opens in Chrome on Windows, Mac, or Android with a saved Google Pay card.',
-                    })}
+                    defaultValue:
+                      'Google Pay opens in Chrome on Windows, Mac, or Android with a saved Google Pay card.',
+                  })}
               </p>
             }
           >
@@ -225,8 +225,8 @@ const CheckoutPaymentFields = ({
               onReady={({ availablePaymentMethods }) => {
                 const available = Boolean(
                   availablePaymentMethods &&
-                    ((isGooglePay && availablePaymentMethods.googlePay) ||
-                      (isApplePay && availablePaymentMethods.applePay)),
+                  ((isGooglePay && availablePaymentMethods.googlePay) ||
+                    (isApplePay && availablePaymentMethods.applePay)),
                 );
                 setWalletReady(available);
               }}
@@ -238,13 +238,13 @@ const CheckoutPaymentFields = ({
           <p className="mt-3 rounded-lg bg-white/70 px-3 py-2 text-sm text-gray-700">
             {isApplePay
               ? t('paymentPages.section2.applePayHint', {
-                  defaultValue:
-                    'Apple Pay opens in Safari on iPhone, iPad, or Mac with a card in Apple Wallet.',
-                })
+                defaultValue:
+                  'Apple Pay opens in Safari on iPhone, iPad, or Mac with a card in Apple Wallet.',
+              })
               : t('paymentPages.section2.googlePayHint', {
-                  defaultValue:
-                    'Google Pay opens in Chrome on Windows, Mac, or Android with a saved Google Pay card.',
-                })}
+                defaultValue:
+                  'Google Pay opens in Chrome on Windows, Mac, or Android with a saved Google Pay card.',
+              })}
           </p>
         ) : null}
         {processing || verifying ? (
@@ -359,6 +359,7 @@ const CheckoutPaymentFieldsReadOnly = ({
     </div>
   );
 };
+
 
 export default function CheckoutStripeForm({
   clientSecret,

@@ -1,6 +1,6 @@
 const METHOD_ICONS = {
   google_pay: {
-    src: '/image/paymentIcon/gpay-light.png',
+    src: '/image/paymentIcon/google-pay-user.png',
     alt: 'Google Pay',
   },
   card: {
@@ -52,7 +52,7 @@ export default function CheckoutPaymentMethodPicker({
   return (
     <div className="mb-3 w-full min-w-0 sm:mb-4">
       {networkLabel ? (
-        <p className="mb-1.5 text-[11px] font-semibold tracking-wide text-gray-600 sm:mb-2 sm:text-xs">
+        <p className="mb-2 text-xs font-semibold tracking-wide text-gray-600 sm:mb-2.5 sm:text-sm">
           {networkLabel}
         </p>
       ) : null}
@@ -60,7 +60,7 @@ export default function CheckoutPaymentMethodPicker({
       <div
         role="radiogroup"
         aria-label={networkLabel || 'Payment methods'}
-        className="flex w-full min-w-0 flex-wrap items-center gap-1.5"
+        className="flex w-full min-w-0 flex-nowrap items-center gap-2"
       >
         {visibleMethods.map((method) => {
           const isActive = effectiveSelected === method.id;
@@ -76,23 +76,22 @@ export default function CheckoutPaymentMethodPicker({
               aria-label={method.label}
               title={method.label}
               onClick={() => onSelect(method.id)}
-              className={`relative inline-flex h-7 shrink-0 items-center justify-center rounded-md border bg-transparent px-1.5 transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#73BFA1] sm:h-8 sm:px-2 ${
-                isActive
+              className={`relative inline-flex h-9 min-w-0 flex-1 shrink items-center justify-center rounded-md border bg-transparent px-2 transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#73BFA1] sm:h-10 sm:px-3 ${isActive
                   ? 'border-[#73BFA1] bg-white/80 shadow-[0_0_0_1.5px_rgba(115,191,161,0.45)]'
                   : 'border-transparent hover:border-gray-300 hover:bg-white/60'
-              }`}
+                }`}
             >
               {isApple ? (
-                <ApplePayMark className="h-3 w-[40px] sm:h-3.5 sm:w-[46px]" />
+                <ApplePayMark className="h-4 w-full max-w-16 sm:h-4.5" />
               ) : icon ? (
                 <img
                   src={icon.src}
                   alt={icon.alt}
                   draggable={false}
-                  className="h-3 w-auto max-w-[58px] object-contain object-center sm:h-3.5 sm:max-w-[68px]"
+                  className="h-4 w-auto max-w-full object-contain object-center sm:h-4.5"
                 />
               ) : (
-                <span className="text-[10px] font-semibold text-gray-700 sm:text-[11px]">
+                <span className="text-xs font-semibold text-gray-700 sm:text-sm">
                   {method.label}
                 </span>
               )}
@@ -100,7 +99,7 @@ export default function CheckoutPaymentMethodPicker({
               {isActive ? (
                 <span
                   aria-hidden="true"
-                  className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-[#73BFA1] text-[7px] font-bold leading-none text-white sm:h-3.5 sm:w-3.5 sm:text-[8px]"
+                  className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#73BFA1] text-[8px] font-bold leading-none text-white sm:h-4 sm:w-4 sm:text-[9px]"
                 >
                   ✓
                 </span>
