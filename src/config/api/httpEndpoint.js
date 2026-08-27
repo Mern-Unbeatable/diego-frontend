@@ -123,6 +123,7 @@ export const endpoints = {
     MARK_ALL_NOTIFICATIONS_READ: '/notifications/mark-all-read',
     MY_CERTIFICATES: '/certificates/my',
     MY_PROFILE: '/users/me',
+    MY_AVATAR: '/users/me/avatar',
     MY_CREDENTIALS: '/users/me/credentials',
     MARK_CREDENTIAL_VIEWED: (credentialId) => `/users/me/credentials/${credentialId}/viewed`,
   },

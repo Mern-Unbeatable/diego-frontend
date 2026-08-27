@@ -183,7 +183,7 @@ const TicketDetail = () => {
             )}
           </section>
 
-          <section className="rounded-xl border border-[#e4e4e4] bg-white p-4 sm:p-5">
+          {/* <section className="rounded-xl border border-[#e4e4e4] bg-white p-4 sm:p-5">
             <h2 className="mb-3 text-sm font-semibold text-[#262626] sm:text-base">
               Rispondi
             </h2>
@@ -204,7 +204,7 @@ const TicketDetail = () => {
                 Invia
               </button>
             </div>
-          </section>
+          </section> */}
         </div>
 
         <aside className="order-1 min-w-0 lg:order-2 lg:sticky lg:top-6 lg:self-start">

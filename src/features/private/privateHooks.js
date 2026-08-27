@@ -11,6 +11,7 @@ import {
   getMyCertificatesAPI,
   getMyProfileAPI,
   updateMyProfileAPI,
+  updateMyAvatarAPI,
 } from './privateAPI';
 import { resetTicketDetail } from './privateSlice';
 import { selectPrivate } from './privateSelectors';
@@ -103,6 +104,14 @@ export const usePrivate = () => {
     [dispatch],
   );
 
+  const updateMyAvatar = useCallback(
+    async (avatar) => {
+      const result = await dispatch(updateMyAvatarAPI(avatar)).unwrap();
+      return result;
+    },
+    [dispatch],
+  );
+
   return {
     fetchMyEnrollments,
     fetchMyTickets,
@@ -115,6 +124,7 @@ export const usePrivate = () => {
     fetchMyCertificates,
     fetchMyProfile,
     updateMyProfile,
+    updateMyAvatar,
     ...privateState,
   };
 };

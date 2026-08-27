@@ -10,6 +10,7 @@ import {
   getMyCertificatesAPI,
   getMyProfileAPI,
   updateMyProfileAPI,
+  updateMyAvatarAPI,
 } from './privateAPI';
 import {
   mapEnrollmentsResponse,
@@ -63,6 +64,8 @@ const initialState = {
   profileError: null,
   profileUpdateLoading: false,
   profileUpdateError: null,
+  avatarUploadLoading: false,
+  avatarUploadError: null,
 };
 
 const privateSlice = createSlice({
@@ -219,6 +222,7 @@ const privateSlice = createSlice({
       .addCase(updateMyProfileAPI.pending, (state) => {
         state.profileUpdateLoading = true;
         state.profileUpdateError = null;
+      state.avatarUploadError = null;
       })
       .addCase(updateMyProfileAPI.fulfilled, (state, action) => {
         state.profileUpdateLoading = false;
@@ -227,6 +231,33 @@ const privateSlice = createSlice({
       .addCase(updateMyProfileAPI.rejected, (state, action) => {
         state.profileUpdateLoading = false;
         state.profileUpdateError = action.payload;
+      })
+      .addCase(updateMyAvatarAPI.pending, (state) => {
+        state.avatarUploadLoading = true;
+        state.avatarUploadError = null;
+      })
+      .addCase(updateMyAvatarAPI.fulfilled, (state, action) => {
+        state.avatarUploadLoading = false;
+        const mappedProfile = mapProfileResponse(action.payload);
+
+        if (mappedProfile) {
+          state.profile = mappedProfile;
+          return;
+        }
+
+        const avatar =
+          action.payload?.data?.avatar ??
+          action.payload?.avatar ??
+          action.payload?.data?.user?.avatar ??
+          action.payload?.user?.avatar;
+
+        if (avatar && state.profile) {
+          state.profile.avatar = avatar;
+        }
+      })
+      .addCase(updateMyAvatarAPI.rejected, (state, action) => {
+        state.avatarUploadLoading = false;
+        state.avatarUploadError = action.payload;
       });
   },
 });

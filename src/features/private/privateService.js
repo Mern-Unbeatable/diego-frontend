@@ -129,6 +129,22 @@ export const updateMyProfileService = async (payload, { signal } = {}) => {
   });
 };
 
+export const updateMyAvatarService = async (avatar, { signal } = {}) => {
+  const formData = new FormData();
+  formData.append('avatar', avatar);
+
+  return await request({
+    method: 'PATCH',
+    url: endpoints.private.MY_AVATAR,
+    data: formData,
+    signal,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    timeout: 120000,
+  });
+};
+
 export const getMyCredentialsService = async ({ unreadOnly = false, signal } = {}) => {
   const response = await request({
     method: 'GET',

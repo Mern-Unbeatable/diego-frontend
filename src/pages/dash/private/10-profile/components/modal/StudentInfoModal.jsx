@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Calendar, ChevronDown, X } from 'lucide-react';
 import { usePrivate } from '../../../../../../features/private/privateHooks';
 import { mapProfileUpdatePayload } from '../../../../../../features/private/privateMappers';
@@ -11,6 +12,7 @@ const fieldClass =
 const labelClass = 'mb-1.5 block text-sm font-medium text-[#222]';
 
 const StudentInfoModal = ({ profile, onClose }) => {
+  const { t } = useTranslation();
   const overlayRef = useRef(null);
   const dialogRef = useRef(null);
   const dateInputRef = useRef(null);
@@ -50,10 +52,10 @@ const StudentInfoModal = ({ profile, onClose }) => {
     try {
       setSubmitting(true);
       const response = await updateMyProfile(payload);
-      toast.success(response?.message || 'Profilo aggiornato');
+      toast.success(response?.message || t('privateProfile.modal.updateSuccess'));
       onClose?.();
     } catch (error) {
-      toast.error(error || 'Impossibile aggiornare il profilo');
+      toast.error(error || t('privateProfile.modal.updateError'));
     } finally {
       setSubmitting(false);
     }
@@ -79,7 +81,7 @@ const StudentInfoModal = ({ profile, onClose }) => {
             <button
               type="button"
               onClick={() => !submitting && onClose?.()}
-              aria-label="Indietro"
+              aria-label={t('privateProfile.modal.back')}
               disabled={submitting}
               className="rounded-full p-2 text-[#2c2c2c] hover:bg-black/5 disabled:opacity-50 sm:hidden"
             >
@@ -89,13 +91,13 @@ const StudentInfoModal = ({ profile, onClose }) => {
               id="student-info-title"
               className="truncate text-base font-semibold text-[#171717] sm:text-lg"
             >
-              Informazioni personali
+              {t('privateProfile.modal.title')}
             </h3>
           </div>
           <button
             type="button"
             onClick={() => !submitting && onClose?.()}
-            aria-label="Chiudi"
+            aria-label={t('privateProfile.modal.close')}
             disabled={submitting}
             className="hidden rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 disabled:opacity-50 sm:inline-flex"
           >
@@ -111,16 +113,16 @@ const StudentInfoModal = ({ profile, onClose }) => {
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-4 sm:px-5 sm:py-5">
             <div className="mx-auto w-full max-w-[800px] space-y-3 sm:space-y-4">
               <h4 className="text-sm font-semibold text-[#171717] sm:text-base">
-                Informazioni
+                {t('privateProfile.modal.sectionInfo')}
               </h4>
 
               <div>
                 <label className={labelClass}>
-                  Nome <span className="text-red-500">*</span>
+                  {t('privateProfile.modal.firstName')} <span className="text-red-500">*</span>
                 </label>
                 <input
                   name="firstName"
-                  placeholder="Inserisci il nome"
+                  placeholder={t('privateProfile.modal.firstNamePlaceholder')}
                   required
                   defaultValue={profile?.firstName ?? undefined}
                   className={fieldClass}
@@ -129,11 +131,11 @@ const StudentInfoModal = ({ profile, onClose }) => {
 
               <div>
                 <label className={labelClass}>
-                  Cognome <span className="text-red-500">*</span>
+                  {t('privateProfile.modal.lastName')} <span className="text-red-500">*</span>
                 </label>
                 <input
                   name="lastName"
-                  placeholder="Inserisci il cognome"
+                  placeholder={t('privateProfile.modal.lastNamePlaceholder')}
                   required
                   defaultValue={profile?.lastName ?? undefined}
                   className={fieldClass}
@@ -142,7 +144,7 @@ const StudentInfoModal = ({ profile, onClose }) => {
 
               <div>
                 <label className={labelClass}>
-                  Data di nascita <span className="text-red-500">*</span>
+                  {t('privateProfile.modal.birthDate')} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -164,11 +166,11 @@ const StudentInfoModal = ({ profile, onClose }) => {
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 <div>
                   <label className={labelClass}>
-                    Città <span className="text-red-500">*</span>
+                    {t('privateProfile.modal.city')} <span className="text-red-500">*</span>
                   </label>
                   <input
                     name="city"
-                    placeholder="Inserisci il luogo di nascita"
+                    placeholder={t('privateProfile.modal.cityPlaceholder')}
                     required
                     defaultValue={profile?.city ?? undefined}
                     className={fieldClass}
@@ -177,7 +179,7 @@ const StudentInfoModal = ({ profile, onClose }) => {
 
                 <div>
                   <label className={labelClass}>
-                    Paese <span className="text-red-500">*</span>
+                    {t('privateProfile.modal.country')} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <select
@@ -187,11 +189,11 @@ const StudentInfoModal = ({ profile, onClose }) => {
                       className={`${fieldClass} appearance-none pr-10 text-[#3a3a3a]`}
                     >
                       <option value="" disabled>
-                        Seleziona il Paese
+                        {t('privateProfile.modal.selectCountry')}
                       </option>
-                      <option value="Italy">Italia</option>
-                      <option value="France">Francia</option>
-                      <option value="Spain">Spagna</option>
+                      <option value="Italy">{t('privateProfile.modal.countries.italy')}</option>
+                      <option value="France">{t('privateProfile.modal.countries.france')}</option>
+                      <option value="Spain">{t('privateProfile.modal.countries.spain')}</option>
                     </select>
                     <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-[#555] sm:right-4" />
                   </div>
@@ -200,11 +202,11 @@ const StudentInfoModal = ({ profile, onClose }) => {
 
               <div>
                 <label className={labelClass}>
-                  Indirizzo di residenza <span className="text-red-500">*</span>
+                  {t('privateProfile.modal.address')} <span className="text-red-500">*</span>
                 </label>
                 <input
                   name="address"
-                  placeholder="Via, numero civico, CAP, città..."
+                  placeholder={t('privateProfile.modal.addressPlaceholder')}
                   required
                   defaultValue={profile?.residenceAddress ?? undefined}
                   className={fieldClass}
@@ -212,30 +214,30 @@ const StudentInfoModal = ({ profile, onClose }) => {
               </div>
 
               <div>
-                <label className={labelClass}>Nome azienda</label>
+                <label className={labelClass}>{t('privateProfile.modal.companyName')}</label>
                 <input
                   name="companyName"
-                  placeholder="Inserisci il nome dell'azienda"
+                  placeholder={t('privateProfile.modal.companyNamePlaceholder')}
                   defaultValue={profile?.companyName ?? undefined}
                   className={fieldClass}
                 />
               </div>
 
               <div>
-                <label className={labelClass}>Sede legale</label>
+                <label className={labelClass}>{t('privateProfile.modal.companyAddress')}</label>
                 <input
                   name="companyAddress"
-                  placeholder="Inserisci sede legale"
+                  placeholder={t('privateProfile.modal.companyAddressPlaceholder')}
                   defaultValue={profile?.companyAddress ?? undefined}
                   className={fieldClass}
                 />
               </div>
 
               <div>
-                <label className={labelClass}>Partita IVA</label>
+                <label className={labelClass}>{t('privateProfile.modal.vatNumber')}</label>
                 <input
                   name="companyVatNumber"
-                  placeholder="Inserisci la Partita IVA"
+                  placeholder={t('privateProfile.modal.vatNumberPlaceholder')}
                   defaultValue={profile?.companyVatNumber ?? undefined}
                   className={fieldClass}
                 />
@@ -243,11 +245,11 @@ const StudentInfoModal = ({ profile, onClose }) => {
 
               <div>
                 <label className={labelClass}>
-                  Codice fiscale (se diverso da partita IVA)
+                  {t('privateProfile.modal.taxCode')}
                 </label>
                 <input
                   name="traineeTaxCode"
-                  placeholder="Inserisci il codice fiscale"
+                  placeholder={t('privateProfile.modal.taxCodePlaceholder')}
                   defaultValue={profile?.traineeTaxCode ?? undefined}
                   className={fieldClass}
                 />
@@ -263,14 +265,14 @@ const StudentInfoModal = ({ profile, onClose }) => {
                 disabled={submitting}
                 className="inline-flex h-10 items-center justify-center rounded-full border border-gray-200 px-5 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50 sm:w-auto"
               >
-                Annulla
+                {t('privateProfile.modal.cancel')}
               </button>
               <button
                 type="submit"
                 disabled={submitting}
                 className="inline-flex h-10 items-center justify-center rounded-full bg-[#73BFA1] px-6 text-sm font-semibold text-white shadow-sm hover:bg-[#5fa488] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {submitting ? 'Salvataggio...' : 'Salva'}
+                {submitting ? t('privateProfile.modal.saving') : t('privateProfile.modal.save')}
               </button>
             </div>
           </div>

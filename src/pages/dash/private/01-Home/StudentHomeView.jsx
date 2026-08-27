@@ -12,6 +12,7 @@ import ProfileSidebar from './components/ProfileSidebar';
 const StudentHomeView = () => {
   const [courses, setCourses] = useState([]);
   const [userName, setUserName] = useState('');
+  const [userAvatar, setUserAvatar] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const loadDashboard = useCallback(async () => {
@@ -25,9 +26,10 @@ const StudentHomeView = () => {
       const enrollments = enrollmentsData?.enrollments ?? [];
       setCourses(enrollments.map(mapEnrollmentToCourseCard));
 
-      const user = profileData?.user ?? profileData;
+      const user = profileData?.user ?? profileData?.data?.user ?? profileData;
       const name = `${user?.firstName || ''} ${user?.lastName || ''}`.trim();
       setUserName(name || user?.email || '');
+      setUserAvatar(user?.avatar || null);
     } catch (error) {
       toast.error(error?.message || 'Impossibile caricare i tuoi corsi');
       setCourses([]);
@@ -52,7 +54,7 @@ const StudentHomeView = () => {
         </div>
 
         <div className="order-1 min-w-0 xl:order-2 xl:col-span-1 xl:sticky xl:top-6">
-          <ProfileSidebar userName={userName} />
+          <ProfileSidebar userName={userName} avatar={userAvatar} />
         </div>
       </div>
     </div>

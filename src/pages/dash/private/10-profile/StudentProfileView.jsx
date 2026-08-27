@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   FaHome,
   FaKey,
@@ -21,62 +22,72 @@ import { ROUTES } from '../../../../config/routes';
 import { logout } from '../../../../features/auth/authSlice';
 import { usePrivate } from '../../../../features/private/privateHooks';
 
-const menu = [
+const MENU_CONFIG = [
   {
     id: 1,
-    icon: <FaHome />,
-    label: 'Home',
+    icon: FaHome,
+    labelKey: 'privateHome.sidebar.dashboard',
     path: ROUTES.PRIVATE_USER.DASHBOARD,
   },
   {
     id: 2,
-    icon: <IoSettingsSharp />,
-    label: 'Modifica informazioni personali',
+    icon: IoSettingsSharp,
+    labelKey: 'privateProfile.menu.editPersonalInfo',
     action: 'edit-profile',
   },
   {
     id: 3,
-    icon: <FaKey />,
-    label: 'Nuove credenziali ricevute',
+    icon: FaKey,
+    labelKey: 'privateProfile.menu.newCredentials',
     path: ROUTES.PRIVATE_USER.CREDENTIALS,
   },
   {
     id: 4,
-    icon: <FaShieldAlt />,
-    label: 'Privacy & policy',
+    icon: FaShieldAlt,
+    labelKey: 'privateHome.sidebar.privacyPolicy',
     path: ROUTES.PRIVATE_USER.PRIVACY,
   },
   {
     id: 5,
-    icon: <FaDownload />,
-    label: 'I tuoi attestati',
+    icon: FaDownload,
+    labelKey: 'privateProfile.menu.yourCertificates',
     path: ROUTES.PRIVATE_USER.CERTIFICATES,
   },
   {
     id: 6,
-    icon: <FaListAlt />,
-    label: 'Elenco dei certificati',
+    icon: FaListAlt,
+    labelKey: 'privateProfile.menu.certificateList',
     path: ROUTES.PRIVATE_USER.CERTIFICATES,
   },
   {
     id: 7,
-    icon: <LuArrowLeftToLine />,
-    label: 'Anteprima / Dettagli',
+    icon: LuArrowLeftToLine,
+    labelKey: 'privateProfile.menu.previewDetails',
     path: ROUTES.PRIVATE_USER.TICKETS,
   },
   {
     id: 8,
-    icon: <FaBell />,
-    label: 'Notifiche',
+    icon: FaBell,
+    labelKey: 'privateHome.sidebar.notifications',
     path: ROUTES.PRIVATE_USER.NOTIFICATIONS,
   },
 ];
 
 const StudentProfileView = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { fetchMyProfile, profile, profileLoading, profileError } = usePrivate();
+
+  const menu = useMemo(
+    () =>
+      MENU_CONFIG.map((item) => ({
+        ...item,
+        label: t(item.labelKey),
+      })),
+    [t],
+  );
 
   useEffect(() => {
     fetchMyProfile().catch(() => {});
@@ -112,8 +123,8 @@ const StudentProfileView = () => {
         <button
           type="button"
           onClick={handleBack}
-          aria-label="Torna indietro"
-          title="Torna indietro"
+          aria-label={t('privateProfile.back')}
+          title={t('privateProfile.back')}
           className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#F1F9F6] text-gray-600 shadow-sm hover:bg-[#e5f3ed]"
         >
           <FaChevronLeft className="text-sm" />
@@ -133,7 +144,10 @@ const StudentProfileView = () => {
 
       <div className="overflow-hidden rounded-xl border border-[#E6E6E6] bg-white p-3 shadow-sm sm:p-4 md:p-6">
         <div className="space-y-2 sm:space-y-2.5">
-          {menu.map((item) => (
+          {menu.map((item) => {
+            const Icon = item.icon;
+
+            return (
             <button
               key={item.id}
               type="button"
@@ -143,7 +157,7 @@ const StudentProfileView = () => {
             >
               <div className="flex min-w-0 items-center gap-2.5 text-gray-700 sm:gap-3">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F1F9F6] text-sm text-[#55B18D] sm:h-9 sm:w-9 sm:text-base">
-                  {item.icon}
+                  <Icon />
                 </div>
                 <span className="truncate text-sm font-medium text-[#252525] sm:text-base">
                   {item.label}
@@ -152,7 +166,8 @@ const StudentProfileView = () => {
 
               <FaChevronRight className="shrink-0 text-xs text-[#1A1A1A] sm:text-sm" />
             </button>
-          ))}
+            );
+          })}
 
           <button
             type="button"
@@ -162,7 +177,7 @@ const StudentProfileView = () => {
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-50 sm:h-9 sm:w-9">
               <IoIosLogOut className="h-4 w-4 sm:h-5 sm:w-5" />
             </span>
-            Esci
+            {t('privateProfile.logout')}
           </button>
         </div>
       </div>

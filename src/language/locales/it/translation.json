@@ -1009,6 +1009,59 @@
       "privacyPolicy": "Privacy e policy"
     }
   },
+  "privateProfile": {
+    "back": "Torna indietro",
+    "logout": "Esci",
+    "profileFallback": "Profilo",
+    "changeAvatar": "Cambia avatar",
+    "avatarUploadSuccess": "Avatar aggiornato con successo",
+    "avatarUploadError": "Impossibile caricare l'avatar",
+    "avatarInvalidType": "Sono consentiti solo file immagine",
+    "avatarTooLarge": "L'immagine deve essere massimo 5 MB",
+    "editProfile": "Modifica profilo",
+    "menu": {
+      "editPersonalInfo": "Modifica informazioni personali",
+      "newCredentials": "Nuove credenziali ricevute",
+      "yourCertificates": "I tuoi attestati",
+      "certificateList": "Elenco dei certificati",
+      "previewDetails": "Anteprima / Dettagli"
+    },
+    "modal": {
+      "title": "Informazioni personali",
+      "sectionInfo": "Informazioni",
+      "back": "Indietro",
+      "close": "Chiudi",
+      "firstName": "Nome",
+      "firstNamePlaceholder": "Inserisci il nome",
+      "lastName": "Cognome",
+      "lastNamePlaceholder": "Inserisci il cognome",
+      "birthDate": "Data di nascita",
+      "city": "Città",
+      "cityPlaceholder": "Inserisci il luogo di nascita",
+      "country": "Paese",
+      "selectCountry": "Seleziona il Paese",
+      "countries": {
+        "italy": "Italia",
+        "france": "Francia",
+        "spain": "Spagna"
+      },
+      "address": "Indirizzo di residenza",
+      "addressPlaceholder": "Via, numero civico, CAP, città...",
+      "companyName": "Nome azienda",
+      "companyNamePlaceholder": "Inserisci il nome dell'azienda",
+      "companyAddress": "Sede legale",
+      "companyAddressPlaceholder": "Inserisci sede legale",
+      "vatNumber": "Partita IVA",
+      "vatNumberPlaceholder": "Inserisci la Partita IVA",
+      "taxCode": "Codice fiscale (se diverso da partita IVA)",
+      "taxCodePlaceholder": "Inserisci il codice fiscale",
+      "cancel": "Annulla",
+      "save": "Salva",
+      "saving": "Salvataggio...",
+      "updateSuccess": "Profilo aggiornato",
+      "updateError": "Impossibile aggiornare il profilo"
+    }
+  },
   "footer": {
     "product": "Prodotto",
     "overview": "Panoramica",

@@ -995,6 +995,59 @@
       "privacyPolicy": "隐私政策"
     }
   },
+  "privateProfile": {
+    "back": "返回",
+    "logout": "退出登录",
+    "profileFallback": "个人资料",
+    "changeAvatar": "更换头像",
+    "avatarUploadSuccess": "头像更新成功",
+    "avatarUploadError": "无法上传头像",
+    "avatarInvalidType": "仅允许上传图片文件",
+    "avatarTooLarge": "图片大小不能超过 5 MB",
+    "editProfile": "编辑个人资料",
+    "menu": {
+      "editPersonalInfo": "编辑个人信息",
+      "newCredentials": "收到的新凭证",
+      "yourCertificates": "您的证书",
+      "certificateList": "证书列表",
+      "previewDetails": "预览 / 详情"
+    },
+    "modal": {
+      "title": "个人信息",
+      "sectionInfo": "信息",
+      "back": "返回",
+      "close": "关闭",
+      "firstName": "名字",
+      "firstNamePlaceholder": "输入名字",
+      "lastName": "姓氏",
+      "lastNamePlaceholder": "输入姓氏",
+      "birthDate": "出生日期",
+      "city": "城市",
+      "cityPlaceholder": "输入出生地",
+      "country": "国家",
+      "selectCountry": "选择国家",
+      "countries": {
+        "italy": "意大利",
+        "france": "法国",
+        "spain": "西班牙"
+      },
+      "address": "居住地址",
+      "addressPlaceholder": "街道、门牌号、邮编、城市...",
+      "companyName": "公司名称",
+      "companyNamePlaceholder": "输入公司名称",
+      "companyAddress": "注册地址",
+      "companyAddressPlaceholder": "输入注册地址",
+      "vatNumber": "增值税号",
+      "vatNumberPlaceholder": "输入增值税号",
+      "taxCode": "税号（如与增值税号不同）",
+      "taxCodePlaceholder": "输入税号",
+      "cancel": "取消",
+      "save": "保存",
+      "saving": "保存中...",
+      "updateSuccess": "个人资料已更新",
+      "updateError": "无法更新个人资料"
+    }
+  },
   "footer": {
     "product": "产品",
     "overview": "概览",

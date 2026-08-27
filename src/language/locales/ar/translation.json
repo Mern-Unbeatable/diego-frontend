@@ -1003,6 +1003,59 @@
       "privacyPolicy": "سياسة الخصوصية"
     }
   },
+  "privateProfile": {
+    "back": "رجوع",
+    "logout": "تسجيل الخروج",
+    "profileFallback": "الملف الشخصي",
+    "changeAvatar": "تغيير الصورة الرمزية",
+    "avatarUploadSuccess": "تم تحديث الصورة الرمزية بنجاح",
+    "avatarUploadError": "تعذر رفع الصورة الرمزية",
+    "avatarInvalidType": "يُسمح بملفات الصور فقط",
+    "avatarTooLarge": "يجب ألا يتجاوز حجم الصورة 5 ميجابايت",
+    "editProfile": "تعديل الملف الشخصي",
+    "menu": {
+      "editPersonalInfo": "تعديل المعلومات الشخصية",
+      "newCredentials": "بيانات اعتماد جديدة مستلمة",
+      "yourCertificates": "شهاداتك",
+      "certificateList": "قائمة الشهادات",
+      "previewDetails": "معاينة / التفاصيل"
+    },
+    "modal": {
+      "title": "المعلومات الشخصية",
+      "sectionInfo": "المعلومات",
+      "back": "رجوع",
+      "close": "إغلاق",
+      "firstName": "الاسم",
+      "firstNamePlaceholder": "أدخل الاسم",
+      "lastName": "اسم العائلة",
+      "lastNamePlaceholder": "أدخل اسم العائلة",
+      "birthDate": "تاريخ الميلاد",
+      "city": "المدينة",
+      "cityPlaceholder": "أدخل مكان الميلاد",
+      "country": "البلد",
+      "selectCountry": "اختر البلد",
+      "countries": {
+        "italy": "إيطاليا",
+        "france": "فرنسا",
+        "spain": "إسبانيا"
+      },
+      "address": "عنوان السكن",
+      "addressPlaceholder": "الشارع، الرقم، الرمز البريدي، المدينة...",
+      "companyName": "اسم الشركة",
+      "companyNamePlaceholder": "أدخل اسم الشركة",
+      "companyAddress": "المقر القانوني",
+      "companyAddressPlaceholder": "أدخل المقر القانوني",
+      "vatNumber": "رقم ضريبة القيمة المضافة",
+      "vatNumberPlaceholder": "أدخل رقم ضريبة القيمة المضافة",
+      "taxCode": "الرمز الضريبي (إذا كان مختلفًا عن رقم ضريبة القيمة المضافة)",
+      "taxCodePlaceholder": "أدخل الرمز الضريبي",
+      "cancel": "إلغاء",
+      "save": "حفظ",
+      "saving": "جارٍ الحفظ...",
+      "updateSuccess": "تم تحديث الملف الشخصي",
+      "updateError": "تعذر تحديث الملف الشخصي"
+    }
+  },
   "footer": {
     "product": "المنتج",
     "overview": "نظرة عامة",
