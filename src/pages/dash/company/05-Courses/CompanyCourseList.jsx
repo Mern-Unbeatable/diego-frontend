@@ -1,6 +1,7 @@
 import { ArrowLeft, Download, Send } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { Toast, useToast } from '../../../../components/ui';
 import { ENV_CONFIG } from '../../../../config/env.config';
@@ -11,16 +12,14 @@ import {
   getCompanyProgressReportService,
   sendEnrollmentReminderService,
 } from '../../../../features/company/companyService';
+import {
+  getProgressBadgeTone,
+  getProgressStatusLabel,
+} from '../../../../features/company/companyI18nHelpers';
 import { useEmployees } from '../../../../features/company/employee/employeeHooks';
 import EmployeeModal from '../EmployeeModal';
 
 const PAGE_SIZE = 6;
-
-const badgeTone = {
-  Completato: 'bg-[#e6f6ef] text-[#57a080]',
-  'In corso': 'bg-[#fdf2df] text-[#e59a2b]',
-  'Non iniziato': 'bg-[#fce8e6] text-[#d9534f]',
-};
 
 const formatDate = (value) => {
   if (!value) return '—';
@@ -37,6 +36,7 @@ const resolveAssetUrl = (path) => {
 };
 
 const StudentTrackingModal = ({ course, open, onClose }) => {
+  const { t } = useTranslation();
   const [rows, setRows] = useState([]);
   const [meta, setMeta] = useState({ page: 1, total: 0, totalPages: 1 });
   const [loading, setLoading] = useState(false);
@@ -55,13 +55,13 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
         setRows(data?.report ?? []);
         setMeta(data?.meta ?? { page, total: 0, totalPages: 1 });
       } catch (error) {
-        toast.error(error?.message || 'Impossibile caricare i corsisti');
+        toast.error(error?.message || t('companyAdmin.courses.toasts.loadStudentsFailed'));
         setRows([]);
       } finally {
         setLoading(false);
       }
     },
-    [course?.courseId],
+    [course?.courseId, t],
   );
 
   useEffect(() => {
@@ -74,9 +74,9 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
     try {
       setActionId(row.enrollmentId);
       await sendEnrollmentReminderService(row.enrollmentId);
-      toast.success(`Promemoria inviato a ${row.employeeName}`);
+      toast.success(t('companyAdmin.courses.toasts.reminderSent', { name: row.employeeName }));
     } catch (error) {
-      toast.error(error?.message || 'Invio promemoria non riuscito');
+      toast.error(error?.message || t('companyAdmin.courses.toasts.reminderFailed'));
     } finally {
       setActionId(null);
     }
@@ -93,7 +93,7 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
       const pdfUrl = resolveAssetUrl(data?.pdfUrl);
       window.open(pdfUrl, '_blank', 'noopener,noreferrer');
     } catch (error) {
-      toast.error(error?.message || 'Download attestato non riuscito');
+      toast.error(error?.message || t('companyAdmin.courses.toasts.downloadFailed'));
     } finally {
       setActionId(null);
     }
@@ -118,13 +118,13 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
         <section className="mt-6 overflow-hidden rounded-xl border border-[#e8e8e8] bg-white">
           <header className="flex flex-wrap items-center justify-between gap-3 border-b border-[#ececec] px-5 py-5">
             <h2 className="text-[34px] font-semibold text-[#202020]">
-              Elenco di chi svolge il corso: {course.courseTitle}
+              {t('companyAdmin.courses.rosterTitle', { title: course.courseTitle })}
             </h2>
           </header>
 
           {loading ? (
             <p className="px-5 py-8 text-sm text-gray-500">
-              Caricamento corsisti...
+              {t('companyAdmin.courses.loadingStudents')}
             </p>
           ) : (
             <div className="overflow-x-auto">
@@ -132,14 +132,14 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
                 <thead className="border-b border-[#ececec] bg-[#f1f1f1]">
                   <tr className="text-sm text-[#3d3d3d]">
                     <th className="px-5 py-3 font-semibold">
-                      Corsisti iscritti
+                      {t('companyAdmin.common.table.enrolledStudents')}
                     </th>
-                    <th className="px-3 py-3 font-semibold">Stato</th>
-                    <th className="px-3 py-3 font-semibold">Avanzamento</th>
+                    <th className="px-3 py-3 font-semibold">{t('companyAdmin.common.table.status')}</th>
+                    <th className="px-3 py-3 font-semibold">{t('companyAdmin.common.table.progress')}</th>
                     <th className="px-3 py-3 font-semibold">
-                      Data di iscrizione
+                      {t('companyAdmin.common.table.enrollmentDate')}
                     </th>
-                    <th className="px-3 py-3 font-semibold">Azioni</th>
+                    <th className="px-3 py-3 font-semibold">{t('companyAdmin.common.table.actions')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -149,7 +149,7 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
                         colSpan={5}
                         className="px-5 py-8 text-sm text-gray-500"
                       >
-                        Nessun dipendente iscritto a questo corso.
+                        {t('companyAdmin.courses.noEnrolled')}
                       </td>
                     </tr>
                   ) : (
@@ -163,9 +163,9 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
                         </td>
                         <td className="px-3 py-3">
                           <span
-                            className={`rounded-full px-2 py-1 text-[11px] font-semibold ${badgeTone[row.statusLabel] || badgeTone['Non iniziato']}`}
+                            className={`rounded-full px-2 py-1 text-[11px] font-semibold ${getProgressBadgeTone(row.statusLabel)}`}
                           >
-                            {row.statusLabel}
+                            {getProgressStatusLabel(t, row.statusLabel)}
                           </span>
                         </td>
                         <td className="px-3 py-3 text-[#404040]">
@@ -192,7 +192,7 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
                               onClick={() => handleDownload(row)}
                               className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-4 py-1.5 text-sm font-semibold text-white disabled:opacity-60"
                             >
-                              <Download size={13} /> Download
+                              <Download size={13} /> {t('companyAdmin.common.download')}
                             </button>
                           ) : (
                             <button
@@ -204,7 +204,7 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
                               onClick={() => handleReminder(row)}
                               className="inline-flex items-center gap-2 rounded-full bg-[#e6f6ef] px-4 py-1.5 text-sm font-semibold text-[#57a080] disabled:opacity-60"
                             >
-                              <Send size={13} /> Invia un promemoria
+                              <Send size={13} /> {t('companyAdmin.common.sendReminder')}
                             </button>
                           )}
                         </td>
@@ -218,7 +218,7 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
 
           <footer className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 text-sm text-[#7d7d7d]">
             <p>
-              Mostra {from}-{to} di {meta.total} corsisti
+              {t('companyAdmin.courses.pagination.showing', { from, to, total: meta.total })}
             </p>
             <div className="flex items-center gap-4">
               <button
@@ -226,7 +226,7 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
                 disabled={meta.page <= 1 || loading}
                 onClick={() => loadReport(meta.page - 1)}
               >
-                Precedente
+                {t('companyAdmin.common.pagination.previous')}
               </button>
               <span className="h-6 min-w-6 rounded bg-[#73bfa1] px-2 text-center text-sm leading-6 font-semibold text-white">
                 {meta.page}
@@ -236,7 +236,7 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
                 disabled={meta.page >= meta.totalPages || loading}
                 onClick={() => loadReport(meta.page + 1)}
               >
-                Prossimo
+                {t('companyAdmin.common.pagination.next')}
               </button>
             </div>
           </footer>
@@ -247,6 +247,7 @@ const StudentTrackingModal = ({ course, open, onClose }) => {
 };
 
 const CompanyCourseList = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { createEmployee } = useEmployees();
   const { toasts, addToast, removeToast } = useToast();
@@ -265,12 +266,12 @@ const CompanyCourseList = () => {
       setCourses(data?.courses ?? []);
       setAdminName(data?.adminName || '');
     } catch (error) {
-      toast.error(error?.message || 'Impossibile caricare i corsi');
+      toast.error(error?.message || t('companyAdmin.courses.toasts.loadCoursesFailed'));
       setCourses([]);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     loadCourses();
@@ -278,7 +279,7 @@ const CompanyCourseList = () => {
 
   const handleAssignSubmit = async (payload) => {
     await createEmployee(payload);
-    addToast('Dipendente assegnato al corso con successo', 'success');
+    addToast(t('companyAdmin.courses.toasts.assignedSuccess'), 'success');
   };
 
   const openAssign = (course) => {
@@ -310,11 +311,11 @@ const CompanyCourseList = () => {
         companyCoursePurchaseId:
           selectedCourse.companyCoursePurchaseId || undefined,
       });
-      toast.success('Dipendente aggiunto e corso assegnato');
+      toast.success(t('companyAdmin.courses.toasts.addedAndAssigned'));
       setAssignOpen(false);
       await loadCourses();
     } catch (error) {
-      toast.error(error?.message || 'Assegnazione non riuscita');
+      toast.error(error?.message || t('companyAdmin.courses.toasts.assignFailed'));
     } finally {
       setSaving(false);
     }
@@ -322,13 +323,13 @@ const CompanyCourseList = () => {
 
   return (
     <>
-      {toasts.map((toast) => (
+      {toasts.map((toastItem) => (
         <Toast
-          key={toast.id}
-          type={toast.type}
-          message={toast.message}
-          duration={toast.duration}
-          onClose={() => removeToast(toast.id)}
+          key={toastItem.id}
+          type={toastItem.type}
+          message={toastItem.message}
+          duration={toastItem.duration}
+          onClose={() => removeToast(toastItem.id)}
         />
       ))}
       <section className="space-y-7">
@@ -341,9 +342,9 @@ const CompanyCourseList = () => {
         </button>
 
         <section className="relative overflow-hidden rounded-lg bg-[#73bfa1] px-6 py-8 text-white">
-          <p className="mb-1 text-sm text-[#ecfff7]">Ciao!</p>
+          <p className="mb-1 text-sm text-[#ecfff7]">{t('companyAdmin.common.hello')}</p>
           <h1 className="text-[38px] font-semibold text-white">
-            {adminName || 'Amministratore'}
+            {adminName || t('companyAdmin.courses.administrator')}
           </h1>
           <div className="pointer-events-none absolute right-[-10px] bottom-[-20px] h-[170px] w-[170px] rounded-full border-[10px] border-[#4a9e7f]/20" />
           <div className="pointer-events-none absolute right-[10px] bottom-[-30px] h-[150px] w-[150px] rounded-full border-[10px] border-[#4a9e7f]/20" />
@@ -351,11 +352,10 @@ const CompanyCourseList = () => {
         </section>
 
         {loading ? (
-          <p className="text-sm text-gray-500">Caricamento corsi...</p>
+          <p className="text-sm text-gray-500">{t('companyAdmin.courses.loading')}</p>
         ) : courses.length === 0 ? (
           <p className="rounded-xl border border-[#ececec] bg-white p-6 text-sm text-gray-600">
-            Nessun corso acquistato per la tua azienda. Acquista un pacchetto
-            corso per iniziare.
+            {t('companyAdmin.courses.noPurchasedCompany')}
           </p>
         ) : (
           <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -368,15 +368,12 @@ const CompanyCourseList = () => {
                   src={resolveAssetUrl(course.thumbnailUrl)}
                   alt={course.courseTitle}
                   className="h-[180px] w-full rounded-xl object-cover"
-                // onError={(event) => {
-                //   event.currentTarget.src = '/images/course/course.png';
-                // }}
                 />
                 <h3 className="mt-4 text-[30px] font-semibold text-[#1f1f1f]">
                   {course.courseTitle}
                 </h3>
                 <div className="mt-2 flex items-center justify-between text-[16px] text-[#4d4d4d]">
-                  <span>Dipendenti iscritti:</span>
+                  <span>{t('companyAdmin.courses.enrolledCount')}</span>
                   <span>{course.enrolledEmployees}</span>
                 </div>
                 <div className="mt-5 flex flex-col gap-3">
@@ -385,14 +382,14 @@ const CompanyCourseList = () => {
                     onClick={() => openTracking(course)}
                     className="rounded-full bg-[#73bfa1] px-5 py-2.5 text-sm font-semibold text-white"
                   >
-                    Visualizza i dettagli
+                    {t('companyAdmin.courses.viewDetails')}
                   </button>
                   <button
                     type="button"
                     onClick={() => openAssign(course)}
                     className="rounded-full border border-[#86c8ad] px-5 py-2.5 text-sm font-semibold text-[#73bfa1]"
                   >
-                    Assegna dipendente
+                    {t('companyAdmin.courses.assignEmployee')}
                   </button>
                 </div>
               </article>

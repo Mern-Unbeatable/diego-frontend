@@ -1,0 +1,351 @@
+{
+  "companyAdmin": {
+    "sidebar": {
+      "home": "Home",
+      "training": "Manage training",
+      "certificates": "Your certificates",
+      "tickets": "Tickets",
+      "myCourses": "Your courses",
+      "privacyPolicy": "Privacy & policy"
+    },
+    "common": {
+      "hello": "Hello!",
+      "back": "Back",
+      "close": "Close",
+      "cancel": "Cancel",
+      "reset": "Reset",
+      "retry": "Retry",
+      "saving": "Saving...",
+      "download": "Download",
+      "sendReminder": "Send reminder",
+      "send": "Send",
+      "course": "Course",
+      "allCourses": "All courses",
+      "courseFallback": "Course",
+      "adminFallback": "Admin",
+      "progress": "Progress",
+      "lastAccess": "Last access",
+      "statusLabel": "Status",
+      "actions": "Actions",
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "positions": {
+        "safetyManager": "Safety manager",
+        "productionOperator": "Production operator",
+        "hrManager": "HR manager",
+        "maintenanceTechnician": "Maintenance technician",
+        "administration": "Administration"
+      },
+      "progressStatus": {
+        "completed": "Completed",
+        "inProgress": "In progress",
+        "notStarted": "Not started"
+      },
+      "tableActions": {
+        "details": "Details",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "errors": {
+        "saveFailed": "Save failed. Please try again."
+      },
+      "table": {
+        "course": "Course",
+        "enrolledStudents": "Enrolled students",
+        "status": "Status",
+        "progress": "Progress",
+        "enrollmentDate": "Enrollment date",
+        "actions": "Actions"
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "showingZeroStudents": "Showing 0 of 0 students",
+        "showingStudents": "Showing {{from}}-{{to}} of {{total}} students",
+        "showingZeroEmployees": "Showing 0 of 0 employees",
+        "showingEmployees": "Showing {{count}} of {{total}} employees",
+        "showingZeroStudentsShort": "Showing 0 of 0 students",
+        "showingStudentsRange": "Showing {{from}}-{{to}} of {{total}} students"
+      }
+    },
+    "home": {
+      "overview": "Overview",
+      "buyNewCourses": "Buy new courses",
+      "goToCatalog": "Go to catalog",
+      "progressTitle": "Progress status — {{course}}",
+      "searchEmployee": "Search employee",
+      "searchByNamePlaceholder": "Search by name",
+      "searchParticipant": "Search participant",
+      "allParticipants": "All participants",
+      "noResults": "No results found.",
+      "cards": {
+        "totalUsers": "Total users",
+        "activeCourses": "Active courses",
+        "expiringSoon": "Expiring soon",
+        "completedCourses": "Completed courses",
+        "myTickets": "My tickets"
+      }
+    },
+    "training": {
+      "title": "Employee registry",
+      "addUser": "+ Add user",
+      "empty": "No employees found. Start by adding the first user.",
+      "hireDateLabel": "Hire date:",
+      "courseLabel": "Course:",
+      "assignedCourse": "Assigned course:",
+      "viewEnrolled": "View enrolled",
+      "noAssignedCourse": "No course assigned.",
+      "assignedCourseFallback": "Assigned course",
+      "errors": {
+        "loadFailed": "Unable to load employees"
+      },
+      "toasts": {
+        "updated": "Employee updated successfully",
+        "accessEmailSent": "Access email sent to employee",
+        "added": "Employee added successfully",
+        "deleted": "Employee deleted successfully",
+        "deleteFailed": "Delete failed"
+      },
+      "deleteModal": {
+        "title": "Delete employee",
+        "messageNamed": "Are you sure you want to delete {{name}}? This action cannot be undone.",
+        "messageGeneric": "Are you sure you want to delete this employee?"
+      }
+    },
+    "employeeModal": {
+      "titles": {
+        "add": "Add user",
+        "edit": "Edit user",
+        "view": "User details"
+      },
+      "buttons": {
+        "save": "Save",
+        "saveChanges": "Save changes"
+      },
+      "subtitle": {
+        "viewing": "You are viewing",
+        "editing": "You are editing"
+      },
+      "fields": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Employee email",
+        "phone": "Contact number",
+        "position": "Role",
+        "hireDate": "Hire date",
+        "status": "Status",
+        "assignedCourse": "Assigned course",
+        "password": "Password",
+        "passwordOptional": "New password (optional)"
+      },
+      "placeholders": {
+        "firstName": "Enter first name...",
+        "lastName": "Enter last name...",
+        "email": "employee@company.com",
+        "phone": "+39 340 00 00000",
+        "selectRole": "Select a role",
+        "passwordCreate": "Create a password for your employee",
+        "passwordOptional": "Leave blank to keep current password"
+      },
+      "noCourseAssigned": "No course assigned",
+      "aria": {
+        "hidePassword": "Hide password",
+        "showPassword": "Show password"
+      }
+    },
+    "certificates": {
+      "title": "Certificate list",
+      "loading": "Loading certificates...",
+      "empty": "No certificates found for the selected filters.",
+      "complianceNote": "Stored on servers for regulatory compliance",
+      "print": "Print",
+      "download": "Download",
+      "buyArchive": "Buy archive",
+      "filters": {
+        "all": "All certificates",
+        "activePeriod": "Free period active",
+        "archived": "In cloud archive",
+        "course": "Course",
+        "archiveStatus": "Archive status",
+        "searchParticipant": "Search participant",
+        "searchPlaceholder": "search by name..."
+      },
+      "badges": {
+        "archived": "In cloud archive",
+        "expired": "Free period expired",
+        "available": "Available"
+      },
+      "fields": {
+        "userName": "User name",
+        "studentId": "Student ID",
+        "issueDate": "Issue date"
+      },
+      "archiveBanner": {
+        "title": "Cloud certificate archive",
+        "description": "Purchase cloud archive to store certificates securely with search, export and backups.",
+        "descriptionExtended": "Employees can download certificates for free for the first {{days}} days. As a company admin you can always download your employees' certificates. Activate cloud archive to keep your personal certificates beyond the free period.",
+        "active": "Cloud archive active",
+        "until": "until"
+      },
+      "expiredNotice": "The free download period for this certificate has expired. Purchase cloud archive to access it.",
+      "expiredEmployeeAdminNotice": "The employee must purchase cloud archive to download again. As company admin, you can still download this certificate.",
+      "errors": {
+        "loadFailed": "Unable to load certificates",
+        "pdfUnavailable": "Certificate PDF not available",
+        "actionFailed": "Download/Print failed",
+        "downloadFailed": "Certificate download failed",
+        "printFailed": "Certificate print failed"
+      },
+      "pagination": {
+        "showing": "Showing {{from}}-{{to}} of {{total}} certificates"
+      },
+      "preview": {
+        "title": "Certificate {{courseTitle}}",
+        "qrAlt": "Certificate QR {{courseTitle}}",
+        "unavailable": "Preview not available"
+      }
+    },
+    "tickets": {
+      "areaLabel": "Ticket area",
+      "listTitle": "Ticket list",
+      "newTicket": "New ticket",
+      "searchLabel": "Search ticket",
+      "searchPlaceholder": "Search by subject, ID or name",
+      "requester": "Requester:",
+      "empty": "No tickets found.",
+      "updatedAt": "Updated:",
+      "priorityLabel": "Priority:",
+      "notFound": "Ticket not found",
+      "openTitle": "Open a ticket",
+      "sending": "Sending...",
+      "filters": {
+        "statusAll": "All",
+        "statusOpen": "Open",
+        "statusInProgress": "In progress",
+        "priorityAll": "All",
+        "priorityCritical": "Critical",
+        "priorityMedium": "Medium",
+        "priorityLow": "Low",
+        "status": "Status",
+        "priority": "Priority"
+      },
+      "form": {
+        "subject": "Subject",
+        "description": "Description",
+        "subjectPlaceholder": "Enter ticket subject",
+        "descriptionPlaceholder": "Describe your issue in detail...",
+        "maxFileSize": "Maximum allowed size: up to {{max}} MB per file"
+      },
+      "detail": {
+        "descriptionTitle": "Ticket description",
+        "noDescription": "No description available",
+        "detailsTitle": "Ticket details",
+        "conversationTitle": "Conversation",
+        "updateLabel": "Update",
+        "supportLabel": "Support",
+        "fields": {
+          "id": "ID:",
+          "subject": "Subject:",
+          "requesterType": "Requester type:",
+          "priority": "Priority:",
+          "createdAt": "Created:",
+          "name": "Name:",
+          "status": "Status:"
+        }
+      },
+      "toasts": {
+        "fileTooLarge": "File must be at most {{max}} MB",
+        "requiredFields": "Please fill in all required fields",
+        "messageTooLong": "Description cannot exceed {{max}} characters",
+        "sent": "Ticket sent successfully"
+      }
+    },
+    "courses": {
+      "loading": "Loading courses...",
+      "loadingStudents": "Loading students...",
+      "noPurchased": "No courses purchased yet. Go to the catalog to buy courses.",
+      "noPurchasedCompany": "No courses purchased for your company yet. Buy a course package to get started.",
+      "administrator": "Administrator",
+      "noEnrolled": "No employees enrolled in this course.",
+      "enrolledCount": "Enrolled employees:",
+      "viewDetails": "View details",
+      "assignEmployee": "Assign employee",
+      "rosterTitle": "Course participants: {{title}}",
+      "rosterTitlePrefix": "Course participants:",
+      "toasts": {
+        "loadStudentsFailed": "Unable to load students",
+        "reminderFailed": "Failed to send reminder",
+        "downloadFailed": "Certificate download failed",
+        "loadCoursesFailed": "Unable to load courses",
+        "reminderSent": "Reminder sent to {{name}}",
+        "assignedSuccess": "Employee assigned to course successfully",
+        "addedAndAssigned": "Employee added and course assigned successfully",
+        "assignFailed": "Assignment failed"
+      },
+      "pagination": {
+        "showing": "Showing {{from}}-{{to}} of {{total}} students",
+        "showingZero": "Showing 0 of 0 students"
+      }
+    },
+    "purchases": {
+      "title": "Purchased company packages",
+      "subtitle": "Assign access links to your employees",
+      "subtitleExtended": "Assign access links to students and monitor accounts",
+      "empty": "No packages purchased yet.",
+      "emptyExtended": "No packages purchased yet. Buy a company course from the catalog.",
+      "assignStudent": "Assign student",
+      "seatsUsed": "{{used}}/{{total}} seats used",
+      "expiresInDays": "Expires in {{days}} days",
+      "noAssigned": "No students assigned to this package yet.",
+      "noAssignedHint": "No students assigned yet. Click \"Assign student\" to get started.",
+      "sending": "Sending...",
+      "sendLink": "Send link",
+      "form": {
+        "studentEmail": "Student email",
+        "firstName": "First name",
+        "lastName": "Last name"
+      },
+      "status": {
+        "active": "Active",
+        "pending": "Pending"
+      },
+      "table": {
+        "accessLink": "Access link",
+        "student": "Student",
+        "email": "Email",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "aria": {
+        "copyLink": "Copy link",
+        "sendEmail": "Send email"
+      },
+      "errors": {
+        "loadFailed": "Unable to load packages"
+      },
+      "toasts": {
+        "invited": "Employee invited and access link sent",
+        "inviteFailed": "Invite failed",
+        "linkUnavailable": "Link not available",
+        "linkCopied": "Link copied",
+        "linkCopiedClipboard": "Link copied to clipboard",
+        "copyFailed": "Copy failed",
+        "copyLinkFailed": "Unable to copy link",
+        "emailSent": "Access email sent",
+        "emailFailed": "Email send failed"
+      }
+    },
+    "privacyPolicy": {
+      "title": "Privacy & policy",
+      "heading": "Privacy notice",
+      "subtitle": "PURSUANT TO ARTICLES 13 AND 14 OF REGULATION (EU) 2016/679",
+      "consent": {
+        "accept": "I consent",
+        "decline": "I do not consent",
+        "submit": "Submit"
+      }
+    }
+  }
+}

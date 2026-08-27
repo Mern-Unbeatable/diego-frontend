@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
@@ -21,6 +21,7 @@ import { STORAGE } from '../../utils/storage/authStorage';
 import { getUserRole } from '../../utils/auth/authUtils';
 import { useUIStore } from '../../features/zustand';
 import LanguageSwitcher from '../../components/common/LanguageSwitcher';
+import { usePrivate } from '../../features/private/privateHooks';
 
 const helpRouteByRole = {
   [ROLES.PLATFORM_ADMIN]: ROUTES.PLATFORM_ADMIN.TICKETS,
@@ -51,14 +52,26 @@ const getDisplayEmail = (profile) =>
 
 const DashboardNavbar = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { openSidebar } = useUIStore();
   const { user } = useSelector((state) => state.auth);
+  const { fetchUnreadNotificationsCount, notificationsMeta } = usePrivate();
 
   const role = getUserRole(user);
   const profile = COOKIE_STORAGE.getProfile() || STORAGE.getProfile() || null;
   const displayName = getDisplayName(profile, role);
   const displayEmail = getDisplayEmail(profile);
+  const canViewNotifications = canAccess(role, ROUTES.PRIVATE_USER.NOTIFICATIONS);
+  const unreadCount = notificationsMeta?.unreadCount ?? 0;
+  const unreadBadgeLabel =
+    unreadCount > 99 ? '99+' : unreadCount > 0 ? String(unreadCount) : null;
+
+  useEffect(() => {
+    if (!canViewNotifications) return;
+
+    fetchUnreadNotificationsCount().catch(() => {});
+  }, [canViewNotifications, fetchUnreadNotificationsCount, location.pathname]);
 
   const menuItems = [
     canAccess(role, ROUTES.PRIVATE_USER.PROFILE) && {
@@ -120,13 +133,32 @@ const DashboardNavbar = () => {
           >
             <Search size={18} />
           </button>
-          <button
-            type="button"
-            className="rounded-full bg-white p-2 text-[#414141] shadow-sm hover:bg-[#f0f0f0]"
-            aria-label="Notifications"
-          >
-            <Bell size={18} />
-          </button>
+          {canViewNotifications ? (
+            <Link
+              to={ROUTES.PRIVATE_USER.NOTIFICATIONS}
+              className="relative rounded-full bg-white p-2 text-[#414141] shadow-sm hover:bg-[#f0f0f0]"
+              aria-label={
+                unreadCount > 0
+                  ? `${t('privateHome.sidebar.notifications')} (${unreadCount})`
+                  : t('privateHome.sidebar.notifications')
+              }
+            >
+              <Bell size={18} />
+              {unreadBadgeLabel ? (
+                <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#e5534f] px-1 text-[10px] font-semibold text-white">
+                  {unreadBadgeLabel}
+                </span>
+              ) : null}
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className="rounded-full bg-white p-2 text-[#414141] shadow-sm hover:bg-[#f0f0f0]"
+              aria-label="Notifications"
+            >
+              <Bell size={18} />
+            </button>
+          )}
 
           {/* Profile Dropdown */}
           <div className="relative">

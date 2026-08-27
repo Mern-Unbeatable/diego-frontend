@@ -208,6 +208,11 @@ export const mapNotificationsResponse = (payload) => {
   };
 };
 
+export const mapUnreadNotificationsCountResponse = (payload) => {
+  const data = getPayloadData(payload);
+  return data?.unreadCount ?? 0;
+};
+
 const formatCertificateDate = (value) => {
   if (!value) return '';
 

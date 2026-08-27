@@ -1,18 +1,24 @@
 import { ArrowLeft, Download, Send } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Loading from '../../../../components/ui/Utilities/Loading';
 import Pagination from '../../../../components/ui/Utilities/Pagination';
 import { ROUTES } from '../../../../config/routes';
 import { getCompanyCoursesService } from '../../../../features/company/companyService';
 import {
   formatProgressDate,
-  PROGRESS_BADGE_TONE,
   PROGRESS_PAGE_SIZE,
 } from '../../../../features/company/companyProgressUtils';
+import {
+  getProgressBadgeTone,
+  getProgressStatusLabel,
+} from '../../../../features/company/companyI18nHelpers';
 import { useCompanyProgressReport } from '../../../../features/company/hooks/useCompanyProgressReport';
 
 const ActionButton = ({ row, actionId, onDownload, onReminder }) => {
+  const { t } = useTranslation();
+
   if (row.canDownload) {
     return (
       <button
@@ -21,7 +27,7 @@ const ActionButton = ({ row, actionId, onDownload, onReminder }) => {
         onClick={() => onDownload(row)}
         className="inline-flex h-9 w-full items-center justify-center gap-2 rounded-full bg-[#73bfa1] px-4 text-sm font-medium text-white hover:bg-[#63a88c] disabled:opacity-60 sm:w-auto"
       >
-        <Download size={13} /> Download
+        <Download size={13} /> {t('companyAdmin.common.download')}
       </button>
     );
   }
@@ -33,12 +39,13 @@ const ActionButton = ({ row, actionId, onDownload, onReminder }) => {
       onClick={() => onReminder(row)}
       className="inline-flex h-9 w-full items-center justify-center gap-2 rounded-full bg-[#e6f6ef] px-4 text-sm font-medium text-[#57a080] hover:bg-[#d9f1e7] disabled:opacity-60 sm:w-auto"
     >
-      <Send size={13} /> Invia un promemoria
+      <Send size={13} /> {t('companyAdmin.common.sendReminder')}
     </button>
   );
 };
 
 const CompanyCourseRosterView = () => {
+  const { t } = useTranslation();
   const { courseId } = useParams();
   const [courseTitle, setCourseTitle] = useState('');
 
@@ -49,11 +56,11 @@ const CompanyCourseRosterView = () => {
       const course = (data?.courses ?? []).find(
         (item) => item.courseId === courseId,
       );
-      setCourseTitle(course?.courseTitle || 'Corso');
+      setCourseTitle(course?.courseTitle || t('companyAdmin.common.courseFallback'));
     } catch {
-      setCourseTitle('Corso');
+      setCourseTitle(t('companyAdmin.common.courseFallback'));
     }
-  }, [courseId]);
+  }, [courseId, t]);
 
   useEffect(() => {
     loadCourseTitle();
@@ -83,13 +90,13 @@ const CompanyCourseRosterView = () => {
         className="inline-flex items-center gap-2 text-sm text-[#2c2c2c] hover:text-[#73bfa1]"
       >
         <ArrowLeft size={18} />
-        Indietro
+        {t('companyAdmin.common.back')}
       </Link>
 
       <section className="min-w-0 overflow-hidden rounded-xl border border-[#e8e8e8] bg-white">
         <header className="border-b border-[#ececec] px-4 py-4 sm:px-5 sm:py-4">
           <h2 className="text-base font-semibold leading-snug text-[#202020] sm:text-lg md:text-xl">
-            Elenco di chi svolge il corso:{' '}
+            {t('companyAdmin.courses.rosterTitlePrefix')}{' '}
             <span className="font-medium text-[#404040]">{courseTitle}</span>
           </h2>
         </header>
@@ -98,7 +105,7 @@ const CompanyCourseRosterView = () => {
           <Loading size="md" className="min-h-40" />
         ) : rows.length === 0 ? (
           <p className="px-4 py-8 text-center text-sm text-gray-500 sm:px-5">
-            Nessun dipendente iscritto a questo corso.
+            {t('companyAdmin.courses.noEnrolled')}
           </p>
         ) : (
           <>
@@ -114,15 +121,15 @@ const CompanyCourseRosterView = () => {
                       {row.employeeName}
                     </p>
                     <span
-                      className={`shrink-0 rounded-full px-2 py-1 text-[11px] font-semibold ${PROGRESS_BADGE_TONE[row.statusLabel] || PROGRESS_BADGE_TONE['Non iniziato']}`}
+                      className={`shrink-0 rounded-full px-2 py-1 text-[11px] font-semibold ${getProgressBadgeTone(row.statusLabel)}`}
                     >
-                      {row.statusLabel}
+                      {getProgressStatusLabel(t, row.statusLabel)}
                     </span>
                   </div>
 
                   <dl className="mt-3 space-y-2 border-t border-gray-100 pt-3 text-xs text-gray-600">
                     <div className="flex items-center justify-between gap-2">
-                      <dt>Avanzamento</dt>
+                      <dt>{t('companyAdmin.common.progress')}</dt>
                       <dd className="flex min-w-0 items-center gap-2 font-medium text-gray-800">
                         <div className="h-1.5 w-16 rounded-full bg-[#e5f2ec]">
                           <div
@@ -134,7 +141,7 @@ const CompanyCourseRosterView = () => {
                       </dd>
                     </div>
                     <div className="flex justify-between gap-2">
-                      <dt>Data di iscrizione</dt>
+                      <dt>{t('companyAdmin.common.table.enrollmentDate')}</dt>
                       <dd className="font-medium text-gray-800">
                         {formatProgressDate(row.enrolledAt)}
                       </dd>
@@ -159,12 +166,12 @@ const CompanyCourseRosterView = () => {
                 <thead className="border-b border-[#ececec] bg-[#fafafa]">
                   <tr className="text-xs text-[#3d3d3d] sm:text-sm">
                     <th className="px-4 py-3 font-semibold lg:px-5">
-                      Corsisti iscritti
+                      {t('companyAdmin.common.table.enrolledStudents')}
                     </th>
-                    <th className="px-3 py-3 font-semibold">Stato</th>
-                    <th className="px-3 py-3 font-semibold">Avanzamento</th>
-                    <th className="px-3 py-3 font-semibold">Data di iscrizione</th>
-                    <th className="px-3 py-3 font-semibold">Azioni</th>
+                    <th className="px-3 py-3 font-semibold">{t('companyAdmin.common.table.status')}</th>
+                    <th className="px-3 py-3 font-semibold">{t('companyAdmin.common.table.progress')}</th>
+                    <th className="px-3 py-3 font-semibold">{t('companyAdmin.common.table.enrollmentDate')}</th>
+                    <th className="px-3 py-3 font-semibold">{t('companyAdmin.common.table.actions')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -178,9 +185,9 @@ const CompanyCourseRosterView = () => {
                       </td>
                       <td className="px-3 py-3">
                         <span
-                          className={`rounded-full px-2 py-1 text-[11px] font-semibold ${PROGRESS_BADGE_TONE[row.statusLabel] || PROGRESS_BADGE_TONE['Non iniziato']}`}
+                          className={`rounded-full px-2 py-1 text-[11px] font-semibold ${getProgressBadgeTone(row.statusLabel)}`}
                         >
-                          {row.statusLabel}
+                          {getProgressStatusLabel(t, row.statusLabel)}
                         </span>
                       </td>
                       <td className="px-3 py-3 text-[#404040]">
@@ -222,8 +229,12 @@ const CompanyCourseRosterView = () => {
             onPageChange={setPage}
             showingLabel={
               total === 0
-                ? 'Mostra 0 di 0 corsisti'
-                : `Mostra ${Math.min((page - 1) * PROGRESS_PAGE_SIZE + 1, total)}-${Math.min(page * PROGRESS_PAGE_SIZE, total)} di ${total} corsisti`
+                ? t('companyAdmin.courses.pagination.showingZero')
+                : t('companyAdmin.courses.pagination.showing', {
+                    from: Math.min((page - 1) * PROGRESS_PAGE_SIZE + 1, total),
+                    to: Math.min(page * PROGRESS_PAGE_SIZE, total),
+                    total,
+                  })
             }
           />
         </div>

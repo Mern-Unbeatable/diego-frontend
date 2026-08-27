@@ -20,6 +20,7 @@ const Input = ({
   inputMode,
   minLength,
   suffix,
+  interactiveSuffix = false,
   inputClassName = '',
   labelClassName = '',
 }) => {
@@ -70,7 +71,11 @@ const Input = ({
               />
             )}
             {suffix && (
-              <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-gray-500">
+              <div
+                className={`absolute inset-y-0 right-4 flex items-center text-sm text-gray-500 ${
+                  interactiveSuffix ? 'pointer-events-auto' : 'pointer-events-none'
+                }`}
+              >
                 {suffix}
               </div>
             )}

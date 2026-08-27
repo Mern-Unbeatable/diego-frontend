@@ -6,6 +6,7 @@ import {
   createTicketAPI,
   getTicketByIdAPI,
   getNotificationsAPI,
+  getUnreadNotificationsCountAPI,
   markNotificationsReadAPI,
   markAllNotificationsReadAPI,
   getMyCertificatesAPI,
@@ -54,6 +55,11 @@ export const usePrivate = () => {
 
   const fetchNotifications = useCallback(async () => {
     const result = await dispatch(getNotificationsAPI()).unwrap();
+    return result;
+  }, [dispatch]);
+
+  const fetchUnreadNotificationsCount = useCallback(async () => {
+    const result = await dispatch(getUnreadNotificationsCountAPI()).unwrap();
     return result;
   }, [dispatch]);
 
@@ -119,6 +125,7 @@ export const usePrivate = () => {
     fetchTicketById,
     clearTicketDetail,
     fetchNotifications,
+    fetchUnreadNotificationsCount,
     markNotificationsAsRead,
     markAllNotificationsAsRead,
     fetchMyCertificates,

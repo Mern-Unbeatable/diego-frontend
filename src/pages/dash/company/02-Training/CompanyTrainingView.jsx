@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   CalendarDays,
   Eye,
@@ -23,11 +24,13 @@ import { useModalState } from './hooks/useModalState';
 import { formatApiErrorMessage } from '../../../../config/api/errorHandler';
 import { ROUTES } from '../../../../config/routes';
 import { getCompanyCoursesService } from '../../../../features/company/companyService';
+import { getEmployeeStatusLabel } from '../../../../features/company/companyI18nHelpers';
 
 const resolveErrorMessage = (error, fallback) =>
   formatApiErrorMessage(error) || fallback;
 
 const CompanyTrainingView = () => {
+  const { t } = useTranslation();
   const {
     employees,
     total,
@@ -91,22 +94,22 @@ const CompanyTrainingView = () => {
     try {
       if (modal.mode === 'edit' && modal.employee) {
         const result = await updateEmployee(modal.employee.userId, payload);
-        addToast('Dipendente aggiornato con successo', 'success');
+        addToast(t('companyAdmin.training.toasts.updated'), 'success');
         if (result?.emailSent) {
-          addToast('Email di accesso inviata al dipendente', 'success');
+          addToast(t('companyAdmin.training.toasts.accessEmailSent'), 'success');
         }
         return;
       }
 
       const result = await createEmployee(payload);
-      addToast('Dipendente aggiunto con successo', 'success');
+      addToast(t('companyAdmin.training.toasts.added'), 'success');
       if (result?.emailSent) {
-        addToast('Email di accesso inviata al dipendente', 'success');
+        addToast(t('companyAdmin.training.toasts.accessEmailSent'), 'success');
       }
     } catch (submitError) {
       resetError();
       addToast(
-        resolveErrorMessage(submitError, 'Salvataggio non riuscito. Riprova.'),
+        resolveErrorMessage(submitError, t('companyAdmin.common.errors.saveFailed')),
         'error',
       );
       throw submitError;
@@ -118,9 +121,9 @@ const CompanyTrainingView = () => {
     if (!employee) return;
     try {
       await deleteEmployee(employee.userId);
-      addToast('Dipendente eliminato con successo', 'success');
+      addToast(t('companyAdmin.training.toasts.deleted'), 'success');
     } catch (err) {
-      addToast(resolveErrorMessage(err, 'Eliminazione non riuscita'), 'error');
+      addToast(resolveErrorMessage(err, t('companyAdmin.training.toasts.deleteFailed')), 'error');
     } finally {
       confirmDelete.close();
     }
@@ -144,21 +147,21 @@ const CompanyTrainingView = () => {
       <section className="min-w-0 space-y-4 sm:space-y-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-base font-semibold text-[#1f1f1f] sm:text-lg md:text-xl">
-            Anagrafica dipendenti
+            {t('companyAdmin.training.title')}
           </h2>
           <button
             type="button"
             onClick={openAdd}
             className="inline-flex h-10 w-full items-center justify-center rounded-full bg-[#73bfa1] px-5 text-sm font-medium text-white hover:bg-[#63a88c] sm:w-auto"
           >
-            + Aggiungi utente
+            {t('companyAdmin.training.addUser')}
           </button>
         </div>
 
         {error ? (
           <Alert
             type="error"
-            title="Non è stato possibile caricare i dipendenti"
+            title={t('companyAdmin.training.errors.loadFailed')}
             message={error}
             onClose={resetError}
           />
@@ -191,14 +194,14 @@ const CompanyTrainingView = () => {
         {showEmpty ? (
           <div className="rounded-xl border border-dashed border-[#d7d7d7] bg-white px-4 py-8 text-center sm:px-5 sm:py-10">
             <p className="text-sm text-[#7d7d7d]">
-              Nessun dipendente trovato. Inizia aggiungendo il primo utente.
+              {t('companyAdmin.training.empty')}
             </p>
             <button
               type="button"
               onClick={openAdd}
               className="mt-4 inline-flex h-10 items-center justify-center rounded-full bg-[#73bfa1] px-5 text-sm font-medium text-white hover:bg-[#63a88c]"
             >
-              + Aggiungi utente
+              {t('companyAdmin.training.addUser')}
             </button>
           </div>
         ) : null}
@@ -230,7 +233,7 @@ const CompanyTrainingView = () => {
                         : 'bg-[#fbe9e7] text-[#dd6b5f]'
                       }`}
                   >
-                    {employee.status}
+                    {getEmployeeStatusLabel(t, employee.status)}
                   </span>
                 </div>
 
@@ -245,13 +248,13 @@ const CompanyTrainingView = () => {
                   </p>
                   <p className="flex items-center gap-2">
                     <CalendarDays size={14} className="shrink-0" />
-                    <span>Assunzione: {employee.hireDate}</span>
+                    <span>{t('companyAdmin.training.hireDateLabel')} {employee.hireDate}</span>
                   </p>
                   {employee.assignedCourseTitle ? (
                     <p className="flex min-w-0 items-center gap-2">
                       <UsersRound size={14} className="shrink-0" />
                       <span className="truncate">
-                        Corso: {employee.assignedCourseTitle}
+                        {t('companyAdmin.training.courseLabel')} {employee.assignedCourseTitle}
                       </span>
                     </p>
                   ) : null}
@@ -264,7 +267,7 @@ const CompanyTrainingView = () => {
                     className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-[#d7d7d7] px-3 text-xs font-medium text-[#5a5a5a] hover:bg-[#f5f5f5] sm:text-sm"
                   >
                     <Eye size={14} />
-                    Dettagli
+                    {t('companyAdmin.common.tableActions.details')}
                   </button>
                   <button
                     type="button"
@@ -273,7 +276,7 @@ const CompanyTrainingView = () => {
                     className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-[#92d0b7] px-3 text-xs font-medium text-[#65ad8d] hover:bg-[#eff9f5] disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
                   >
                     <Pencil size={14} />
-                    Modifica
+                    {t('companyAdmin.common.tableActions.edit')}
                   </button>
                   <button
                     type="button"
@@ -282,7 +285,7 @@ const CompanyTrainingView = () => {
                     className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-[#ef6a59] px-3 text-xs font-medium text-[#e14f3f] hover:bg-[#fff3f1] disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
                   >
                     <Trash2 size={14} />
-                    Elimina
+                    {t('companyAdmin.common.tableActions.delete')}
                   </button>
                 </div>
               </article>
@@ -300,8 +303,11 @@ const CompanyTrainingView = () => {
               onPageChange={setPage}
               showingLabel={
                 total === 0
-                  ? 'Mostra 0 di 0 dipendenti'
-                  : `Mostra ${employees.length} di ${total} dipendenti`
+                  ? t('companyAdmin.common.pagination.showingZeroEmployees')
+                  : t('companyAdmin.common.pagination.showingEmployees', {
+                      count: employees.length,
+                      total,
+                    })
               }
             />
           </div>
@@ -311,7 +317,7 @@ const CompanyTrainingView = () => {
           {highlightCourse ? (
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="min-w-0 text-sm text-[#666666]">
-                Corso assegnato:{' '}
+                {t('companyAdmin.training.assignedCourse')}{' '}
                 <span className="font-medium text-[#2f2f2f]">
                   {highlightCourse.courseTitle}
                 </span>
@@ -320,11 +326,11 @@ const CompanyTrainingView = () => {
                 to={`${ROUTES.COMPANY_ADMIN.TRAINING}/courses/${highlightCourse.courseId}`}
                 className="inline-flex h-10 w-full shrink-0 items-center justify-center rounded-full bg-[#73bfa1] px-5 text-sm font-medium text-white hover:bg-[#63a88c] sm:w-auto"
               >
-                Vedi iscritti
+                {t('companyAdmin.training.viewEnrolled')}
               </Link>
             </div>
           ) : (
-            <p className="text-sm text-[#666666]">Nessun corso assegnato.</p>
+            <p className="text-sm text-[#666666]">{t('companyAdmin.training.noAssignedCourse')}</p>
           )}
         </div>
       </section>
@@ -342,11 +348,13 @@ const CompanyTrainingView = () => {
         isOpen={confirmDelete.isOpen}
         onClose={confirmDelete.close}
         onConfirm={handleConfirmDelete}
-        title="Elimina dipendente"
+        title={t('companyAdmin.training.deleteModal.title')}
         message={
           confirmDelete.employee
-            ? `Sei sicuro di voler eliminare ${confirmDelete.employee.firstName} ${confirmDelete.employee.lastName}? L'operazione non può essere annullata.`
-            : 'Sei sicuro di voler eliminare questo dipendente?'
+            ? t('companyAdmin.training.deleteModal.messageNamed', {
+                name: `${confirmDelete.employee.firstName} ${confirmDelete.employee.lastName}`,
+              })
+            : t('companyAdmin.training.deleteModal.messageGeneric')
         }
       />
     </>

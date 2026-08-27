@@ -6,6 +6,7 @@ import {
   createTicketService,
   getTicketByIdService,
   getNotificationsService,
+  getUnreadNotificationsCountService,
   markNotificationsReadService,
   markAllNotificationsReadService,
   getMyCertificatesService,
@@ -63,6 +64,17 @@ export const getNotificationsAPI = createAsyncThunk(
   async (params = {}, { rejectWithValue, signal }) => {
     try {
       return await getNotificationsService(params, { signal });
+    } catch (error) {
+      return rejectWithValue(handleApiError(error));
+    }
+  },
+);
+
+export const getUnreadNotificationsCountAPI = createAsyncThunk(
+  'private/getUnreadNotificationsCount',
+  async (_, { rejectWithValue, signal }) => {
+    try {
+      return await getUnreadNotificationsCountService({ signal });
     } catch (error) {
       return rejectWithValue(handleApiError(error));
     }

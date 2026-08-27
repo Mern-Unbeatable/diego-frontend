@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CheckSquare, Square } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const h2Class =
   'mb-2 text-base font-semibold leading-snug text-[#2b2b2b] sm:text-lg md:text-xl';
@@ -9,19 +10,20 @@ const bodyClass = 'text-sm leading-relaxed text-[#3b3b3b] sm:text-[15px] md:text
 const listClass = `list-disc space-y-1 pl-5 ${bodyClass} sm:pl-6`;
 
 const CompanyPrivacyPolicyView = () => {
+  const { t } = useTranslation();
   const [consent, setConsent] = useState(null);
 
   return (
     <section className="mx-auto min-w-0 max-w-5xl overflow-hidden rounded-xl bg-white px-3 py-5 text-[#2f2f2f] sm:px-6 sm:py-8 md:px-8 md:py-10">
       <header className="mb-6 text-center sm:mb-8 md:mb-10">
         <p className="text-sm font-medium text-[#232323] sm:text-base">
-          Privacy &amp; policy
+          {t('companyAdmin.privacyPolicy.title')}
         </p>
         <h1 className="mt-3 text-base font-semibold uppercase tracking-wide text-[#232323] sm:mt-4 sm:text-lg md:text-xl">
-          Informativa privacy
+          {t('companyAdmin.privacyPolicy.heading')}
         </h1>
         <p className="mt-2 text-xs font-normal leading-relaxed text-[#5f5f5f] sm:text-sm">
-          AI SENSI DEGLI ARTT. 13 E 14 DEL REGOLAMENTO (UE) 2016/679
+          {t('companyAdmin.privacyPolicy.subtitle')}
         </p>
       </header>
 
@@ -262,7 +264,7 @@ const CompanyPrivacyPolicyView = () => {
                 : 'bg-[#cfeee1] text-[#2f5d4f]'
             }`}
           >
-            <CheckSquare size={16} /> Acconsento
+            <CheckSquare size={16} /> {t('companyAdmin.privacyPolicy.consent.accept')}
           </button>
           <button
             type="button"
@@ -273,7 +275,7 @@ const CompanyPrivacyPolicyView = () => {
                 : 'bg-[#ececf1] text-[#505a61]'
             }`}
           >
-            <Square size={16} /> Non acconsento
+            <Square size={16} /> {t('companyAdmin.privacyPolicy.consent.decline')}
           </button>
         </div>
 
@@ -282,7 +284,7 @@ const CompanyPrivacyPolicyView = () => {
           disabled={consent === null}
           className="mt-4 inline-flex h-10 w-full items-center justify-center rounded-full bg-[#73bfa1] px-6 text-sm font-medium text-white hover:bg-[#63a88c] disabled:cursor-not-allowed disabled:opacity-50 sm:mt-5 sm:w-auto sm:px-8"
         >
-          Invia
+          {t('companyAdmin.privacyPolicy.consent.submit')}
         </button>
       </footer>
     </section>

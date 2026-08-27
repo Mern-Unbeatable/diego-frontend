@@ -66,6 +66,15 @@ export const getNotificationsService = async (params = {}, { signal } = {}) => {
   return unwrap(response);
 };
 
+export const getUnreadNotificationsCountService = async ({ signal } = {}) => {
+  const response = await request({
+    method: 'GET',
+    url: endpoints.private.NOTIFICATIONS_UNREAD_COUNT,
+    signal,
+  });
+  return unwrap(response);
+};
+
 export const markNotificationsReadService = async (
   { notificationIds },
   { signal } = {},

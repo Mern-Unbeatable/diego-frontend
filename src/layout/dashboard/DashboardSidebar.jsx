@@ -243,6 +243,15 @@ const PRIVATE_USER_LABEL_KEYS = {
   '/dashboard/private-user/privacy-policy': 'privateHome.sidebar.privacyPolicy',
 };
 
+const COMPANY_ADMIN_LABEL_KEYS = {
+  '/dashboard/company-admin': 'companyAdmin.sidebar.home',
+  '/dashboard/company-admin/training': 'companyAdmin.sidebar.training',
+  '/dashboard/company-admin/certificates': 'companyAdmin.sidebar.certificates',
+  '/dashboard/company-admin/ticket': 'companyAdmin.sidebar.tickets',
+  '/dashboard/company-admin/my-courses': 'companyAdmin.sidebar.myCourses',
+  '/dashboard/company-admin/privacy-policy': 'companyAdmin.sidebar.privacyPolicy',
+};
+
 const DashboardSidebar = () => {
   const { t } = useTranslation();
   const { isOpen, setActiveLink, closeSidebar } = useUIStore();
@@ -260,6 +269,15 @@ const DashboardSidebar = () => {
     const filteredLinks = isLicenseBlocked
       ? allLinks.filter((link) => LICENSE_EXPIRED_ALLOWED_PATHS.includes(link.path))
       : allLinks;
+
+    if (role === ROLES.COMPANY_ADMIN) {
+      return filteredLinks.map((link) => ({
+        ...link,
+        label: COMPANY_ADMIN_LABEL_KEYS[link.path]
+          ? t(COMPANY_ADMIN_LABEL_KEYS[link.path])
+          : link.label,
+      }));
+    }
 
     if (role !== ROLES.PRIVATE_USER) {
       return filteredLinks;

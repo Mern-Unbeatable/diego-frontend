@@ -1,6 +1,7 @@
 import { ArrowLeft, Copy, Mail, Plus, Users, X } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import Loading from '../../../../components/ui/Utilities/Loading';
 import {
@@ -9,8 +10,8 @@ import {
   sendAccessLinkService,
 } from '../../../../features/company/companyPurchaseService';
 
-const getCourseTitle = (course) => {
-  if (!course?.courseTitle) return 'Corso';
+const getCourseTitle = (course, fallback) => {
+  if (!course?.courseTitle) return fallback;
   if (typeof course.courseTitle === 'string') return course.courseTitle;
   return (
     course.courseTitle.it ||
@@ -20,6 +21,7 @@ const getCourseTitle = (course) => {
 };
 
 const InviteModal = ({ open, purchase, onClose, onSuccess }) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -37,14 +39,14 @@ const InviteModal = ({ open, purchase, onClose, onSuccess }) => {
         firstName,
         lastName,
       });
-      toast.success('Dipendente invitato e link di accesso inviato');
+      toast.success(t('companyAdmin.purchases.toasts.invited'));
       onSuccess?.();
       onClose();
       setEmail('');
       setFirstName('');
       setLastName('');
     } catch (error) {
-      toast.error(error?.message || 'Invito non riuscito');
+      toast.error(error?.message || t('companyAdmin.purchases.toasts.inviteFailed'));
     } finally {
       setLoading(false);
     }
@@ -56,7 +58,7 @@ const InviteModal = ({ open, purchase, onClose, onSuccess }) => {
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="Assegna corsista"
+      aria-label={t('companyAdmin.purchases.assignStudent')}
     >
       <form
         onSubmit={handleSubmit}
@@ -66,17 +68,17 @@ const InviteModal = ({ open, purchase, onClose, onSuccess }) => {
         <div className="flex shrink-0 items-start justify-between gap-3 border-b border-gray-100 px-4 py-3 sm:px-5 sm:py-4">
           <div className="min-w-0">
             <h3 className="text-base font-semibold text-[#1f1f1f] sm:text-lg">
-              Assegna corsista
+              {t('companyAdmin.purchases.assignStudent')}
             </h3>
             <p className="mt-0.5 truncate text-sm text-[#666]">
-              {getCourseTitle(purchase.course)}
+              {getCourseTitle(purchase.course, t('companyAdmin.common.courseFallback'))}
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
             className="shrink-0 rounded-lg p-2 text-gray-400 hover:bg-gray-100"
-            aria-label="Chiudi"
+            aria-label={t('companyAdmin.common.close')}
           >
             <X size={18} />
           </button>
@@ -88,21 +90,21 @@ const InviteModal = ({ open, purchase, onClose, onSuccess }) => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email del corsista"
+            placeholder={t('companyAdmin.purchases.form.studentEmail')}
             className="h-11 w-full rounded-lg border border-gray-200 px-4 text-sm outline-none focus:border-[#73bfa1]"
           />
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            placeholder="Nome"
+            placeholder={t('companyAdmin.purchases.form.firstName')}
             className="h-11 w-full rounded-lg border border-gray-200 px-4 text-sm outline-none focus:border-[#73bfa1]"
           />
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            placeholder="Cognome"
+            placeholder={t('companyAdmin.purchases.form.lastName')}
             className="h-11 w-full rounded-lg border border-gray-200 px-4 text-sm outline-none focus:border-[#73bfa1]"
           />
         </div>
@@ -113,14 +115,14 @@ const InviteModal = ({ open, purchase, onClose, onSuccess }) => {
             onClick={onClose}
             className="inline-flex h-10 items-center justify-center rounded-full border border-gray-300 px-5 text-sm font-medium"
           >
-            Annulla
+            {t('companyAdmin.common.cancel')}
           </button>
           <button
             type="submit"
             disabled={loading}
             className="inline-flex h-10 items-center justify-center rounded-full bg-[#73bfa1] px-5 text-sm font-medium text-white disabled:opacity-50"
           >
-            {loading ? 'Invio...' : 'Invia link'}
+            {loading ? t('companyAdmin.purchases.sending') : t('companyAdmin.purchases.sendLink')}
           </button>
         </div>
       </form>
@@ -128,39 +130,48 @@ const InviteModal = ({ open, purchase, onClose, onSuccess }) => {
   );
 };
 
-const StatusBadge = ({ used }) => (
-  <span
-    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
-      used ? 'bg-[#e6f6ef] text-[#57a080]' : 'bg-[#fdf2df] text-[#e59a2b]'
-    }`}
-  >
-    {used ? 'Attivato' : 'In attesa'}
-  </span>
-);
+const StatusBadge = ({ used }) => {
+  const { t } = useTranslation();
 
-const RowActions = ({ row, sendingId, onCopy, onSend }) => (
-  <div className="flex items-center gap-2">
-    <button
-      type="button"
-      onClick={() => onCopy(row.accessUrl)}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#9fd9c1] text-[#73bfa1]"
-      aria-label="Copia link"
+  return (
+    <span
+      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
+        used ? 'bg-[#e6f6ef] text-[#57a080]' : 'bg-[#fdf2df] text-[#e59a2b]'
+      }`}
     >
-      <Copy size={14} />
-    </button>
-    <button
-      type="button"
-      onClick={() => onSend(row.enrollmentId)}
-      disabled={sendingId === row.enrollmentId}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#73bfa1] text-white disabled:opacity-50"
-      aria-label="Invia email"
-    >
-      <Mail size={14} />
-    </button>
-  </div>
-);
+      {used ? t('companyAdmin.purchases.status.active') : t('companyAdmin.purchases.status.pending')}
+    </span>
+  );
+};
+
+const RowActions = ({ row, sendingId, onCopy, onSend }) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        type="button"
+        onClick={() => onCopy(row.accessUrl)}
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#9fd9c1] text-[#73bfa1]"
+        aria-label={t('companyAdmin.purchases.aria.copyLink')}
+      >
+        <Copy size={14} />
+      </button>
+      <button
+        type="button"
+        onClick={() => onSend(row.enrollmentId)}
+        disabled={sendingId === row.enrollmentId}
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#73bfa1] text-white disabled:opacity-50"
+        aria-label={t('companyAdmin.purchases.aria.sendEmail')}
+      >
+        <Mail size={14} />
+      </button>
+    </div>
+  );
+};
 
 const CompanyPurchasesView = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [purchases, setPurchases] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -173,12 +184,12 @@ const CompanyPurchasesView = () => {
       const data = await getCompanyPurchasesService();
       setPurchases(Array.isArray(data) ? data : []);
     } catch (error) {
-      toast.error(error?.message || 'Impossibile caricare i pacchetti');
+      toast.error(error?.message || t('companyAdmin.purchases.errors.loadFailed'));
       setPurchases([]);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     loadPurchases();
@@ -186,14 +197,14 @@ const CompanyPurchasesView = () => {
 
   const handleCopyLink = async (url) => {
     if (!url) {
-      toast.error('Link non disponibile');
+      toast.error(t('companyAdmin.purchases.toasts.linkUnavailable'));
       return;
     }
     try {
       await navigator.clipboard.writeText(url);
-      toast.success('Link copiato negli appunti');
+      toast.success(t('companyAdmin.purchases.toasts.linkCopiedClipboard'));
     } catch {
-      toast.error('Impossibile copiare il link');
+      toast.error(t('companyAdmin.purchases.toasts.copyLinkFailed'));
     }
   };
 
@@ -201,9 +212,9 @@ const CompanyPurchasesView = () => {
     try {
       setSendingId(enrollmentId);
       await sendAccessLinkService(enrollmentId);
-      toast.success('Email di accesso inviata');
+      toast.success(t('companyAdmin.purchases.toasts.emailSent'));
     } catch (error) {
-      toast.error(error?.message || 'Invio email non riuscito');
+      toast.error(error?.message || t('companyAdmin.purchases.toasts.emailFailed'));
     } finally {
       setSendingId(null);
     }
@@ -217,15 +228,15 @@ const CompanyPurchasesView = () => {
         className="mb-3 inline-flex items-center gap-2 text-sm text-[#2f2f2f] sm:mb-4"
       >
         <ArrowLeft size={18} />
-        Indietro
+        {t('companyAdmin.common.back')}
       </button>
 
       <header className="mb-4 sm:mb-6">
         <h1 className="text-base font-semibold text-[#1f1f1f] sm:text-lg md:text-xl">
-          Pacchetti aziendali acquistati
+          {t('companyAdmin.purchases.title')}
         </h1>
         <p className="mt-1 text-xs text-[#666] sm:text-sm">
-          Assegna link di accesso ai corsisti e monitora le utenze
+          {t('companyAdmin.purchases.subtitleExtended')}
         </p>
       </header>
 
@@ -233,7 +244,7 @@ const CompanyPurchasesView = () => {
         <Loading size="md" className="min-h-40" />
       ) : purchases.length === 0 ? (
         <div className="rounded-xl border border-dashed border-gray-300 bg-white p-6 text-center text-sm text-[#666] sm:rounded-2xl sm:p-10">
-          Nessun pacchetto acquistato. Acquista un corso aziendale dal catalogo.
+          {t('companyAdmin.purchases.emptyExtended')}
         </div>
       ) : (
         <div className="space-y-4 sm:space-y-6">
@@ -245,16 +256,19 @@ const CompanyPurchasesView = () => {
               <div className="flex flex-col gap-3 border-b border-gray-100 bg-[#f3f7f5] px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5 sm:py-4">
                 <div className="min-w-0">
                   <h2 className="truncate text-sm font-semibold text-[#1f1f1f] sm:text-base md:text-lg">
-                    {getCourseTitle(purchase.course)}
+                    {getCourseTitle(purchase.course, t('companyAdmin.common.courseFallback'))}
                   </h2>
                   <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#666] sm:text-sm">
                     <span className="inline-flex items-center gap-1.5">
                       <Users size={14} />
-                      {purchase.seatsUsed}/{purchase.seatsTotal} posti usati
+                      {t('companyAdmin.purchases.seatsUsed', {
+                        used: purchase.seatsUsed,
+                        total: purchase.seatsTotal,
+                      })}
                     </span>
                     {purchase.daysRemaining > 0 ? (
                       <span className="text-[#d48c21]">
-                        · Scade tra {purchase.daysRemaining} giorni
+                        · {t('companyAdmin.purchases.expiresInDays', { days: purchase.daysRemaining })}
                       </span>
                     ) : null}
                   </p>
@@ -266,15 +280,14 @@ const CompanyPurchasesView = () => {
                     className="inline-flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-full bg-[#73bfa1] px-4 text-sm font-medium text-white sm:w-auto sm:px-5"
                   >
                     <Plus size={16} />
-                    Assegna corsista
+                    {t('companyAdmin.purchases.assignStudent')}
                   </button>
                 ) : null}
               </div>
 
               {!purchase.assignedEmployees?.length ? (
                 <p className="px-4 py-8 text-center text-sm text-[#888] sm:px-5">
-                  Nessun corsista assegnato. Clicca &quot;Assegna corsista&quot; per
-                  iniziare.
+                  {t('companyAdmin.purchases.noAssignedHint')}
                 </p>
               ) : (
                 <>
@@ -298,14 +311,14 @@ const CompanyPurchasesView = () => {
                         </div>
 
                         <div className="mt-3 border-t border-gray-100 pt-3">
-                          <p className="mb-1 text-xs text-gray-500">Link accesso</p>
+                          <p className="mb-1 text-xs text-gray-500">{t('companyAdmin.purchases.table.accessLink')}</p>
                           <p className="truncate text-xs text-[#73bfa1]">
                             {row.accessUrl || '—'}
                           </p>
                         </div>
 
                         <div className="mt-3 flex items-center justify-between border-t border-gray-100 pt-3">
-                          <span className="text-xs text-gray-400">Azioni</span>
+                          <span className="text-xs text-gray-400">{t('companyAdmin.purchases.table.actions')}</span>
                           <RowActions
                             row={row}
                             sendingId={sendingId}
@@ -323,15 +336,15 @@ const CompanyPurchasesView = () => {
                       <thead>
                         <tr className="bg-[#fafafa] text-left text-xs text-[#444] sm:text-sm">
                           <th className="px-4 py-3 font-semibold lg:px-5">
-                            Corsista
+                            {t('companyAdmin.purchases.table.student')}
                           </th>
-                          <th className="px-4 py-3 font-semibold lg:px-5">Email</th>
-                          <th className="px-4 py-3 font-semibold lg:px-5">Stato</th>
+                          <th className="px-4 py-3 font-semibold lg:px-5">{t('companyAdmin.purchases.table.email')}</th>
+                          <th className="px-4 py-3 font-semibold lg:px-5">{t('companyAdmin.purchases.table.status')}</th>
                           <th className="px-4 py-3 font-semibold lg:px-5">
-                            Link accesso
+                            {t('companyAdmin.purchases.table.accessLink')}
                           </th>
                           <th className="px-4 py-3 font-semibold lg:px-5">
-                            Azioni
+                            {t('companyAdmin.purchases.table.actions')}
                           </th>
                         </tr>
                       </thead>

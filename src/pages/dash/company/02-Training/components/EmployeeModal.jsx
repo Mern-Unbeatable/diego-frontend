@@ -1,15 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowLeft } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import Form from '../../../../../Forms/Form';
 import Input from '../../../../../Forms/Input';
 import Select from '../../../../../Forms/Select';
 import DatePicker from '../../../../../Forms/DatePicker';
+import { EMPLOYEE_STATUS } from '../../../../../features/company/employee/employeeConstants';
 import {
-  EMPLOYEE_STATUS,
-  POSITION_OPTIONS,
-  STATUS_OPTIONS,
-} from '../../../../../features/company/employee/employeeConstants';
+  buildEmployeePositionOptions,
+  buildEmployeeStatusOptions,
+} from '../../../../../features/company/companyI18nHelpers';
 import {
   createEmployeeFormResolver,
   mapEmployeeToFormValues,
@@ -26,8 +27,10 @@ const EmployeeModal = ({
   onSubmit,
   onClose,
 }) => {
+  const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [courseOptions, setCourseOptions] = useState([]);
   const modalRef = useRef(null);
 
@@ -72,6 +75,9 @@ const EmployeeModal = ({
     };
   }, []);
 
+  const positionOptions = useMemo(() => buildEmployeePositionOptions(t), [t]);
+  const statusOptions = useMemo(() => buildEmployeeStatusOptions(t), [t]);
+
   const courseSelectOptions = useMemo(() => {
     const options = courseOptions.map((course) => ({
       value: course.courseId,
@@ -84,12 +90,12 @@ const EmployeeModal = ({
     ) {
       options.unshift({
         value: initialData.assignedCourseId,
-        label: initialData.assignedCourseTitle || 'Corso assegnato',
+        label: initialData.assignedCourseTitle || t('companyAdmin.training.assignedCourseFallback'),
       });
     }
 
-    return [{ value: '', label: 'Nessun corso assegnato' }, ...options];
-  }, [courseOptions, initialData]);
+    return [{ value: '', label: t('companyAdmin.employeeModal.noCourseAssigned') }, ...options];
+  }, [courseOptions, initialData, t]);
 
   const handleFormSubmit = async (formValues) => {
     if (isViewMode) return;
@@ -118,24 +124,20 @@ const EmployeeModal = ({
       onClose();
     } catch (error) {
       setSubmitError(
-        formatApiErrorMessage(error) || 'Salvataggio non riuscito. Riprova.',
+        formatApiErrorMessage(error) || t('companyAdmin.common.errors.saveFailed'),
       );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const titles = {
-    add: 'Aggiungi utente',
-    edit: 'Modifica utente',
-    view: 'Dettagli utente',
-  };
-  const buttonLabels = {
-    add: 'Salva',
-    edit: 'Salva modifiche',
-  };
-  const title = titles[mode] || titles.add;
-  const buttonLabel = buttonLabels[mode] || buttonLabels.add;
+  const title = t(`companyAdmin.employeeModal.titles.${mode}`, {
+    defaultValue: t('companyAdmin.employeeModal.titles.add'),
+  });
+  const buttonLabel =
+    mode === 'edit'
+      ? t('companyAdmin.employeeModal.buttons.saveChanges')
+      : t('companyAdmin.employeeModal.buttons.save');
 
   const modalContent = (
     <div
@@ -155,7 +157,7 @@ const EmployeeModal = ({
             type="button"
             onClick={onClose}
             className="rounded-lg p-2 text-[#404040] hover:bg-gray-100"
-            aria-label="Indietro"
+            aria-label={t('companyAdmin.common.back')}
           >
             <ArrowLeft size={18} />
           </button>
@@ -168,7 +170,9 @@ const EmployeeModal = ({
             </h3>
             {(isEditMode || isViewMode) && initialData ? (
               <p className="truncate text-xs text-gray-500 sm:text-sm">
-                {isViewMode ? 'Stai visualizzando' : 'Stai modificando'}{' '}
+                {isViewMode
+                  ? t('companyAdmin.employeeModal.subtitle.viewing')
+                  : t('companyAdmin.employeeModal.subtitle.editing')}{' '}
                 {initialData.firstName} {initialData.lastName}
               </p>
             ) : null}
@@ -193,16 +197,16 @@ const EmployeeModal = ({
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
               <Input
                 name="firstName"
-                label="Nome"
-                placeholder="Inserisci il nome..."
+                label={t('companyAdmin.employeeModal.fields.firstName')}
+                placeholder={t('companyAdmin.employeeModal.placeholders.firstName')}
                 required
                 disabled={isSubmitting || isViewMode}
                 variant="employee"
               />
               <Input
                 name="lastName"
-                label="Cognome"
-                placeholder="Inserisci il cognome..."
+                label={t('companyAdmin.employeeModal.fields.lastName')}
+                placeholder={t('companyAdmin.employeeModal.placeholders.lastName')}
                 required
                 disabled={isSubmitting || isViewMode}
                 variant="employee"
@@ -210,8 +214,8 @@ const EmployeeModal = ({
               <div className="sm:col-span-2">
                 <Input
                   name="email"
-                  label="E-mail dipendente"
-                  placeholder="franco.rossi@mototo.com"
+                  label={t('companyAdmin.employeeModal.fields.email')}
+                  placeholder={t('companyAdmin.employeeModal.placeholders.email')}
                   type="email"
                   required
                   disabled={isSubmitting || isViewMode || isEditMode}
@@ -221,8 +225,8 @@ const EmployeeModal = ({
               <div className="sm:col-span-2">
                 <Input
                   name="phone"
-                  label="Numero di contatto"
-                  placeholder="+39 340 00 00000"
+                  label={t('companyAdmin.employeeModal.fields.phone')}
+                  placeholder={t('companyAdmin.employeeModal.placeholders.phone')}
                   type="tel"
                   required
                   disabled={isSubmitting || isViewMode}
@@ -232,18 +236,19 @@ const EmployeeModal = ({
 
               <Select
                 name="position"
-                label="Ruolo"
+                label={t('companyAdmin.employeeModal.fields.position')}
                 required
                 disabled={isSubmitting || isViewMode}
                 variant="employee"
                 options={[
-                  { value: '', label: 'Seleziona un ruolo' },
-                  ...POSITION_OPTIONS,
+                  { value: '', label: t('companyAdmin.employeeModal.placeholders.selectRole') },
+                  ...positionOptions,
                 ]}
               />
               <div className="min-w-0">
                 <label className="mb-1.5 block text-sm font-medium text-[#222222]">
-                  Data di assunzione <span className="text-[#e34f4f]">*</span>
+                  {t('companyAdmin.employeeModal.fields.hireDate')}{' '}
+                  <span className="text-[#e34f4f]">*</span>
                 </label>
                 <DatePicker
                   name="hireDate"
@@ -255,15 +260,15 @@ const EmployeeModal = ({
               </div>
               <Select
                 name="status"
-                label="Stato"
+                label={t('companyAdmin.employeeModal.fields.status')}
                 required
                 disabled={isSubmitting || isViewMode}
                 variant="employee"
-                options={STATUS_OPTIONS}
+                options={statusOptions}
               />
               <Select
                 name="assignedCourseId"
-                label="Corso assegnato"
+                label={t('companyAdmin.employeeModal.fields.assignedCourse')}
                 disabled={isSubmitting || isViewMode}
                 variant="employee"
                 options={courseSelectOptions}
@@ -274,18 +279,41 @@ const EmployeeModal = ({
                   <Input
                     name="password"
                     label={
-                      isEditMode ? 'Nuova password (opzionale)' : 'Password'
+                      isEditMode
+                        ? t('companyAdmin.employeeModal.fields.passwordOptional')
+                        : t('companyAdmin.employeeModal.fields.password')
                     }
                     placeholder={
                       isEditMode
-                        ? 'Lascia vuoto per non modificarla'
-                        : 'Crea una password per il tuo lavoratore'
+                        ? t('companyAdmin.employeeModal.placeholders.passwordOptional')
+                        : t('companyAdmin.employeeModal.placeholders.passwordCreate')
                     }
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     required={!isEditMode}
                     minLength={isEditMode ? undefined : 6}
                     disabled={isSubmitting}
                     variant="employee"
+                    inputClassName="pr-12"
+                    interactiveSuffix
+                    suffix={
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="text-[#7a7a7a] transition-colors hover:text-[#73bfa1] focus:outline-none"
+                        aria-label={
+                          showPassword
+                            ? t('companyAdmin.employeeModal.aria.hidePassword')
+                            : t('companyAdmin.employeeModal.aria.showPassword')
+                        }
+                        tabIndex={-1}
+                      >
+                        {showPassword ? (
+                          <EyeOff size={18} />
+                        ) : (
+                          <Eye size={18} />
+                        )}
+                      </button>
+                    }
                   />
                 </div>
               ) : null}
@@ -299,7 +327,7 @@ const EmployeeModal = ({
               className="inline-flex h-10 w-full items-center justify-center rounded-full border border-gray-300 px-5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60 sm:w-auto"
               disabled={isSubmitting}
             >
-              {isViewMode ? 'Chiudi' : 'Annulla'}
+              {isViewMode ? t('companyAdmin.common.close') : t('companyAdmin.common.cancel')}
             </button>
             {!isViewMode ? (
               <button

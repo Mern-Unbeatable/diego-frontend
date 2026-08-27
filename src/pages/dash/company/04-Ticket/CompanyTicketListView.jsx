@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Loading from '../../../../components/ui/Utilities/Loading';
 import { useGetTicketsQuery } from '../../../../features/api/ticketApi';
 import {
@@ -15,19 +16,6 @@ import {
   mapTicketPriorityLabel,
 } from '../../../../features/api/ticketMappers';
 import { getRtkErrorMessage } from '../../../../features/api/utils';
-
-const STATUS_OPTIONS = [
-  { label: 'Tutti', value: '' },
-  { label: 'Aperto', value: 'OPEN' },
-  { label: 'In lavorazione', value: 'IN_PROGRESS' },
-];
-
-const PRIORITY_OPTIONS = [
-  { label: 'Tutte', value: '' },
-  { label: 'Critical', value: 'CRITICAL' },
-  { label: 'Medium', value: 'MEDIUM' },
-  { label: 'Low', value: 'LOW' },
-];
 
 const normalizeSearchValue = (value) =>
   String(value ?? '')
@@ -37,10 +25,30 @@ const normalizeSearchValue = (value) =>
 const extractDigits = (value) => normalizeSearchValue(value).replace(/\D+/g, '');
 
 const CompanyTicketListView = () => {
+  const { t } = useTranslation();
   const [searchInput, setSearchInput] = useState('');
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [priorityFilter, setPriorityFilter] = useState('');
+
+  const statusOptions = useMemo(
+    () => [
+      { label: t('companyAdmin.tickets.filters.statusAll'), value: '' },
+      { label: t('companyAdmin.tickets.filters.statusOpen'), value: 'OPEN' },
+      { label: t('companyAdmin.tickets.filters.statusInProgress'), value: 'IN_PROGRESS' },
+    ],
+    [t],
+  );
+
+  const priorityOptions = useMemo(
+    () => [
+      { label: t('companyAdmin.tickets.filters.priorityAll'), value: '' },
+      { label: t('companyAdmin.tickets.filters.priorityCritical'), value: 'CRITICAL' },
+      { label: t('companyAdmin.tickets.filters.priorityMedium'), value: 'MEDIUM' },
+      { label: t('companyAdmin.tickets.filters.priorityLow'), value: 'LOW' },
+    ],
+    [t],
+  );
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -110,41 +118,41 @@ const CompanyTicketListView = () => {
     <section className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <p className="text-sm font-medium text-[#7d7d7d]">Area ticket</p>
-          <h2 className="text-[42px] font-semibold text-[#1f1f1f]">Elenco ticket</h2>
+          <p className="text-sm font-medium text-[#7d7d7d]">{t('companyAdmin.tickets.areaLabel')}</p>
+          <h2 className="text-[42px] font-semibold text-[#1f1f1f]">{t('companyAdmin.tickets.listTitle')}</h2>
         </div>
 
         <Link
           to="/dashboard/company-admin/ticket/new"
           className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white hover:bg-[#63a88c]"
         >
-          <TicketPlus size={16} /> Nuovo ticket
+          <TicketPlus size={16} /> {t('companyAdmin.tickets.newTicket')}
         </Link>
       </div>
 
       <section className="rounded-xl border border-[#e8e8e8] bg-white p-5">
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1.2fr_1fr_1fr_auto] lg:items-end">
           <label className="block">
-            <span className="mb-1 block text-sm font-medium text-[#868686]">Cerca ticket</span>
+            <span className="mb-1 block text-sm font-medium text-[#868686]">{t('companyAdmin.tickets.searchLabel')}</span>
             <div className="flex h-10 items-center rounded-full border border-[#e5e5e5] bg-white px-4">
               <Search size={16} className="text-[#9ca3af]" />
               <input
                 value={searchInput}
                 onChange={(event) => setSearchInput(event.target.value)}
                 className="ml-2 w-full text-sm outline-none placeholder:text-[#a3a3a3]"
-                placeholder="Cerca per oggetto, ID o nominativo"
+                placeholder={t('companyAdmin.tickets.searchPlaceholder')}
               />
             </div>
           </label>
 
           <label className="block">
-            <span className="mb-1 block text-sm font-medium text-[#868686]">Stato</span>
+            <span className="mb-1 block text-sm font-medium text-[#868686]">{t('companyAdmin.tickets.filters.status')}</span>
             <select
               value={statusFilter}
               onChange={(event) => setStatusFilter(event.target.value)}
               className="h-10 w-full rounded-full border border-[#e5e5e5] px-4 text-sm text-[#555555] outline-none"
             >
-              {STATUS_OPTIONS.map((option) => (
+              {statusOptions.map((option) => (
                 <option key={option.label} value={option.value}>
                   {option.label}
                 </option>
@@ -153,13 +161,13 @@ const CompanyTicketListView = () => {
           </label>
 
           <label className="block">
-            <span className="mb-1 block text-sm font-medium text-[#868686]">Priorità</span>
+            <span className="mb-1 block text-sm font-medium text-[#868686]">{t('companyAdmin.tickets.filters.priority')}</span>
             <select
               value={priorityFilter}
               onChange={(event) => setPriorityFilter(event.target.value)}
               className="h-10 w-full rounded-full border border-[#e5e5e5] px-4 text-sm text-[#555555] outline-none"
             >
-              {PRIORITY_OPTIONS.map((option) => (
+              {priorityOptions.map((option) => (
                 <option key={option.label} value={option.value}>
                   {option.label}
                 </option>
@@ -172,7 +180,7 @@ const CompanyTicketListView = () => {
             onClick={handleReset}
             className="h-10 rounded-full border border-[#e5e5e5] px-5 text-sm font-medium text-[#4f4f4f] hover:bg-[#f8f8f8]"
           >
-            Reset
+            {t('companyAdmin.common.reset')}
           </button>
         </div>
       </section>
@@ -181,7 +189,7 @@ const CompanyTicketListView = () => {
         <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {getRtkErrorMessage(error)}
           <button type="button" onClick={refetch} className="ml-3 font-semibold underline">
-            Riprova
+            {t('companyAdmin.common.retry')}
           </button>
         </div>
       )}
@@ -206,7 +214,9 @@ const CompanyTicketListView = () => {
                     <p className="max-w-[960px] text-[18px] font-medium text-[#3a3a3a]">
                       {ticket.title}
                     </p>
-                    <p className="text-sm text-[#7d7d7d]">Richiedente: {ticket.requester}</p>
+                    <p className="text-sm text-[#7d7d7d]">
+                      {t('companyAdmin.tickets.requester')} {ticket.requester}
+                    </p>
                   </div>
 
                   <div className="flex items-center gap-3">
@@ -221,19 +231,19 @@ const CompanyTicketListView = () => {
 
                 <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-[#666666]">
                   <span className="inline-flex items-center gap-2">
-                    <CircleAlert size={14} className="text-[#e59a2b]" /> Priorità:{' '}
-                    {ticket.priority}
+                    <CircleAlert size={14} className="text-[#e59a2b]" />{' '}
+                    {t('companyAdmin.tickets.priorityLabel')} {ticket.priority}
                   </span>
                   <span className="inline-flex items-center gap-2">
-                    <CircleCheck size={14} className="text-[#57a080]" /> Aggiornato:{' '}
-                    {ticket.updatedAt}
+                    <CircleCheck size={14} className="text-[#57a080]" />{' '}
+                    {t('companyAdmin.tickets.updatedAt')} {ticket.updatedAt}
                   </span>
                 </div>
               </Link>
             ))
           ) : (
             <div className="rounded-xl border border-dashed border-[#d7d7d7] bg-white px-5 py-10 text-center text-sm text-[#7d7d7d]">
-              Nessun ticket trovato.
+              {t('companyAdmin.tickets.empty')}
             </div>
           )}
         </section>

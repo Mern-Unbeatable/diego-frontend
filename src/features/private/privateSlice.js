@@ -5,6 +5,7 @@ import {
   createTicketAPI,
   getTicketByIdAPI,
   getNotificationsAPI,
+  getUnreadNotificationsCountAPI,
   markNotificationsReadAPI,
   markAllNotificationsReadAPI,
   getMyCertificatesAPI,
@@ -17,6 +18,7 @@ import {
   mapTicketsResponse,
   mapTicketDetailResponse,
   mapNotificationsResponse,
+  mapUnreadNotificationsCountResponse,
   mapCertificatesResponse,
   mapProfileResponse,
 } from './privateMappers';
@@ -150,6 +152,10 @@ const privateSlice = createSlice({
       .addCase(getNotificationsAPI.rejected, (state, action) => {
         state.notificationsLoading = false;
         state.notificationsError = action.payload;
+      })
+      .addCase(getUnreadNotificationsCountAPI.fulfilled, (state, action) => {
+        state.notificationsMeta.unreadCount =
+          mapUnreadNotificationsCountResponse(action.payload);
       })
       .addCase(markNotificationsReadAPI.fulfilled, (state, action) => {
         const notificationIds = action.meta.arg?.notificationIds ?? [];

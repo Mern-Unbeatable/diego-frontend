@@ -1,6 +1,7 @@
 import { Download, Printer } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { ENV_CONFIG } from '../../../../config/env.config';
 import { ROUTES } from '../../../../config/routes';
@@ -14,12 +15,6 @@ import CertificatePreview from './components/CertificatePreview';
 
 const PAGE_SIZE = 6;
 
-const ARCHIVE_FILTER_OPTIONS = [
-  { value: '', label: 'Tutti gli attestati' },
-  { value: 'active', label: 'Periodo gratuito attivo' },
-  { value: 'archived', label: 'In archivio cloud' },
-];
-
 const resolveAssetUrl = (path) => {
   if (!path) return null;
   if (path.startsWith('http')) return path;
@@ -27,26 +22,8 @@ const resolveAssetUrl = (path) => {
   return `${base}${path.startsWith('/') ? path : `/${path}`}`;
 };
 
-const getArchiveBadge = (certificate) => {
-  if (certificate.archived) {
-    return {
-      label: 'In archivio cloud',
-      className: 'bg-[#ede7f6] text-[#5e35b1]',
-    };
-  }
-  if (certificate.isExpired) {
-    return {
-      label: 'Periodo gratuito scaduto',
-      className: 'bg-[#fff3e0] text-[#e65100]',
-    };
-  }
-  return {
-    label: 'Disponibile',
-    className: 'bg-[#e6f6ef] text-[#2d5f49]',
-  };
-};
-
 const CompanyCertificatesView = () => {
+  const { t } = useTranslation();
   const [certificates, setCertificates] = useState([]);
   const [courses, setCourses] = useState([]);
   const [archiveInfo, setArchiveInfo] = useState({
@@ -61,6 +38,37 @@ const CompanyCertificatesView = () => {
   const [search, setSearch] = useState('');
   const [archiveFilter, setArchiveFilter] = useState('');
   const [actionId, setActionId] = useState(null);
+
+  const archiveFilterOptions = useMemo(
+    () => [
+      { value: '', label: t('companyAdmin.certificates.filters.all') },
+      { value: 'active', label: t('companyAdmin.certificates.filters.activePeriod') },
+      { value: 'archived', label: t('companyAdmin.certificates.filters.archived') },
+    ],
+    [t],
+  );
+
+  const getArchiveBadge = useCallback(
+    (certificate) => {
+      if (certificate.archived) {
+        return {
+          label: t('companyAdmin.certificates.badges.archived'),
+          className: 'bg-[#ede7f6] text-[#5e35b1]',
+        };
+      }
+      if (certificate.isExpired) {
+        return {
+          label: t('companyAdmin.certificates.badges.expired'),
+          className: 'bg-[#fff3e0] text-[#e65100]',
+        };
+      }
+      return {
+        label: t('companyAdmin.certificates.badges.available'),
+        className: 'bg-[#e6f6ef] text-[#2d5f49]',
+      };
+    },
+    [t],
+  );
 
   const loadCourses = useCallback(async () => {
     try {
@@ -92,12 +100,12 @@ const CompanyCertificatesView = () => {
       setMeta(data.meta);
       setArchiveInfo(data.archive);
     } catch (error) {
-      toast.error(error?.message || 'Impossibile caricare gli attestati');
+      toast.error(error?.message || t('companyAdmin.certificates.errors.loadFailed'));
       setCertificates([]);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     loadCourses();
@@ -108,8 +116,8 @@ const CompanyCertificatesView = () => {
   }, [courseId, search, archiveFilter, loadCertificates]);
 
   const courseOptions = useMemo(
-    () => [{ courseId: '', courseTitle: 'Tutti i corsi' }, ...courses],
-    [courses],
+    () => [{ courseId: '', courseTitle: t('companyAdmin.common.allCourses') }, ...courses],
+    [courses, t],
   );
 
   const handleReset = () => {
@@ -124,7 +132,7 @@ const CompanyCertificatesView = () => {
       const data = await downloadCompanyCertificateService(certificate.id);
       return resolveAssetUrl(data?.pdfUrl || certificate.pdfUrl);
     } catch (error) {
-      toast.error(error?.message || 'Download attestato non riuscito');
+      toast.error(error?.message || t('companyAdmin.certificates.errors.downloadFailed'));
       return resolveAssetUrl(certificate.pdfUrl);
     }
   };
@@ -134,12 +142,12 @@ const CompanyCertificatesView = () => {
       setActionId(certificate.id);
       const pdfUrl = await openCertificate(certificate);
       if (!pdfUrl) {
-        toast.error('Attestato PDF non disponibile');
+        toast.error(t('companyAdmin.certificates.errors.pdfUnavailable'));
         return;
       }
       window.open(pdfUrl, '_blank', 'noopener,noreferrer');
     } catch (error) {
-      toast.error(error?.message || 'Download attestato non riuscito');
+      toast.error(error?.message || t('companyAdmin.certificates.errors.downloadFailed'));
     } finally {
       setActionId(null);
     }
@@ -150,14 +158,14 @@ const CompanyCertificatesView = () => {
       setActionId(certificate.id);
       const pdfUrl = await openCertificate(certificate);
       if (!pdfUrl) {
-        toast.error('Attestato PDF non disponibile');
+        toast.error(t('companyAdmin.certificates.errors.pdfUnavailable'));
         return;
       }
       const printWindow = window.open(pdfUrl, '_blank', 'noopener,noreferrer');
       printWindow?.focus();
       printWindow?.print();
     } catch (error) {
-      toast.error(error?.message || 'Stampa attestato non riuscita');
+      toast.error(error?.message || t('companyAdmin.certificates.errors.printFailed'));
     } finally {
       setActionId(null);
     }
@@ -169,36 +177,38 @@ const CompanyCertificatesView = () => {
   return (
     <section className="space-y-6">
       <h2 className="text-2xl font-semibold text-[#1f1f1f]">
-        Elenco degli attestati
+        {t('companyAdmin.certificates.title')}
       </h2>
 
       {!archiveInfo.hasActiveSubscription ? (
         <div className="rounded-xl border border-[#9fd9c1] bg-[#f3f7f5] px-5 py-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="font-semibold text-[#1f1f1f]">Archivio attestati cloud</p>
+              <p className="font-semibold text-[#1f1f1f]">
+                {t('companyAdmin.certificates.archiveBanner.title')}
+              </p>
               <p className="mt-1 text-sm text-[#666]">
-                I dipendenti possono scaricare gli attestati gratuitamente per i primi{' '}
-                {archiveInfo.freeDownloadDays} giorni. Come admin azienda puoi sempre scaricare
-                gli attestati dei tuoi collaboratori. Attiva l&apos;archivio cloud per conservare
-                anche i tuoi attestati personali oltre il periodo gratuito.
+                {t('companyAdmin.certificates.archiveBanner.descriptionExtended', {
+                  days: archiveInfo.freeDownloadDays,
+                })}
               </p>
             </div>
             <Link
               to={ROUTES.COMPANY_ADMIN.ARCHIVE}
               className="rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white"
             >
-              Acquista archivio
+              {t('companyAdmin.certificates.buyArchive')}
             </Link>
           </div>
         </div>
       ) : (
         <div className="rounded-xl bg-[#e6f6ef] px-5 py-3 text-sm text-[#2d5f49]">
-          Archivio cloud attivo
+          {t('companyAdmin.certificates.archiveBanner.active')}
           {archiveInfo.expiresAt && (
             <span>
               {' '}
-              fino al {new Date(archiveInfo.expiresAt).toLocaleDateString('it-IT')}
+              {t('companyAdmin.certificates.archiveBanner.until')}{' '}
+              {new Date(archiveInfo.expiresAt).toLocaleDateString('it-IT')}
             </span>
           )}
         </div>
@@ -207,7 +217,9 @@ const CompanyCertificatesView = () => {
       <section className="rounded-xl border border-[#e8e8e8] bg-white p-5">
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-4">
           <div>
-            <p className="mb-1 text-sm font-medium text-[#868686]">Corso</p>
+            <p className="mb-1 text-sm font-medium text-[#868686]">
+              {t('companyAdmin.certificates.filters.course')}
+            </p>
             <select
               value={courseId}
               onChange={(event) => setCourseId(event.target.value)}
@@ -222,14 +234,14 @@ const CompanyCertificatesView = () => {
           </div>
           <div>
             <p className="mb-1 text-sm font-medium text-[#868686]">
-              Stato archivio
+              {t('companyAdmin.certificates.filters.archiveStatus')}
             </p>
             <select
               value={archiveFilter}
               onChange={(event) => setArchiveFilter(event.target.value)}
               className="h-10 w-full rounded-full border border-[#e5e5e5] px-4 text-sm text-[#555555] outline-none"
             >
-              {ARCHIVE_FILTER_OPTIONS.map((option) => (
+              {archiveFilterOptions.map((option) => (
                 <option key={option.value || 'all'} value={option.value}>
                   {option.label}
                 </option>
@@ -238,12 +250,12 @@ const CompanyCertificatesView = () => {
           </div>
           <div>
             <p className="mb-1 text-sm font-medium text-[#868686]">
-              Cerca partecipante
+              {t('companyAdmin.certificates.filters.searchParticipant')}
             </p>
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="cerca per nome..."
+              placeholder={t('companyAdmin.certificates.filters.searchPlaceholder')}
               className="h-10 w-full rounded-full border border-[#e5e5e5] px-4 text-sm text-[#555555] outline-none"
             />
           </div>
@@ -253,17 +265,17 @@ const CompanyCertificatesView = () => {
               onClick={handleReset}
               className="h-10 rounded-full border border-[#e5e5e5] px-5 text-sm font-medium text-[#4f4f4f] hover:bg-[#f8f8f8]"
             >
-              Reset
+              {t('companyAdmin.common.reset')}
             </button>
           </div>
         </div>
       </section>
 
       {loading ? (
-        <p className="text-sm text-gray-500">Caricamento attestati...</p>
+        <p className="text-sm text-gray-500">{t('companyAdmin.certificates.loading')}</p>
       ) : certificates.length === 0 ? (
         <p className="rounded-xl border border-[#ececec] bg-white p-6 text-sm text-gray-600">
-          Nessun attestato trovato per i filtri selezionati.
+          {t('companyAdmin.certificates.empty')}
         </p>
       ) : (
         <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
@@ -279,30 +291,29 @@ const CompanyCertificatesView = () => {
                     </span>
                     {certificate.archived && (
                       <span className="text-xs text-[#666]">
-                        Conservato sui server per conformità normativa
+                        {t('companyAdmin.certificates.complianceNote')}
                       </span>
                     )}
                   </div>
                   <p className="text-sm text-[#202020]">
-                    <span className="font-semibold">Nominativo utente:</span>{' '}
+                    <span className="font-semibold">{t('companyAdmin.certificates.fields.userName')}:</span>{' '}
                     {certificate.employeeName}
                   </p>
                   <p className="mt-1 text-sm text-[#202020]">
-                    <span className="font-semibold">ID corsista:</span>{' '}
+                    <span className="font-semibold">{t('companyAdmin.certificates.fields.studentId')}:</span>{' '}
                     {certificate.userId?.slice(0, 8) || '—'}
                   </p>
                   <p className="mt-1 text-sm text-[#202020]">
-                    <span className="font-semibold">Corso:</span>{' '}
+                    <span className="font-semibold">{t('companyAdmin.common.course')}:</span>{' '}
                     {certificate.courseTitle}
                   </p>
                   <p className="mt-1 text-sm text-[#202020]">
-                    <span className="font-semibold">Data emissione:</span>{' '}
+                    <span className="font-semibold">{t('companyAdmin.certificates.fields.issueDate')}:</span>{' '}
                     {certificate.issuedAtFormatted}
                   </p>
                   {certificate.isExpired && !certificate.archived && (
                     <p className="mt-2 text-xs text-[#b45309]">
-                      Il dipendente deve acquistare l&apos;archivio cloud per scaricare di nuovo.
-                      Tu, come admin azienda, puoi comunque scaricare questo attestato.
+                      {t('companyAdmin.certificates.expiredEmployeeAdminNotice')}
                     </p>
                   )}
                 </div>
@@ -322,7 +333,7 @@ const CompanyCertificatesView = () => {
                     onClick={() => handlePrint(certificate)}
                     className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white hover:bg-[#63a88c] disabled:opacity-60"
                   >
-                    <Printer size={14} /> Stampa
+                    <Printer size={14} /> {t('companyAdmin.certificates.print')}
                   </button>
                   <button
                     type="button"
@@ -330,7 +341,7 @@ const CompanyCertificatesView = () => {
                     onClick={() => handleDownload(certificate)}
                     className="inline-flex items-center gap-2 rounded-full bg-[#73bfa1] px-5 py-2 text-sm font-semibold text-white hover:bg-[#63a88c] disabled:opacity-60"
                   >
-                    <Download size={14} /> Scarica
+                    <Download size={14} /> {t('companyAdmin.certificates.download')}
                   </button>
                 </div>
               </article>
@@ -341,7 +352,7 @@ const CompanyCertificatesView = () => {
 
       <footer className="flex flex-wrap items-center justify-between border-t border-[#ececec] pt-4 text-sm text-[#7d7d7d]">
         <p>
-          Mostra {from}-{to} di {meta.total} certificati
+          {t('companyAdmin.certificates.pagination.showing', { from, to, total: meta.total })}
         </p>
         <div className="flex items-center gap-4">
           <button
@@ -349,7 +360,7 @@ const CompanyCertificatesView = () => {
             disabled={meta.page <= 1 || loading}
             onClick={() => loadCertificates(meta.page - 1, { courseId, search, archived: archiveFilter })}
           >
-            Precedente
+            {t('companyAdmin.common.pagination.previous')}
           </button>
           <span className="h-6 min-w-6 rounded bg-[#73bfa1] px-2 text-center text-sm font-semibold leading-6 text-white">
             {meta.page}
@@ -359,7 +370,7 @@ const CompanyCertificatesView = () => {
             disabled={meta.page >= meta.totalPages || loading}
             onClick={() => loadCertificates(meta.page + 1, { courseId, search, archived: archiveFilter })}
           >
-            Prossimo
+            {t('companyAdmin.common.pagination.next')}
           </button>
         </div>
       </footer>

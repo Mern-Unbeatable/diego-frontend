@@ -2,6 +2,7 @@ import { ArrowLeft, CloudUpload } from 'lucide-react';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Form, FileInput, Input } from '../../../../Forms';
 import { Toast, useToast } from '../../../../components/ui';
 import { useCreateTicketMutation } from '../../../../features/api/ticketApi';
@@ -17,6 +18,7 @@ const defaultValues = {
 };
 
 const TicketFormFields = ({ attachment, onAttachmentChange, disabled }) => {
+  const { t } = useTranslation();
   const { watch } = useFormContext();
   const message = watch('message') || '';
 
@@ -24,11 +26,11 @@ const TicketFormFields = ({ attachment, onAttachmentChange, disabled }) => {
     <div className="space-y-5">
       <label className="block">
         <span className="mb-1.5 block text-[24px] font-medium text-[#202020]">
-          Oggetto<span className="text-[#e34f4f]">*</span>
+          {t('companyAdmin.tickets.form.subject')}<span className="text-[#e34f4f]">*</span>
         </span>
         <Input
           name="subject"
-          placeholder="Inserisci una breve descrizione"
+          placeholder={t('companyAdmin.tickets.form.subjectPlaceholder')}
           required
           variant="ticket"
           inputClassName="h-12"
@@ -38,11 +40,11 @@ const TicketFormFields = ({ attachment, onAttachmentChange, disabled }) => {
 
       <label className="block">
         <span className="mb-1.5 block text-[24px] font-medium text-[#202020]">
-          Descrizione<span className="text-[#e34f4f]">*</span>
+          {t('companyAdmin.tickets.form.description')}<span className="text-[#e34f4f]">*</span>
         </span>
         <Input
           name="message"
-          placeholder="Descrivici quale problema hai riscontrato..."
+          placeholder={t('companyAdmin.tickets.form.descriptionPlaceholder')}
           required
           multiline
           rows={5}
@@ -64,7 +66,7 @@ const TicketFormFields = ({ attachment, onAttachmentChange, disabled }) => {
           disabled={disabled}
         />
         <p className="mt-3 text-sm text-[#7e7e7e]">
-          Dimensioni massime permesse: massimo {MAX_FILE_SIZE_MB} MB per allegato.
+          {t('companyAdmin.tickets.form.maxFileSize', { max: MAX_FILE_SIZE_MB })}
         </p>
       </div>
     </div>
@@ -72,6 +74,7 @@ const TicketFormFields = ({ attachment, onAttachmentChange, disabled }) => {
 };
 
 const CompanyOpenTicketView = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [attachment, setAttachment] = useState(null);
   const [formKey, setFormKey] = useState(0);
@@ -85,7 +88,7 @@ const CompanyOpenTicketView = () => {
     }
 
     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      addToast(`Il file deve essere massimo ${MAX_FILE_SIZE_MB} MB`, 'error');
+      addToast(t('companyAdmin.tickets.toasts.fileTooLarge', { max: MAX_FILE_SIZE_MB }), 'error');
       return;
     }
 
@@ -97,18 +100,18 @@ const CompanyOpenTicketView = () => {
     const message = data.message?.trim();
 
     if (!subject || !message) {
-      addToast('Compilare tutti i campi obbligatori', 'error');
+      addToast(t('companyAdmin.tickets.toasts.requiredFields'), 'error');
       return;
     }
 
     if (message.length > MAX_MESSAGE_LENGTH) {
-      addToast(`La descrizione non può superare ${MAX_MESSAGE_LENGTH} caratteri`, 'error');
+      addToast(t('companyAdmin.tickets.toasts.messageTooLong', { max: MAX_MESSAGE_LENGTH }), 'error');
       return;
     }
 
     try {
       await createTicket({ subject, message, attachment }).unwrap();
-      addToast('Ticket inviato con successo', 'success');
+      addToast(t('companyAdmin.tickets.toasts.sent'), 'success');
       setAttachment(null);
       setFormKey((prev) => prev + 1);
       navigate(ROUTES.COMPANY_ADMIN.TICKETS);
@@ -138,7 +141,7 @@ const CompanyOpenTicketView = () => {
         </Link>
 
         <h2 className="mb-7 mt-2 text-center text-[38px] font-semibold text-[#1f1f1f]">
-          Apri un ticket
+          {t('companyAdmin.tickets.openTitle')}
         </h2>
 
         <Form
@@ -160,14 +163,14 @@ const CompanyOpenTicketView = () => {
               disabled={isLoading}
               className="rounded-full border border-[#ef6a59] px-6 py-2 text-sm font-semibold text-[#e14f3f] hover:bg-[#fff3f1] disabled:opacity-50"
             >
-              Annulla
+              {t('companyAdmin.common.cancel')}
             </button>
             <button
               type="submit"
               disabled={isLoading}
               className="rounded-full bg-[#73bfa1] px-7 py-2 text-sm font-semibold text-white hover:bg-[#63a88c] disabled:opacity-50"
             >
-              {isLoading ? 'Invio in corso...' : 'Invia'}
+              {isLoading ? t('companyAdmin.tickets.sending') : t('companyAdmin.common.send')}
             </button>
           </div>
         </Form>

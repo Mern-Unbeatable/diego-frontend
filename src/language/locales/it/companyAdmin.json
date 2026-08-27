@@ -1,0 +1,351 @@
+{
+  "companyAdmin": {
+    "sidebar": {
+      "home": "Home",
+      "training": "Gestisci la formazione",
+      "certificates": "I tuoi attestati",
+      "tickets": "Ticket",
+      "myCourses": "I tuoi corsi",
+      "privacyPolicy": "Privacy & policy"
+    },
+    "common": {
+      "hello": "Ciao!",
+      "back": "Indietro",
+      "close": "Chiudi",
+      "cancel": "Annulla",
+      "reset": "Reset",
+      "retry": "Riprova",
+      "saving": "Salvataggio...",
+      "download": "Download",
+      "sendReminder": "Invia un promemoria",
+      "send": "Invia",
+      "course": "Corso",
+      "allCourses": "Tutti i corsi",
+      "courseFallback": "Corso",
+      "adminFallback": "Admin",
+      "progress": "Avanzamento",
+      "lastAccess": "Ultimo accesso",
+      "statusLabel": "Stato",
+      "actions": "Azioni",
+      "status": {
+        "active": "Attivo",
+        "inactive": "Inattivo"
+      },
+      "positions": {
+        "safetyManager": "Safety manager",
+        "productionOperator": "Operatore di produzione",
+        "hrManager": "Responsabile HR",
+        "maintenanceTechnician": "Tecnico di manutenzione",
+        "administration": "Amministrazione"
+      },
+      "progressStatus": {
+        "completed": "Completato",
+        "inProgress": "In corso",
+        "notStarted": "Non iniziato"
+      },
+      "tableActions": {
+        "details": "Dettagli",
+        "edit": "Modifica",
+        "delete": "Elimina"
+      },
+      "errors": {
+        "saveFailed": "Salvataggio non riuscito. Riprova."
+      },
+      "table": {
+        "course": "Corso",
+        "enrolledStudents": "Corsisti iscritti",
+        "status": "Stato",
+        "progress": "Avanzamento",
+        "enrollmentDate": "Data di iscrizione",
+        "actions": "Azioni"
+      },
+      "pagination": {
+        "previous": "Precedente",
+        "next": "Prossimo",
+        "showingZeroStudents": "Mostra 0 di 0 studenti",
+        "showingStudents": "Mostra {{from}}-{{to}} di {{total}} studenti",
+        "showingZeroEmployees": "Mostra 0 di 0 dipendenti",
+        "showingEmployees": "Mostra {{count}} di {{total}} dipendenti",
+        "showingZeroStudentsShort": "Mostra 0 di 0 corsisti",
+        "showingStudentsRange": "Mostra {{from}}-{{to}} di {{total}} corsisti"
+      }
+    },
+    "home": {
+      "overview": "Panoramica",
+      "buyNewCourses": "Acquista nuovi corsi",
+      "goToCatalog": "Vai al catalogo",
+      "progressTitle": "Stato di avanzamento — {{course}}",
+      "searchEmployee": "Cerca dipendente",
+      "searchByNamePlaceholder": "Cerca per nome",
+      "searchParticipant": "Cerca partecipante",
+      "allParticipants": "Tutti i partecipanti",
+      "noResults": "Nessun risultato trovato.",
+      "cards": {
+        "totalUsers": "Totale utenti",
+        "activeCourses": "Corsi attivi",
+        "expiringSoon": "In scadenza",
+        "completedCourses": "Corsi completati",
+        "myTickets": "I miei tickets"
+      }
+    },
+    "training": {
+      "title": "Anagrafica dipendenti",
+      "addUser": "+ Aggiungi utente",
+      "empty": "Nessun dipendente trovato. Inizia aggiungendo il primo utente.",
+      "hireDateLabel": "Assunzione:",
+      "courseLabel": "Corso:",
+      "assignedCourse": "Corso assegnato:",
+      "viewEnrolled": "Vedi iscritti",
+      "noAssignedCourse": "Nessun corso assegnato.",
+      "assignedCourseFallback": "Corso assegnato",
+      "errors": {
+        "loadFailed": "Non è stato possibile caricare i dipendenti"
+      },
+      "toasts": {
+        "updated": "Dipendente aggiornato con successo",
+        "accessEmailSent": "Email di accesso inviata al dipendente",
+        "added": "Dipendente aggiunto con successo",
+        "deleted": "Dipendente eliminato con successo",
+        "deleteFailed": "Eliminazione non riuscita"
+      },
+      "deleteModal": {
+        "title": "Elimina dipendente",
+        "messageNamed": "Sei sicuro di voler eliminare {{name}}? L'operazione non può essere annullata.",
+        "messageGeneric": "Sei sicuro di voler eliminare questo dipendente?"
+      }
+    },
+    "employeeModal": {
+      "titles": {
+        "add": "Aggiungi utente",
+        "edit": "Modifica utente",
+        "view": "Dettagli utente"
+      },
+      "buttons": {
+        "save": "Salva",
+        "saveChanges": "Salva modifiche"
+      },
+      "subtitle": {
+        "viewing": "Stai visualizzando",
+        "editing": "Stai modificando"
+      },
+      "fields": {
+        "firstName": "Nome",
+        "lastName": "Cognome",
+        "email": "E-mail dipendente",
+        "phone": "Numero di contatto",
+        "position": "Ruolo",
+        "hireDate": "Data di assunzione",
+        "status": "Stato",
+        "assignedCourse": "Corso assegnato",
+        "password": "Password",
+        "passwordOptional": "Nuova password (opzionale)"
+      },
+      "placeholders": {
+        "firstName": "Inserisci il nome...",
+        "lastName": "Inserisci il cognome...",
+        "email": "franco.rossi@mototo.com",
+        "phone": "+39 340 00 00000",
+        "selectRole": "Seleziona un ruolo",
+        "passwordCreate": "Crea una password per il tuo lavoratore",
+        "passwordOptional": "Lascia vuoto per non modificarla"
+      },
+      "noCourseAssigned": "Nessun corso assegnato",
+      "aria": {
+        "hidePassword": "Nascondi password",
+        "showPassword": "Mostra password"
+      }
+    },
+    "certificates": {
+      "title": "Elenco degli attestati",
+      "loading": "Caricamento attestati...",
+      "empty": "Nessun attestato trovato per i filtri selezionati.",
+      "complianceNote": "Conservato sui server per conformità normativa",
+      "print": "Stampa",
+      "download": "Scarica",
+      "buyArchive": "Acquista archivio",
+      "filters": {
+        "all": "Tutti gli attestati",
+        "activePeriod": "Periodo gratuito attivo",
+        "archived": "In archivio cloud",
+        "course": "Corso",
+        "archiveStatus": "Stato archivio",
+        "searchParticipant": "Cerca partecipante",
+        "searchPlaceholder": "cerca per nome..."
+      },
+      "badges": {
+        "archived": "In archivio cloud",
+        "expired": "Periodo gratuito scaduto",
+        "available": "Disponibile"
+      },
+      "fields": {
+        "userName": "Nominativo utente",
+        "studentId": "ID corsista",
+        "issueDate": "Data emissione"
+      },
+      "archiveBanner": {
+        "title": "Archivio attestati cloud",
+        "description": "Acquista l'archivio cloud per conservare gli attestati in modo sicuro con ricerca, export e backup.",
+        "descriptionExtended": "I dipendenti possono scaricare gli attestati gratuitamente per i primi {{days}} giorni. Come admin azienda puoi sempre scaricare gli attestati dei tuoi collaboratori. Attiva l'archivio cloud per conservare anche i tuoi attestati personali oltre il periodo gratuito.",
+        "active": "Archivio cloud attivo",
+        "until": "fino al"
+      },
+      "expiredNotice": "Il periodo gratuito di download per questo attestato è scaduto. Acquista l'archivio cloud per accedervi.",
+      "expiredEmployeeAdminNotice": "Il dipendente deve acquistare l'archivio cloud per scaricare di nuovo. Tu, come admin azienda, puoi comunque scaricare questo attestato.",
+      "errors": {
+        "loadFailed": "Impossibile caricare gli attestati",
+        "pdfUnavailable": "Attestato PDF non disponibile",
+        "actionFailed": "Download/Stampa non riuscita",
+        "downloadFailed": "Download attestato non riuscito",
+        "printFailed": "Stampa attestato non riuscita"
+      },
+      "pagination": {
+        "showing": "Mostra {{from}}-{{to}} di {{total}} certificati"
+      },
+      "preview": {
+        "title": "Attestato {{courseTitle}}",
+        "qrAlt": "QR attestato {{courseTitle}}",
+        "unavailable": "Anteprima non disponibile"
+      }
+    },
+    "tickets": {
+      "areaLabel": "Area ticket",
+      "listTitle": "Elenco ticket",
+      "newTicket": "Nuovo ticket",
+      "searchLabel": "Cerca ticket",
+      "searchPlaceholder": "Cerca per oggetto, ID o nominativo",
+      "requester": "Richiedente:",
+      "empty": "Nessun ticket trovato.",
+      "updatedAt": "Aggiornato:",
+      "priorityLabel": "Priorità:",
+      "notFound": "Ticket non trovato",
+      "openTitle": "Apri un ticket",
+      "sending": "Invio in corso...",
+      "filters": {
+        "statusAll": "Tutti",
+        "statusOpen": "Aperto",
+        "statusInProgress": "In lavorazione",
+        "priorityAll": "Tutte",
+        "priorityCritical": "Critical",
+        "priorityMedium": "Medium",
+        "priorityLow": "Low",
+        "status": "Stato",
+        "priority": "Priorità"
+      },
+      "form": {
+        "subject": "Oggetto",
+        "description": "Descrizione",
+        "subjectPlaceholder": "Inserisci l'oggetto del ticket",
+        "descriptionPlaceholder": "Descrivi il problema in dettaglio...",
+        "maxFileSize": "Dimensioni massime permesse: massimo {{max}} MB per file"
+      },
+      "detail": {
+        "descriptionTitle": "Descrizione ticket",
+        "noDescription": "Nessuna descrizione disponibile",
+        "detailsTitle": "Dettagli ticket",
+        "conversationTitle": "Conversazione",
+        "updateLabel": "Update",
+        "supportLabel": "Supporto",
+        "fields": {
+          "id": "ID:",
+          "subject": "Oggetto:",
+          "requesterType": "Tipologia richiedente:",
+          "priority": "Priorita:",
+          "createdAt": "Creato il:",
+          "name": "Nominativo:",
+          "status": "Stato:"
+        }
+      },
+      "toasts": {
+        "fileTooLarge": "Il file deve essere massimo {{max}} MB",
+        "requiredFields": "Compilare tutti i campi obbligatori",
+        "messageTooLong": "La descrizione non può superare {{max}} caratteri",
+        "sent": "Ticket inviato con successo"
+      }
+    },
+    "courses": {
+      "loading": "Caricamento corsi...",
+      "loadingStudents": "Caricamento corsisti...",
+      "noPurchased": "Nessun corso acquistato. Vai al catalogo per acquistare corsi.",
+      "noPurchasedCompany": "Nessun corso acquistato per la tua azienda. Acquista un pacchetto corso per iniziare.",
+      "administrator": "Amministratore",
+      "noEnrolled": "Nessun dipendente iscritto a questo corso.",
+      "enrolledCount": "Dipendenti iscritti:",
+      "viewDetails": "Visualizza i dettagli",
+      "assignEmployee": "Assegna dipendente",
+      "rosterTitle": "Elenco di chi svolge il corso: {{title}}",
+      "rosterTitlePrefix": "Elenco di chi svolge il corso:",
+      "toasts": {
+        "loadStudentsFailed": "Impossibile caricare i corsisti",
+        "reminderFailed": "Invio promemoria non riuscito",
+        "downloadFailed": "Download attestato non riuscito",
+        "loadCoursesFailed": "Impossibile caricare i corsi",
+        "reminderSent": "Promemoria inviato a {{name}}",
+        "assignedSuccess": "Dipendente assegnato al corso con successo",
+        "addedAndAssigned": "Dipendente aggiunto e corso assegnato con successo",
+        "assignFailed": "Assegnazione non riuscita"
+      },
+      "pagination": {
+        "showing": "Mostra {{from}}-{{to}} di {{total}} corsisti",
+        "showingZero": "Mostra 0 di 0 corsisti"
+      }
+    },
+    "purchases": {
+      "title": "Pacchetti aziendali acquistati",
+      "subtitle": "Assegna link di accesso ai tuoi dipendenti",
+      "subtitleExtended": "Assegna link di accesso ai corsisti e monitora le utenze",
+      "empty": "Nessun pacchetto acquistato.",
+      "emptyExtended": "Nessun pacchetto acquistato. Acquista un corso aziendale dal catalogo.",
+      "assignStudent": "Assegna corsista",
+      "seatsUsed": "{{used}}/{{total}} posti usati",
+      "expiresInDays": "Scade tra {{days}} giorni",
+      "noAssigned": "Nessun corsista assegnato a questo pacchetto.",
+      "noAssignedHint": "Nessun corsista assegnato. Clicca \"Assegna corsista\" per iniziare.",
+      "sending": "Invio...",
+      "sendLink": "Invia link",
+      "form": {
+        "studentEmail": "Email del corsista",
+        "firstName": "Nome",
+        "lastName": "Cognome"
+      },
+      "status": {
+        "active": "Attivato",
+        "pending": "In attesa"
+      },
+      "table": {
+        "accessLink": "Link accesso",
+        "student": "Corsista",
+        "email": "Email",
+        "status": "Stato",
+        "actions": "Azioni"
+      },
+      "aria": {
+        "copyLink": "Copia link",
+        "sendEmail": "Invia email"
+      },
+      "errors": {
+        "loadFailed": "Impossibile caricare i pacchetti"
+      },
+      "toasts": {
+        "invited": "Dipendente invitato e link di accesso inviato",
+        "inviteFailed": "Invito non riuscito",
+        "linkUnavailable": "Link non disponibile",
+        "linkCopied": "Link copiato",
+        "linkCopiedClipboard": "Link copiato negli appunti",
+        "copyFailed": "Copia non riuscita",
+        "copyLinkFailed": "Impossibile copiare il link",
+        "emailSent": "Email di accesso inviata",
+        "emailFailed": "Invio email non riuscito"
+      }
+    },
+    "privacyPolicy": {
+      "title": "Privacy & policy",
+      "heading": "Informativa privacy",
+      "subtitle": "AI SENSI DEGLI ARTT. 13 E 14 DEL REGOLAMENTO (UE) 2016/679",
+      "consent": {
+        "accept": "Acconsento",
+        "decline": "Non acconsento",
+        "submit": "Invia"
+      }
+    }
+  }
+}
