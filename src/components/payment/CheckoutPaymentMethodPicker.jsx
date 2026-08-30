@@ -7,10 +7,10 @@ const METHOD_ICONS = {
     src: '/image/paymentIcon/stripe-light.png',
     alt: 'Stripe',
   },
-  paypal: {
-    src: '/image/paymentIcon/paypal.png',
-    alt: 'PayPal',
-  },
+  // paypal: {
+  //   src: '/image/paymentIcon/paypal.png',
+  //   alt: 'PayPal',
+  // },
 };
 
 const ApplePayMark = ({ className = '' }) => (
@@ -77,8 +77,8 @@ export default function CheckoutPaymentMethodPicker({
               title={method.label}
               onClick={() => onSelect(method.id)}
               className={`relative inline-flex h-9 min-w-0 flex-1 shrink items-center justify-center rounded-md border bg-transparent px-2 transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#73BFA1] sm:h-10 sm:px-3 ${isActive
-                  ? 'border-[#73BFA1] bg-white/80 shadow-[0_0_0_1.5px_rgba(115,191,161,0.45)]'
-                  : 'border-transparent hover:border-gray-300 hover:bg-white/60'
+                ? 'border-[#73BFA1] bg-white/80 shadow-[0_0_0_1.5px_rgba(115,191,161,0.45)]'
+                : 'border-transparent hover:border-gray-300 hover:bg-white/60'
                 }`}
             >
               {isApple ? (

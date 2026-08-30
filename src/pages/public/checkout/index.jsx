@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import CourseMedia from '../../../components/training/CourseMedia';
 import CheckoutStripeForm from '../../../components/payment/CheckoutStripeForm';
-import CheckoutPayPalForm from '../../../components/payment/CheckoutPayPalForm';
+// import CheckoutPayPalForm from '../../../components/payment/CheckoutPayPalForm';
 import CheckoutPaymentMethodPicker from '../../../components/payment/CheckoutPaymentMethodPicker';
 import { useGetPlatformStatusQuery } from '../../../features/api/platformApi';
 import { useCourse } from '../../../features/public/course/courseHooks';
@@ -55,7 +55,7 @@ const Checkout = () => {
   const isCompanyPlan = selectedPlan === 'company';
 
   const stripeEnabled = platformStatus?.stripeEnabled !== false;
-  const paypalEnabled = Boolean(platformStatus?.paypalEnabled);
+  // const paypalEnabled = Boolean(platformStatus?.paypalEnabled);
   const applePayEnabled =
     stripeEnabled && platformStatus?.applePayEnabled !== false;
   const googlePayEnabled =
@@ -74,15 +74,15 @@ const Checkout = () => {
     if (stripeEnabled) {
       methods.push({ id: 'card', label: 'Stripe' });
     }
-    if (paypalEnabled && !isCompanyPlan) {
-      methods.push({ id: 'paypal', label: 'PayPal' });
-    }
+    // if (paypalEnabled && !isCompanyPlan) {
+    //   methods.push({ id: 'paypal', label: 'PayPal' });
+    // }
     return methods;
   }, [
     applePayEnabled,
     googlePayEnabled,
     isCompanyPlan,
-    paypalEnabled,
+    // paypalEnabled,
     stripeEnabled,
   ]);
 
@@ -150,7 +150,7 @@ const Checkout = () => {
     if (!isAuthenticated || !course?.id) return undefined;
     if (isCompanyPlan && !selectedTierId) return undefined;
     if (hasEnrollmentConflict) return undefined;
-    if (paymentMethod === 'paypal') return undefined;
+    // if (paymentMethod === 'paypal') return undefined;
     if (!usesStripeIntent) return undefined;
 
     const hasIntentForSelection = isCompanyPlan
@@ -409,6 +409,7 @@ const Checkout = () => {
               ) : null}
             </div>
 
+
             {isAuthenticated && paymentLoading && usesStripeIntent ? (
               <p className="mb-4 text-sm text-gray-600">
                 {t('paymentPages.section2.preparingPayment')}
@@ -442,15 +443,6 @@ const Checkout = () => {
               <p className="text-sm text-gray-600">
                 {t('trainingPages.section12.companyPackage.selectTierFirst')}
               </p>
-            ) : paymentMethod === 'paypal' && paypalEnabled && !isCompanyPlan ? (
-              <CheckoutPayPalForm
-                courseId={course.id}
-                amount={displayAmount}
-                currency={platformStatus?.defaultCurrency || 'EUR'}
-                disabled={hasEnrollmentConflict || paymentVerifying}
-                onSuccess={handlePayPalSuccess}
-                onError={() => toast.error(t('paymentPages.section2.paymentError'))}
-              />
             ) : hasEnrollmentConflict || clientSecret ? (
               <CheckoutStripeForm
                 key={`${clientSecret || 'enrollment-conflict'}-${paymentMethod}`}
